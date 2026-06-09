@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Infinite Limit Near a Vertical Asymptote - Calculus Intro</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../vendor/katex/katex.min.css">
+<script defer src="../vendor/katex/katex.min.js"></script>
+<script defer src="../vendor/katex/contrib/auto-render.min.js"></script>
+<script defer src="../js/render-math.js"></script>
+<script>
+  /* Apply saved theme / language before paint to avoid a flash. */
+  (function () {
+    var d = document.documentElement, t, l;
+    try { t = localStorage.getItem("calc-theme"); } catch (e) {}
+    if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    d.setAttribute("data-theme", t);
+    try { l = localStorage.getItem("calc-lang"); } catch (e) {}
+    d.setAttribute("data-lang", l || "en");
+  })();
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="en">Calculus &middot; Introduction to Limits</span><span class="zh">微積分 &middot; 極限導論</span></div>
+  <div class="sub"><span class="en">Local study copy of the calculus problem set</span><span class="zh">微積分習題集 &middot; 本機學習版</span></div>
+</header>
+<main class="container">
+  <div class="toolbar">
+    <button id="theme-toggle" type="button" aria-label="Toggle dark / light theme"></button>
+    <button id="lang-toggle" type="button" aria-label="Switch language English / 中文"></button>
+  </div>
+  <div class="breadcrumb"><a href="../index.html"><span class="en">Index</span><span class="zh">首頁</span></a> &rsaquo; <span class="en">Calculus</span><span class="zh">微積分</span> &rsaquo; <span class="en">Limits</span><span class="zh">極限</span> &rsaquo; <span class="en">Infinite Limits</span><span class="zh">無窮極限</span></div>
+  <h1><span class="en">3. Infinite Limit Near a Vertical Asymptote</span><span class="zh">3. 垂直漸近線附近的無窮極限</span></h1>
+
+  <h2><span class="en">Problem</span><span class="zh">題目</span></h2>
+  <p><span class="en">Consider \(f(x)=\dfrac{1}{(x-2)^2}+1\). The denominator is squared, so it is positive on both sides of \(x=2\). As \(x\) gets very close to 2, the denominator becomes very small, and \(\dfrac{1}{(x-2)^2}\) grows without bound.</span><span class="zh">考慮函數 \(f(x)=\dfrac{1}{(x-2)^2}+1\)。分母是平方，因此在 \(x=2\) 兩側都為正。當 \(x\) 非常接近 2 時，分母變得很小，\(\dfrac{1}{(x-2)^2}\) 會無界增大。</span></p>
+  <p><span class="en">The graph has a vertical asymptote at \(x=2\). Read the behavior from both sides and evaluate</span><span class="zh">此圖形在 \(x=2\) 有垂直漸近線。請由左右兩側判讀，並求</span></p>
+  <p class="eq">\[ \lim_{x\to 2}\left(\frac{1}{(x-2)^2}+1\right) \]</p>
+  <p><span class="en">Use the graph first, then justify algebraically why both one-sided limits are positive infinity.</span><span class="zh">先用圖形判讀，再用代數說明為何兩個單邊極限都趨向正無窮大。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="inf-title inf-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="inf-title">Graph of f of x equals 1 over x minus 2 squared plus 1</title>
+      <desc id="inf-desc">A curve with a vertical asymptote at x equals 2. On both sides of x equals 2, the graph rises steeply upward, indicating both one-sided limits go to positive infinity. Dashed guide marks x equals 2 and sample points near the asymptote.</desc>
+      <defs>
+        <marker id="axisarrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <!-- grid: vertical lines x = 0..5, horizontal lines y = 0,2,4,6,8 -->
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <!-- axes: y-axis at x=0 (px 134), x-axis at y=0 (px 424) -->
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <!-- vertical asymptote at x = 2 -->
+      <line class="guide" x1="262" y1="424" x2="262" y2="40"></line>
+
+      <!-- left branch of y = 1/(x-2)^2 + 1 -->
+      <path class="curve" d="M 70 398 L 134 392 L 170 382 L 198 362 L 224 322 L 240 242 L 248 136 L 254 64"></path>
+
+      <!-- right branch of y = 1/(x-2)^2 + 1 -->
+      <path class="curve" d="M 270 64 L 276 136 L 284 242 L 300 322 L 326 362 L 354 382 L 390 392 L 454 398"></path>
+
+      <!-- sample points near x = 2 at x = 1.5 and x = 2.5, y = 5 -->
+      <line class="guide" x1="230" y1="424" x2="230" y2="184"></line>
+      <line class="guide" x1="294" y1="424" x2="294" y2="184"></line>
+      <line class="guide" x1="134" y1="184" x2="294" y2="184"></line>
+      <circle class="fillpt" cx="230" cy="184" r="5"></circle>
+      <circle class="fillpt" cx="294" cy="184" r="5"></circle>
+
+      <!-- axis tick labels -->
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="108" y="189">5</text>
+      <text class="lbl" x="548" y="430">x</text>
+      <text class="lbl" x="120" y="20">y</text>
+
+      <!-- annotation -->
+      <text class="small en" x="274" y="56">both sides go to +&#8734;</text>
+      <text class="small zh" x="274" y="56">左右兩側都趨向 +&#8734;</text>
+      <text class="small en" x="274" y="440">x = 2 asymptote</text>
+      <text class="small zh" x="274" y="440">x = 2 垂直漸近線</text>
+    </svg>
+  </div>
+
+  <h2><span class="en">What the graph shows</span><span class="zh">圖形說明</span></h2>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">Description</span><span class="zh">說明</span></th>
+    </tr>
+    <tr>
+      <td><span class="en">Asymptote</span><span class="zh">漸近線</span></td>
+      <td>\(x=2\)</td>
+      <td><span class="en">The denominator is zero at \(x=2\), so the graph has a vertical asymptote there.</span><span class="zh">在 \(x=2\) 分母為零，因此圖形在此有垂直漸近線。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Left limit</span><span class="zh">左極限</span></td>
+      <td>\(+\infty\)</td>
+      <td><span class="en">As \(x\to 2^{-}\), values increase without bound.</span><span class="zh">當 \(x\to 2^{-}\)，函數值無界增大。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Right limit</span><span class="zh">右極限</span></td>
+      <td>\(+\infty\)</td>
+      <td><span class="en">As \(x\to 2^{+}\), values also increase without bound.</span><span class="zh">當 \(x\to 2^{+}\)，函數值同樣無界增大。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Two-sided limit</span><span class="zh">雙邊極限</span></td>
+      <td>\(+\infty\)</td>
+      <td><span class="en">Both one-sided limits are \(+\infty\), so the limit diverges to positive infinity.</span><span class="zh">兩個單邊極限皆為 \(+\infty\)，因此雙邊極限發散到正無窮大。</span></td>
+    </tr>
+  </table>
+
+  <h2><span class="en">Task</span><span class="zh">練習</span></h2>
+  <p><span class="en">Evaluate the limit:</span><span class="zh">求下列極限：</span></p>
+  <p class="eq">\[ \lim_{x\to 2}\left(\frac{1}{(x-2)^2}+1\right) \]</p>
+  <p><span class="en">State the one-sided limits and then the two-sided limit.</span><span class="zh">請先寫出單邊極限，再寫出雙邊極限。</span></p>
+
+  <div class="hint"><strong><span class="en">Hint:</span><span class="zh">提示：</span></strong> <span class="en">Because \((x-2)^2\gt 0\) for \(x\neq 2\), the term \(\dfrac{1}{(x-2)^2}\) is always positive. As \(x\) gets closer to 2, that denominator shrinks toward 0, so the fraction becomes arbitrarily large.</span><span class="zh">由於 \((x-2)^2\gt 0\)（對 \(x\neq 2\)），所以 \(\dfrac{1}{(x-2)^2}\) 永遠為正。當 \(x\) 越接近 2，分母越接近 0，分數就會變得任意大。</span></div>
+
+  <details class="solution">
+    <summary><span class="en">Show solution</span><span class="zh">顯示解答</span></summary>
+    <p><span class="en">Given</span><span class="zh">已知</span></p>
+    <p class="eq">\[ f(x)=\frac{1}{(x-2)^2}+1 \]</p>
+    <p><span class="en">For \(x\neq 2\), \((x-2)^2\) is positive, and as \(x\to 2\) from either side \((x-2)^2\to 0^{+}\), so</span><span class="zh">當 \(x\neq 2\) 時 \((x-2)^2\) 為正；且 \(x\) 從左右接近 2 時 \((x-2)^2\to 0^{+}\)，因此</span></p>
+    <p class="eq">\[ \frac{1}{(x-2)^2}\to +\infty \]</p>
+    <p><span class="en">Adding 1 does not change this infinite behavior, therefore both one-sided limits diverge:</span><span class="zh">再加上 1 不會改變此無窮趨勢，所以兩個單邊極限皆發散：</span></p>
+    <p class="eq">\[ \lim_{x\to 2^{-}} f(x)=+\infty, \qquad \lim_{x\to 2^{+}} f(x)=+\infty \]</p>
+    <p><span class="en">Since both sides agree, the two-sided limit is</span><span class="zh">由於兩側一致，雙邊極限為</span></p>
+    <p class="eq">\[ \lim_{x\to 2} f(x)=+\infty \]</p>
+    <p><span class="en">So \(x=2\) is a vertical asymptote and the limit is infinite.</span><span class="zh">所以 \(x=2\) 是垂直漸近線，且此極限為無窮極限。</span></p>
+  </details>
+
+  <div class="backlink"><a href="02-one-sided-limits.html"><span class="en">&larr; Prev</span><span class="zh">&larr; 上一題</span></a> &nbsp;|&nbsp; <a href="../index.html"><span class="en">Index</span><span class="zh">首頁</span></a> &nbsp;|&nbsp; <a href="04-squeeze-theorem.html"><span class="en">Next &rarr;</span><span class="zh">下一題 &rarr;</span></a></div>
+</main>
+<script src="../js/ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculus — Introduction to Limits</title>
+<link rel="stylesheet" href="css/style.css">
+<script>
+  /* Apply saved theme / language before paint to avoid a flash. */
+  (function () {
+    var d = document.documentElement, t, l;
+    try { t = localStorage.getItem("calc-theme"); } catch (e) {}
+    if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    d.setAttribute("data-theme", t);
+    try { l = localStorage.getItem("calc-lang"); } catch (e) {}
+    d.setAttribute("data-lang", l || "en");
+  })();
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="en">Calculus &middot; Introduction to Limits</span><span class="zh">微積分 &middot; 極限導論</span></div>
+  <div class="sub"><span class="en">Local study copy of the calculus problem set</span><span class="zh">微積分習題集 &middot; 本機學習版</span></div>
+</header>
+<main class="container">
+  <div class="toolbar">
+    <button id="theme-toggle" type="button" aria-label="Toggle dark / light theme"></button>
+    <button id="lang-toggle" type="button" aria-label="Switch language English / 中文"></button>
+  </div>
+
+  <h1><span class="en">Introduction to Limits</span><span class="zh">極限導論</span></h1>
+  <p><span class="en">A set of introductory <strong>limit</strong> exercises for first-year calculus, built for offline browsing. Each page has the problem statement, a graph, a table reading off the graph, a practice task, a hint, and a collapsible reference solution. Use the buttons above to switch theme or language.</span><span class="zh">為微積分初學者設計的<strong>極限</strong>入門練習，可離線瀏覽。每一頁包含題目敘述、圖形、圖形判讀表、練習題、提示，以及可展開的參考解答。可用上方按鈕切換主題或語言。</span></p>
+
+  <ol class="problist">
+    <li>
+      <a href="problems/01-limit-removable-discontinuity.html"><span class="en">Limit at a removable discontinuity</span><span class="zh">可去間斷點的極限</span></a>
+      <div class="blurb"><span class="en">Evaluate a 0/0 limit by cancelling a common factor; the graph has a single hole.</span><span class="zh">透過約去公因式求 0/0 型極限；圖形只有一個空心點。</span></div>
+    </li>
+    <li>
+      <a href="problems/02-one-sided-limits.html"><span class="en">One-sided limits at a jump</span><span class="zh">跳躍點的單邊極限</span></a>
+      <div class="blurb"><span class="en">Read the left and right limits of a piecewise function and decide if the two-sided limit exists.</span><span class="zh">判讀分段函數的左右極限，並判斷雙邊極限是否存在。</span></div>
+    </li>
+    <li>
+      <a href="problems/03-infinite-limit-vertical-asymptote.html"><span class="en">Infinite limit near a vertical asymptote</span><span class="zh">垂直漸近線附近的無窮極限</span></a>
+      <div class="blurb"><span class="en">Read an infinite limit from both sides of a vertical asymptote and justify it algebraically.</span><span class="zh">由垂直漸近線兩側判讀無窮極限，並用代數方式說明。</span></div>
+    </li>
+    <li>
+      <a href="problems/04-squeeze-theorem.html"><span class="en">The squeeze theorem</span><span class="zh">夾擠定理</span></a>
+      <div class="blurb"><span class="en">Trap an oscillating function between two parabolas to evaluate a limit the limit laws cannot reach.</span><span class="zh">將振盪函數夾在兩條拋物線之間，求出極限定律無法直接處理的極限。</span></div>
+    </li>
+    <li>
+      <a href="problems/05-continuity-piecewise.html"><span class="en">Continuity of a piecewise function</span><span class="zh">分段函數的連續性</span></a>
+      <div class="blurb"><span class="en">Find the constant that makes a piecewise function continuous, using the three conditions for continuity.</span><span class="zh">利用連續性的三個條件，求使分段函數連續的常數。</span></div>
+    </li>
+  </ol>
+
+  <footer class="site">
+    <span class="en">Custom teaching material for an introductory calculus unit. Problem statements paraphrased for local use; graphs are custom inline SVG schematics.</span><span class="zh">微積分入門單元的自編教材。題目敘述為本機教學改寫；圖形為自製內嵌 SVG 示意圖。</span>
+  </footer>
+</main>
+<script src="js/ui.js"></script>
+</body>
+</html>

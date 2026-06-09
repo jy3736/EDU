@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One-Sided Limits at a Jump — Calculus Intro</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../vendor/katex/katex.min.css">
+<script defer src="../vendor/katex/katex.min.js"></script>
+<script defer src="../vendor/katex/contrib/auto-render.min.js"></script>
+<script defer src="../js/render-math.js"></script>
+<script>
+  /* Apply saved theme / language before paint to avoid a flash. */
+  (function () {
+    var d = document.documentElement, t, l;
+    try { t = localStorage.getItem("calc-theme"); } catch (e) {}
+    if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    d.setAttribute("data-theme", t);
+    try { l = localStorage.getItem("calc-lang"); } catch (e) {}
+    d.setAttribute("data-lang", l || "en");
+  })();
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="en">Calculus &middot; Introduction to Limits</span><span class="zh">微積分 &middot; 極限導論</span></div>
+  <div class="sub"><span class="en">Local study copy of the calculus problem set</span><span class="zh">微積分習題集 &middot; 本機學習版</span></div>
+</header>
+<main class="container">
+  <div class="toolbar">
+    <button id="theme-toggle" type="button" aria-label="Toggle dark / light theme"></button>
+    <button id="lang-toggle" type="button" aria-label="Switch language English / 中文"></button>
+  </div>
+  <div class="breadcrumb"><a href="../index.html"><span class="en">Index</span><span class="zh">首頁</span></a> &rsaquo; <span class="en">Calculus</span><span class="zh">微積分</span> &rsaquo; <span class="en">Limits</span><span class="zh">極限</span> &rsaquo; <span class="en">One-Sided Limits</span><span class="zh">單邊極限</span></div>
+  <h1><span class="en">2. One-Sided Limits at a Jump</span><span class="zh">2. 跳躍點的單邊極限</span></h1>
+
+  <h2><span class="en">Problem</span><span class="zh">題目</span></h2>
+  <p><span class="en">Consider the <em>piecewise</em> function below. Different rules apply on the two sides of \(x=1\):</span><span class="zh">考慮以下<em>分段函數</em>。在 \(x=1\) 兩側適用不同的式子：</span></p>
+  <p class="eq">\[ f(x)=\begin{cases} x+1, & x\lt 1 \\[2pt] x+4, & x\ge 1 \end{cases} \]</p>
+  <p><span class="en">Its graph <strong>jumps</strong> at \(x=1\): the left piece rises to an <em>open circle</em> at \((1,2)\), while the right piece begins at a <em>filled dot</em> at \((1,5)\). A filled dot marks the actual function value; an open circle marks a value the graph approaches but does not reach on that side.</span><span class="zh">其圖形在 \(x=1\) 處<strong>跳躍</strong>：左段上升到 \((1,2)\) 的<em>空心圓</em>，右段則從 \((1,5)\) 的<em>實心點</em>開始。實心點表示函數的實際值；空心點表示圖形在該側趨近、但未達到的值。</span></p>
+  <p><span class="en">A <em>one-sided</em> limit asks what \(f(x)\) approaches from a single direction. Read both one-sided limits at \(x=1\) from the graph, then decide whether the two-sided limit \(\lim_{x\to 1} f(x)\) exists.</span><span class="zh"><em>單邊</em>極限只探討 \(f(x)\) 從單一方向趨近的值。請由圖形判讀 \(x=1\) 的兩個單邊極限，再判斷雙邊極限 \(\lim_{x\to 1} f(x)\) 是否存在。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="js-title js-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="js-title">Graph of a piecewise function with a jump at x equals 1</title>
+      <desc id="js-desc">The left piece is a line rising to an open circle at the point 1 comma 2. The right piece is a line starting from a filled dot at the point 1 comma 5 and continuing upward. Dashed guide lines mark x equals 1 and the heights 2 and 5, showing the left limit is 2 and the right limit is 5.</desc>
+      <defs>
+        <marker id="axisarrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <!-- grid: vertical lines x = 0..5, horizontal lines y = 2,4,6 -->
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <!-- axes: y-axis at x=0 (px 134), x-axis at y=0 (px 424) -->
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <!-- left piece: f(x) = x + 1 for x < 1 -->
+      <path class="curve" d="M 70 424 L 198 328"></path>
+      <!-- right piece: f(x) = x + 4 for x >= 1 -->
+      <path class="curve" d="M 198 184 L 390 40"></path>
+
+      <!-- dashed guides: x = 1, and heights y = 2 and y = 5 -->
+      <line class="guide" x1="198" y1="424" x2="198" y2="184"></line>
+      <line class="guide" x1="134" y1="328" x2="198" y2="328"></line>
+      <line class="guide" x1="134" y1="184" x2="198" y2="184"></line>
+
+      <!-- open circle at (1, 2) = left limit; filled dot at (1, 5) = f(1) and right limit -->
+      <circle class="hole" cx="198" cy="328" r="6"></circle>
+      <circle class="fillpt" cx="198" cy="184" r="6"></circle>
+
+      <!-- axis tick labels -->
+      <text class="tick" x="195" y="444">1</text>
+      <text class="tick" x="110" y="333">2</text>
+      <text class="tick" x="110" y="189">5</text>
+      <text class="lbl"  x="548" y="430">x</text>
+      <text class="lbl"  x="120" y="20">y</text>
+
+      <!-- annotations -->
+      <text class="small en" x="212" y="346">left limit = 2</text>
+      <text class="small zh" x="212" y="346">左極限 = 2</text>
+      <text class="small en" x="190" y="176" text-anchor="end">right limit = 5</text>
+      <text class="small zh" x="190" y="176" text-anchor="end">右極限 = 5</text>
+    </svg>
+  </div>
+
+  <h2><span class="en">What the graph shows</span><span class="zh">圖形說明</span></h2>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">Description</span><span class="zh">說明</span></th>
+    </tr>
+    <tr>
+      <td>\(f(1)\)</td>
+      <td>5</td>
+      <td><span class="en">Set by the \(x\ge 1\) rule: \(1+4=5\) (filled dot).</span><span class="zh">由 \(x\ge 1\) 的式子決定：\(1+4=5\)（實心點）。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Left limit \((x\to 1^{-})\)</span><span class="zh">左極限 \((x\to 1^{-})\)</span></td>
+      <td>2</td>
+      <td><span class="en">The \(x+1\) piece approaches \(1+1=2\) (open circle).</span><span class="zh">\(x+1\) 趨近 \(1+1=2\)（空心圓）。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Right limit \((x\to 1^{+})\)</span><span class="zh">右極限 \((x\to 1^{+})\)</span></td>
+      <td>5</td>
+      <td><span class="en">The \(x+4\) piece approaches \(1+4=5\).</span><span class="zh">\(x+4\) 趨近 \(1+4=5\)。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Two-sided limit</span><span class="zh">雙邊極限</span></td>
+      <td><span class="en">does not exist</span><span class="zh">不存在</span></td>
+      <td><span class="en">Left \(2\neq\) right \(5\), so the limit does not exist.</span><span class="zh">左極限 \(2\neq\) 右極限 \(5\)，故極限不存在。</span></td>
+    </tr>
+  </table>
+
+  <h2><span class="en">Task</span><span class="zh">練習</span></h2>
+  <p><span class="en">Find the one-sided limits, then decide the two-sided limit:</span><span class="zh">求兩個單邊極限，再判斷雙邊極限：</span></p>
+  <p class="eq">\[ \lim_{x\to 1^{-}} f(x)=\;?\qquad \lim_{x\to 1^{+}} f(x)=\;?\qquad \lim_{x\to 1} f(x)=\;? \]</p>
+  <p><span class="en">where \(f(x)=x+1\) for \(x\lt 1\) and \(f(x)=x+4\) for \(x\ge 1\).</span><span class="zh">其中 \(f(x)=x+1\)（\(x\lt 1\)），\(f(x)=x+4\)（\(x\ge 1\)）。</span></p>
+
+  <div class="hint"><strong><span class="en">Hint:</span><span class="zh">提示：</span></strong> <span class="en">For each one-sided limit, use the rule that applies on that side: the left limit uses \(x+1\), the right limit uses \(x+4\). A two-sided limit exists <em>only</em> when the two one-sided limits are equal.</span><span class="zh">每個單邊極限請代入該側適用的式子：左極限用 \(x+1\)，右極限用 \(x+4\)。<em>唯有</em>當兩個單邊極限相等時，雙邊極限才存在。</span></div>
+
+  <details class="solution">
+    <summary><span class="en">Show solution</span><span class="zh">顯示解答</span></summary>
+    <p><span class="en">From the left \((x\lt 1)\) the rule is \(f(x)=x+1\):</span><span class="zh">左側 \((x\lt 1)\) 適用 \(f(x)=x+1\)：</span></p>
+    <p class="eq">\[ \lim_{x\to 1^{-}} f(x)=\lim_{x\to 1^{-}}(x+1)=1+1=2 \]</p>
+    <p><span class="en">From the right \((x\ge 1)\) the rule is \(f(x)=x+4\):</span><span class="zh">右側 \((x\ge 1)\) 適用 \(f(x)=x+4\)：</span></p>
+    <p class="eq">\[ \lim_{x\to 1^{+}} f(x)=\lim_{x\to 1^{+}}(x+4)=1+4=5 \]</p>
+    <p><span class="en">The one-sided limits disagree, \(2\neq 5\). A two-sided limit exists only if both sides agree, so \(\lim_{x\to 1} f(x)\) <strong>does not exist</strong>.</span><span class="zh">兩個單邊極限不相等，\(2\neq 5\)。雙邊極限唯有在兩側相等時才存在，故 \(\lim_{x\to 1} f(x)\) <strong>不存在</strong>。</span></p>
+    <p><span class="en">Note that \(f(1)=5\) is defined, yet the limit still fails to exist.</span><span class="zh">注意 \(f(1)=5\) 有定義，但極限仍不存在。</span></p>
+  </details>
+
+  <div class="backlink"><a href="01-limit-removable-discontinuity.html"><span class="en">&larr; Prev</span><span class="zh">&larr; 上一題</span></a> &nbsp;|&nbsp; <a href="../index.html"><span class="en">Index</span><span class="zh">首頁</span></a> &nbsp;|&nbsp; <a href="03-infinite-limit-vertical-asymptote.html"><span class="en">Next &rarr;</span><span class="zh">下一題 &rarr;</span></a></div>
+</main>
+<script src="../js/ui.js"></script>
+</body>
+</html>

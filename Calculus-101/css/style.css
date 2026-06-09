@@ -205,3 +205,12 @@ html[data-lang="zh"] .zh { display: revert; }
 .eq { margin: 16px 0; }
 .katex-display { margin: 14px 0; overflow-x: auto; overflow-y: hidden; }
 /* KaTeX inherits `color`, so math already follows --ink in light and dark. */
+
+/* ---- "Concepts you need" section ---- */
+ul.concepts { margin: 12px 0; padding-left: 22px; }
+ul.concepts li { margin: 8px 0; }
+ul.concepts li strong { color: var(--hdl-blue); }
+ol.method { margin: 12px 0; padding-left: 22px; }
+ol.method li { margin: 6px 0; }
+p.method { margin: 14px 0; }
+p.method strong, ol.method strong { color: var(--hdl-blue); }

@@ -51,10 +51,12 @@ Mirror the existing problems top to bottom:
 5. `h2` Problem + statement paragraphs
 6. `.diagram` containing the inline SVG figure
 7. `h2` "What the graph shows" + `table.ports`
-8. `h2` Task + a prose prompt and a display equation
-9. `.hint` box
-10. `details.solution` with the worked answer
-11. `.backlink` (Prev / Index / Next)
+8. `h2` "Concepts you need" + `ul.concepts` (the underlying ideas) and a
+   `p.method` summarizing the solving steps
+9. `h2` Task + a prose prompt and a display equation
+10. `.hint` box
+11. `details.solution` with the worked answer
+12. `.backlink` (Prev / Index / Next)
 
 ## 4. Bilingual content (EN default, 中文 on demand)
 

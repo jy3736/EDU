@@ -135,6 +135,16 @@
     </tr>
   </table>
 
+  <h2><span class="en">Concepts you need</span><span class="zh">解題所需概念</span></h2>
+  <ul class="concepts">
+    <li><span class="en"><strong>One-sided limits.</strong> \(\lim_{x\to a^{-}}\) is the value approached from the left (\(x\lt a\)); \(\lim_{x\to a^{+}}\) is from the right (\(x\gt a\)). Each ignores what happens on the other side.</span><span class="zh"><strong>單邊極限。</strong>\(\lim_{x\to a^{-}}\) 是從左側（\(x\lt a\)）趨近的值；\(\lim_{x\to a^{+}}\) 是從右側（\(x\gt a\)）趨近的值。每一個都不理會另一側發生的事。</span></li>
+    <li><span class="en"><strong>Existence criterion.</strong> The two-sided limit \(\lim_{x\to a}f(x)=L\) exists <em>if and only if</em> both one-sided limits exist and are equal to the same \(L\).</span><span class="zh"><strong>存在判準。</strong>雙邊極限 \(\lim_{x\to a}f(x)=L\) 存在<em>當且僅當</em>兩個單邊極限都存在且等於同一個 \(L\)。</span></li>
+    <li><span class="en"><strong>Piecewise functions.</strong> A different formula applies on each side of the boundary. To take a one-sided limit, use the formula that governs the side you are approaching from.</span><span class="zh"><strong>分段函數。</strong>邊界兩側各自適用不同的式子。求單邊極限時，要用「你所趨近那一側」所適用的式子。</span></li>
+    <li><span class="en"><strong>Jump discontinuity.</strong> When the left and right limits disagree, the graph "jumps" and the two-sided limit does not exist — no matter what value \(f(a)\) takes.</span><span class="zh"><strong>跳躍間斷點。</strong>當左右極限不一致時，圖形會「跳躍」，雙邊極限不存在，無論 \(f(a)\) 取何值。</span></li>
+    <li><span class="en"><strong>\(f(a)\) is separate from the limit.</strong> A function can be perfectly well defined at \(a\) and still have no limit there; the two questions are independent.</span><span class="zh"><strong>\(f(a)\) 與極限是兩回事。</strong>函數在 \(a\) 可以有明確定義，卻仍然沒有極限；這是兩個獨立的問題。</span></li>
+  </ul>
+  <p class="method"><span class="en"><strong>Method:</strong> pick the formula for each side and compute \(\lim_{x\to a^{-}}f\) and \(\lim_{x\to a^{+}}f\). If they are equal, that common value is the two-sided limit; if they differ, the limit does not exist.</span><span class="zh"><strong>解題步驟：</strong>分別取兩側的式子，計算 \(\lim_{x\to a^{-}}f\) 與 \(\lim_{x\to a^{+}}f\)。若兩者相等，該共同值即為雙邊極限；若不相等，則極限不存在。</span></p>
+
   <h2><span class="en">Task</span><span class="zh">練習</span></h2>
   <p><span class="en">Find the one-sided limits, then decide the two-sided limit:</span><span class="zh">求兩個單邊極限，再判斷雙邊極限：</span></p>
   <p class="eq">\[ \lim_{x\to 1^{-}} f(x)=\;?\qquad \lim_{x\to 1^{+}} f(x)=\;?\qquad \lim_{x\to 1} f(x)=\;? \]</p>

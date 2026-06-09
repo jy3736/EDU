@@ -131,6 +131,16 @@
     </tr>
   </table>
 
+  <h2><span class="en">Concepts you need</span><span class="zh">解題所需概念</span></h2>
+  <ul class="concepts">
+    <li><span class="en"><strong>Continuity at a point: three conditions.</strong> \(f\) is continuous at \(a\) when (i) \(f(a)\) is defined, (ii) \(\lim_{x\to a}f(x)\) exists, and (iii) the two are equal: \(\lim_{x\to a}f(x)=f(a)\).</span><span class="zh"><strong>點連續：三個條件。</strong>\(f\) 在 \(a\) 連續須滿足：(i) \(f(a)\) 有定義；(ii) \(\lim_{x\to a}f(x)\) 存在；(iii) 兩者相等：\(\lim_{x\to a}f(x)=f(a)\)。</span></li>
+    <li><span class="en"><strong>Intuition.</strong> Continuous means no break: you can trace the graph through \(x=a\) without lifting your pen.</span><span class="zh"><strong>直觀理解。</strong>連續代表沒有斷裂：可以一筆不離紙地描過 \(x=a\)。</span></li>
+    <li><span class="en"><strong>At a piecewise boundary, condition (ii) is the work.</strong> The limit exists only when the one-sided limits match, \(\lim_{x\to a^{-}}f=\lim_{x\to a^{+}}f\), so this is where continuity usually succeeds or fails.</span><span class="zh"><strong>分段邊界上，條件 (ii) 是重點。</strong>唯有左右極限相等 \(\lim_{x\to a^{-}}f=\lim_{x\to a^{+}}f\) 時極限才存在，因此連續與否通常就在此決定。</span></li>
+    <li><span class="en"><strong>Polynomials are continuous everywhere.</strong> Each polynomial piece is automatically continuous on its own interval, so only the junction \(x=a\) needs checking.</span><span class="zh"><strong>多項式處處連續。</strong>每段多項式在自己的區間上自動連續，故只需檢查接合點 \(x=a\)。</span></li>
+    <li><span class="en"><strong>A free constant lets you enforce continuity.</strong> With an unknown like \(c\), set the boundary-matching condition equal and solve for the value that makes the limit exist and match \(f(a)\).</span><span class="zh"><strong>用自由常數迫使連續。</strong>當式中有未知數（如 \(c\)），令邊界相等的條件成立並求解，得到使極限存在且等於 \(f(a)\) 的值。</span></li>
+  </ul>
+  <p class="method"><span class="en"><strong>Method:</strong> read \(f(a)\) from the piece that includes \(a\); compute both one-sided limits; set them equal to force the limit to exist; require that common value to equal \(f(a)\); solve for the constant.</span><span class="zh"><strong>解題步驟：</strong>由包含 \(a\) 的那一段讀出 \(f(a)\)；計算兩個單邊極限；令其相等以迫使極限存在；要求該共同值等於 \(f(a)\)；解出常數。</span></p>
+
   <h2><span class="en">Task</span><span class="zh">練習</span></h2>
   <p><span class="en">Find the constant \(c\) for which</span><span class="zh">求使下列函數</span></p>
   <p class="eq">\[ f(x)=\begin{cases} x^2+c, & x\lt 1 \\[2pt] 2x, & x\ge 1 \end{cases} \]</p>

@@ -125,6 +125,16 @@
     </tr>
   </table>
 
+  <h2><span class="en">Concepts you need</span><span class="zh">解題所需概念</span></h2>
+  <ul class="concepts">
+    <li><span class="en"><strong>A bounded factor.</strong> For every input, \(-1\le\sin\theta\le 1\). So \(-1\le\sin\frac{1}{x}\le 1\) holds even though \(\lim_{x\to 0}\sin\frac{1}{x}\) does not exist (it oscillates).</span><span class="zh"><strong>有界因子。</strong>對任何輸入，\(-1\le\sin\theta\le 1\)。因此即使 \(\lim_{x\to 0}\sin\frac{1}{x}\) 不存在（它在振盪），\(-1\le\sin\frac{1}{x}\le 1\) 仍恆成立。</span></li>
+    <li><span class="en"><strong>Why the product law fails.</strong> The law \(\lim(fg)=\lim f\cdot\lim g\) requires <em>each</em> factor to have a limit. Since \(\sin\frac{1}{x}\) has none at \(0\), the law cannot be applied directly.</span><span class="zh"><strong>為何不能用乘法定律。</strong>定律 \(\lim(fg)=\lim f\cdot\lim g\) 要求<em>每個</em>因子都有極限。但 \(\sin\frac{1}{x}\) 在 \(0\) 沒有極限，故不能直接套用。</span></li>
+    <li><span class="en"><strong>The squeeze (sandwich) theorem.</strong> If \(g(x)\le f(x)\le h(x)\) near \(a\) and \(\lim_{x\to a}g=\lim_{x\to a}h=L\), then \(\lim_{x\to a}f=L\). The trapped function is forced to the shared limit.</span><span class="zh"><strong>夾擠（三明治）定理。</strong>若在 \(a\) 附近 \(g(x)\le f(x)\le h(x)\)，且 \(\lim_{x\to a}g=\lim_{x\to a}h=L\)，則 \(\lim_{x\to a}f=L\)。被夾住的函數被迫趨向那個共同極限。</span></li>
+    <li><span class="en"><strong>Multiplying by a nonnegative quantity preserves the inequality.</strong> Because \(x^2\ge 0\), multiplying \(-1\le\sin\frac{1}{x}\le 1\) by \(x^2\) keeps the \(\le\) signs pointing the same way.</span><span class="zh"><strong>乘以非負量不改變不等式方向。</strong>由於 \(x^2\ge 0\)，將 \(-1\le\sin\frac{1}{x}\le 1\) 兩邊乘以 \(x^2\)，\(\le\) 的方向維持不變。</span></li>
+    <li><span class="en"><strong>Bounded times vanishing goes to zero.</strong> A bounded factor multiplied by something heading to \(0\) (here \(x^2\to 0\)) is dragged to \(0\). The bounds \(\pm x^2\) make this precise.</span><span class="zh"><strong>有界 × 趨零 ⇒ 趨零。</strong>有界因子乘上趨於 \(0\) 的量（此處 \(x^2\to 0\)）會被拉向 \(0\)。上下界 \(\pm x^2\) 把這件事說得精確。</span></li>
+  </ul>
+  <p class="method"><span class="en"><strong>Method:</strong> bound the oscillating factor between constants; multiply through by the vanishing factor to get \(g\le f\le h\); check that \(\lim g=\lim h\); conclude the same value by the squeeze theorem.</span><span class="zh"><strong>解題步驟：</strong>先用常數把振盪因子夾住；兩邊乘以趨零的因子得到 \(g\le f\le h\)；確認 \(\lim g=\lim h\)；再由夾擠定理得到相同的極限值。</span></p>
+
   <h2><span class="en">Task</span><span class="zh">練習</span></h2>
   <p><span class="en">Use the squeeze theorem to evaluate</span><span class="zh">利用夾擠定理求</span></p>
   <p class="eq">\[ \lim_{x\to 0} x^2 \sin\frac{1}{x} \]</p>

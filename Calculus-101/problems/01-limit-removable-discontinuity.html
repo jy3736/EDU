@@ -128,6 +128,16 @@
     </tr>
   </table>
 
+  <h2><span class="en">Concepts you need</span><span class="zh">解題所需概念</span></h2>
+  <ul class="concepts">
+    <li><span class="en"><strong>A limit describes approach, not arrival.</strong> \(\lim_{x\to a}f(x)\) is the value the outputs head toward as \(x\) nears \(a\). It can exist even when \(f(a)\) is undefined, because it never asks for the value <em>at</em> \(a\).</span><span class="zh"><strong>極限描述「趨近」而非「到達」。</strong>\(\lim_{x\to a}f(x)\) 是當 \(x\) 接近 \(a\) 時輸出所趨向的值。由於它從不過問 \(a\) <em>當點</em>的值，因此即使 \(f(a)\) 沒有定義，極限仍可能存在。</span></li>
+    <li><span class="en"><strong>The form \(0/0\) is indeterminate.</strong> Substituting \(x=2\) gives \(\tfrac{0}{0}\), which is not a number. It is a signal that you must simplify first, not a final answer.</span><span class="zh"><strong>\(0/0\) 是未定形。</strong>代入 \(x=2\) 得 \(\tfrac{0}{0}\)，它不是一個數，而是「必須先化簡」的訊號，並非最終答案。</span></li>
+    <li><span class="en"><strong>Difference of squares.</strong> \(a^2-b^2=(a-b)(a+b)\), so here \(x^2-4=(x-2)(x+2)\). Spotting this factoring is what unlocks the cancellation.</span><span class="zh"><strong>平方差公式。</strong>\(a^2-b^2=(a-b)(a+b)\)，故此處 \(x^2-4=(x-2)(x+2)\)。看出此分解正是能夠約分的關鍵。</span></li>
+    <li><span class="en"><strong>Canceling is valid inside a limit.</strong> A limit only considers \(x\neq a\), where \(x-2\neq 0\). Dividing out the common factor \(x-2\) therefore does not change the limit, even though it would be illegal exactly at \(x=2\).</span><span class="zh"><strong>在極限中約分是合法的。</strong>極限只考慮 \(x\neq a\) 的情形，此時 \(x-2\neq 0\)。因此約去公因式 \(x-2\) 不會改變極限值，儘管在 \(x=2\) 該點這麼做並不合法。</span></li>
+    <li><span class="en"><strong>Removable discontinuity.</strong> A single hole where the limit exists but \(f(a)\) is missing. It is called "removable" because redefining \(f(a)\) to equal the limit would patch the hole and make \(f\) continuous.</span><span class="zh"><strong>可去間斷點。</strong>單一空洞：極限存在，但 \(f(a)\) 缺失。之所以稱為「可去」，是因為只要把 \(f(a)\) 重新定義為該極限，即可補上空洞，使 \(f\) 連續。</span></li>
+  </ul>
+  <p class="method"><span class="en"><strong>Method:</strong> substitute \(x=a\); if you get \(\tfrac{0}{0}\), factor the numerator and denominator, cancel the common factor, then substitute into the simplified expression.</span><span class="zh"><strong>解題步驟：</strong>先代入 \(x=a\)；若得 \(\tfrac{0}{0}\)，將分子與分母因式分解，約去公因式，再把 \(x=a\) 代入化簡後的式子。</span></p>
+
   <h2><span class="en">Task</span><span class="zh">練習</span></h2>
   <p><span class="en">Evaluate the limit:</span><span class="zh">求下列極限：</span></p>
   <p class="eq">\[ \lim_{x\to 2}\frac{x^2-4}{x-2} \]</p>

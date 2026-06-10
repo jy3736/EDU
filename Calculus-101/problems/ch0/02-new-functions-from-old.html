@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Functions from Old - Calculus I</title>
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../vendor/katex/katex.min.css">
+<script defer src="../../vendor/katex/katex.min.js"></script>
+<script defer src="../../vendor/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../js/render-math.js"></script>
+<script>
+  /* Apply saved theme / language before paint to avoid a flash. */
+  (function () {
+    var d = document.documentElement, t, l;
+    try { t = localStorage.getItem("calc-theme"); } catch (e) {}
+    if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    d.setAttribute("data-theme", t);
+    try { l = localStorage.getItem("calc-lang"); } catch (e) {}
+    d.setAttribute("data-lang", l || "en");
+  })();
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="en">Calculus I &middot; Learn by Doing</span><span class="zh">微積分（一）&middot; 做中學</span></div>
+  <div class="sub"><span class="en">First-semester calculus for engineering &middot; Anton 10e</span><span class="zh">工程學系第一學期微積分 &middot; Anton 第 10 版</span></div>
+</header>
+<main class="container">
+  <div class="toolbar">
+    <button id="theme-toggle" type="button" aria-label="Toggle dark / light theme"></button>
+    <button id="lang-toggle" type="button" aria-label="Switch language English / 中文"></button>
+  </div>
+  <div class="breadcrumb"><a href="../../index.html"><span class="en">Course Home</span><span class="zh">課程首頁</span></a> &rsaquo; <a href="../../chapters/ch0-before-calculus.html"><span class="en">Chapter 0</span><span class="zh">第 0 章</span></a> &rsaquo; <span class="en">New Functions from Old</span><span class="zh">由舊函數造新函數</span></div>
+  <h1><span class="en">0.2 New Functions from Old</span><span class="zh">0.2 由舊函數造新函數</span></h1>
+
+  <!-- ============ 1. CONCEPT / FUNDAMENTAL KNOWLEDGE ============ -->
+  <h2><span class="en">1 &middot; Concept and Fundamental Knowledge</span><span class="zh">1 &middot; 概念與基礎知識</span></h2>
+
+  <p><span class="en">Most functions you will ever use are built from a few simple ones. There are two ways to build a new function from old ones: <strong>combine</strong> them with arithmetic (sum, difference, product, quotient) or with <strong>composition</strong>, and <strong>transform</strong> a known graph by shifting, reflecting, or stretching it. This section reads transformations directly off graphs, because once you can see how a graph moves you can predict the new function without plotting a single extra point.</span><span class="zh">你會用到的大多數函數，都是由少數幾個簡單函數組合而成。由舊函數造新函數有兩種方式：用四則運算（和、差、積、商）或<strong>合成</strong>來<strong>組合</strong>它們，以及把已知圖形<strong>平移、反射或伸縮</strong>來<strong>變換</strong>它。本節直接由圖形判讀變換，因為一旦看得出圖形如何移動，就能在不多畫任何一點的情況下預測新函數。</span></p>
+
+  <div class="callout definition">
+  <p class="callout-title"><span class="en">Definition &middot; Composition of functions</span><span class="zh">定義 &middot; 函數合成</span></p>
+  <p><span class="en">Given two functions \(f\) and \(g\), their <strong>composition</strong> \(f\circ g\) is the function that applies \(g\) <em>first</em> and then \(f\):</span><span class="zh">給定兩個函數 \(f\) 與 \(g\)，它們的<strong>合成</strong> \(f\circ g\) 是<em>先</em>做 \(g\)、<em>再</em>做 \(f\) 的函數：</span></p>
+  <p class="eq">\[ (f\circ g)(x)=f\bigl(g(x)\bigr). \]</p>
+  <p><span class="en">Read it inside-out: take the input \(x\), feed it to \(g\), then feed the result \(g(x)\) to \(f\). The order matters, and the domain shrinks to those \(x\) for which \(g(x)\) is an allowed input of \(f\).</span><span class="zh">由內而外讀：把輸入 \(x\) 餵給 \(g\)，再把結果 \(g(x)\) 餵給 \(f\)。順序很重要，且定義域會縮小到那些使 \(g(x)\) 成為 \(f\) 合法輸入的 \(x\)。</span></p>
+  </div>
+
+  <p><span class="en">Transformations are the other half of the story. Every transformation is one small change to either the <em>output</em> of a function (an operation written <strong>outside</strong> \(f\)) or its <em>input</em> (an operation written <strong>inside</strong> \(f\)). The three you will read most often are:</span><span class="zh">變換是另一半的故事。每個變換都是對函數的<em>輸出</em>（寫在 \(f\) <strong>外側</strong>的運算）或<em>輸入</em>（寫在 \(f\) <strong>內側</strong>的運算）所做的一個小改變。最常判讀的三種是：</span></p>
+
+  <div class="callout term">
+  <p class="callout-title"><span class="en">Key terms &middot; transformations of a graph</span><span class="zh">重要名詞 &middot; 圖形的變換</span></p>
+  <ul class="concepts">
+    <li><span class="en"><strong>Vertical shift.</strong> \(y=f(x)+c\) slides the whole graph <em>up</em> by \(c\) (or down if \(c\lt 0\)). The domain is unchanged; the range slides by \(c\).</span><span class="zh"><strong>垂直平移。</strong>\(y=f(x)+c\) 把整個圖形<em>上</em>移 \(c\)（若 \(c\lt 0\) 則下移）。定義域不變；值域平移 \(c\)。</span></li>
+    <li><span class="en"><strong>Horizontal shift.</strong> \(y=f(x-c)\) slides the whole graph <em>right</em> by \(c\) (or left if \(c\lt 0\)). Notice the inside sign is <em>opposite</em> to the motion. The range is unchanged; the domain slides by \(c\).</span><span class="zh"><strong>水平平移。</strong>\(y=f(x-c)\) 把整個圖形<em>右</em>移 \(c\)（若 \(c\lt 0\) 則左移）。注意內側的正負號與移動方向<em>相反</em>。值域不變；定義域平移 \(c\)。</span></li>
+    <li><span class="en"><strong>Vertical scaling.</strong> \(y=a\,f(x)\) <em>stretches</em> the graph vertically when \(a\gt 1\) and <em>compresses</em> it toward the \(x\)-axis when \(0\lt a\lt 1\). The domain is unchanged; every height is multiplied by \(a\).</span><span class="zh"><strong>垂直伸縮。</strong>\(y=a\,f(x)\) 在 \(a\gt 1\) 時把圖形垂直<em>拉伸</em>，在 \(0\lt a\lt 1\) 時朝 \(x\) 軸<em>壓縮</em>。定義域不變；每個高度都乘上 \(a\)。</span></li>
+    <li><span class="en"><strong>Reflection and symmetry.</strong> \(y=-f(x)\) flips the graph across the \(x\)-axis and \(y=f(-x)\) flips it across the \(y\)-axis. A function is <em>even</em> if \(f(-x)=f(x)\) (mirror-symmetric about the \(y\)-axis) and <em>odd</em> if \(f(-x)=-f(x)\) (symmetric about the origin).</span><span class="zh"><strong>反射與對稱。</strong>\(y=-f(x)\) 把圖形對 \(x\) 軸翻折，\(y=f(-x)\) 把圖形對 \(y\) 軸翻折。若 \(f(-x)=f(x)\)（對 \(y\) 軸鏡像對稱）則函數為<em>偶函數</em>；若 \(f(-x)=-f(x)\)（對原點對稱）則為<em>奇函數</em>。</span></li>
+  </ul>
+  </div>
+
+  <div class="callout rule">
+  <p class="callout-title"><span class="en">Rule &middot; outside acts vertically, inside acts horizontally</span><span class="zh">規則 &middot; 外側管垂直、內側管水平</span></p>
+  <p><span class="en">An operation written <strong>outside</strong> \(f\) (on the output, like \(+c\) or \(\times a\)) changes the graph <em>vertically</em> and in the <em>natural</em> direction. An operation written <strong>inside</strong> \(f\) (on the input \(x\)) changes the graph <em>horizontally</em> and in the <em>reversed</em> sense, so \(f(x-c)\) moves right and \(f(-x)\) flips left-right. When in doubt, ask one question: is the change touching the output or the input?</span><span class="zh">寫在 \(f\) <strong>外側</strong>的運算（作用於輸出，如 \(+c\) 或 \(\times a\)）會<em>垂直</em>且依<em>自然</em>方向改變圖形。寫在 \(f\) <strong>內側</strong>的運算（作用於輸入 \(x\)）會<em>水平</em>且依<em>相反</em>方向改變圖形，所以 \(f(x-c)\) 右移、\(f(-x)\) 左右翻折。不確定時只問一句：這個改變動到的是輸出還是輸入？</span></p>
+  </div>
+
+  <!-- ============ 2. WORKED EXAMPLES (three) ============ -->
+  <h2><span class="en">2 &middot; Worked Examples</span><span class="zh">2 &middot; 範例（詳解）</span></h2>
+
+  <p><span class="en">Throughout these three examples the <strong>base function</strong> \(f\) is the one with corner points \((0,2)\), \((2,6)\), \((4,4)\): it rises from \((0,2)\) to a peak at \((2,6)\), then falls to \((4,4)\), so \(\text{domain}(f)=[0,4]\) and \(\text{range}(f)=[2,6]\). Each example draws a <em>single</em> transformation of \(f\). Read the new graph, then check it against the rule.</span><span class="zh">這三個範例中，<strong>基底函數</strong> \(f\) 是以轉角點 \((0,2)\)、\((2,6)\)、\((4,4)\) 構成的函數：由 \((0,2)\) 上升到頂點 \((2,6)\)，再下降到 \((4,4)\)，故 \(\text{domain}(f)=[0,4]\)、\(\text{range}(f)=[2,6]\)。每個範例只畫 \(f\) 的<em>一個</em>變換。請判讀新圖形，再對照規則。</span></p>
+
+  <!-- ---------- Example 1: vertical shift ---------- -->
+  <h3><span class="en">Example 1 &middot; A vertical shift</span><span class="zh">範例 1 &middot; 垂直平移</span></h3>
+
+  <p><span class="en">The graph below is \(g(x)=f(x)+1\). Every point of the base \(f\) has been lifted straight up by \(1\). Read its domain, its range, and the value \(g(3)\).</span><span class="zh">下圖是 \(g(x)=f(x)+1\)。基底 \(f\) 的每個點都被向上抬升 \(1\)。請讀出它的定義域、值域，以及函數值 \(g(3)\)。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="g-title g-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="g-title">Graph of the function g equals f plus 1</title>
+      <desc id="g-desc">A function made of two line segments, the base f shifted up by one. It starts at a filled point at x equals 0 height 3, rises to a peak filled point at x equals 2 height 7, then falls to a filled point at x equals 4 height 5. Dashed guide lines show that at x equals 3 the height is 6.</desc>
+      <defs>
+        <marker id="axisarrow-g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-g); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <!-- grid -->
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <!-- axes -->
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <!-- g(x) = f(x) + 1 : (0,3) -> (2,7) -> (4,5) -->
+      <path class="curve" d="M 134 280 L 262 88 L 390 184"></path>
+
+      <!-- dashed guides reading g(3) = 6 at px (326,136) -->
+      <line class="guide" x1="326" y1="424" x2="326" y2="136"></line>
+      <line class="guide" x1="134" y1="136" x2="326" y2="136"></line>
+
+      <!-- filled points: (0,3),(2,7),(4,5) and read point (3,6) -->
+      <circle class="fillpt" cx="134" cy="280" r="6"></circle>
+      <circle class="fillpt" cx="262" cy="88" r="6"></circle>
+      <circle class="fillpt" cx="390" cy="184" r="6"></circle>
+      <circle class="fillpt" cx="326" cy="136" r="6"></circle>
+
+      <!-- tick labels -->
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="322" y="444">3</text>
+      <text class="tick" x="386" y="444">4</text>
+      <text class="tick" x="112" y="333">2</text>
+      <text class="tick" x="112" y="237">4</text>
+      <text class="tick" x="112" y="141">6</text>
+      <text class="tick" x="112" y="93">7</text>
+      <text class="lbl"  x="548" y="430">x</text>
+      <text class="lbl"  x="120" y="20">y</text>
+
+      <!-- annotation -->
+      <text class="small en" x="332" y="130">g(3) = 6</text>
+      <text class="small zh" x="332" y="130">g(3) = 6</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td><span class="en">Domain</span><span class="zh">定義域</span></td>
+      <td>\([0,4]\)</td>
+      <td><span class="en">A vertical shift moves nothing left or right, so the domain is the same as the base \(f\).</span><span class="zh">垂直平移不會左右移動，故定義域與基底 \(f\) 相同。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Range</span><span class="zh">值域</span></td>
+      <td>\([3,7]\)</td>
+      <td><span class="en">The base range \([2,6]\) is lifted by \(1\): the low \(2\) becomes \(3\), the peak \(6\) becomes \(7\).</span><span class="zh">基底值域 \([2,6]\) 被抬升 \(1\)：最低的 \(2\) 變成 \(3\)，頂點 \(6\) 變成 \(7\)。</span></td>
+    </tr>
+    <tr>
+      <td>\(g(3)\)</td>
+      <td>\(6\)</td>
+      <td><span class="en">Read \(f(3)=5\) on the base, then add \(1\). On the graph, go up from \(x=3\) to the curve and across: the height is \(6\).</span><span class="zh">先在基底讀出 \(f(3)=5\)，再加 \(1\)。在圖上由 \(x=3\) 上移到曲線再水平移過去：高度為 \(6\)。</span></td>
+    </tr>
+  </table>
+
+  <p><span class="en">A vertical shift is an <em>outside</em> operation: it adds \(c\) to the output. The shape and the domain do not change at all; only the range slides, by exactly \(c\).</span><span class="zh">垂直平移是<em>外側</em>運算：它把 \(c\) 加到輸出。形狀與定義域完全不變；只有值域平移，且恰好平移 \(c\)。</span></p>
+
+  <!-- ---------- Example 2: horizontal shift ---------- -->
+  <h3><span class="en">Example 2 &middot; A horizontal shift</span><span class="zh">範例 2 &middot; 水平平移</span></h3>
+
+  <p><span class="en">The next graph is \(p(x)=f(x-1)\). The \(-1\) sits <em>inside</em> \(f\), on the input. Read its domain, its range, and the value \(p(4)\), and watch which way the graph actually moves.</span><span class="zh">下一張圖是 \(p(x)=f(x-1)\)。這個 \(-1\) 在 \(f\) <em>內側</em>、作用於輸入。請讀出它的定義域、值域，以及函數值 \(p(4)\)，並注意圖形實際往哪個方向移動。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="p-title p-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="p-title">Graph of the function p equals f of x minus 1</title>
+      <desc id="p-desc">A function made of two line segments, the base f shifted right by one. It starts at a filled point at x equals 1 height 2, rises to a peak filled point at x equals 3 height 6, then falls to a filled point at x equals 5 height 4. Dashed guide lines show that at x equals 4 the height is 5.</desc>
+      <defs>
+        <marker id="axisarrow-p" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-p); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <!-- grid -->
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <!-- axes -->
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <!-- p(x) = f(x-1) : (1,2) -> (3,6) -> (5,4) -->
+      <path class="curve" d="M 198 328 L 326 136 L 454 232"></path>
+
+      <!-- dashed guides reading p(4) = 5 at px (390,184) -->
+      <line class="guide" x1="390" y1="424" x2="390" y2="184"></line>
+      <line class="guide" x1="134" y1="184" x2="390" y2="184"></line>
+
+      <!-- filled points: (1,2),(3,6),(5,4) and read point (4,5) -->
+      <circle class="fillpt" cx="198" cy="328" r="6"></circle>
+      <circle class="fillpt" cx="326" cy="136" r="6"></circle>
+      <circle class="fillpt" cx="454" cy="232" r="6"></circle>
+      <circle class="fillpt" cx="390" cy="184" r="6"></circle>
+
+      <!-- tick labels -->
+      <text class="tick" x="194" y="444">1</text>
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="322" y="444">3</text>
+      <text class="tick" x="386" y="444">4</text>
+      <text class="tick" x="450" y="444">5</text>
+      <text class="tick" x="112" y="333">2</text>
+      <text class="tick" x="112" y="237">4</text>
+      <text class="tick" x="112" y="141">6</text>
+      <text class="tick" x="112" y="189">5</text>
+      <text class="lbl"  x="548" y="430">x</text>
+      <text class="lbl"  x="120" y="20">y</text>
+
+      <!-- annotation -->
+      <text class="small en" x="396" y="178">p(4) = 5</text>
+      <text class="small zh" x="396" y="178">p(4) = 5</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td><span class="en">Domain</span><span class="zh">定義域</span></td>
+      <td>\([1,5]\)</td>
+      <td><span class="en">The base domain \([0,4]\) slides right by \(1\). The \(-1\) inside \(f\) moves the graph the <em>opposite</em> way to its sign: right, not left.</span><span class="zh">基底定義域 \([0,4]\) 右移 \(1\)。\(f\) 內側的 \(-1\) 使圖形朝與其正負號<em>相反</em>的方向移動：是右移，不是左移。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Range</span><span class="zh">值域</span></td>
+      <td>\([2,6]\)</td>
+      <td><span class="en">A horizontal shift never changes the outputs, so the range is exactly the base range.</span><span class="zh">水平平移不會改變輸出，故值域與基底值域完全相同。</span></td>
+    </tr>
+    <tr>
+      <td>\(p(4)\)</td>
+      <td>\(5\)</td>
+      <td><span class="en">By definition \(p(4)=f(4-1)=f(3)=5\). On the graph, go up from \(x=4\) to the curve: the height is \(5\).</span><span class="zh">依定義 \(p(4)=f(4-1)=f(3)=5\)。在圖上由 \(x=4\) 上移到曲線：高度為 \(5\)。</span></td>
+    </tr>
+  </table>
+
+  <div class="callout notice">
+  <p class="callout-title"><span class="en">Notice &middot; inside shifts go the opposite way</span><span class="zh">注意 &middot; 內側平移方向相反</span></p>
+  <p><span class="en">\(f(x-1)\) moves the graph <em>right</em>, even though the sign is negative. The reason: to get the same height the base had at input \(3\), the new function must be fed \(x=4\), one unit further right. An inside operation always undoes its sign.</span><span class="zh">\(f(x-1)\) 把圖形<em>右</em>移，即使符號是負的。原因：要得到基底在輸入 \(3\) 處的高度，新函數必須餵入 \(x=4\)，也就是再往右一格。內側運算總是把它的正負號反過來。</span></p>
+  </div>
+
+  <!-- ---------- Example 3: vertical scaling ---------- -->
+  <h3><span class="en">Example 3 &middot; A vertical compression</span><span class="zh">範例 3 &middot; 垂直壓縮</span></h3>
+
+  <p><span class="en">This graph is \(q(x)=\tfrac{1}{2}\,f(x)\). Every output of the base is multiplied by \(\tfrac{1}{2}\). Read its domain, its range, and the value \(q(1)\).</span><span class="zh">這張圖是 \(q(x)=\tfrac{1}{2}\,f(x)\)。基底的每個輸出都乘上 \(\tfrac{1}{2}\)。請讀出它的定義域、值域，以及函數值 \(q(1)\)。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="q-title q-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="q-title">Graph of the function q equals one half f</title>
+      <desc id="q-desc">A function made of two line segments, the base f compressed vertically by one half. It starts at a filled point at x equals 0 height 1, rises to a corner filled point at x equals 2 height 3, then falls to a filled point at x equals 4 height 2. Dashed guide lines show that at x equals 1 the height is 2.</desc>
+      <defs>
+        <marker id="axisarrow-q" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-q); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <!-- grid -->
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <!-- axes -->
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <!-- q(x) = 0.5 f(x) : (0,1) -> (2,3) -> (4,2) -->
+      <path class="curve" d="M 134 376 L 262 280 L 390 328"></path>
+
+      <!-- dashed guides reading q(1) = 2 at px (198,328) -->
+      <line class="guide" x1="198" y1="424" x2="198" y2="328"></line>
+      <line class="guide" x1="134" y1="328" x2="198" y2="328"></line>
+
+      <!-- filled points: (0,1),(2,3),(4,2) and read point (1,2) -->
+      <circle class="fillpt" cx="134" cy="376" r="6"></circle>
+      <circle class="fillpt" cx="262" cy="280" r="6"></circle>
+      <circle class="fillpt" cx="390" cy="328" r="6"></circle>
+      <circle class="fillpt" cx="198" cy="328" r="6"></circle>
+
+      <!-- tick labels -->
+      <text class="tick" x="194" y="444">1</text>
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="386" y="444">4</text>
+      <text class="tick" x="112" y="333">2</text>
+      <text class="tick" x="112" y="237">4</text>
+      <text class="tick" x="112" y="141">6</text>
+      <text class="tick" x="112" y="381">1</text>
+      <text class="tick" x="112" y="285">3</text>
+      <text class="lbl"  x="548" y="430">x</text>
+      <text class="lbl"  x="120" y="20">y</text>
+
+      <!-- annotation -->
+      <text class="small en" x="204" y="322">q(1) = 2</text>
+      <text class="small zh" x="204" y="322">q(1) = 2</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td><span class="en">Domain</span><span class="zh">定義域</span></td>
+      <td>\([0,4]\)</td>
+      <td><span class="en">Vertical scaling is an outside operation, so it leaves the inputs alone; the domain matches the base \(f\).</span><span class="zh">垂直伸縮是外側運算，不動輸入；定義域與基底 \(f\) 相同。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Range</span><span class="zh">值域</span></td>
+      <td>\([1,3]\)</td>
+      <td><span class="en">Every height of the base range \([2,6]\) is halved: \(2\to 1\) and \(6\to 3\).</span><span class="zh">基底值域 \([2,6]\) 的每個高度都減半：\(2\to 1\)、\(6\to 3\)。</span></td>
+    </tr>
+    <tr>
+      <td>\(q(1)\)</td>
+      <td>\(2\)</td>
+      <td><span class="en">Read \(f(1)=4\) on the base, then halve it: \(\tfrac{1}{2}\cdot 4=2\).</span><span class="zh">先在基底讀出 \(f(1)=4\)，再取一半：\(\tfrac{1}{2}\cdot 4=2\)。</span></td>
+    </tr>
+  </table>
+
+  <p><span class="en">A vertical scaling by \(a\) multiplies every output by \(a\), pulling the graph toward the \(x\)-axis when \(0\lt a\lt 1\). The domain is untouched; the range is scaled by the same factor.</span><span class="zh">以 \(a\) 做垂直伸縮會把每個輸出乘上 \(a\)，在 \(0\lt a\lt 1\) 時把圖形朝 \(x\) 軸拉近。定義域不受影響；值域以相同倍率縮放。</span></p>
+
+  <!-- ============ 3. EXERCISES (two) ============ -->
+  <h2><span class="en">3 &middot; Exercises</span><span class="zh">3 &middot; 練習</span></h2>
+
+  <!-- ---------- Exercise 1: vertical shift down ---------- -->
+  <h3><span class="en">Exercise 1 &middot; A vertical shift</span><span class="zh">練習 1 &middot; 垂直平移</span></h3>
+
+  <p><span class="en">Now it is your turn. Let the base function \(b\) have corner points \((0,2)\), \((2,6)\), \((4,4)\). The graph below is a single transformation \(h\) of \(b\), all of whose points have moved straight down.</span><span class="zh">換你試試。設基底函數 \(b\) 的轉角點為 \((0,2)\)、\((2,6)\)、\((4,4)\)。下圖是 \(b\) 的一個變換 \(h\)，其所有點都向正下方移動。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="h-title h-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="h-title">Graph of the exercise function h</title>
+      <desc id="h-desc">A function made of two line segments, the base b shifted down by two. It starts at a filled point at x equals 0 height 0, rises to a peak filled point at x equals 2 height 4, then falls to a filled point at x equals 4 height 2. No values are marked; the reader must read them.</desc>
+      <defs>
+        <marker id="axisarrow-h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-h); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <!-- grid -->
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <!-- axes -->
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <!-- h(x) = b(x) - 2 : (0,0) -> (2,4) -> (4,2) -->
+      <path class="curve" d="M 134 424 L 262 232 L 390 328"></path>
+
+      <!-- filled points: (0,0),(2,4),(4,2) -->
+      <circle class="fillpt" cx="134" cy="424" r="6"></circle>
+      <circle class="fillpt" cx="262" cy="232" r="6"></circle>
+      <circle class="fillpt" cx="390" cy="328" r="6"></circle>
+
+      <!-- tick labels -->
+      <text class="tick" x="194" y="444">1</text>
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="322" y="444">3</text>
+      <text class="tick" x="386" y="444">4</text>
+      <text class="tick" x="112" y="333">2</text>
+      <text class="tick" x="112" y="237">4</text>
+      <text class="tick" x="112" y="141">6</text>
+      <text class="lbl"  x="548" y="430">x</text>
+      <text class="lbl"  x="120" y="20">y</text>
+    </svg>
+  </div>
+
+  <p><span class="en">Using the graph of \(h\) and the base \(b\), answer all five parts:</span><span class="zh">利用 \(h\) 的圖形與基底 \(b\)，回答以下五個小題：</span></p>
+  <ol class="concepts">
+    <li><span class="en">State the <strong>domain</strong> of \(h\) in interval notation.</span><span class="zh">以區間記號寫出 \(h\) 的<strong>定義域</strong>。</span></li>
+    <li><span class="en">State the <strong>range</strong> of \(h\) in interval notation.</span><span class="zh">以區間記號寫出 \(h\) 的<strong>值域</strong>。</span></li>
+    <li><span class="en">Find \(h(1)\).</span><span class="zh">求 \(h(1)\)。</span></li>
+    <li><span class="en">Find \(h(3)\).</span><span class="zh">求 \(h(3)\)。</span></li>
+    <li><span class="en">Write \(h\) as a transformation of \(b\) in the form \(h(x)=b(x)+c\), and say where the base peak \((2,6)\) has moved to.</span><span class="zh">將 \(h\) 以 \(h(x)=b(x)+c\) 的形式寫成 \(b\) 的變換，並說明基底頂點 \((2,6)\) 移到了何處。</span></li>
+  </ol>
+
+  <div class="hint"><strong><span class="en">Hint:</span><span class="zh">提示：</span></strong> <span class="en">Every point of \(b\) dropped by the same amount. Compare a base height to the matching height on \(h\) (for example the peak) to find \(c\). A vertical shift leaves the domain alone.</span><span class="zh">\(b\) 的每個點都下降相同的量。把基底某個高度與 \(h\) 上對應的高度相比（例如頂點）即可求出 \(c\)。垂直平移不改變定義域。</span></div>
+
+  <details class="solution">
+    <summary><span class="en">Show full solution</span><span class="zh">顯示完整解答</span></summary>
+
+    <p><span class="en"><strong>(1) Domain.</strong> A vertical shift moves no point left or right, so \(h\) is defined on the same inputs as \(b\), from the filled left end \(x=0\) to the filled right end \(x=4\):</span><span class="zh"><strong>(1) 定義域。</strong>垂直平移不左右移動任何點，故 \(h\) 的定義輸入與 \(b\) 相同，由實心左端 \(x=0\) 到實心右端 \(x=4\)：</span></p>
+    <p class="eq">\[ \text{domain}(h)=[0,4]. \]</p>
+
+    <p><span class="en"><strong>(2) Range.</strong> The lowest point of \(h\) is the left end at height \(0\); the highest is the peak at height \(4\). Every height between is reached, so:</span><span class="zh"><strong>(2) 值域。</strong>\(h\) 的最低點是左端高度 \(0\)，最高是頂點高度 \(4\)。其間每個高度都被取到，故：</span></p>
+    <p class="eq">\[ \text{range}(h)=[0,4]. \]</p>
+
+    <p><span class="en"><strong>(3) \(h(1)\).</strong> On the base, \(b(1)=4\) (halfway up from \((0,2)\) to \((2,6)\)). Reading \(h\) at \(x=1\) gives the height halfway from \((0,0)\) to \((2,4)\):</span><span class="zh"><strong>(3) \(h(1)\)。</strong>在基底上 \(b(1)=4\)（由 \((0,2)\) 到 \((2,6)\) 的中點）。在 \(x=1\) 讀 \(h\)，得到由 \((0,0)\) 到 \((2,4)\) 的中點高度：</span></p>
+    <p class="eq">\[ h(1)=2. \]</p>
+
+    <p><span class="en"><strong>(4) \(h(3)\).</strong> Now \(x=3\) is halfway down from the peak \((2,4)\) to \((4,2)\):</span><span class="zh"><strong>(4) \(h(3)\)。</strong>此時 \(x=3\) 位於由頂點 \((2,4)\) 下降到 \((4,2)\) 的中點：</span></p>
+    <p class="eq">\[ h(3)=3. \]</p>
+
+    <p><span class="en"><strong>(5) As a transformation.</strong> Each base height has dropped by \(2\) (the peak \(6\) became \(4\)), so:</span><span class="zh"><strong>(5) 寫成變換。</strong>每個基底高度都下降了 \(2\)（頂點 \(6\) 變成 \(4\)），故：</span></p>
+    <p class="eq">\[ h(x)=b(x)-2,\qquad (2,6)\ \mapsto\ (2,4). \]</p>
+
+    <p><span class="en"><strong>Sense check.</strong> Subtracting \(2\) from the base range \([2,6]\) gives \([0,4]\), matching part (2). The readings \(h(1)=2\) and \(h(3)=3\) are exactly \(b(1)=4\) and \(b(3)=5\) each minus \(2\), and both lie inside \([0,4]\). Everything is consistent.</span><span class="zh"><strong>合理性檢查。</strong>把基底值域 \([2,6]\) 減 \(2\) 得 \([0,4]\)，與第 (2) 題相符。讀值 \(h(1)=2\)、\(h(3)=3\) 恰為 \(b(1)=4\)、\(b(3)=5\) 各減 \(2\)，且都落在 \([0,4]\) 內。一切一致。</span></p>
+  </details>
+
+  <!-- ---------- Exercise 2: vertical stretch ---------- -->
+  <h3><span class="en">Exercise 2 &middot; A vertical stretch</span><span class="zh">練習 2 &middot; 垂直拉伸</span></h3>
+
+  <p><span class="en">Here the base function \(c\) has corner points \((0,2)\), \((2,4)\), \((4,3)\). The graph below is a single transformation \(k\) of \(c\) in which every height has grown. Read carefully: this is an outside operation, not a shift.</span><span class="zh">這裡基底函數 \(c\) 的轉角點為 \((0,2)\)、\((2,4)\)、\((4,3)\)。下圖是 \(c\) 的一個變換 \(k\)，其中每個高度都變大了。請仔細判讀：這是外側運算，不是平移。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="k-title k-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="k-title">Graph of the exercise function k</title>
+      <desc id="k-desc">A function made of two line segments, the base c stretched vertically by two. It starts at a filled point at x equals 0 height 4, rises to a peak filled point at x equals 2 height 8, then falls to a filled point at x equals 4 height 6. No values are marked; the reader must read them.</desc>
+      <defs>
+        <marker id="axisarrow-k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-k); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <!-- grid -->
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <!-- axes -->
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <!-- k(x) = 2 c(x) : (0,4) -> (2,8) -> (4,6) -->
+      <path class="curve" d="M 134 232 L 262 40 L 390 136"></path>
+
+      <!-- filled points: (0,4),(2,8),(4,6) -->
+      <circle class="fillpt" cx="134" cy="232" r="6"></circle>
+      <circle class="fillpt" cx="262" cy="40" r="6"></circle>
+      <circle class="fillpt" cx="390" cy="136" r="6"></circle>
+
+      <!-- tick labels -->
+      <text class="tick" x="194" y="444">1</text>
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="322" y="444">3</text>
+      <text class="tick" x="386" y="444">4</text>
+      <text class="tick" x="112" y="333">2</text>
+      <text class="tick" x="112" y="237">4</text>
+      <text class="tick" x="112" y="141">6</text>
+      <text class="tick" x="112" y="45">8</text>
+      <text class="lbl"  x="548" y="430">x</text>
+      <text class="lbl"  x="120" y="20">y</text>
+    </svg>
+  </div>
+
+  <p><span class="en">Using the graph of \(k\) and the base \(c\), answer all five parts:</span><span class="zh">利用 \(k\) 的圖形與基底 \(c\)，回答以下五個小題：</span></p>
+  <ol class="concepts">
+    <li><span class="en">State the <strong>domain</strong> of \(k\) in interval notation.</span><span class="zh">以區間記號寫出 \(k\) 的<strong>定義域</strong>。</span></li>
+    <li><span class="en">State the <strong>range</strong> of \(k\) in interval notation.</span><span class="zh">以區間記號寫出 \(k\) 的<strong>值域</strong>。</span></li>
+    <li><span class="en">Find \(k(1)\).</span><span class="zh">求 \(k(1)\)。</span></li>
+    <li><span class="en">Find \(k(3)\).</span><span class="zh">求 \(k(3)\)。</span></li>
+    <li><span class="en">Write \(k\) as a transformation of \(c\) in the form \(k(x)=a\,c(x)\), and say what happens to the domain.</span><span class="zh">將 \(k\) 以 \(k(x)=a\,c(x)\) 的形式寫成 \(c\) 的變換，並說明定義域有何變化。</span></li>
+  </ol>
+
+  <div class="hint"><strong><span class="en">Hint:</span><span class="zh">提示：</span></strong> <span class="en">Compare a base height to the matching height on \(k\) (the peak \(c(2)=4\) became \(8\)) to find the factor \(a\). A vertical scaling is an outside operation, so the domain does not move.</span><span class="zh">把基底某個高度與 \(k\) 上對應的高度相比（頂點 \(c(2)=4\) 變成 \(8\)）即可求出倍率 \(a\)。垂直伸縮是外側運算，故定義域不動。</span></div>
+
+  <details class="solution">
+    <summary><span class="en">Show full solution</span><span class="zh">顯示完整解答</span></summary>
+
+    <p><span class="en"><strong>(1) Domain.</strong> A vertical scaling is an outside operation and leaves the inputs untouched, so \(k\) is defined from \(x=0\) to \(x=4\):</span><span class="zh"><strong>(1) 定義域。</strong>垂直伸縮是外側運算，不動輸入，故 \(k\) 的定義由 \(x=0\) 到 \(x=4\)：</span></p>
+    <p class="eq">\[ \text{domain}(k)=[0,4]. \]</p>
+
+    <p><span class="en"><strong>(2) Range.</strong> The lowest point of \(k\) is the left end at height \(4\); the highest is the peak at height \(8\). So:</span><span class="zh"><strong>(2) 值域。</strong>\(k\) 的最低點是左端高度 \(4\)，最高是頂點高度 \(8\)。故：</span></p>
+    <p class="eq">\[ \text{range}(k)=[4,8]. \]</p>
+
+    <p><span class="en"><strong>(3) \(k(1)\).</strong> On the base, \(c(1)=3\) (halfway up from \((0,2)\) to \((2,4)\)). Reading \(k\) at \(x=1\) is halfway up from \((0,4)\) to \((2,8)\):</span><span class="zh"><strong>(3) \(k(1)\)。</strong>在基底上 \(c(1)=3\)（由 \((0,2)\) 到 \((2,4)\) 的中點）。在 \(x=1\) 讀 \(k\)，是由 \((0,4)\) 到 \((2,8)\) 的中點：</span></p>
+    <p class="eq">\[ k(1)=6. \]</p>
+
+    <p><span class="en"><strong>(4) \(k(3)\).</strong> Now \(x=3\) is halfway down from the peak \((2,8)\) to \((4,6)\):</span><span class="zh"><strong>(4) \(k(3)\)。</strong>此時 \(x=3\) 位於由頂點 \((2,8)\) 下降到 \((4,6)\) 的中點：</span></p>
+    <p class="eq">\[ k(3)=7. \]</p>
+
+    <p><span class="en"><strong>(5) As a transformation.</strong> Each base height has doubled (the peak \(4\) became \(8\), the end \(2\) became \(4\)), so:</span><span class="zh"><strong>(5) 寫成變換。</strong>每個基底高度都變成兩倍（頂點 \(4\) 變成 \(8\)，端點 \(2\) 變成 \(4\)），故：</span></p>
+    <p class="eq">\[ k(x)=2\,c(x), \]</p>
+    <p><span class="en">and the domain is unchanged at \([0,4]\): an outside operation never moves the inputs.</span><span class="zh">且定義域不變，仍為 \([0,4]\)：外側運算永遠不動輸入。</span></p>
+
+    <p><span class="en"><strong>Sense check.</strong> Doubling the base range \([2,4]\) gives \([4,8]\), matching part (2). The readings \(k(1)=6\) and \(k(3)=7\) are exactly \(c(1)=3\) and \(c(3)=3.5\) each times \(2\), and both lie inside \([4,8]\). Everything is consistent.</span><span class="zh"><strong>合理性檢查。</strong>把基底值域 \([2,4]\) 加倍得 \([4,8]\)，與第 (2) 題相符。讀值 \(k(1)=6\)、\(k(3)=7\) 恰為 \(c(1)=3\)、\(c(3)=3.5\) 各乘 \(2\)，且都落在 \([4,8]\) 內。一切一致。</span></p>
+  </details>
+
+  <div class="backlink"><a href="../../chapters/ch0-before-calculus.html"><span class="en">&larr; Chapter 0</span><span class="zh">&larr; 第 0 章</span></a> &nbsp;|&nbsp; <a href="../../index.html"><span class="en">Course Home</span><span class="zh">課程首頁</span></a></div>
+</main>
+<script src="../../js/ui.js"></script>
+</body>
+</html>

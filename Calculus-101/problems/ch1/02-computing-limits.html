@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Computing Limits - Calculus I</title>
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../vendor/katex/katex.min.css">
+<script defer src="../../vendor/katex/katex.min.js"></script>
+<script defer src="../../vendor/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../js/render-math.js"></script>
+<script>
+  /* Apply saved theme / language before paint to avoid a flash. */
+  (function () {
+    var d = document.documentElement, t, l;
+    try { t = localStorage.getItem("calc-theme"); } catch (e) {}
+    if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    d.setAttribute("data-theme", t);
+    try { l = localStorage.getItem("calc-lang"); } catch (e) {}
+    d.setAttribute("data-lang", l || "en");
+  })();
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="en">Calculus I &middot; Learn by Doing</span><span class="zh">微積分（一）&middot; 做中學</span></div>
+  <div class="sub"><span class="en">First-semester calculus for engineering &middot; Anton 10e</span><span class="zh">工程學系第一學期微積分 &middot; Anton 第 10 版</span></div>
+</header>
+<main class="container">
+  <div class="toolbar">
+    <button id="theme-toggle" type="button" aria-label="Toggle dark / light theme"></button>
+    <button id="lang-toggle" type="button" aria-label="Switch language English / 中文"></button>
+  </div>
+  <div class="breadcrumb"><a href="../../index.html"><span class="en">Course Home</span><span class="zh">課程首頁</span></a> &rsaquo; <a href="../../chapters/ch1-limits-continuity.html"><span class="en">Chapter 1</span><span class="zh">第 1 章</span></a> &rsaquo; <span class="en">Computing Limits</span><span class="zh">計算極限</span></div>
+  <h1><span class="en">1.2 Computing Limits</span><span class="zh">1.2 計算極限</span></h1>
+
+  <h2><span class="en">1 &middot; Concept and Fundamental Knowledge</span><span class="zh">1 &middot; 概念與基礎知識</span></h2>
+
+  <div class="callout definition">
+    <p class="callout-title"><span class="en">Definition &middot; Computing a limit</span><span class="zh">定義 &middot; 計算極限</span></p>
+    <p><span class="en">To compute \(\lim_{x\to a}f(x)\), we identify the expression type and apply a valid rule so the nearby behavior can be read as a number. Sometimes direct substitution works immediately. Sometimes we must first simplify the expression (factor, cancel, or rewrite), and then substitute.</span><span class="zh">要計算 \(\lim_{x\to a}f(x)\)，先判斷表達式型態，再使用正確規則把附近行為化為數值。有時可直接代入；有時需先化簡（因式分解、約分或改寫）後再代入。</span></p>
+  </div>
+
+  <p><span class="en">Graphically, the limit is still read from where the curve goes near \(x=a\). Algebra gives a fast and reliable way to get the same value when graph reading is rough.</span><span class="zh">在圖形上，極限仍是看曲線在 \(x=a\) 附近往哪裡走。代數方法則在圖形不易精讀時，提供快速且可靠的同一個答案。</span></p>
+
+  <div class="callout term">
+    <p class="callout-title"><span class="en">Key terms &middot; common algebra patterns</span><span class="zh">重要名詞 &middot; 常見代數型態</span></p>
+    <ul class="concepts">
+      <li><span class="en"><strong>Direct substitution form.</strong> If plugging in \(x=a\) gives a regular number, that number is the limit.</span><span class="zh"><strong>直接代入型。</strong>若代入 \(x=a\) 後得到一般數值，該數值就是極限。</span></li>
+      <li><span class="en"><strong>Indeterminate form \(0/0\).</strong> This does not mean the limit is zero. It means we must simplify first.</span><span class="zh"><strong>不定形 \(0/0\)。</strong>這不代表極限是 0，而是表示必須先化簡。</span></li>
+      <li><span class="en"><strong>Removable hole.</strong> After cancellation, the simplified function gives the trend value at the hole.</span><span class="zh"><strong>可去空洞。</strong>約分後的簡化函數會給出空洞處的趨勢值。</span></li>
+      <li><span class="en"><strong>One-sided check.</strong> If left and right limits differ, the two-sided limit does not exist.</span><span class="zh"><strong>單邊檢查。</strong>若左右極限不同，雙邊極限不存在。</span></li>
+    </ul>
+  </div>
+
+  <div class="callout rule">
+    <p class="callout-title"><span class="en">Rule &middot; Compute in this order</span><span class="zh">規則 &middot; 依序計算</span></p>
+    <p><span class="en">Try direct substitution first. If you get \(0/0\), simplify algebraically and then substitute again. If the expression changes sign across \(a\), compute left and right limits separately before deciding the two-sided limit.</span><span class="zh">先嘗試直接代入。若得到 \(0/0\)，先做代數化簡，再代入一次。若表達式在 \(a\) 左右會改變符號，先分別算左右極限，再判定雙邊極限。</span></p>
+  </div>
+
+  <h2><span class="en">2 &middot; Worked Examples</span><span class="zh">2 &middot; 範例（詳解）</span></h2>
+
+  <h3><span class="en">Example 1 &middot; Direct substitution works</span><span class="zh">範例 1 &middot; 直接代入可行</span></h3>
+  <p><span class="en">For \(f(x)=2x+1\), compute \(\lim_{x\to 2}f(x)\). The graph is a straight line, so the trend value should match substitution.</span><span class="zh">對 \(f(x)=2x+1\)，計算 \(\lim_{x\to 2}f(x)\)。圖形是一條直線，因此趨勢值應與代入值一致。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="f-title f-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="f-title">Graph of f x equals 2x plus 1</title>
+      <desc id="f-desc">A straight line segment from x equals 0 height 1 to x equals 3 point 5 height 8. A dashed guide reads the point at x equals 2 with height 5.</desc>
+      <defs>
+        <marker id="axisarrow-f2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-f2); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <path class="curve" d="M 134 376 L 358 40"></path>
+      <line class="guide" x1="262" y1="424" x2="262" y2="184"></line>
+      <line class="guide" x1="134" y1="184" x2="262" y2="184"></line>
+      <circle class="fillpt" cx="134" cy="376" r="6"></circle>
+      <circle class="fillpt" cx="262" cy="184" r="6"></circle>
+      <circle class="fillpt" cx="358" cy="40" r="6"></circle>
+
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="112" y="381">1</text>
+      <text class="tick" x="112" y="237">4</text>
+      <text class="tick" x="112" y="189">5</text>
+      <text class="tick" x="112" y="45">8</text>
+      <text class="lbl" x="548" y="430">x</text>
+      <text class="lbl" x="120" y="20">y</text>
+      <text class="small en" x="280" y="170">f(2) = 5</text>
+      <text class="small zh" x="280" y="170">f(2) = 5</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td><span class="en">Expression</span><span class="zh">表達式</span></td>
+      <td>\(f(x)=2x+1\)</td>
+      <td><span class="en">A linear function, continuous everywhere.</span><span class="zh">一次函數，在每一點都連續。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Substitute</span><span class="zh">代入</span></td>
+      <td>\(2(2)+1=5\)</td>
+      <td><span class="en">Direct substitution gives an ordinary number.</span><span class="zh">直接代入得到一般數值。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Limit</span><span class="zh">極限</span></td>
+      <td>\(\lim_{x\to 2}(2x+1)=5\)</td>
+      <td><span class="en">Graph and algebra agree at height 5.</span><span class="zh">圖形與代數都得到高度 5。</span></td>
+    </tr>
+  </table>
+
+  <p><span class="en">The first move in limit computation is simple: try substitution first.</span><span class="zh">計算極限的第一步很直接：先試代入。</span></p>
+
+  <h3><span class="en">Example 2 &middot; Factor and cancel a \(0/0\)</span><span class="zh">範例 2 &middot; \(0/0\) 先因式分解再約分</span></h3>
+  <p><span class="en">Compute \(\lim_{x\to 2}\dfrac{x^2-4}{x-2}\). The graph is a line with a hole at \((2,4)\), so the trend should be 4.</span><span class="zh">計算 \(\lim_{x\to 2}\dfrac{x^2-4}{x-2}\)。圖形是直線但在 \((2,4)\) 有一個空洞，所以趨勢值應是 4。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="g-title g-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="g-title">Graph of x squared minus 4 over x minus 2</title>
+      <desc id="g-desc">A line y equals x plus 2 from x equals 0 to x equals 4, with an open circle at x equals 2 height 4. Dashed guides show the hole coordinate.</desc>
+      <defs>
+        <marker id="axisarrow-g2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-g2); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <path class="curve" d="M 134 328 L 390 136"></path>
+      <line class="guide" x1="262" y1="424" x2="262" y2="232"></line>
+      <line class="guide" x1="134" y1="232" x2="262" y2="232"></line>
+      <circle class="fillpt" cx="134" cy="328" r="6"></circle>
+      <circle class="hole" cx="262" cy="232" r="6"></circle>
+      <circle class="fillpt" cx="390" cy="136" r="6"></circle>
+
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="386" y="444">4</text>
+      <text class="tick" x="112" y="333">2</text>
+      <text class="tick" x="112" y="237">4</text>
+      <text class="tick" x="112" y="141">6</text>
+      <text class="lbl" x="548" y="430">x</text>
+      <text class="lbl" x="120" y="20">y</text>
+      <text class="small en" x="286" y="220">hole at (2,4)</text>
+      <text class="small zh" x="286" y="220">hole at (2,4)</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td><span class="en">Direct form</span><span class="zh">直接型態</span></td>
+      <td>\(\dfrac{0}{0}\)</td>
+      <td><span class="en">At \(x=2\): numerator \(=0\), denominator \(=0\), so simplify first.</span><span class="zh">在 \(x=2\) 時：分子 \(=0\)、分母 \(=0\)，所以先化簡。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Simplify</span><span class="zh">化簡</span></td>
+      <td>\(\dfrac{(x-2)(x+2)}{x-2}=x+2\)</td>
+      <td><span class="en">For \(x\ne 2\), cancel \((x-2)\).</span><span class="zh">當 \(x\ne 2\) 時可約分 \((x-2)\)。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Limit</span><span class="zh">極限</span></td>
+      <td>\(\lim_{x\to 2}\dfrac{x^2-4}{x-2}=4\)</td>
+      <td><span class="en">Use simplified form \(x+2\), then substitute \(x=2\).</span><span class="zh">使用簡化後 \(x+2\)，再代入 \(x=2\)。</span></td>
+    </tr>
+  </table>
+
+  <div class="callout notice">
+    <p class="callout-title"><span class="en">Notice &middot; undefined point, defined trend</span><span class="zh">注意 &middot; 點值未定義，趨勢仍可定義</span></p>
+    <p><span class="en">The function is not defined at \(x=2\), but the limit still exists because nearby values approach 4 from both sides.</span><span class="zh">函數在 \(x=2\) 雖未定義，但因兩側附近值都趨近 4，極限仍存在。</span></p>
+  </div>
+
+  <h3><span class="en">Example 3 &middot; One-sided limits disagree</span><span class="zh">範例 3 &middot; 左右極限不一致</span></h3>
+  <p><span class="en">Compute \(\lim_{x\to 2}\left(\dfrac{|x-2|}{x-2}+3\right)\). This expression gives one value on the left and another on the right.</span><span class="zh">計算 \(\lim_{x\to 2}\left(\dfrac{|x-2|}{x-2}+3\right)\)。此表達式在左側與右側會給出不同值。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="p-title p-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="p-title">Graph showing different one-sided limits at x equals 2</title>
+      <desc id="p-desc">A horizontal left branch at y equals 2 ending with an open point at x equals 2. A horizontal right branch at y equals 4 starting with an open point at x equals 2. A filled point at x equals 2 and y equals 3 marks a separate value.</desc>
+      <defs>
+        <marker id="axisarrow-p2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-p2); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <path class="curve" d="M 134 328 L 262 328"></path>
+      <path class="curve" d="M 262 232 L 390 232"></path>
+      <circle class="hole" cx="262" cy="328" r="6"></circle>
+      <circle class="hole" cx="262" cy="232" r="6"></circle>
+      <circle class="fillpt" cx="262" cy="280" r="6"></circle>
+      <circle class="fillpt" cx="134" cy="328" r="6"></circle>
+      <circle class="fillpt" cx="390" cy="232" r="6"></circle>
+
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="112" y="333">2</text>
+      <text class="tick" x="112" y="285">3</text>
+      <text class="tick" x="112" y="237">4</text>
+      <text class="lbl" x="548" y="430">x</text>
+      <text class="lbl" x="120" y="20">y</text>
+      <text class="small en" x="286" y="320">left to 2</text>
+      <text class="small zh" x="286" y="320">left to 2</text>
+      <text class="small en" x="286" y="224">right to 4</text>
+      <text class="small zh" x="286" y="224">right to 4</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td><span class="en">Left limit</span><span class="zh">左極限</span></td>
+      <td>\(\lim_{x\to 2^{-}}\left(\dfrac{|x-2|}{x-2}+3\right)=2\)</td>
+      <td><span class="en">For \(x\lt 2\), \(|x-2|=-(x-2)\), so value is \(-1+3=2\).</span><span class="zh">當 \(x\lt 2\) 時，\(|x-2|=-(x-2)\)，故值為 \(-1+3=2\)。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Right limit</span><span class="zh">右極限</span></td>
+      <td>\(\lim_{x\to 2^{+}}\left(\dfrac{|x-2|}{x-2}+3\right)=4\)</td>
+      <td><span class="en">For \(x\gt 2\), \(|x-2|=x-2\), so value is \(1+3=4\).</span><span class="zh">當 \(x\gt 2\) 時，\(|x-2|=x-2\)，故值為 \(1+3=4\)。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Two-sided</span><span class="zh">雙邊</span></td>
+      <td><span class="en">does not exist</span><span class="zh">不存在</span></td>
+      <td><span class="en">Left and right limits are different, so no two-sided limit.</span><span class="zh">左右極限不同，因此雙邊極限不存在。</span></td>
+    </tr>
+  </table>
+
+  <div class="callout rule">
+    <p class="callout-title"><span class="en">Rule of thumb &middot; absolute value needs side analysis</span><span class="zh">口訣 &middot; 絕對值要分左右</span></p>
+    <p><span class="en">Near the switching point of an absolute value, always compute left and right expressions separately.</span><span class="zh">在絕對值切換點附近，務必把左側與右側表達式分開計算。</span></p>
+  </div>
+
+  <h2><span class="en">3 &middot; Exercises</span><span class="zh">3 &middot; 練習</span></h2>
+
+  <h3><span class="en">Exercise 1 &middot; Factor then compute</span><span class="zh">練習 1 &middot; 先分解後計算</span></h3>
+  <p><span class="en">Use the graph of \(m(x)=\dfrac{x^2-9}{x-3}\) (\(x\ne 3\)). The graph follows a line with a hole at \((3,6)\).</span><span class="zh">使用 \(m(x)=\dfrac{x^2-9}{x-3}\)（\(x\ne 3\)）的圖形。此圖沿著一直線，但在 \((3,6)\) 有空洞。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="m-title m-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="m-title">Exercise graph with a removable hole at x equals 3</title>
+      <desc id="m-desc">A line from x equals 0 height 3 to x equals 4 height 7 with an open point at x equals 3 height 6.</desc>
+      <defs>
+        <marker id="axisarrow-m2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-m2); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <path class="curve" d="M 134 280 L 390 88"></path>
+      <circle class="fillpt" cx="134" cy="280" r="6"></circle>
+      <circle class="hole" cx="326" cy="136" r="6"></circle>
+      <circle class="fillpt" cx="390" cy="88" r="6"></circle>
+
+      <text class="tick" x="322" y="444">3</text>
+      <text class="tick" x="386" y="444">4</text>
+      <text class="tick" x="112" y="285">3</text>
+      <text class="tick" x="112" y="141">6</text>
+      <text class="tick" x="112" y="93">7</text>
+      <text class="lbl" x="548" y="430">x</text>
+      <text class="lbl" x="120" y="20">y</text>
+    </svg>
+  </div>
+
+  <p><span class="en">Answer all five parts:</span><span class="zh">回答下列五題：</span></p>
+  <ol class="concepts">
+    <li><span class="en">Evaluate \(\lim_{x\to 3^{-}}m(x)\).</span><span class="zh">求 \(\lim_{x\to 3^{-}}m(x)\)。</span></li>
+    <li><span class="en">Evaluate \(\lim_{x\to 3^{+}}m(x)\).</span><span class="zh">求 \(\lim_{x\to 3^{+}}m(x)\)。</span></li>
+    <li><span class="en">Does \(\lim_{x\to 3}m(x)\) exist, and what is it?</span><span class="zh">\(\lim_{x\to 3}m(x)\) 是否存在？值為何？</span></li>
+    <li><span class="en">Is \(m(3)\) defined?</span><span class="zh">\(m(3)\) 是否有定義？</span></li>
+    <li><span class="en">Use factoring to confirm your limit value.</span><span class="zh">用因式分解確認你的極限值。</span></li>
+  </ol>
+
+  <div class="hint"><strong><span class="en">Hint:</span><span class="zh">提示：</span></strong> <span class="en">Write \(x^2-9=(x-3)(x+3)\). The simplified trend expression is \(x+3\) for \(x\ne 3\).</span><span class="zh">將 \(x^2-9\) 寫成 \((x-3)(x+3)\)。對 \(x\ne 3\) 而言，簡化後的趨勢式是 \(x+3\)。</span></div>
+
+  <details class="solution">
+    <summary><span class="en">Show full solution</span><span class="zh">顯示完整解答</span></summary>
+
+    <p><span class="en"><strong>(1)</strong> From the left branch, heights approach 6.</span><span class="zh"><strong>(1)</strong> 由左側分支靠近時，高度趨近 6。</span></p>
+    <p class="eq">\[ \lim_{x\to 3^{-}}m(x)=6. \]</p>
+
+    <p><span class="en"><strong>(2)</strong> From the right branch, heights also approach 6.</span><span class="zh"><strong>(2)</strong> 由右側分支靠近時，高度也趨近 6。</span></p>
+    <p class="eq">\[ \lim_{x\to 3^{+}}m(x)=6. \]</p>
+
+    <p><span class="en"><strong>(3)</strong> Left and right agree, so the two-sided limit exists and equals 6.</span><span class="zh"><strong>(3)</strong> 左右一致，因此雙邊極限存在且等於 6。</span></p>
+    <p class="eq">\[ \lim_{x\to 3}m(x)=6. \]</p>
+
+    <p><span class="en"><strong>(4)</strong> \(m(3)\) is undefined in the original formula because denominator \(x-3=0\).</span><span class="zh"><strong>(4)</strong> 原式在 \(x=3\) 時分母 \(x-3=0\)，故 \(m(3)\) 無定義。</span></p>
+    <p class="eq">\[ m(3)\text{ is undefined}. \]</p>
+
+    <p><span class="en"><strong>(5)</strong> Algebra check:</span><span class="zh"><strong>(5)</strong> 代數確認：</span></p>
+    <p class="eq">\[ \frac{x^2-9}{x-3}=\frac{(x-3)(x+3)}{x-3}=x+3\quad (x\ne 3). \]</p>
+    <p class="eq">\[ \lim_{x\to 3}m(x)=\lim_{x\to 3}(x+3)=6. \]</p>
+
+    <p><span class="en"><strong>Sense check.</strong> The graph has a hole at \((3,6)\), so a defined trend to 6 with an undefined point value is exactly what the picture shows.</span><span class="zh"><strong>合理性檢查。</strong>圖上在 \((3,6)\) 有空洞，因此「趨勢為 6、點值未定義」正是圖形所呈現的結果。</span></p>
+  </details>
+
+  <h3><span class="en">Exercise 2 &middot; Two-sided limit test by sides</span><span class="zh">練習 2 &middot; 以左右判定雙邊極限</span></h3>
+  <p><span class="en">Use the graph of \(q(x)=\dfrac{|x-2|}{x-2}+3\) for \(x\ne 2\). A separate filled point at \((2,3)\) is also shown.</span><span class="zh">使用 \(q(x)=\dfrac{|x-2|}{x-2}+3\)（\(x\ne 2\)）的圖形。圖上另外給出實心點 \((2,3)\)。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="q-title q-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="q-title">Exercise graph for one-sided limit comparison</title>
+      <desc id="q-desc">A left horizontal branch at y equals 2 ending open at x equals 2. A right horizontal branch at y equals 4 starting open at x equals 2. A filled point at x equals 2 and y equals 3.</desc>
+      <defs>
+        <marker id="axisarrow-q2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-q2); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <path class="curve" d="M 134 328 L 262 328"></path>
+      <path class="curve" d="M 262 232 L 390 232"></path>
+      <circle class="hole" cx="262" cy="328" r="6"></circle>
+      <circle class="hole" cx="262" cy="232" r="6"></circle>
+      <circle class="fillpt" cx="262" cy="280" r="6"></circle>
+      <circle class="fillpt" cx="134" cy="328" r="6"></circle>
+      <circle class="fillpt" cx="390" cy="232" r="6"></circle>
+
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="112" y="333">2</text>
+      <text class="tick" x="112" y="285">3</text>
+      <text class="tick" x="112" y="237">4</text>
+      <text class="lbl" x="548" y="430">x</text>
+      <text class="lbl" x="120" y="20">y</text>
+    </svg>
+  </div>
+
+  <p><span class="en">Answer all five parts:</span><span class="zh">回答下列五題：</span></p>
+  <ol class="concepts">
+    <li><span class="en">Compute \(\lim_{x\to 2^{-}}q(x)\).</span><span class="zh">計算 \(\lim_{x\to 2^{-}}q(x)\)。</span></li>
+    <li><span class="en">Compute \(\lim_{x\to 2^{+}}q(x)\).</span><span class="zh">計算 \(\lim_{x\to 2^{+}}q(x)\)。</span></li>
+    <li><span class="en">Does \(\lim_{x\to 2}q(x)\) exist?</span><span class="zh">\(\lim_{x\to 2}q(x)\) 是否存在？</span></li>
+    <li><span class="en">Read the plotted value at \(x=2\).</span><span class="zh">讀出 \(x=2\) 的作圖值。</span></li>
+    <li><span class="en">State in one sentence why one-sided analysis is required here.</span><span class="zh">用一句話說明此題為何必須做單邊分析。</span></li>
+  </ol>
+
+  <div class="hint"><strong><span class="en">Hint:</span><span class="zh">提示：</span></strong> <span class="en">For \(x\lt 2\), \(\dfrac{|x-2|}{x-2}=-1\); for \(x\gt 2\), \(\dfrac{|x-2|}{x-2}=1\).</span><span class="zh">當 \(x\lt 2\) 時，\(\dfrac{|x-2|}{x-2}=-1\)；當 \(x\gt 2\) 時，\(\dfrac{|x-2|}{x-2}=1\)。</span></div>
+
+  <details class="solution">
+    <summary><span class="en">Show full solution</span><span class="zh">顯示完整解答</span></summary>
+
+    <p><span class="en"><strong>(1)</strong> Left side gives \(-1+3=2\).</span><span class="zh"><strong>(1)</strong> 左側代入得到 \(-1+3=2\)。</span></p>
+    <p class="eq">\[ \lim_{x\to 2^{-}}q(x)=2. \]</p>
+
+    <p><span class="en"><strong>(2)</strong> Right side gives \(1+3=4\).</span><span class="zh"><strong>(2)</strong> 右側代入得到 \(1+3=4\)。</span></p>
+    <p class="eq">\[ \lim_{x\to 2^{+}}q(x)=4. \]</p>
+
+    <p><span class="en"><strong>(3)</strong> Because \(2\ne 4\), the two-sided limit does not exist.</span><span class="zh"><strong>(3)</strong> 因為 \(2\ne 4\)，雙邊極限不存在。</span></p>
+    <p class="eq">\[ \lim_{x\to 2}q(x)\text{ does not exist}. \]</p>
+
+    <p><span class="en"><strong>(4)</strong> The filled point at \(x=2\) is at height 3.</span><span class="zh"><strong>(4)</strong> \(x=2\) 的實心點位於高度 3。</span></p>
+    <p class="eq">\[ q(2)=3. \]</p>
+
+    <p><span class="en"><strong>(5)</strong> One-sided analysis is required because the absolute value changes formula at \(x=2\), producing different left and right trends.</span><span class="zh"><strong>(5)</strong> 必須做單邊分析，因為絕對值在 \(x=2\) 會切換公式，導致左右趨勢不同。</span></p>
+
+    <p><span class="en"><strong>Sense check.</strong> The graph clearly shows approach to 2 from the left and 4 from the right, with a separate point value 3 at \(x=2\), so every computed value matches the picture.</span><span class="zh"><strong>合理性檢查。</strong>圖形清楚顯示左趨近 2、右趨近 4，且在 \(x=2\) 另有點值 3，因此計算結果與圖形完全一致。</span></p>
+  </details>
+
+  <div class="backlink"><a href="../../problems/ch1/01-limits-an-intuitive-approach.html"><span class="en">&larr; 1.1 Limits (An Intuitive Approach)</span><span class="zh">&larr; 1.1 極限（直觀方法）</span></a> &nbsp;|&nbsp; <a href="../../chapters/ch1-limits-continuity.html"><span class="en">Chapter 1</span><span class="zh">第 1 章</span></a> &nbsp;|&nbsp; <a href="../../index.html"><span class="en">Course Home</span><span class="zh">課程首頁</span></a></div>
+</main>
+<script src="../../js/ui.js"></script>
+</body>
+</html>

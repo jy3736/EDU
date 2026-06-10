@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading a Function from its Graph - Calculus I</title>
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../vendor/katex/katex.min.css">
+<script defer src="../../vendor/katex/katex.min.js"></script>
+<script defer src="../../vendor/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../js/render-math.js"></script>
+<script>
+  /* Apply saved theme / language before paint to avoid a flash. */
+  (function () {
+    var d = document.documentElement, t, l;
+    try { t = localStorage.getItem("calc-theme"); } catch (e) {}
+    if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    d.setAttribute("data-theme", t);
+    try { l = localStorage.getItem("calc-lang"); } catch (e) {}
+    d.setAttribute("data-lang", l || "en");
+  })();
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="en">Calculus I &middot; Learn by Doing</span><span class="zh">微積分（一）&middot; 做中學</span></div>
+  <div class="sub"><span class="en">First-semester calculus for engineering &middot; Anton 10e</span><span class="zh">工程學系第一學期微積分 &middot; Anton 第 10 版</span></div>
+</header>
+<main class="container">
+  <div class="toolbar">
+    <button id="theme-toggle" type="button" aria-label="Toggle dark / light theme"></button>
+    <button id="lang-toggle" type="button" aria-label="Switch language English / 中文"></button>
+  </div>
+  <div class="breadcrumb"><a href="../../index.html"><span class="en">Course Home</span><span class="zh">課程首頁</span></a> &rsaquo; <a href="../../chapters/ch0-before-calculus.html"><span class="en">Chapter 0</span><span class="zh">第 0 章</span></a> &rsaquo; <span class="en">Reading a Graph</span><span class="zh">判讀圖形</span></div>
+  <h1><span class="en">0.1 Reading a Function from its Graph</span><span class="zh">0.1 由圖形判讀函數</span></h1>
+
+  <!-- ============ 1. CONCEPT / FUNDAMENTAL KNOWLEDGE ============ -->
+  <h2><span class="en">1 &middot; Concept and Fundamental Knowledge</span><span class="zh">1 &middot; 概念與基礎知識</span></h2>
+
+  <div class="callout definition">
+  <p class="callout-title"><span class="en">Definition &middot; Function</span><span class="zh">定義 &middot; 函數</span></p>
+  <p><span class="en">A <strong>function</strong> is a rule that takes an <em>input</em> and returns <strong>exactly one</strong> <em>output</em>. We usually call the input \(x\) and the output \(y\), and we write \(y=f(x)\), read as &ldquo;\(y\) equals \(f\) of \(x\).&rdquo; The single most important word in that sentence is <strong>exactly one</strong>: for each allowed input there is one and only one output. A machine that sometimes gave two different answers for the same input would not be a function.</span><span class="zh"><strong>函數</strong>是一條規則，吃進一個<em>輸入</em>，回傳<strong>恰好一個</strong><em>輸出</em>。我們通常把輸入記為 \(x\)、輸出記為 \(y\)，並寫成 \(y=f(x)\)，讀作「\(y\) 等於 \(f\) of \(x\)」。這句話中最關鍵的字是<strong>恰好一個</strong>：每個允許的輸入只對應唯一一個輸出。若同一個輸入有時給出兩個不同答案，那就不是函數。</span></p>
+  </div>
+
+  <p><span class="en">The <strong>graph</strong> of \(f\) is the picture you get by plotting every point \(\bigl(x,\,f(x)\bigr)\): the horizontal coordinate is the input, the vertical coordinate is the output. Reading a graph well is the first skill of the whole course, because limits, derivatives, and integrals are all described through graphs. Four things can be read directly off a graph:</span><span class="zh">\(f\) 的<strong>圖形</strong>是把所有點 \(\bigl(x,\,f(x)\bigr)\) 畫出來所得到的圖：水平座標是輸入，垂直座標是輸出。能熟練判讀圖形是整門課的第一個技能，因為極限、導數與積分都透過圖形來描述。可由圖形直接讀出四件事：</span></p>
+
+  <div class="callout term">
+  <p class="callout-title"><span class="en">Key terms &middot; what you read off a graph</span><span class="zh">重要名詞 &middot; 由圖形可讀出</span></p>
+  <ul class="concepts">
+    <li><span class="en"><strong>The value \(f(a)\).</strong> To find the output at an input \(a\), start at \(x=a\) on the horizontal axis, move straight <em>up or down</em> until you meet the curve, then read the <em>height</em> of that point on the vertical axis. That height is \(f(a)\).</span><span class="zh"><strong>函數值 \(f(a)\)。</strong>要求輸入 \(a\) 處的輸出，先在水平軸找到 \(x=a\)，再<em>垂直</em>上下移動直到碰到曲線，然後讀出該點在垂直軸上的<em>高度</em>。這個高度就是 \(f(a)\)。</span></li>
+    <li><span class="en"><strong>The domain.</strong> The <em>domain</em> is the set of all inputs the function accepts. On the graph it is the <em>shadow of the curve cast onto the horizontal axis</em>: the stretch of \(x\)-values that lie under (or over) some point of the curve.</span><span class="zh"><strong>定義域。</strong><em>定義域</em>是函數所接受的所有輸入所成的集合。在圖形上，它是<em>曲線投影到水平軸上的影子</em>：也就是曲線下方（或上方）所涵蓋的那段 \(x\) 值範圍。</span></li>
+    <li><span class="en"><strong>The range.</strong> The <em>range</em> is the set of all outputs the function actually produces. On the graph it is the <em>shadow of the curve cast onto the vertical axis</em>: from the lowest height the curve reaches up to the highest.</span><span class="zh"><strong>值域。</strong><em>值域</em>是函數實際產生的所有輸出所成的集合。在圖形上，它是<em>曲線投影到垂直軸上的影子</em>：從曲線到達的最低高度到最高高度。</span></li>
+    <li><span class="en"><strong>Endpoints: filled vs. open.</strong> A <strong>filled</strong> dot &#9679; means that endpoint is <em>included</em>; an <strong>open</strong> dot &#9675; means it is <em>excluded</em>. We record this with interval notation: \([a,b]\) includes both ends, \((a,b)\) excludes both, and \([a,b)\) includes the left end only.</span><span class="zh"><strong>端點：實心與空心。</strong><strong>實心</strong>點 &#9679; 表示該端點<em>包含在內</em>；<strong>空心</strong>點 &#9675; 表示<em>不包含</em>。我們用區間記號記錄：\([a,b]\) 含兩端、\((a,b)\) 兩端皆不含、\([a,b)\) 僅含左端。</span></li>
+  </ul>
+  </div>
+
+  <div class="callout rule">
+  <p class="callout-title"><span class="en">Rule &middot; The vertical line test</span><span class="zh">規則 &middot; 垂直線檢驗法</span></p>
+  <p><span class="en">Because a function gives exactly one output per input, every <em>vertical</em> line may cross the graph <strong>at most once</strong>. If some vertical line hits a curve twice, that input would have two outputs, so the curve is <em>not</em> the graph of a function. Use this test whenever you are unsure whether a picture even represents a function.</span><span class="zh">因為函數對每個輸入恰好給一個輸出，所以任一條<em>垂直</em>線與圖形<strong>最多只能相交一次</strong>。若某條垂直線與曲線相交兩次，該輸入就會有兩個輸出，故此曲線<em>不是</em>函數的圖形。當你不確定一張圖是否代表函數時，就用這個檢驗法。</span></p>
+  </div>
+
+  <!-- ============ 2. WORKED EXAMPLES (three) ============ -->
+  <h2><span class="en">2 &middot; Worked Examples</span><span class="zh">2 &middot; 範例（詳解）</span></h2>
+
+  <!-- ---------- Example 1: both ends filled, a peak ---------- -->
+  <h3><span class="en">Example 1 &middot; Both endpoints filled</span><span class="zh">範例 1 &middot; 兩端皆為實心</span></h3>
+
+  <p><span class="en">The graph below shows a function \(g\). It is drawn with two straight segments meeting at a peak, and both endpoints are <strong>filled</strong> dots. Read its domain, its range, and the value \(g(3)\).</span><span class="zh">下圖是函數 \(g\)，由兩段相接於頂點的直線段構成，兩端皆為<strong>實心</strong>點。請讀出它的定義域、值域，以及函數值 \(g(3)\)。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="g-title g-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="g-title">Graph of the sample function g</title>
+      <desc id="g-desc">A function made of two line segments. It starts at a filled point at x equals 0 height 2, rises to a peak filled point at x equals 2 height 6, then falls to a filled point at x equals 4 height 4. Dashed guide lines show that at x equals 3 the height is 5.</desc>
+      <defs>
+        <marker id="axisarrow-g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-g); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <!-- grid: vertical x = 0..5, horizontal y = 2,4,6 -->
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <!-- axes -->
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <!-- the function g: (0,2) -> (2,6) -> (4,4) -->
+      <path class="curve" d="M 134 328 L 262 136 L 390 232"></path>
+
+      <!-- dashed guides reading g(3) = 5 at px (326,184) -->
+      <line class="guide" x1="326" y1="424" x2="326" y2="184"></line>
+      <line class="guide" x1="134" y1="184" x2="326" y2="184"></line>
+
+      <!-- filled points: endpoints (0,2),(4,4), peak (2,6), read point (3,5) -->
+      <circle class="fillpt" cx="134" cy="328" r="6"></circle>
+      <circle class="fillpt" cx="262" cy="136" r="6"></circle>
+      <circle class="fillpt" cx="390" cy="232" r="6"></circle>
+      <circle class="fillpt" cx="326" cy="184" r="6"></circle>
+
+      <!-- tick labels -->
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="322" y="444">3</text>
+      <text class="tick" x="386" y="444">4</text>
+      <text class="tick" x="112" y="333">2</text>
+      <text class="tick" x="112" y="237">4</text>
+      <text class="tick" x="112" y="141">6</text>
+      <text class="tick" x="112" y="189">5</text>
+      <text class="lbl"  x="548" y="430">x</text>
+      <text class="lbl"  x="120" y="20">y</text>
+
+      <!-- annotation -->
+      <text class="small en" x="332" y="178">g(3) = 5</text>
+      <text class="small zh" x="332" y="178">g(3) = 5</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td><span class="en">Domain</span><span class="zh">定義域</span></td>
+      <td>\([0,4]\)</td>
+      <td><span class="en">The curve&rsquo;s shadow on the \(x\)-axis runs from the left filled end \(x=0\) to the right filled end \(x=4\); both are included.</span><span class="zh">曲線在 \(x\) 軸的影子由左側實心端 \(x=0\) 延伸到右側實心端 \(x=4\)，兩端皆含。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Range</span><span class="zh">值域</span></td>
+      <td>\([2,6]\)</td>
+      <td><span class="en">The lowest the curve goes is \(y=2\) (left end), the highest is \(y=6\) (the peak), so every height between 2 and 6 is hit.</span><span class="zh">曲線最低到 \(y=2\)（左端），最高到 \(y=6\)（頂點），故 2 到 6 之間每個高度都被取到。</span></td>
+    </tr>
+    <tr>
+      <td>\(g(3)\)</td>
+      <td>\(5\)</td>
+      <td><span class="en">Go up from \(x=3\) (dashed) to the curve, then across to the \(y\)-axis: the height is 5.</span><span class="zh">由 \(x=3\) 沿虛線上移到曲線，再水平移到 \(y\) 軸：高度為 5。</span></td>
+    </tr>
+  </table>
+
+  <p><span class="en">Notice that \(g(3)=5\) even though there is no grid line at height 5: the point sits exactly halfway between the grid lines \(y=4\) and \(y=6\). Reading values often means interpolating between grid lines like this.</span><span class="zh">注意即使高度 5 沒有格線，\(g(3)=5\) 仍成立：該點恰好落在格線 \(y=4\) 與 \(y=6\) 的正中間。判讀數值常常需要像這樣在格線之間做內插。</span></p>
+
+  <!-- ---------- Example 2: an open endpoint ---------- -->
+  <h3><span class="en">Example 2 &middot; An open endpoint</span><span class="zh">範例 2 &middot; 一個空心端點</span></h3>
+
+  <p><span class="en">The next graph is a function \(p\) drawn as a single straight rising line. The <strong>left</strong> end is an <strong>open</strong> dot &#9675; (excluded) and the <strong>right</strong> end is a <strong>filled</strong> dot &#9679; (included). Read its domain, its range, and the value \(p(2)\). Watch how one open endpoint changes a square bracket into a round one.</span><span class="zh">下一張圖是函數 \(p\)，畫成一條上升的直線。<strong>左</strong>端是<strong>空心</strong>點 &#9675;（不含），<strong>右</strong>端是<strong>實心</strong>點 &#9679;（含）。請讀出它的定義域、值域，以及函數值 \(p(2)\)。注意一個空心端點如何把中括號變成小括號。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="p-title p-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="p-title">Graph of the sample function p</title>
+      <desc id="p-desc">A single rising straight line. It starts at an open point at x equals 0 height 1, and ends at a filled point at x equals 4 height 5. Dashed guide lines show that at x equals 2 the height is 3.</desc>
+      <defs>
+        <marker id="axisarrow-p" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-p); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <!-- grid -->
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <!-- axes -->
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <!-- the function p: (0,1) open -> (4,5) filled ; p(x) = x + 1 -->
+      <path class="curve" d="M 134 376 L 390 184"></path>
+
+      <!-- dashed guides reading p(2) = 3 at px (262,280) -->
+      <line class="guide" x1="262" y1="424" x2="262" y2="280"></line>
+      <line class="guide" x1="134" y1="280" x2="262" y2="280"></line>
+
+      <!-- read point (2,3) filled -->
+      <circle class="fillpt" cx="262" cy="280" r="6"></circle>
+
+      <!-- endpoints: open left (0,1), filled right (4,5) -->
+      <circle class="hole"   cx="134" cy="376" r="6"></circle>
+      <circle class="fillpt" cx="390" cy="184" r="6"></circle>
+
+      <!-- tick labels -->
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="386" y="444">4</text>
+      <text class="tick" x="112" y="381">1</text>
+      <text class="tick" x="112" y="285">3</text>
+      <text class="tick" x="112" y="189">5</text>
+      <text class="lbl"  x="548" y="430">x</text>
+      <text class="lbl"  x="120" y="20">y</text>
+
+      <!-- annotation -->
+      <text class="small en" x="268" y="274">p(2) = 3</text>
+      <text class="small zh" x="268" y="274">p(2) = 3</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td><span class="en">Domain</span><span class="zh">定義域</span></td>
+      <td>\((0,4]\)</td>
+      <td><span class="en">The shadow on the \(x\)-axis runs from \(x=0\) to \(x=4\), but the left end is <em>open</em>, so \(x=0\) is excluded: a round bracket on the left, a square bracket on the right.</span><span class="zh">在 \(x\) 軸的影子由 \(x=0\) 到 \(x=4\)，但左端為<em>空心</em>，故 \(x=0\) 不含：左用小括號、右用中括號。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Range</span><span class="zh">值域</span></td>
+      <td>\((1,5]\)</td>
+      <td><span class="en">As \(x\) leaves the open left end the height drops toward \(y=1\) but never reaches it; the top height \(y=5\) is the filled right end, so it is included.</span><span class="zh">當 \(x\) 離開左側空心端，高度趨近 \(y=1\) 卻取不到；最高高度 \(y=5\) 為實心右端，故包含在內。</span></td>
+    </tr>
+    <tr>
+      <td>\(p(2)\)</td>
+      <td>\(3\)</td>
+      <td><span class="en">Go up from \(x=2\) (dashed) to the line, then across: the height is 3, halfway between \(y=2\) and \(y=4\).</span><span class="zh">由 \(x=2\) 沿虛線上移到直線，再水平移過去：高度為 3，落在 \(y=2\) 與 \(y=4\) 的中間。</span></td>
+    </tr>
+  </table>
+
+  <div class="callout rule">
+  <p class="callout-title"><span class="en">Rule of thumb &middot; brackets follow the dot</span><span class="zh">口訣 &middot; 括號跟著點走</span></p>
+  <p><span class="en">A <em>filled</em> endpoint keeps its value (square bracket); an <em>open</em> endpoint loses it (round bracket). The same open dot that excludes \(x=0\) from the domain also excludes \(y=1\) from the range.</span><span class="zh"><em>實心</em>端點保留其值（中括號）；<em>空心</em>端點則失去（小括號）。同一個空心點既把 \(x=0\) 排除於定義域，也把 \(y=1\) 排除於值域。</span></p>
+  </div>
+
+  <!-- ---------- Example 3: a flat segment ---------- -->
+  <h3><span class="en">Example 3 &middot; A flat segment</span><span class="zh">範例 3 &middot; 一段水平線</span></h3>
+
+  <p><span class="en">This function \(q\) rises and then runs <strong>flat</strong>: it climbs from \((0,2)\) to a corner at \((2,6)\), then stays level out to \((4,6)\). All three marked points are <strong>filled</strong>. Read its domain, its range, and the values \(q(1)\) and \(q(3)\). A flat piece is a good reminder that many different inputs may share the same output.</span><span class="zh">此函數 \(q\) 先上升、再走<strong>水平</strong>：由 \((0,2)\) 爬升到轉角 \((2,6)\)，之後維持水平到 \((4,6)\)。三個標示點皆為<strong>實心</strong>。請讀出它的定義域、值域，以及函數值 \(q(1)\) 與 \(q(3)\)。水平段正好提醒我們：許多不同的輸入可以共用同一個輸出。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="q-title q-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="q-title">Graph of the sample function q</title>
+      <desc id="q-desc">A function made of a rising segment and a flat segment. It starts at a filled point at x equals 0 height 2, rises to a corner filled point at x equals 2 height 6, then stays level to a filled point at x equals 4 height 6. A dashed guide shows that at x equals 1 the height is 4.</desc>
+      <defs>
+        <marker id="axisarrow-q" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-q); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <!-- grid -->
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <!-- axes -->
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <!-- the function q: (0,2) -> (2,6) -> (4,6) flat -->
+      <path class="curve" d="M 134 328 L 262 136 L 390 136"></path>
+
+      <!-- dashed guides reading q(1) = 4 at px (198,232) -->
+      <line class="guide" x1="198" y1="424" x2="198" y2="232"></line>
+      <line class="guide" x1="134" y1="232" x2="198" y2="232"></line>
+
+      <!-- read point (1,4) filled -->
+      <circle class="fillpt" cx="198" cy="232" r="6"></circle>
+
+      <!-- marked points: (0,2),(2,6),(4,6) filled -->
+      <circle class="fillpt" cx="134" cy="328" r="6"></circle>
+      <circle class="fillpt" cx="262" cy="136" r="6"></circle>
+      <circle class="fillpt" cx="390" cy="136" r="6"></circle>
+
+      <!-- tick labels -->
+      <text class="tick" x="194" y="444">1</text>
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="322" y="444">3</text>
+      <text class="tick" x="386" y="444">4</text>
+      <text class="tick" x="112" y="333">2</text>
+      <text class="tick" x="112" y="237">4</text>
+      <text class="tick" x="112" y="141">6</text>
+      <text class="lbl"  x="548" y="430">x</text>
+      <text class="lbl"  x="120" y="20">y</text>
+
+      <!-- annotation -->
+      <text class="small en" x="204" y="226">q(1) = 4</text>
+      <text class="small zh" x="204" y="226">q(1) = 4</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td><span class="en">Domain</span><span class="zh">定義域</span></td>
+      <td>\([0,4]\)</td>
+      <td><span class="en">The shadow on the \(x\)-axis runs from the filled left end \(x=0\) to the filled right end \(x=4\); both included.</span><span class="zh">在 \(x\) 軸的影子由實心左端 \(x=0\) 到實心右端 \(x=4\)，兩端皆含。</span></td>
+    </tr>
+    <tr>
+      <td><span class="en">Range</span><span class="zh">值域</span></td>
+      <td>\([2,6]\)</td>
+      <td><span class="en">The lowest height is \(y=2\) (left end); the highest is \(y=6\), held all along the flat part. Every height from 2 up to 6 is reached on the rise.</span><span class="zh">最低高度為 \(y=2\)（左端）；最高為 \(y=6\)，並在整段水平處維持。上升途中 2 到 6 之間每個高度都被取到。</span></td>
+    </tr>
+    <tr>
+      <td>\(q(1)\)</td>
+      <td>\(4\)</td>
+      <td><span class="en">\(x=1\) is halfway up the rising segment from \((0,2)\) to \((2,6)\), so the height is halfway between 2 and 6.</span><span class="zh">\(x=1\) 位於由 \((0,2)\) 上升到 \((2,6)\) 那段的中點，故高度為 2 與 6 的中間值。</span></td>
+    </tr>
+    <tr>
+      <td>\(q(3)\)</td>
+      <td>\(6\)</td>
+      <td><span class="en">\(x=3\) lands on the flat part, where the height is a constant \(6\).</span><span class="zh">\(x=3\) 落在水平段上，高度固定為 \(6\)。</span></td>
+    </tr>
+  </table>
+
+  <div class="callout notice">
+  <p class="callout-title"><span class="en">Notice &middot; many inputs, one output is allowed</span><span class="zh">注意 &middot; 多個輸入對一個輸出是可以的</span></p>
+  <p><span class="en">Both \(x=2\) and \(x=3\) (and every \(x\) between) give the output \(6\). That is perfectly fine: a function may send many inputs to one output. What it may <em>not</em> do is send one input to two outputs, which is exactly what the vertical line test forbids, and this graph passes it.</span><span class="zh">\(x=2\) 與 \(x=3\)（以及其間每個 \(x\)）都給出輸出 \(6\)。這完全沒問題：函數可以把許多輸入送到同一個輸出。它<em>不能</em>做的是把一個輸入送到兩個輸出，而這正是垂直線檢驗法所禁止的，本圖通過該檢驗。</span></p>
+  </div>
+
+  <!-- ============ 3. EXERCISES (two) ============ -->
+  <h2><span class="en">3 &middot; Exercises</span><span class="zh">3 &middot; 練習</span></h2>
+
+  <!-- ---------- Exercise 1: both ends filled, a dip ---------- -->
+  <h3><span class="en">Exercise 1 &middot; Both endpoints filled</span><span class="zh">練習 1 &middot; 兩端皆為實心</span></h3>
+
+  <p><span class="en">Now it is your turn. The graph below shows a function \(h\), again made of two straight segments, this time dipping to a low point. Both endpoints are <strong>filled</strong> dots.</span><span class="zh">換你試試。下圖是函數 \(h\)，同樣由兩段直線構成，這次往下凹到一個低點。兩端皆為<strong>實心</strong>點。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="h-title h-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="h-title">Graph of the exercise function h</title>
+      <desc id="h-desc">A function made of two line segments. It starts at a filled point at x equals 0 height 7, falls to a low filled point at x equals 2 height 1, then rises to a filled point at x equals 4 height 5. No values are marked; the reader must read them.</desc>
+      <defs>
+        <marker id="axisarrow-h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-h); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <!-- grid: vertical x = 0..5, horizontal y = 2,4,6 -->
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <!-- axes -->
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <!-- the function h: (0,7) -> (2,1) -> (4,5) -->
+      <path class="curve" d="M 134 88 L 262 376 L 390 184"></path>
+
+      <!-- filled points: endpoints (0,7),(4,5) and low point (2,1) -->
+      <circle class="fillpt" cx="134" cy="88" r="6"></circle>
+      <circle class="fillpt" cx="262" cy="376" r="6"></circle>
+      <circle class="fillpt" cx="390" cy="184" r="6"></circle>
+
+      <!-- tick labels -->
+      <text class="tick" x="194" y="444">1</text>
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="322" y="444">3</text>
+      <text class="tick" x="386" y="444">4</text>
+      <text class="tick" x="112" y="333">2</text>
+      <text class="tick" x="112" y="237">4</text>
+      <text class="tick" x="112" y="141">6</text>
+      <text class="lbl"  x="548" y="430">x</text>
+      <text class="lbl"  x="120" y="20">y</text>
+    </svg>
+  </div>
+
+  <p><span class="en">Using the graph of \(h\), answer all five parts:</span><span class="zh">利用 \(h\) 的圖形，回答以下五個小題：</span></p>
+  <ol class="concepts">
+    <li><span class="en">State the <strong>domain</strong> of \(h\) in interval notation.</span><span class="zh">以區間記號寫出 \(h\) 的<strong>定義域</strong>。</span></li>
+    <li><span class="en">State the <strong>range</strong> of \(h\) in interval notation.</span><span class="zh">以區間記號寫出 \(h\) 的<strong>值域</strong>。</span></li>
+    <li><span class="en">Find \(h(1)\).</span><span class="zh">求 \(h(1)\)。</span></li>
+    <li><span class="en">Find \(h(3)\).</span><span class="zh">求 \(h(3)\)。</span></li>
+    <li><span class="en">At which input \(x\) is the output <strong>smallest</strong>, and what is that smallest output?</span><span class="zh">在哪個輸入 \(x\) 處輸出<strong>最小</strong>？該最小輸出值為何？</span></li>
+  </ol>
+
+  <div class="hint"><strong><span class="en">Hint:</span><span class="zh">提示：</span></strong> <span class="en">For the domain and range, look at how far the curve spreads <em>left-to-right</em> and <em>bottom-to-top</em>. For \(h(1)\) and \(h(3)\), go up from that \(x\)-value to the curve and read the height; each lands neatly relative to the grid lines \(y=2,4,6\).</span><span class="zh">求定義域與值域時，觀察曲線<em>左右</em>與<em>上下</em>延伸的範圍。求 \(h(1)\) 與 \(h(3)\) 時，由該 \(x\) 值往上到曲線再讀高度；兩者相對於格線 \(y=2,4,6\) 都落在好讀的位置。</span></div>
+
+  <details class="solution">
+    <summary><span class="en">Show full solution</span><span class="zh">顯示完整解答</span></summary>
+
+    <p><span class="en"><strong>(1) Domain.</strong> The curve&rsquo;s left filled endpoint sits at \(x=0\) and its right filled endpoint at \(x=4\); the function is drawn for every \(x\) in between. Because both endpoints are filled, both are included:</span><span class="zh"><strong>(1) 定義域。</strong>曲線左側實心端在 \(x=0\)，右側實心端在 \(x=4\)；中間每個 \(x\) 皆有定義。由於兩端皆為實心，兩端皆包含：</span></p>
+    <p class="eq">\[ \text{domain}(h)=[0,4]. \]</p>
+
+    <p><span class="en"><strong>(2) Range.</strong> Scan the curve from its lowest point to its highest. The lowest it reaches is the dip at height \(y=1\); the highest is the left endpoint at height \(y=7\). Every height between is achieved on the way down and up, so:</span><span class="zh"><strong>(2) 值域。</strong>從曲線最低處掃到最高處。最低落在凹點高度 \(y=1\)；最高在左端點高度 \(y=7\)。下降與上升途中之間每個高度都被取到，故：</span></p>
+    <p class="eq">\[ \text{range}(h)=[1,7]. \]</p>
+
+    <p><span class="en"><strong>(3) \(h(1)\).</strong> Start at \(x=1\) and move up to the curve. The point \(x=1\) is halfway along the falling segment from \((0,7)\) to \((2,1)\), so its height is halfway between 7 and 1, which lands exactly on the grid line \(y=4\):</span><span class="zh"><strong>(3) \(h(1)\)。</strong>由 \(x=1\) 往上到曲線。\(x=1\) 位於由 \((0,7)\) 下降到 \((2,1)\) 那段的中點，故高度為 7 與 1 的中間值，恰好落在格線 \(y=4\) 上：</span></p>
+    <p class="eq">\[ h(1)=4. \]</p>
+
+    <p><span class="en"><strong>(4) \(h(3)\).</strong> Now \(x=3\) is halfway along the rising segment from \((2,1)\) to \((4,5)\). Its height is halfway between 1 and 5:</span><span class="zh"><strong>(4) \(h(3)\)。</strong>此時 \(x=3\) 位於由 \((2,1)\) 上升到 \((4,5)\) 那段的中點。其高度為 1 與 5 的中間值：</span></p>
+    <p class="eq">\[ h(3)=\frac{1+5}{2}=3. \]</p>
+
+    <p><span class="en"><strong>(5) Smallest output.</strong> The curve falls and then rises, so its lowest point is the corner where the two segments meet. That happens at \(x=2\), where the height is \(1\):</span><span class="zh"><strong>(5) 最小輸出。</strong>曲線先降後升，故最低點是兩段相接的轉角處，發生在 \(x=2\)，高度為 \(1\)：</span></p>
+    <p class="eq">\[ \text{smallest output } h(2)=1 \text{ at } x=2. \]</p>
+
+    <p><span class="en"><strong>Sense check.</strong> The smallest output \(1\) is exactly the bottom of the range \([1,7]\), and the largest output \(7\) is the top, taken at the left endpoint \(x=0\). The two readings \(h(1)=4\) and \(h(3)=3\) both lie inside \([1,7]\), as every output must. Everything is consistent.</span><span class="zh"><strong>合理性檢查。</strong>最小輸出 \(1\) 恰為值域 \([1,7]\) 的下界，最大輸出 \(7\) 為上界，取於左端點 \(x=0\)。兩個讀值 \(h(1)=4\) 與 \(h(3)=3\) 都落在 \([1,7]\) 內，符合每個輸出都應落在值域中的要求。一切一致。</span></p>
+  </details>
+
+  <!-- ---------- Exercise 2: an open endpoint ---------- -->
+  <h3><span class="en">Exercise 2 &middot; An open endpoint</span><span class="zh">練習 2 &middot; 一個空心端點</span></h3>
+
+  <p><span class="en">Here is a function \(m\) made of two straight segments that dip and rise back up. The <strong>left</strong> end \(\bigl(0,6\bigr)\) is <strong>filled</strong> &#9679;, but the <strong>right</strong> end \(\bigl(4,6\bigr)\) is an <strong>open</strong> dot &#9675;. Read carefully: this open dot is the whole point of the exercise.</span><span class="zh">這是函數 \(m\)，由兩段先降後升的直線構成。<strong>左</strong>端 \(\bigl(0,6\bigr)\) 為<strong>實心</strong> &#9679;，但<strong>右</strong>端 \(\bigl(4,6\bigr)\) 為<strong>空心</strong>點 &#9675;。請仔細判讀：這個空心點正是本練習的重點。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="m-title m-desc" viewBox="0 0 600 460" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="m-title">Graph of the exercise function m</title>
+      <desc id="m-desc">A function made of two line segments. It starts at a filled point at x equals 0 height 6, falls to a low filled point at x equals 2 height 2, then rises to an open point at x equals 4 height 6. No values are marked; the reader must read them.</desc>
+      <defs>
+        <marker id="axisarrow-m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+        </marker>
+        <style>
+          .axis { stroke: var(--ink); stroke-width: 2; marker-end: url(#axisarrow-m); }
+          .arrowhead { fill: var(--ink); }
+          .grid { stroke: var(--grid); stroke-width: 1; }
+          .curve { stroke: var(--hdl-blue); stroke-width: 3; fill: none; }
+          .guide { stroke: var(--guide); stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+          .hole { stroke: var(--hdl-blue); stroke-width: 3; fill: var(--diagram-bg); }
+          .fillpt { fill: var(--hdl-blue); }
+          .lbl { font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); }
+          .tick { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .small { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--guide); }
+        </style>
+      </defs>
+
+      <!-- grid -->
+      <line class="grid" x1="134" y1="40" x2="134" y2="424"></line>
+      <line class="grid" x1="198" y1="40" x2="198" y2="424"></line>
+      <line class="grid" x1="262" y1="40" x2="262" y2="424"></line>
+      <line class="grid" x1="326" y1="40" x2="326" y2="424"></line>
+      <line class="grid" x1="390" y1="40" x2="390" y2="424"></line>
+      <line class="grid" x1="454" y1="40" x2="454" y2="424"></line>
+      <line class="grid" x1="70" y1="328" x2="518" y2="328"></line>
+      <line class="grid" x1="70" y1="232" x2="518" y2="232"></line>
+      <line class="grid" x1="70" y1="136" x2="518" y2="136"></line>
+
+      <!-- axes -->
+      <line class="axis" x1="134" y1="424" x2="134" y2="24"></line>
+      <line class="axis" x1="70" y1="424" x2="540" y2="424"></line>
+
+      <!-- the function m: (0,6) filled -> (2,2) filled -> (4,6) open -->
+      <path class="curve" d="M 134 136 L 262 328 L 390 136"></path>
+
+      <!-- endpoints and low point: (0,6) filled, (2,2) filled, (4,6) open -->
+      <circle class="fillpt" cx="134" cy="136" r="6"></circle>
+      <circle class="fillpt" cx="262" cy="328" r="6"></circle>
+      <circle class="hole"   cx="390" cy="136" r="6"></circle>
+
+      <!-- tick labels -->
+      <text class="tick" x="194" y="444">1</text>
+      <text class="tick" x="258" y="444">2</text>
+      <text class="tick" x="322" y="444">3</text>
+      <text class="tick" x="386" y="444">4</text>
+      <text class="tick" x="112" y="333">2</text>
+      <text class="tick" x="112" y="237">4</text>
+      <text class="tick" x="112" y="141">6</text>
+      <text class="lbl"  x="548" y="430">x</text>
+      <text class="lbl"  x="120" y="20">y</text>
+    </svg>
+  </div>
+
+  <p><span class="en">Using the graph of \(m\), answer all five parts:</span><span class="zh">利用 \(m\) 的圖形，回答以下五個小題：</span></p>
+  <ol class="concepts">
+    <li><span class="en">State the <strong>domain</strong> of \(m\) in interval notation. (Mind the open right end.)</span><span class="zh">以區間記號寫出 \(m\) 的<strong>定義域</strong>。（注意右側空心端。）</span></li>
+    <li><span class="en">State the <strong>range</strong> of \(m\) in interval notation.</span><span class="zh">以區間記號寫出 \(m\) 的<strong>值域</strong>。</span></li>
+    <li><span class="en">Find \(m(1)\).</span><span class="zh">求 \(m(1)\)。</span></li>
+    <li><span class="en">Find \(m(3)\).</span><span class="zh">求 \(m(3)\)。</span></li>
+    <li><span class="en">The height \(6\) is reached at the left end. Is it also reached at \(x=4\)? Explain using the open dot.</span><span class="zh">高度 \(6\) 在左端達到。在 \(x=4\) 處是否也達到？請用空心點說明。</span></li>
+  </ol>
+
+  <div class="hint"><strong><span class="en">Hint:</span><span class="zh">提示：</span></strong> <span class="en">The open dot at the right end means \(x=4\) is <em>not</em> in the domain, so the bracket on that side is round. For the range, the top height \(6\) is still included because the <em>left</em> end at \((0,6)\) is filled.</span><span class="zh">右端的空心點表示 \(x=4\) <em>不</em>在定義域內，故該側用小括號。至於值域，最高高度 \(6\) 仍被包含，因為<em>左</em>端 \((0,6)\) 是實心。</span></div>
+
+  <details class="solution">
+    <summary><span class="en">Show full solution</span><span class="zh">顯示完整解答</span></summary>
+
+    <p><span class="en"><strong>(1) Domain.</strong> The shadow on the \(x\)-axis runs from \(x=0\) to \(x=4\). The left end is filled (included) but the right end is open (excluded), so the right bracket is round:</span><span class="zh"><strong>(1) 定義域。</strong>在 \(x\) 軸的影子由 \(x=0\) 到 \(x=4\)。左端實心（含）、右端空心（不含），故右側用小括號：</span></p>
+    <p class="eq">\[ \text{domain}(m)=[0,4). \]</p>
+
+    <p><span class="en"><strong>(2) Range.</strong> The lowest height is the dip at \(y=2\) (a filled corner, included). The highest height is \(y=6\). Even though the right end \((4,6)\) is open, the <em>left</em> end \((0,6)\) is filled, so \(y=6\) is still produced and the top bracket is square:</span><span class="zh"><strong>(2) 值域。</strong>最低高度為凹點 \(y=2\)（實心轉角，含）。最高高度為 \(y=6\)。雖然右端 \((4,6)\) 為空心，但<em>左</em>端 \((0,6)\) 為實心，故 \(y=6\) 仍被取到，上界用中括號：</span></p>
+    <p class="eq">\[ \text{range}(m)=[2,6]. \]</p>
+
+    <p><span class="en"><strong>(3) \(m(1)\).</strong> \(x=1\) is halfway down the falling segment from \((0,6)\) to \((2,2)\), so the height is halfway between 6 and 2:</span><span class="zh"><strong>(3) \(m(1)\)。</strong>\(x=1\) 位於由 \((0,6)\) 下降到 \((2,2)\) 那段的中點，故高度為 6 與 2 的中間值：</span></p>
+    <p class="eq">\[ m(1)=\frac{6+2}{2}=4. \]</p>
+
+    <p><span class="en"><strong>(4) \(m(3)\).</strong> \(x=3\) is halfway up the rising segment from \((2,2)\) to \((4,6)\). The endpoint \((4,6)\) being open does <em>not</em> affect \(x=3\), which sits strictly inside the segment:</span><span class="zh"><strong>(4) \(m(3)\)。</strong>\(x=3\) 位於由 \((2,2)\) 上升到 \((4,6)\) 那段的中點。端點 \((4,6)\) 為空心並<em>不</em>影響 \(x=3\)，因為它嚴格落在線段內部：</span></p>
+    <p class="eq">\[ m(3)=\frac{2+6}{2}=4. \]</p>
+
+    <p><span class="en"><strong>(5) Is \(6\) reached at \(x=4\)?</strong> No. The dot at \((4,6)\) is <em>open</em>, so \(x=4\) is not in the domain and \(m(4)\) is undefined. The height \(6\) is reached only at the left end \(x=0\). The curve climbs toward \((4,6)\) and gets as close as you like, but never arrives there.</span><span class="zh"><strong>(5) \(6\) 在 \(x=4\) 處是否達到？</strong>否。\((4,6)\) 處的點為<em>空心</em>，故 \(x=4\) 不在定義域內，\(m(4)\) 無定義。高度 \(6\) 僅在左端 \(x=0\) 達到。曲線朝 \((4,6)\) 攀升、可任意接近，卻永遠到不了該點。</span></p>
+
+    <p><span class="en"><strong>Sense check.</strong> Both readings \(m(1)=4\) and \(m(3)=4\) lie inside the range \([2,6]\); the two segments are mirror images, so equal heights at \(x=1\) and \(x=3\) make sense. The smallest output \(2\) (at \(x=2\)) is the bottom of the range, exactly as it should be.</span><span class="zh"><strong>合理性檢查。</strong>兩個讀值 \(m(1)=4\) 與 \(m(3)=4\) 都落在值域 \([2,6]\) 內；兩段互為鏡像，故 \(x=1\) 與 \(x=3\) 高度相等合理。最小輸出 \(2\)（在 \(x=2\)）為值域下界，恰如預期。</span></p>
+  </details>
+
+  <div class="backlink"><a href="../../chapters/ch0-before-calculus.html"><span class="en">&larr; Chapter 0</span><span class="zh">&larr; 第 0 章</span></a> &nbsp;|&nbsp; <a href="../../index.html"><span class="en">Course Home</span><span class="zh">課程首頁</span></a></div>
+</main>
+<script src="../../js/ui.js"></script>
+</body>
+</html>

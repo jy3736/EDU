@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ch 2 The Derivative - Calculus I</title>
+<link rel="stylesheet" href="../css/style.css">
+<script>
+  /* Apply saved theme / language before paint to avoid a flash. */
+  (function () {
+    var d = document.documentElement, t, l;
+    try { t = localStorage.getItem("calc-theme"); } catch (e) {}
+    if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    d.setAttribute("data-theme", t);
+    try { l = localStorage.getItem("calc-lang"); } catch (e) {}
+    d.setAttribute("data-lang", l || "en");
+  })();
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="en">Calculus I &middot; Learn by Doing</span><span class="zh">微積分（一）&middot; 做中學</span></div>
+  <div class="sub"><span class="en">First-semester calculus for engineering &middot; Anton 10e</span><span class="zh">工程學系第一學期微積分 &middot; Anton 第 10 版</span></div>
+</header>
+<main class="container">
+  <div class="toolbar">
+    <button id="theme-toggle" type="button" aria-label="Toggle dark / light theme"></button>
+    <button id="lang-toggle" type="button" aria-label="Switch language English / 中文"></button>
+  </div>
+  <div class="breadcrumb"><a href="../index.html"><span class="en">Course Home</span><span class="zh">課程首頁</span></a> &rsaquo; <span class="en">Chapter 2</span><span class="zh">第 2 章</span></div>
+
+  <h1><span class="en">Chapter 2. The Derivative</span><span class="zh">第 2 章 &middot; 導數</span></h1>
+  <p><span class="en">The derivative measures instantaneous rate of change. These exercises take you from the slope of a secant line, to the derivative as a limit, to the function that returns the slope at every point, and finally to the rules that let you compute it quickly.</span><span class="zh">導數量度瞬時變化率。這些練習帶你從割線斜率出發，先以極限定義導數，再得到回傳每一點斜率的導函數，最後建立能快速計算導數的法則。</span></p>
+
+  <ol class="problist">
+    <li>
+      <span class="ptitle"><span class="en">Tangent line as a limit of secants</span><span class="zh">以割線極限求切線</span></span>
+      <span class="tag planned"><span class="en">planned</span><span class="zh">規劃中</span></span>
+      <div class="blurb"><span class="en">Watch secant slopes settle onto the tangent slope as the second point slides in.</span><span class="zh">當第二點逐漸靠近時，觀察割線斜率收斂到切線斜率。</span></div>
+    </li>
+    <li>
+      <span class="ptitle"><span class="en">Sketching f&prime; from the graph of f</span><span class="zh">由 f 的圖形描繪 f&prime;</span></span>
+      <span class="tag planned"><span class="en">planned</span><span class="zh">規劃中</span></span>
+      <div class="blurb"><span class="en">Read where the slope is positive, negative, or zero and draw the derivative graph.</span><span class="zh">判讀斜率為正、負或零之處，畫出導函數的圖形。</span></div>
+    </li>
+    <li>
+      <span class="ptitle"><span class="en">The power and sum rules</span><span class="zh">冪法則與和法則</span></span>
+      <span class="tag planned"><span class="en">planned</span><span class="zh">規劃中</span></span>
+      <div class="blurb"><span class="en">Differentiate polynomials term by term and check against the limit definition.</span><span class="zh">逐項對多項式求導，並與極限定義對照驗證。</span></div>
+    </li>
+    <li>
+      <span class="ptitle"><span class="en">The product and quotient rules</span><span class="zh">乘積與商法則</span></span>
+      <span class="tag planned"><span class="en">planned</span><span class="zh">規劃中</span></span>
+      <div class="blurb"><span class="en">See why the derivative of a product is not the product of the derivatives.</span><span class="zh">理解為何乘積的導數不是導數的乘積。</span></div>
+    </li>
+    <li>
+      <span class="ptitle"><span class="en">The chain rule</span><span class="zh">連鎖律</span></span>
+      <span class="tag planned"><span class="en">planned</span><span class="zh">規劃中</span></span>
+      <div class="blurb"><span class="en">Peel a composite function layer by layer, multiplying the rates as you go.</span><span class="zh">逐層拆解合成函數，沿途將各層變化率相乘。</span></div>
+    </li>
+  </ol>
+
+  <div class="backlink"><a href="ch1-limits-continuity.html"><span class="en">&larr; Chapter 1</span><span class="zh">&larr; 第 1 章</span></a> &nbsp;|&nbsp; <a href="../index.html"><span class="en">Course Home</span><span class="zh">課程首頁</span></a> &nbsp;|&nbsp; <a href="ch3-derivative-applications.html"><span class="en">Chapter 3 &rarr;</span><span class="zh">第 3 章 &rarr;</span></a></div>
+</main>
+<script src="../js/ui.js"></script>
+</body>
+</html>

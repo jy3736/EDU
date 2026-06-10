@@ -17,6 +17,13 @@
   --hint-bg: #fff8e6;
   --hint-line: #f0d68a;
   --hint-ink: #8a6d00;
+  /* table-of-contents sidebar width (kept in sync with the docked layout) */
+  --toc-w: 416px;
+  /* callout boxes: definition / rule / term / notice */
+  --cl-def-accent: #1f4e8c;  --cl-def-bg: #eef3fb;  --cl-def-ink: #1a4279;
+  --cl-rule-accent: #1e7d54; --cl-rule-bg: #e9f6ef; --cl-rule-ink: #14633f;
+  --cl-term-accent: #7a4fb0; --cl-term-bg: #f3eefb; --cl-term-ink: #5c3a8c;
+  --cl-note-accent: #c0392b; --cl-note-bg: #fdecea; --cl-note-ink: #9c2a1d;
 }
 
 html[data-theme="dark"] {
@@ -35,6 +42,10 @@ html[data-theme="dark"] {
   --hint-bg: #2a2410;
   --hint-line: #5c4d16;
   --hint-ink: #e8cf72;
+  --cl-def-accent: #4f8fe0;  --cl-def-bg: #14202f;  --cl-def-ink: #bcd6f5;
+  --cl-rule-accent: #4cbb8a; --cl-rule-bg: #11241c; --cl-rule-ink: #9fe0c2;
+  --cl-term-accent: #b08fe0; --cl-term-bg: #1d1730; --cl-term-ink: #d6c2f5;
+  --cl-note-accent: #ff7a6b; --cl-note-bg: #2a1614; --cl-note-ink: #ffc2ba;
 }
 
 * { box-sizing: border-box; }
@@ -46,13 +57,28 @@ body {
   background: var(--page-bg);
   line-height: 1.6;
   transition: background-color .2s ease, color .2s ease;
+  /* stop the elastic over-scroll bounce at the page top/bottom, which on
+     macOS / iOS makes fixed elements (the sidebar, the sticky header) appear
+     to slide away when you scroll past the beginning or end of the page */
+  overscroll-behavior-y: none;
 }
 
 header.topbar {
   background: var(--hdl-blue);
   color: #fff;
-  padding: 14px 22px;
+  padding: 12px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 18px;
+  flex-wrap: wrap;
+  /* keep the bar (and its controls) pinned to the top while the page scrolls */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
 }
+header.topbar .topbar-text { min-width: 0; }
 header.topbar .brand { font-weight: 700; font-size: 1.15rem; letter-spacing: .3px; }
 header.topbar .sub { color: #cdddf2; font-size: .85rem; }
 
@@ -136,6 +162,55 @@ details.solution > :last-child { margin-bottom: 14px; }
 }
 .hint strong { color: var(--hint-ink); }
 
+/* ---- callout boxes (definition / rule / term / notice) ----
+   Use to make a definition, rule, key term, or notice jump out of the prose.
+   Markup:
+     <div class="callout definition">            (or rule / term / notice)
+       <p class="callout-title"><span class="en">Definition</span><span class="zh">定義</span></p>
+       <p> ... body, normal bilingual prose / equations ... </p>
+     </div>
+   Defaults to the "definition" flavor if no variant class is given. */
+.callout {
+  --cl-accent: var(--cl-def-accent);
+  --cl-bg: var(--cl-def-bg);
+  --cl-ink: var(--cl-def-ink);
+  --cl-icon: "\1F4D8";                 /* 📘 */
+  background: var(--cl-bg);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--cl-accent);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 18px 0;
+}
+.callout.rule   { --cl-accent: var(--cl-rule-accent); --cl-bg: var(--cl-rule-bg); --cl-ink: var(--cl-rule-ink); --cl-icon: "\1F4D0"; } /* 📐 */
+.callout.term   { --cl-accent: var(--cl-term-accent); --cl-bg: var(--cl-term-bg); --cl-ink: var(--cl-term-ink); --cl-icon: "\1F511"; } /* 🔑 */
+.callout.notice { --cl-accent: var(--cl-note-accent); --cl-bg: var(--cl-note-bg); --cl-ink: var(--cl-note-ink); --cl-icon: "\26A0\FE0F"; } /* ⚠️ */
+
+/* tidy spacing of the first/last child so the box hugs its content */
+.callout > :first-child { margin-top: 0; }
+.callout > :last-child { margin-bottom: 0; }
+
+.callout-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-weight: 700;
+  font-size: .82rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--cl-ink);
+  margin: 0 0 8px;
+}
+.callout-title::before {
+  content: var(--cl-icon);
+  font-size: 1rem;
+  text-transform: none;
+  line-height: 1;
+}
+/* let strong / em inside a callout pick up its accent colour */
+.callout strong { color: var(--cl-ink); }
+.callout-title + * { margin-top: 0; }
+
 .backlink { display: inline-block; margin-top: 32px; font-size: .9rem; }
 .backlink a { color: var(--accent); text-decoration: none; }
 .backlink a:hover { text-decoration: underline; }
@@ -165,34 +240,205 @@ ol.problist li::before {
 ol.problist a { font-size: 1.05rem; font-weight: 600; color: var(--accent); text-decoration: none; }
 ol.problist a:hover { text-decoration: underline; }
 ol.problist .blurb { color: var(--muted); font-size: .9rem; margin-top: 2px; }
+ol.problist .ptitle { font-size: 1.05rem; font-weight: 600; color: var(--ink); }
+
+/* ---- chapter cards on the course home page ---- */
+ul.chapters { list-style: none; padding-left: 0; margin: 18px 0 0; }
+ul.chapters > li {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px 18px 16px 66px;
+  margin: 12px 0;
+  position: relative;
+  background: var(--card-bg);
+  transition: box-shadow .15s, border-color .15s;
+}
+ul.chapters > li:hover { border-color: var(--hdl-blue); box-shadow: 0 2px 10px rgba(31,78,140,.12); }
+ul.chapters > li .ch-num {
+  position: absolute;
+  left: 16px; top: 16px;
+  width: 36px; height: 36px;
+  background: var(--hdl-blue);
+  color: #fff;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.05rem; font-weight: 700;
+}
+ul.chapters .ch-title { font-size: 1.1rem; font-weight: 700; color: var(--accent); text-decoration: none; }
+ul.chapters .ch-title:hover { text-decoration: underline; }
+ul.chapters .pages { color: var(--muted); font-size: .78rem; font-weight: 500; margin-left: 8px; }
+ul.chapters .blurb { color: var(--muted); font-size: .9rem; margin-top: 4px; }
+ul.chapters .topics { color: var(--muted); font-size: .82rem; margin-top: 6px; }
+ul.chapters .topics strong { color: var(--ink); font-weight: 600; }
+
+/* ---- ready / planned status pill ---- */
+.tag {
+  display: inline-block; font-size: .68rem; font-weight: 700;
+  padding: 1px 8px; border-radius: 999px; margin-left: 8px;
+  vertical-align: middle; letter-spacing: .3px;
+}
+.tag.ready { background: var(--hdl-blue); color: #fff; }
+.tag.planned { background: transparent; color: var(--muted); border: 1px dashed var(--line); }
 
 footer.site { color: var(--muted); font-size: .82rem; border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px; }
 footer.site a { color: var(--accent); }
 
 /* ---- toolbar with theme / language toggles ---- */
-.toolbar {
+/* The in-page toolbar is now redundant: ui.js relocates its buttons into the
+   blue header bar. Hide it (controls need JS to work anyway, so a no-JS page
+   would have non-functional buttons regardless). */
+.toolbar { display: none; }
+
+/* ---- controls relocated into the blue header bar (by ui.js) ---- */
+.topbar-controls {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
   gap: 8px;
-  margin: 6px 0 2px;
+  flex-wrap: wrap;
+  margin-left: auto;
 }
-.toolbar button {
+.topbar-controls button {
   font: inherit;
   font-size: .82rem;
   font-weight: 600;
   cursor: pointer;
   color: var(--ink);
   background: var(--card-bg);
-  border: 1px solid var(--line);
+  border: 1px solid transparent;
   border-radius: 999px;
   padding: 5px 13px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: border-color .15s, background-color .15s, color .15s;
+  transition: background-color .15s, color .15s, box-shadow .15s;
 }
-.toolbar button:hover { border-color: var(--hdl-blue); }
-.toolbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.topbar-controls button:hover { box-shadow: 0 0 0 2px rgba(255, 255, 255, .55); }
+.topbar-controls button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* zoom slider group: a translucent pill holding A · slider · A · percent */
+.topbar-controls .zoom-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(255, 255, 255, .15);
+  border-radius: 999px;
+  padding: 3px 6px 3px 12px;
+}
+.topbar-controls .zoom-end { color: #eaf1fb; font-weight: 700; line-height: 1; }
+.topbar-controls .zoom-end { font-size: .78rem; }
+.topbar-controls .zoom-end-lg { font-size: 1.15rem; }
+#zoom-slider {
+  width: 118px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: #fff;          /* white track fill + thumb on the blue bar */
+}
+#zoom-slider:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 4px; }
+#zoom-reset {
+  min-width: 52px;
+  justify-content: center;
+  font-variant-numeric: tabular-nums;
+  padding: 4px 10px;
+}
+
+/* the content area (main.container) is scaled via `zoom`; keep the figures fluid */
+.diagram svg { width: 100%; height: auto; }
+
+/* ---- table-of-contents sidebar (built by ui.js) ---- */
+.toc {
+  position: fixed;
+  top: var(--header-h, 64px);
+  left: 0;
+  bottom: 0;
+  width: var(--toc-w, 416px);
+  max-width: 88vw;
+  background: var(--card-bg);
+  border-right: 1px solid var(--line);
+  box-shadow: 2px 0 18px rgba(0, 0, 0, .16);
+  z-index: 90;                      /* below the sticky header (100) */
+  padding: 10px 0 20px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  transform: translateX(-100%);
+  transition: transform .22s ease;
+}
+html.toc-open .toc { transform: translateX(0); }
+.toc-title {
+  margin: 6px 18px 8px;
+  font-size: .94rem;          /* 1.3x */
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc a {
+  display: block;
+  padding: 7px 18px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 1.17rem;           /* 1.3x */
+  line-height: 1.35;
+  white-space: nowrap;          /* never wrap, even when the active item is bold */
+  border-left: 3px solid transparent;
+  transition: background-color .12s, color .12s, border-color .12s;
+}
+.toc a:hover { background: var(--code-bg); }
+.toc a.lvl-3 { padding-left: 36px; font-size: 1.09rem; color: var(--muted); }  /* 1.3x */
+.toc a.active {
+  border-left-color: var(--hdl-blue);
+  color: var(--accent);
+  font-weight: 600;
+  background: var(--code-bg);
+}
+
+/* chevron handle that shows / hides the catalog, attached to the sidebar edge.
+   Closed: sits at the left screen edge showing ». Open: rides the sidebar's
+   right edge (left: --toc-w) showing «. The arrow points the way the panel moves. */
+#toc-edge {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 95;                     /* above the sidebar (90), below the header (100) */
+  width: 26px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  background: var(--hdl-blue);
+  border: 1px solid var(--hdl-blue-dark);
+  border-left: none;
+  border-radius: 0 9px 9px 0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, .18);
+  cursor: pointer;
+  transition: left .22s ease, background-color .15s;
+}
+#toc-edge:hover { background: var(--hdl-blue-dark); }
+#toc-edge:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+html.toc-open #toc-edge { left: var(--toc-w, 416px); }
+@media (max-width: 767px) {
+  /* the sidebar overlays on phones, so cap the handle travel at the panel width */
+  html.toc-open #toc-edge { left: min(var(--toc-w, 416px), 88vw); }
+}
+
+/* Dock the sidebar instead of letting it overlay: reserve its width on the
+   left so the content is never covered, and let `main.container { margin: auto }`
+   re-centre the content within the remaining space. The header stays full
+   width via a compensating negative margin. Content is therefore horizontally
+   centred in both states (just within a narrower band while the sidebar is
+   open). Below 768px the panel overlays (no room to dock on phones). The
+   layout snaps instantly (only the sidebar itself slides) to avoid a transient
+   horizontal-overflow flash. */
+@media (min-width: 768px) {
+  html.toc-open body { padding-left: var(--toc-w); }
+  html.toc-open header.topbar { margin-left: calc(-1 * var(--toc-w)); width: calc(100% + var(--toc-w)); }
+}
 
 /* ---- bilingual content switch (EN default, 中文 on demand) ---- */
 .zh { display: none; }

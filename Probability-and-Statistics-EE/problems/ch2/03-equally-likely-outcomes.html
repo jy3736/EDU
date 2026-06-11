@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Equally Likely Outcomes - Probability and Statistics</title>
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../vendor/katex/katex.min.css">
+<script defer src="../../vendor/katex/katex.min.js"></script>
+<script defer src="../../vendor/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../js/render-math.js"></script>
+<script defer src="../../js/run-sim.js"></script>
+<script>
+  (function () {
+    var d = document.documentElement, t, l;
+    try { t = localStorage.getItem("prob-theme"); } catch (e) {}
+    if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    d.setAttribute("data-theme", t);
+    try { l = localStorage.getItem("prob-lang"); } catch (e) {}
+    d.setAttribute("data-lang", l || "en");
+  })();
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="en">Probability and Statistics &middot; Learn by Doing</span><span class="zh">機率與統計 &middot; 做中學</span></div>
+  <div class="sub"><span class="en">For Electronic Engineering &middot; STUST &middot; 36D00301</span><span class="zh">電子工程系 &middot; 南臺科技大學 &middot; 36D00301</span></div>
+</header>
+<main class="container">
+  <div class="toolbar">
+    <button id="theme-toggle" type="button" aria-label="Toggle dark / light theme"></button>
+    <button id="lang-toggle" type="button" aria-label="Switch language English / 中文"></button>
+  </div>
+  <div class="breadcrumb"><a href="../../index.html"><span class="en">Course Home</span><span class="zh">課程首頁</span></a> &rsaquo; <a href="../../chapters/ch2-counting-probability.html"><span class="en">Chapter 2</span><span class="zh">第 2 章</span></a> &rsaquo; <span class="en">Equally Likely Outcomes</span><span class="zh">等可能結果</span></div>
+  <h1><span class="en">2.3 Equally Likely Outcomes</span><span class="zh">2.3 等可能結果</span></h1>
+
+  <h2><span class="en">1 &middot; Concept and Fundamental Knowledge</span><span class="zh">1 &middot; 概念與基礎知識</span></h2>
+
+  <figure class="mascot-panel">
+    <img src="../../assets/mascots/yu24.png" alt="Mascot with a probability formula and coin">
+    <figcaption><span class="en"><strong>Probability view:</strong> once the outcomes are equally likely, probability becomes a ratio of favourable outcomes to total outcomes.</span><span class="zh"><strong>機率觀點：</strong>一旦結果等可能，機率就可以寫成有利結果數除以總結果數。</span></figcaption>
+  </figure>
+
+  <p><span class="en"><strong>Why an electronic engineer needs this.</strong> Random test vectors, scrambled data, and randomized trials are often designed so that outcomes are equally likely. Then a probability question becomes a counting question.</span><span class="zh"><strong>電子工程師為什麼需要這個。</strong>隨機測試向量、擾碼資料與隨機化試驗常常刻意設計成等可能。這時候機率問題就會回到「怎麼數」。</span></p>
+
+  <div class="callout definition">
+    <p class="callout-title"><span class="en">Definition &middot; equally likely outcomes</span><span class="zh">定義 &middot; 等可能結果</span></p>
+    <p><span class="en">Outcomes in a finite sample space \(S\) are <strong>equally likely</strong> when every single outcome has probability \(1/\lvert S\rvert\). In that case, events are measured by counting outcomes.</span><span class="zh">有限樣本空間 \(S\) 中，若每個單一結果的機率都是 \(1/\lvert S\rvert\)，就稱為<strong>等可能結果</strong>。這時事件機率就可以用計數算出來。</span></p>
+  </div>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="ratio-title ratio-desc" viewBox="0 0 600 270" width="100%" style="max-width:600px;height:auto;border:1px solid var(--line);border-radius:6px;background:var(--diagram-bg);padding:8px;">
+      <title id="ratio-title">Favourable outcomes out of total outcomes</title>
+      <desc id="ratio-desc">A sample-space rectangle contains ten dots. Four dots are filled blue to represent favourable outcomes.</desc>
+      <defs><style>.space{fill:none;stroke:var(--ink);stroke-width:1.6}.dot{fill:var(--card-bg);stroke:var(--ink);stroke-width:2}.hit{fill:var(--hdl-blue);stroke:var(--hdl-blue);stroke-width:2}.lbl{font:700 16px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:var(--muted)}.small{font:700 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:var(--ink);text-anchor:middle}</style></defs>
+      <rect class="space" x="40" y="40" width="520" height="180" rx="10"></rect><text class="lbl" x="58" y="68">S</text>
+      <circle class="hit" cx="120" cy="100" r="18"></circle><circle class="hit" cx="180" cy="100" r="18"></circle><circle class="hit" cx="240" cy="100" r="18"></circle><circle class="hit" cx="300" cy="100" r="18"></circle>
+      <circle class="dot" cx="360" cy="100" r="18"></circle><circle class="dot" cx="420" cy="100" r="18"></circle><circle class="dot" cx="480" cy="100" r="18"></circle>
+      <circle class="dot" cx="180" cy="165" r="18"></circle><circle class="dot" cx="300" cy="165" r="18"></circle><circle class="dot" cx="420" cy="165" r="18"></circle>
+      <text class="small en" x="300" y="245">4 favourable out of 10 total</text><text class="small zh" x="300" y="245">10 個結果中有 4 個有利</text>
+    </svg>
+  </div>
+
+  <div class="callout term">
+    <p class="callout-title"><span class="en">Key terms &middot; favourable and total</span><span class="zh">重要名詞 &middot; 有利與總數</span></p>
+    <ul class="concepts">
+      <li><span class="en"><strong>Total outcomes.</strong> \(\lvert S\rvert\), the size of the sample space.</span><span class="zh"><strong>總結果數。</strong>\(\lvert S\rvert\)，也就是樣本空間大小。</span></li>
+      <li><span class="en"><strong>Favourable outcomes.</strong> \(\lvert A\rvert\), the number of outcomes that make event \(A\) happen.</span><span class="zh"><strong>有利結果數。</strong>\(\lvert A\rvert\)，也就是使事件 \(A\) 發生的結果數。</span></li>
+      <li><span class="en"><strong>Uniform model.</strong> A model where all outcomes in \(S\) are equally likely.</span><span class="zh"><strong>均勻模型。</strong>樣本空間 \(S\) 中所有結果等可能的模型。</span></li>
+    </ul>
+  </div>
+
+  <div class="sim">
+    <p class="sim-title"><span class="en">Simulate it first</span><span class="zh">先模擬看看</span></p>
+    <p><span class="en"><strong>Predict:</strong> if two fair dice are rolled, what fraction of trials have sum 7?</span><span class="zh"><strong>預測：</strong>若擲兩顆公正骰子，點數和為 7 的比例會是多少？</span></p>
+    <pre><code class="language-python">import numpy as np
+rng = np.random.default_rng(0)
+
+d1 = rng.integers(1, 7, size=200_000)
+d2 = rng.integers(1, 7, size=200_000)
+event = (d1 + d2 == 7)
+print(event.mean())</code></pre>
+    <p class="sim-note"><span class="en"><strong>Observed:</strong> about \(0.167\), matching \(6/36=1/6\). The sample space has 36 ordered pairs.</span><span class="zh"><strong>觀察結果：</strong>約 \(0.167\)，符合 \(6/36=1/6\)。樣本空間有 36 個有序對。</span></p>
+  </div>
+
+  <div class="callout rule">
+    <p class="callout-title"><span class="en">Rule &middot; counting probability</span><span class="zh">規則 &middot; 計數機率</span></p>
+    <p class="eq">\[ P(A)=\frac{\lvert A\rvert}{\lvert S\rvert}\qquad\text{when all outcomes in }S\text{ are equally likely}. \]</p>
+    <p><span class="en">The formula is powerful but conditional: it only works after you have a sample space whose outcomes are equally likely.</span><span class="zh">這個公式很好用，但有前提：必須先確認樣本空間中的每個結果都等可能。</span></p>
+  </div>
+
+  <h2><span class="en">2 &middot; Worked Examples</span><span class="zh">2 &middot; 範例（詳解）</span></h2>
+
+  <figure class="mascot-panel mascot-right">
+    <img src="../../assets/mascots/yu10.png" alt="Mascot studying at a laptop">
+    <figcaption><span class="en"><strong>Example walkthrough:</strong> identify \(S\), count \(S\), count the event, then divide.</span><span class="zh"><strong>範例演練：</strong>辨認 \(S\)、數出 \(S\)、數出事件，再相除。</span></figcaption>
+  </figure>
+
+  <h3><span class="en">Example 1 &middot; One fair die</span><span class="zh">範例 1 &middot; 一顆公正骰子</span></h3>
+  <p><span class="en">Roll one fair die. Find the probability of rolling at least 5.</span><span class="zh">擲一顆公正骰子。求擲出至少 5 點的機率。</span></p>
+  <div class="diagram">
+    <svg role="img" aria-labelledby="die-title die-desc" viewBox="0 0 600 250" width="100%" style="max-width:600px;height:auto;border:1px solid var(--line);border-radius:6px;background:var(--diagram-bg);padding:8px;">
+      <title id="die-title">One die sample space with 5 and 6 highlighted</title>
+      <desc id="die-desc">A sample-space rectangle contains outcomes 1 through 6, with 5 and 6 highlighted.</desc>
+      <defs><style>.space{fill:none;stroke:var(--ink);stroke-width:1.6}.dot{fill:var(--card-bg);stroke:var(--ink);stroke-width:2}.hit{fill:var(--hdl-blue);stroke:var(--hdl-blue);stroke-width:2}.lbl{font:700 16px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:var(--ink);text-anchor:middle;dominant-baseline:central}.wlbl{font:700 16px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:var(--on-accent);text-anchor:middle;dominant-baseline:central}</style></defs>
+      <rect class="space" x="50" y="50" width="500" height="140" rx="10"></rect>
+      <circle class="dot" cx="120" cy="120" r="24"></circle><text class="lbl" x="120" y="120">1</text>
+      <circle class="dot" cx="190" cy="120" r="24"></circle><text class="lbl" x="190" y="120">2</text>
+      <circle class="dot" cx="260" cy="120" r="24"></circle><text class="lbl" x="260" y="120">3</text>
+      <circle class="dot" cx="330" cy="120" r="24"></circle><text class="lbl" x="330" y="120">4</text>
+      <circle class="hit" cx="400" cy="120" r="24"></circle><text class="wlbl" x="400" y="120">5</text>
+      <circle class="hit" cx="470" cy="120" r="24"></circle><text class="wlbl" x="470" y="120">6</text>
+    </svg>
+  </div>
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr><th><span class="en">Quantity</span><span class="zh">量</span></th><th><span class="en">Value</span><span class="zh">值</span></th><th><span class="en">How you read it</span><span class="zh">判讀方式</span></th></tr>
+    <tr><td>\(S\)</td><td>\(\{1,2,3,4,5,6\}\)</td><td><span class="en">The six die faces are equally likely.</span><span class="zh">六個骰面等可能。</span></td></tr>
+    <tr><td>\(A\)</td><td>\(\{5,6\}\)</td><td><span class="en">At least 5 means 5 or 6.</span><span class="zh">至少 5 表示 5 或 6。</span></td></tr>
+    <tr><td>\(P(A)\)</td><td>\(2/6=1/3\)</td><td><span class="en">Two favourable outcomes out of six.</span><span class="zh">六個結果中有兩個有利。</span></td></tr>
+  </table>
+  <p><span class="en">The plain case shows the full method: count favourable outcomes and divide by total outcomes.</span><span class="zh">最基本的情況就是完整流程：先數有利結果，再除以總結果數。</span></p>
+
+  <h3><span class="en">Example 2 &middot; Sum of two dice</span><span class="zh">範例 2 &middot; 兩顆骰子的點數和</span></h3>
+  <p><span class="en">Roll two fair dice. Find the probability that the sum is 7.</span><span class="zh">擲兩顆公正骰子。求點數和為 7 的機率。</span></p>
+  <div class="diagram">
+    <svg role="img" aria-labelledby="twodice-title twodice-desc" viewBox="0 0 600 430" width="100%" style="max-width:600px;height:auto;border:1px solid var(--line);border-radius:6px;background:var(--diagram-bg);padding:8px;">
+      <title id="twodice-title">Six by six dice grid with sum seven highlighted</title>
+      <desc id="twodice-desc">A six by six grid represents ordered pairs from two dice. The six cells with sum seven are highlighted.</desc>
+      <defs><style>.cell{fill:var(--card-bg);stroke:var(--line);stroke-width:1}.hit{fill:var(--hdl-blue);fill-opacity:.28;stroke:var(--hdl-blue);stroke-width:1.5}.tick{font:13px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:var(--muted);text-anchor:middle;dominant-baseline:central}.small{font:700 14px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:var(--ink);text-anchor:middle}</style></defs>
+      <text class="small" x="300" y="32">36 ordered pairs</text>
+      <g transform="translate(120,60)">
+        <text class="tick" x="-30" y="-20">d1</text><text class="tick" x="160" y="330">d2</text>
+        <g>
+          <rect class="cell" x="0" y="0" width="45" height="45"></rect><rect class="cell" x="45" y="0" width="45" height="45"></rect><rect class="cell" x="90" y="0" width="45" height="45"></rect><rect class="cell" x="135" y="0" width="45" height="45"></rect><rect class="cell" x="180" y="0" width="45" height="45"></rect><rect class="hit" x="225" y="0" width="45" height="45"></rect>
+          <rect class="cell" x="0" y="45" width="45" height="45"></rect><rect class="cell" x="45" y="45" width="45" height="45"></rect><rect class="cell" x="90" y="45" width="45" height="45"></rect><rect class="cell" x="135" y="45" width="45" height="45"></rect><rect class="hit" x="180" y="45" width="45" height="45"></rect><rect class="cell" x="225" y="45" width="45" height="45"></rect>
+          <rect class="cell" x="0" y="90" width="45" height="45"></rect><rect class="cell" x="45" y="90" width="45" height="45"></rect><rect class="cell" x="90" y="90" width="45" height="45"></rect><rect class="hit" x="135" y="90" width="45" height="45"></rect><rect class="cell" x="180" y="90" width="45" height="45"></rect><rect class="cell" x="225" y="90" width="45" height="45"></rect>
+          <rect class="cell" x="0" y="135" width="45" height="45"></rect><rect class="cell" x="45" y="135" width="45" height="45"></rect><rect class="hit" x="90" y="135" width="45" height="45"></rect><rect class="cell" x="135" y="135" width="45" height="45"></rect><rect class="cell" x="180" y="135" width="45" height="45"></rect><rect class="cell" x="225" y="135" width="45" height="45"></rect>
+          <rect class="cell" x="0" y="180" width="45" height="45"></rect><rect class="hit" x="45" y="180" width="45" height="45"></rect><rect class="cell" x="90" y="180" width="45" height="45"></rect><rect class="cell" x="135" y="180" width="45" height="45"></rect><rect class="cell" x="180" y="180" width="45" height="45"></rect><rect class="cell" x="225" y="180" width="45" height="45"></rect>
+          <rect class="hit" x="0" y="225" width="45" height="45"></rect><rect class="cell" x="45" y="225" width="45" height="45"></rect><rect class="cell" x="90" y="225" width="45" height="45"></rect><rect class="cell" x="135" y="225" width="45" height="45"></rect><rect class="cell" x="180" y="225" width="45" height="45"></rect><rect class="cell" x="225" y="225" width="45" height="45"></rect>
+        </g>
+        <text class="tick" x="-15" y="22">1</text><text class="tick" x="-15" y="67">2</text><text class="tick" x="-15" y="112">3</text><text class="tick" x="-15" y="157">4</text><text class="tick" x="-15" y="202">5</text><text class="tick" x="-15" y="247">6</text>
+        <text class="tick" x="22" y="292">1</text><text class="tick" x="67" y="292">2</text><text class="tick" x="112" y="292">3</text><text class="tick" x="157" y="292">4</text><text class="tick" x="202" y="292">5</text><text class="tick" x="247" y="292">6</text>
+      </g>
+    </svg>
+  </div>
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr><th><span class="en">Quantity</span><span class="zh">量</span></th><th><span class="en">Value</span><span class="zh">值</span></th><th><span class="en">How you read it</span><span class="zh">判讀方式</span></th></tr>
+    <tr><td>\(\lvert S\rvert\)</td><td>\(36\)</td><td><span class="en">Two ordered dice give \(6\cdot 6\) outcomes.</span><span class="zh">兩顆骰子要看成有順序的對，所以有 \(6\cdot 6\) 個結果。</span></td></tr>
+    <tr><td>\(\lvert A\rvert\)</td><td>\(6\)</td><td><span class="en">The highlighted pairs are \((1,6),(2,5),\ldots,(6,1)\).</span><span class="zh">著色的有序對是 \((1,6),(2,5),\ldots,(6,1)\)。</span></td></tr>
+    <tr><td>\(P(A)\)</td><td>\(6/36=1/6\)</td><td><span class="en">Six favourable pairs out of thirty-six.</span><span class="zh">三十六個對中有六個有利。</span></td></tr>
+  </table>
+  <p><span class="en">The new wrinkle is that the sample space uses ordered pairs, not the unordered sums.</span><span class="zh">這題的重點是樣本空間要用有序對，不能只看點數和本身。</span></p>
+
+  <h3><span class="en">Example 3 &middot; Exactly two high bits in a byte (engineering)</span><span class="zh">範例 3 &middot; 位元組中恰有兩個高位元（工程應用）</span></h3>
+  <p><span class="en">A random 8-bit byte is equally likely to be any of the \(2^8\) patterns. Find the probability that exactly two bits are 1.</span><span class="zh">一個隨機 8 位元位元組，等可能落在 \(2^8\) 種樣式之一。求恰有兩個位元為 1 的機率。</span></p>
+  <div class="diagram">
+    <svg role="img" aria-labelledby="byte-title byte-desc" viewBox="0 0 600 220" width="100%" style="max-width:600px;height:auto;border:1px solid var(--line);border-radius:6px;background:var(--diagram-bg);padding:8px;">
+      <title id="byte-title">Eight bit positions with two selected</title>
+      <desc id="byte-desc">Eight bit positions are shown. Two positions are highlighted to represent choosing where the ones occur.</desc>
+      <defs><style>.slot{fill:var(--card-bg);stroke:var(--ink);stroke-width:2}.hit{fill:var(--hdl-blue);fill-opacity:.18;stroke:var(--hdl-blue);stroke-width:2.5}.lbl{font:700 14px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:var(--ink);text-anchor:middle;dominant-baseline:central}.small{font:700 14px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:var(--muted);text-anchor:middle}</style></defs>
+      <rect class="slot" x="70" y="75" width="48" height="48" rx="7"></rect><text class="lbl" x="94" y="99">7</text>
+      <rect class="hit" x="125" y="75" width="48" height="48" rx="7"></rect><text class="lbl" x="149" y="99">6</text>
+      <rect class="slot" x="180" y="75" width="48" height="48" rx="7"></rect><text class="lbl" x="204" y="99">5</text>
+      <rect class="slot" x="235" y="75" width="48" height="48" rx="7"></rect><text class="lbl" x="259" y="99">4</text>
+      <rect class="hit" x="290" y="75" width="48" height="48" rx="7"></rect><text class="lbl" x="314" y="99">3</text>
+      <rect class="slot" x="345" y="75" width="48" height="48" rx="7"></rect><text class="lbl" x="369" y="99">2</text>
+      <rect class="slot" x="400" y="75" width="48" height="48" rx="7"></rect><text class="lbl" x="424" y="99">1</text>
+      <rect class="slot" x="455" y="75" width="48" height="48" rx="7"></rect><text class="lbl" x="479" y="99">0</text>
+      <text class="small en" x="300" y="165">Choose the two positions that hold 1.</text><text class="small zh" x="300" y="165">選出哪兩個位置放 1。</text>
+    </svg>
+  </div>
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr><th><span class="en">Quantity</span><span class="zh">量</span></th><th><span class="en">Value</span><span class="zh">值</span></th><th><span class="en">How you read it</span><span class="zh">判讀方式</span></th></tr>
+    <tr><td>\(\lvert S\rvert\)</td><td>\(2^8=256\)</td><td><span class="en">Each of 8 bits has two choices.</span><span class="zh">8 個位元各有兩種選擇。</span></td></tr>
+    <tr><td>\(\lvert A\rvert\)</td><td>\(\binom{8}{2}=28\)</td><td><span class="en">Choose which two bit positions contain 1.</span><span class="zh">選出哪兩個位元位置為 1。</span></td></tr>
+    <tr><td>\(P(A)\)</td><td>\(28/256=7/64\)</td><td><span class="en">Favourable byte patterns over all byte patterns.</span><span class="zh">有利的位元組樣式數，除以所有位元組樣式數。</span></td></tr>
+  </table>
+  <p><span class="en">The engineering application combines counting and probability: first choose positions, then divide by all possible bytes.</span><span class="zh">這個工程例子把計數和機率接在一起：先數出 1 的位置選法，再除以所有可能的位元組。</span></p>
+
+  <h2><span class="en">3 &middot; Exercises</span><span class="zh">3 &middot; 練習</span></h2>
+
+  <figure class="mascot-panel">
+    <img src="../../assets/mascots/yu15.png" alt="Mascot writing in a notebook with books">
+    <figcaption><span class="en"><strong>Practice mode:</strong> write the sample space size and the event size before simplifying the fraction.</span><span class="zh"><strong>練習模式：</strong>先寫出樣本空間大小與事件大小，再化簡分數。</span></figcaption>
+  </figure>
+
+  <h3><span class="en">Exercise 1 &middot; A random card nibble</span><span class="zh">練習 1 &middot; 隨機四位元半位元組</span></h3>
+  <p><span class="en">A 4-bit nibble is chosen uniformly from all \(2^4\) bit patterns. Find the probability that exactly one bit is 1.</span><span class="zh">一個 4 位元半位元組會從所有 \(2^4\) 種位元樣式中等可能選取。求恰有一個位元為 1 的機率。</span></p>
+  <div class="diagram">
+    <svg role="img" aria-labelledby="x1eq-title x1eq-desc" viewBox="0 0 600 210" width="100%" style="max-width:600px;height:auto;border:1px solid var(--line);border-radius:6px;background:var(--diagram-bg);padding:8px;">
+      <title id="x1eq-title">Four bit positions for a nibble</title>
+      <desc id="x1eq-desc">Four blank bit positions are shown for counting exactly one high bit.</desc>
+      <defs><style>.slot{fill:var(--card-bg);stroke:var(--ink);stroke-width:2}.lbl{font:700 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:var(--muted);text-anchor:middle;dominant-baseline:central}</style></defs>
+      <rect class="slot" x="170" y="75" width="55" height="55" rx="8"></rect><text class="lbl" x="197" y="103">3</text>
+      <rect class="slot" x="245" y="75" width="55" height="55" rx="8"></rect><text class="lbl" x="272" y="103">2</text>
+      <rect class="slot" x="320" y="75" width="55" height="55" rx="8"></rect><text class="lbl" x="347" y="103">1</text>
+      <rect class="slot" x="395" y="75" width="55" height="55" rx="8"></rect><text class="lbl" x="422" y="103">0</text>
+    </svg>
+  </div>
+  <p><span class="en">Answer all five parts:</span><span class="zh">回答以下五個小題：</span></p>
+  <ol class="concepts">
+    <li><span class="en">Find \(\lvert S\rvert\).</span><span class="zh">求 \(\lvert S\rvert\)。</span></li>
+    <li><span class="en">Count the patterns with exactly one 1.</span><span class="zh">計算恰有一個 1 的樣式數。</span></li>
+    <li><span class="en">Find the probability.</span><span class="zh">求機率。</span></li>
+    <li><span class="en">List the favourable patterns.</span><span class="zh">列出有利樣式。</span></li>
+    <li><span class="en">Explain why the outcomes are equally likely.</span><span class="zh">說明為什麼結果等可能。</span></li>
+  </ol>
+  <div class="hint"><strong><span class="en">Hint:</span><span class="zh">提示：</span></strong> <span class="en">Exactly one bit is 1 means choose the position of the single 1.</span><span class="zh">恰有一個位元為 1，就是在四個位置中選出唯一放 1 的位置。</span></div>
+  <details class="solution">
+    <summary><span class="en">Show full solution</span><span class="zh">顯示完整解答</span></summary>
+    <p class="eq">\[ \lvert S\rvert=2^4=16. \]</p>
+    <p class="eq">\[ \lvert A\rvert=\binom{4}{1}=4. \]</p>
+    <p class="eq">\[ P(A)=\frac{4}{16}=\frac14. \]</p>
+    <p><span class="en"><strong>(4)</strong> The favourable patterns are \(1000,0100,0010,0001\).</span><span class="zh"><strong>(4)</strong> 有利樣式為 \(1000,0100,0010,0001\)。</span></p>
+    <p><span class="en"><strong>(5)</strong> The model says the nibble is chosen uniformly from all 16 patterns, so each pattern has probability \(1/16\).</span><span class="zh"><strong>(5)</strong> 題目設定半位元組會在 16 種樣式中均勻選取，因此每個樣式機率為 \(1/16\)。</span></p>
+    <p><span class="en"><strong>Sense check.</strong> Four patterns out of sixteen gives \(1/4\), a probability between 0 and 1.</span><span class="zh"><strong>合理性檢查。</strong>十六個樣式中有四個，得到 \(1/4\)，介於 0 與 1 之間。</span></p>
+  </details>
+
+  <h3><span class="en">Exercise 2 &middot; At least one failed module</span><span class="zh">練習 2 &middot; 至少一個模組失效</span></h3>
+  <p><span class="en">Three independent-looking modules are each recorded simply as pass \(P\) or fail \(F\). Suppose the eight strings \(PPP,\ldots,FFF\) are equally likely. Find the probability of at least one fail.</span><span class="zh">三個模組各自只記錄成通過 \(P\) 或失效 \(F\)。假設八個字串 \(PPP,\ldots,FFF\) 等可能。求至少一個失效的機率。</span></p>
+  <div class="diagram">
+    <svg role="img" aria-labelledby="x2eq-title x2eq-desc" viewBox="0 0 600 260" width="100%" style="max-width:600px;height:auto;border:1px solid var(--line);border-radius:6px;background:var(--diagram-bg);padding:8px;">
+      <title id="x2eq-title">Eight module status strings</title>
+      <desc id="x2eq-desc">Eight module status strings are shown with PPP unmarked and the other strings implied as having at least one fail.</desc>
+      <defs><style>.box{fill:var(--card-bg);stroke:var(--ink);stroke-width:2}.lbl{font:700 14px "SF Mono",Menlo,Consolas,monospace;fill:var(--ink);text-anchor:middle;dominant-baseline:central}.small{font:700 14px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:var(--muted);text-anchor:middle}</style></defs>
+      <rect class="box" x="100" y="65" width="85" height="45" rx="7"></rect><text class="lbl" x="142" y="88">PPP</text>
+      <rect class="box" x="205" y="65" width="85" height="45" rx="7"></rect><text class="lbl" x="247" y="88">PPF</text>
+      <rect class="box" x="310" y="65" width="85" height="45" rx="7"></rect><text class="lbl" x="352" y="88">PFP</text>
+      <rect class="box" x="415" y="65" width="85" height="45" rx="7"></rect><text class="lbl" x="457" y="88">FPP</text>
+      <rect class="box" x="100" y="135" width="85" height="45" rx="7"></rect><text class="lbl" x="142" y="158">PFF</text>
+      <rect class="box" x="205" y="135" width="85" height="45" rx="7"></rect><text class="lbl" x="247" y="158">FPF</text>
+      <rect class="box" x="310" y="135" width="85" height="45" rx="7"></rect><text class="lbl" x="352" y="158">FFP</text>
+      <rect class="box" x="415" y="135" width="85" height="45" rx="7"></rect><text class="lbl" x="457" y="158">FFF</text>
+      <text class="small en" x="300" y="220">Use the complement: not at least one fail means PPP.</text><text class="small zh" x="300" y="220">用補集：「不是至少一個失效」就是 PPP。</text>
+    </svg>
+  </div>
+  <p><span class="en">Answer all five parts:</span><span class="zh">回答以下五個小題：</span></p>
+  <ol class="concepts">
+    <li><span class="en">Find \(\lvert S\rvert\).</span><span class="zh">求 \(\lvert S\rvert\)。</span></li>
+    <li><span class="en">Find the complement of "at least one fail".</span><span class="zh">找出「至少一個失效」的補集。</span></li>
+    <li><span class="en">Find the complement probability.</span><span class="zh">求補集機率。</span></li>
+    <li><span class="en">Find the target probability.</span><span class="zh">求目標機率。</span></li>
+    <li><span class="en">Explain why complement counting is faster here.</span><span class="zh">說明為什麼這裡用補集計數比較快。</span></li>
+  </ol>
+  <div class="hint"><strong><span class="en">Hint:</span><span class="zh">提示：</span></strong> <span class="en">"At least one" is often easiest as \(1-\) "none".</span><span class="zh">遇到「至少一個」，常常用 \(1-\)「一個都沒有」最快。</span></div>
+  <details class="solution">
+    <summary><span class="en">Show full solution</span><span class="zh">顯示完整解答</span></summary>
+    <p class="eq">\[ \lvert S\rvert=2^3=8. \]</p>
+    <p><span class="en"><strong>(2)</strong> The complement is no fail, namely \(PPP\).</span><span class="zh"><strong>(2)</strong> 補集是完全沒有失效，也就是 \(PPP\)。</span></p>
+    <p class="eq">\[ P(PPP)=\frac{1}{8}. \]</p>
+    <p class="eq">\[ P(\text{at least one fail})=1-\frac18=\frac78. \]</p>
+    <p><span class="en"><strong>(5)</strong> Counting the complement needs only one string, while direct counting needs seven strings.</span><span class="zh"><strong>(5)</strong> 補集只要數一個字串；直接數則要列出七個字串。</span></p>
+    <p><span class="en"><strong>Sense check.</strong> At least one fail covers most of the eight equally likely strings, so \(7/8\) is plausible.</span><span class="zh"><strong>合理性檢查。</strong>八個等可能字串中，除了 \(PPP\) 之外都至少有一個失效，所以 \(7/8\) 合理。</span></p>
+  </details>
+
+  <div class="ai-tutor">
+    <p class="ai-title"><span class="en">Ask an AI tutor</span><span class="zh">問問 AI 家教</span></p>
+    <ul>
+      <li><strong>Explain</strong> &middot; <span class="en">Explain why equally likely outcomes turn probability into counting.</span><span class="zh">解釋為什麼等可能結果會把機率變成計數。</span></li>
+      <li><strong>Practice</strong> &middot; <span class="en">Give me one more two-dice probability problem with the answer hidden.</span><span class="zh">再給我一題兩顆骰子的機率題，並隱藏答案。</span></li>
+      <li><strong>Reflect</strong> &middot; <span class="en">Why can using sums instead of ordered pairs give the wrong dice probability?</span><span class="zh">為什麼只用點數和而不用有序對，可能得到錯誤骰子機率？</span></li>
+      <li><strong>Extend</strong> &middot; <span class="en">How would this change if the byte patterns were not equally likely?</span><span class="zh">如果位元組樣式不是等可能，這會如何改變？</span></li>
+    </ul>
+  </div>
+
+  <div class="backlink"><a href="02-the-probability-axioms.html"><span class="en">&larr; Previous</span><span class="zh">&larr; 上一節</span></a> &nbsp;|&nbsp; <a href="../../chapters/ch2-counting-probability.html"><span class="en">Chapter 2</span><span class="zh">第 2 章</span></a> &nbsp;|&nbsp; <a href="../../chapters/ch3-conditional-independence.html"><span class="en">Chapter 3 &rarr;</span><span class="zh">第 3 章 &rarr;</span></a></div>
+</main>
+<script src="../../js/ui.js"></script>
+</body>
+</html>

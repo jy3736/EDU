@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sets, Events, and Venn Diagrams - Probability and Statistics</title>
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../vendor/katex/katex.min.css">
+<script defer src="../../vendor/katex/katex.min.js"></script>
+<script defer src="../../vendor/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../js/render-math.js"></script>
+<script defer src="../../js/run-sim.js"></script>
+<script>
+  /* Apply saved theme / language before paint to avoid a flash. */
+  (function () {
+    var d = document.documentElement, t, l;
+    try { t = localStorage.getItem("prob-theme"); } catch (e) {}
+    if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    d.setAttribute("data-theme", t);
+    try { l = localStorage.getItem("prob-lang"); } catch (e) {}
+    d.setAttribute("data-lang", l || "en");
+  })();
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="en">Probability and Statistics &middot; Learn by Doing</span><span class="zh">機率與統計 &middot; 做中學</span></div>
+  <div class="sub"><span class="en">For Electronic Engineering &middot; STUST &middot; 36D00301</span><span class="zh">電子工程系 &middot; 南臺科技大學 &middot; 36D00301</span></div>
+</header>
+<main class="container">
+  <div class="toolbar">
+    <button id="theme-toggle" type="button" aria-label="Toggle dark / light theme"></button>
+    <button id="lang-toggle" type="button" aria-label="Switch language English / 中文"></button>
+  </div>
+  <div class="breadcrumb"><a href="../../index.html"><span class="en">Course Home</span><span class="zh">課程首頁</span></a> &rsaquo; <a href="../../chapters/ch1-probability-models-sets.html"><span class="en">Chapter 1</span><span class="zh">第 1 章</span></a> &rsaquo; <span class="en">Sets, Events, and Venn Diagrams</span><span class="zh">集合、事件與范氏圖</span></div>
+  <h1><span class="en">1.2 Sets, Events, and Venn Diagrams</span><span class="zh">1.2 集合、事件與范氏圖</span></h1>
+
+  <!-- ============ 1. CONCEPT / FUNDAMENTAL KNOWLEDGE ============ -->
+  <h2><span class="en">1 &middot; Concept and Fundamental Knowledge</span><span class="zh">1 &middot; 概念與基礎知識</span></h2>
+
+  <figure class="mascot-panel">
+    <img src="../../assets/mascots/yu25.png" alt="Mascot holding a statistical analysis checklist">
+    <figcaption><span class="en"><strong>Diagram workflow:</strong> split the sample space into regions first; then add exactly the regions covered by the event.</span><span class="zh"><strong>圖解流程：</strong>先把樣本空間切成區域；再只加總事件涵蓋的那些區域。</span></figcaption>
+  </figure>
+
+  <p><span class="en"><strong>Why an electronic engineer needs this.</strong> Real systems rarely have one thing going wrong at a time. A unit might overheat, or see a voltage spike, or both at once. To reason about &ldquo;A and B,&rdquo; &ldquo;A but not B,&rdquo; or &ldquo;neither,&rdquo; you need a picture that keeps the overlaps straight. The <strong>Venn diagram</strong> is that picture: it draws each event as a region inside the sample space and shows exactly how the events share outcomes.</span><span class="zh"><strong>電子工程師為什麼需要這個。</strong>真實系統很少一次只出一個問題。一個單元可能過熱、遇到電壓突波，也可能兩者同時發生。要推理「A 且 B」「A 但非 B」或「兩者皆非」，需要一張能把重疊關係看清楚的圖。<strong>范氏圖</strong>就是這張圖：它把每個事件畫成樣本空間內的一塊區域，清楚顯示事件之間如何共用結果。</span></p>
+
+  <div class="callout definition">
+  <p class="callout-title"><span class="en">Definition &middot; Venn diagram and the four basic regions</span><span class="zh">定義 &middot; 范氏圖與四個基本區域</span></p>
+  <p><span class="en">A <strong>Venn diagram</strong> draws the sample space \(S\) as a rectangle and each event as a circle inside it. Two events \(A\) and \(B\) cut the rectangle into four regions: <strong>only \(A\)</strong>, <strong>only \(B\)</strong>, the <strong>overlap</strong> (in both), and <strong>neither</strong> (outside both). Because every outcome lands in exactly one region, the four region probabilities always add up to \(1\).</span><span class="zh"><strong>范氏圖</strong>把樣本空間 \(S\) 畫成矩形，並把每個事件畫成矩形內的一個圓。兩個事件 \(A\) 與 \(B\) 會把矩形切成四個區域：<strong>僅 \(A\)</strong>、<strong>僅 \(B\)</strong>、<strong>重疊</strong>（同時屬於兩者）與<strong>兩者皆非</strong>（兩圓之外）。因為每個結果剛好落在一個區域，四個區域的機率加起來一定是 \(1\)。</span></p>
+  </div>
+
+  <p><span class="en">The diagram below names the four regions. Read it slowly: the only place that is &ldquo;in \(A\) and in \(B\)&rdquo; is the lens-shaped overlap in the middle.</span><span class="zh">下圖標出四個區域。慢慢讀：唯一「既屬 \(A\) 又屬 \(B\)」的地方，是中間透鏡形的重疊區。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="map-title map-desc" viewBox="0 0 600 420" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="map-title">The four regions of a two-event Venn diagram</title>
+      <desc id="map-desc">A rectangle labelled S holds two overlapping circles A and B. The left crescent is labelled only A, the right crescent only B, the central lens is labelled A and B, and the area outside both circles is labelled neither.</desc>
+      <defs>
+        <style>
+          .space { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+          .region { fill: var(--hdl-blue); fill-opacity: .16; stroke: var(--hdl-blue); stroke-width: 2.5; }
+          .setlbl { font: 700 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--hdl-blue); text-anchor: middle; }
+          .spacelbl { font: 700 17px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .rlbl { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
+        </style>
+      </defs>
+      <rect class="space" x="20" y="20" width="560" height="380" rx="10"></rect>
+      <text class="spacelbl" x="40" y="48">S</text>
+      <circle class="region" cx="235" cy="220" r="130"></circle>
+      <circle class="region" cx="365" cy="220" r="130"></circle>
+      <text class="setlbl" x="150" y="80">A</text>
+      <text class="setlbl" x="450" y="80">B</text>
+      <text class="rlbl en" x="175" y="220">only A</text><text class="rlbl zh" x="175" y="220">僅 A</text>
+      <text class="rlbl en" x="300" y="220">A and B</text><text class="rlbl zh" x="300" y="220">A 且 B</text>
+      <text class="rlbl en" x="425" y="220">only B</text><text class="rlbl zh" x="425" y="220">僅 B</text>
+      <text class="rlbl en" x="510" y="370">neither</text><text class="rlbl zh" x="510" y="370">皆非</text>
+    </svg>
+  </div>
+
+  <div class="callout term">
+  <p class="callout-title"><span class="en">Key terms &middot; relationships between events</span><span class="zh">重要名詞 &middot; 事件之間的關係</span></p>
+  <ul class="concepts">
+    <li><span class="en"><strong>Subset \(A\subseteq B\).</strong> Every outcome of \(A\) is also in \(B\); the circle for \(A\) sits entirely inside \(B\). Then \(A\) occurring forces \(B\) to occur.</span><span class="zh"><strong>子集合 \(A\subseteq B\)。</strong>\(A\) 的每個結果都屬於 \(B\)；\(A\) 的圓完全落在 \(B\) 裡面。這時只要 \(A\) 發生，就能保證 \(B\) 也發生。</span></li>
+    <li><span class="en"><strong>Mutually exclusive (disjoint).</strong> \(A\) and \(B\) share no outcome; their circles do not overlap. They cannot both happen, so the overlap region is empty.</span><span class="zh"><strong>互斥（不相交）。</strong>\(A\) 與 \(B\) 沒有共同結果；兩圓不重疊。兩者不能同時發生，所以重疊區為空。</span></li>
+    <li><span class="en"><strong>Complement \(\overline{A}\).</strong> Everything in \(S\) that is <em>not</em> in \(A\): the whole region outside the \(A\) circle.</span><span class="zh"><strong>補集 \(\overline{A}\)。</strong>\(S\) 中所有<em>不</em>屬於 \(A\) 的部分：即 \(A\) 圓之外的整塊區域。</span></li>
+  </ul>
+  </div>
+
+  <div class="sim">
+    <p class="sim-title"><span class="en">Simulate it first</span><span class="zh">先模擬看看</span></p>
+    <p><span class="en"><strong>Predict:</strong> a population is split into the four regions with probabilities only-\(A\) \(0.30\), both \(0.10\), only-\(B\) \(0.20\), neither \(0.40\). If you sample many individuals, what fraction land in \(A\) (either region that touches the \(A\) circle)? Guess, then run.</span><span class="zh"><strong>預測：</strong>某母體依四個區域的機率劃分：僅 \(A\) 為 \(0.30\)、兩者為 \(0.10\)、僅 \(B\) 為 \(0.20\)、皆非為 \(0.40\)。若抽樣許多個體，落在 \(A\)（任何位在 \(A\) 圓內的區域）的比例是多少？先猜，再執行。</span></p>
+    <pre><code class="language-python">import numpy as np
+rng = np.random.default_rng(0)
+
+regions = ["onlyA", "both", "onlyB", "neither"]
+probs   = [0.30,    0.10,   0.20,    0.40]
+draws = rng.choice(regions, size=200_000, p=probs)
+
+in_A = np.isin(draws, ["onlyA", "both"])    # A = only-A together with the overlap
+print(in_A.mean())                           # estimated P(A)</code></pre>
+    <p class="sim-note"><span class="en"><strong>Observed:</strong> about \(0.400\), matching \(P(A)=0.30+0.10=0.40\). The overlap counts toward \(A\), which is the whole point of the diagram.</span><span class="zh"><strong>觀察結果：</strong>約 \(0.400\)，對應 \(P(A)=0.30+0.10=0.40\)。重疊區要算進 \(A\)，這正是范氏圖的重點。</span></p>
+  </div>
+
+  <div class="callout rule">
+  <p class="callout-title"><span class="en">Rule &middot; an event is the sum of its regions</span><span class="zh">規則 &middot; 事件等於其各區域之和</span></p>
+  <p><span class="en">On a Venn diagram, the probability of an event is the sum of the region probabilities the event covers. Because the \(A\) circle covers both &ldquo;only \(A\)&rdquo; and the overlap,</span><span class="zh">在范氏圖上，事件的機率是該事件所涵蓋各區域機率之和。由於 \(A\) 圓涵蓋「僅 \(A\)」與重疊區，</span></p>
+  <p class="eq">\[ P(A)=P(\text{only }A)+P(A\cap B). \]</p>
+  <p><span class="en">The same idea gives \(P(\overline{A})=1-P(A)\), since the regions inside and outside the \(A\) circle together fill \(S\).</span><span class="zh">同理可得 \(P(\overline{A})=1-P(A)\)，因為 \(A\) 圓內外的區域合起來填滿 \(S\)。</span></p>
+  </div>
+
+  <!-- ============ 2. WORKED EXAMPLES (three) ============ -->
+  <h2><span class="en">2 &middot; Worked Examples</span><span class="zh">2 &middot; 範例（詳解）</span></h2>
+
+  <figure class="mascot-panel">
+    <img class="flip-x" src="../../assets/mascots/yu09.png" alt="Mascot making an open-hand presenting gesture">
+    <figcaption><span class="en"><strong>Read the regions:</strong> treat each Venn diagram like a map; identify the overlap, the single-event regions, and the outside region before adding.</span><span class="zh"><strong>判讀區域：</strong>把每張范氏圖當作地圖；先找重疊、單一事件區與外側區，再開始相加。</span></figcaption>
+  </figure>
+
+  <!-- ---------- Example 1: read a 2-event Venn ---------- -->
+  <h3><span class="en">Example 1 &middot; Reading a two-event Venn</span><span class="zh">範例 1 &middot; 判讀雙事件范氏圖</span></h3>
+
+  <p><span class="en">The Venn diagram below gives the probability sitting in each of the four regions. Read \(P(A)\), \(P(B)\), \(P(A\cap B)\), and the probability of neither event.</span><span class="zh">下方范氏圖給出四個區域各自的機率。請讀出 \(P(A)\)、\(P(B)\)、\(P(A\cap B)\)，以及兩者皆非的機率。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="e1-title e1-desc" viewBox="0 0 600 420" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="e1-title">Two-event Venn diagram with region probabilities</title>
+      <desc id="e1-desc">A rectangle labelled S holds two overlapping circles A and B. The only-A region shows 0.30, the overlap shows 0.10, the only-B region shows 0.20, and the region outside both shows 0.40.</desc>
+      <defs>
+        <style>
+          .space { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+          .region { fill: var(--hdl-blue); fill-opacity: .16; stroke: var(--hdl-blue); stroke-width: 2.5; }
+          .setlbl { font: 700 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--hdl-blue); text-anchor: middle; }
+          .spacelbl { font: 700 17px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .rval { font: 700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
+        </style>
+      </defs>
+      <rect class="space" x="20" y="20" width="560" height="380" rx="10"></rect>
+      <text class="spacelbl" x="40" y="48">S</text>
+      <circle class="region" cx="235" cy="220" r="130"></circle>
+      <circle class="region" cx="365" cy="220" r="130"></circle>
+      <text class="setlbl" x="150" y="80">A</text>
+      <text class="setlbl" x="450" y="80">B</text>
+      <text class="rval" x="175" y="220">0.30</text>
+      <text class="rval" x="300" y="220">0.10</text>
+      <text class="rval" x="425" y="220">0.20</text>
+      <text class="rval" x="515" y="370">0.40</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td>\(P(A\cap B)\)</td>
+      <td>\(0.10\)</td>
+      <td><span class="en">The number in the central overlap lens.</span><span class="zh">中央重疊透鏡內的數字。</span></td>
+    </tr>
+    <tr>
+      <td>\(P(A)\)</td>
+      <td>\(0.40\)</td>
+      <td><span class="en">Add the two regions the \(A\) circle covers: \(0.30+0.10\).</span><span class="zh">把 \(A\) 圓涵蓋的兩區相加：\(0.30+0.10\)。</span></td>
+    </tr>
+    <tr>
+      <td>\(P(B)\)</td>
+      <td>\(0.30\)</td>
+      <td><span class="en">Add the two regions the \(B\) circle covers: \(0.20+0.10\).</span><span class="zh">把 \(B\) 圓涵蓋的兩區相加：\(0.20+0.10\)。</span></td>
+    </tr>
+    <tr>
+      <td>\(P(\text{neither})\)</td>
+      <td>\(0.40\)</td>
+      <td><span class="en">The region outside both circles.</span><span class="zh">兩圓之外的區域。</span></td>
+    </tr>
+  </table>
+
+  <p><span class="en">The key idea is that the overlap probability is shared: it is counted once inside \(P(A)\) and once inside \(P(B)\). As a check, all four regions sum to \(0.30+0.10+0.20+0.40=1\), as they must.</span><span class="zh">關鍵在於重疊機率是共用的：它在 \(P(A)\) 與 \(P(B)\) 中各算一次。驗算時，四區加總為 \(0.30+0.10+0.20+0.40=1\)，符合樣本空間總機率為 \(1\) 的要求。</span></p>
+
+  <!-- ---------- Example 2: mutually exclusive ---------- -->
+  <h3><span class="en">Example 2 &middot; Mutually exclusive events</span><span class="zh">範例 2 &middot; 互斥事件</span></h3>
+
+  <p><span class="en">A single packet is classified by its result: \(A=\{\text{delivered}\}\) and \(B=\{\text{dropped}\}\). These cannot both happen for one packet, so the circles do not overlap. The new wrinkle is reading a diagram where the overlap is empty.</span><span class="zh">一個封包依結果分類：\(A=\{\text{送達}\}\) 與 \(B=\{\text{丟棄}\}\)。對單一封包來說，這兩者不能同時發生，所以兩圓不重疊。這題的新重點，是判讀重疊區為空的圖。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="e2-title e2-desc" viewBox="0 0 600 420" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="e2-title">Two mutually exclusive events</title>
+      <desc id="e2-desc">A rectangle labelled S holds two separate, non-overlapping circles A and B. Circle A shows 0.85, circle B shows 0.10, and the area outside both shows 0.05.</desc>
+      <defs>
+        <style>
+          .space { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+          .region { fill: var(--hdl-blue); fill-opacity: .16; stroke: var(--hdl-blue); stroke-width: 2.5; }
+          .setlbl { font: 700 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--hdl-blue); text-anchor: middle; }
+          .spacelbl { font: 700 17px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .rval { font: 700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
+        </style>
+      </defs>
+      <rect class="space" x="20" y="20" width="560" height="380" rx="10"></rect>
+      <text class="spacelbl" x="40" y="48">S</text>
+      <circle class="region" cx="170" cy="215" r="115"></circle>
+      <circle class="region" cx="430" cy="215" r="115"></circle>
+      <text class="setlbl" x="170" y="74">A</text>
+      <text class="setlbl" x="430" y="74">B</text>
+      <text class="rval" x="170" y="215">0.85</text>
+      <text class="rval" x="430" y="215">0.10</text>
+      <text class="rval" x="300" y="365">0.05</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td>\(P(A)\)</td>
+      <td>\(0.85\)</td>
+      <td><span class="en">The \(A\) circle stands alone, so its single region is all of \(P(A)\).</span><span class="zh">\(A\) 圓單獨存在，其唯一區域即為整個 \(P(A)\)。</span></td>
+    </tr>
+    <tr>
+      <td>\(P(A\cap B)\)</td>
+      <td>\(0\)</td>
+      <td><span class="en">There is no overlap, so the events share no outcome.</span><span class="zh">沒有重疊，所以兩事件沒有共同結果。</span></td>
+    </tr>
+    <tr>
+      <td>\(P(A\cup B)\)</td>
+      <td>\(0.95\)</td>
+      <td><span class="en">With no shared part, just add: \(0.85+0.10\).</span><span class="zh">沒有共用部分時直接相加：\(0.85+0.10\)。</span></td>
+    </tr>
+  </table>
+
+  <div class="callout notice">
+  <p class="callout-title"><span class="en">Notice &middot; mutually exclusive is not the same as covering everything</span><span class="zh">注意 &middot; 互斥不等於涵蓋全部</span></p>
+  <p><span class="en">The two circles do not overlap, but they also do not fill \(S\): the \(0.05\) outside is &ldquo;neither delivered nor dropped&rdquo; (for instance, still in transit). Mutually exclusive only means the overlap is empty; it does <em>not</em> force the probabilities to add to \(1\).</span><span class="zh">兩圓不重疊，但也未填滿 \(S\)：外側的 \(0.05\) 是「既未送達也未丟棄」（例如仍在傳輸中）。互斥僅表示重疊為空；它<em>並不</em>強迫機率之和為 \(1\)。</span></p>
+  </div>
+
+  <!-- ---------- Example 3: engineering, counts ---------- -->
+  <h3><span class="en">Example 3 &middot; Two fault types from test data (engineering)</span><span class="zh">範例 3 &middot; 由測試資料看兩種故障（工程應用）</span></h3>
+
+  <p><span class="en">Out of \(200\) units on a test bench, \(30\) overheat only, \(10\) both overheat and show a voltage spike, \(20\) show a spike only, and \(140\) show neither. Let \(A=\{\text{overheats}\}\) and \(B=\{\text{voltage spike}\}\). Find the probabilities. The new element is converting <em>counts</em> into probabilities by dividing by \(200\).</span><span class="zh">測試台上 \(200\) 個單元中，\(30\) 個僅過熱、\(10\) 個同時過熱且有電壓突波、\(20\) 個僅有突波、\(140\) 個兩者皆無。令 \(A=\{\text{過熱}\}\)、\(B=\{\text{電壓突波}\}\)。求各機率。這題的新重點，是把<em>計數</em>除以 \(200\)，轉成機率。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="e3-title e3-desc" viewBox="0 0 600 420" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="e3-title">Two fault events with counts out of 200 units</title>
+      <desc id="e3-desc">A rectangle labelled S holds overlapping circles A overheats and B voltage spike. The only-A region shows 30, the overlap shows 10, the only-B region shows 20, and outside both shows 140.</desc>
+      <defs>
+        <style>
+          .space { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+          .region { fill: var(--hdl-blue); fill-opacity: .16; stroke: var(--hdl-blue); stroke-width: 2.5; }
+          .setlbl { font: 700 19px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--hdl-blue); text-anchor: middle; }
+          .spacelbl { font: 700 17px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .rval { font: 700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
+        </style>
+      </defs>
+      <rect class="space" x="20" y="20" width="560" height="380" rx="10"></rect>
+      <text class="spacelbl" x="40" y="48">S = 200</text>
+      <circle class="region" cx="235" cy="220" r="130"></circle>
+      <circle class="region" cx="365" cy="220" r="130"></circle>
+      <text class="setlbl en" x="150" y="72">A: overheat</text><text class="setlbl zh" x="150" y="72">A：過熱</text>
+      <text class="setlbl en" x="450" y="72">B: spike</text><text class="setlbl zh" x="450" y="72">B：突波</text>
+      <text class="rval" x="175" y="220">30</text>
+      <text class="rval" x="300" y="220">10</text>
+      <text class="rval" x="425" y="220">20</text>
+      <text class="rval" x="515" y="370">140</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td>\(P(A)\)</td>
+      <td>\(\dfrac{40}{200}=0.20\)</td>
+      <td><span class="en">\(A\) covers \(30+10=40\) units, over \(200\).</span><span class="zh">\(A\) 涵蓋 \(30+10=40\) 個單元，除以 \(200\)。</span></td>
+    </tr>
+    <tr>
+      <td>\(P(B)\)</td>
+      <td>\(\dfrac{30}{200}=0.15\)</td>
+      <td><span class="en">\(B\) covers \(20+10=30\) units, over \(200\).</span><span class="zh">\(B\) 涵蓋 \(20+10=30\) 個單元，除以 \(200\)。</span></td>
+    </tr>
+    <tr>
+      <td>\(P(A\cap B)\)</td>
+      <td>\(\dfrac{10}{200}=0.05\)</td>
+      <td><span class="en">The \(10\) units in the overlap, over \(200\).</span><span class="zh">重疊區的 \(10\) 個單元，除以 \(200\)。</span></td>
+    </tr>
+    <tr>
+      <td>\(P(\overline{A})\)</td>
+      <td>\(0.80\)</td>
+      <td><span class="en">Complement: \(1-P(A)=1-0.20\).</span><span class="zh">補集：\(1-P(A)=1-0.20\)。</span></td>
+    </tr>
+  </table>
+
+  <p><span class="en">Counts and probabilities carry the same information once you divide by the total. The four counts \(30+10+20+140=200\) recover the whole batch, the count version of &ldquo;the regions sum to \(1\).&rdquo;</span><span class="zh">計數除以總數之後，就會得到同一份資訊的機率版本。四個計數 \(30+10+20+140=200\) 還原整批，正是「各區域機率加起來為 \(1\)」的計數版本。</span></p>
+
+  <!-- ============ 3. EXERCISES (two) ============ -->
+  <h2><span class="en">3 &middot; Exercises</span><span class="zh">3 &middot; 練習</span></h2>
+
+  <figure class="mascot-panel">
+    <img src="../../assets/mascots/yu15.png" alt="Mascot writing in a notebook with books">
+    <figcaption><span class="en"><strong>Practice mode:</strong> label the four regions first; then every requested probability becomes a sum of named regions.</span><span class="zh"><strong>練習模式：</strong>先標出四個區域；接著每個要求的機率都會變成已命名區域的加總。</span></figcaption>
+  </figure>
+
+  <!-- ---------- Exercise 1: read a 2-event Venn ---------- -->
+  <h3><span class="en">Exercise 1 &middot; Reading region probabilities</span><span class="zh">練習 1 &middot; 判讀區域機率</span></h3>
+
+  <p><span class="en">The Venn diagram gives the probability in each region for two events \(A\) and \(B\). Use it to answer the parts below.</span><span class="zh">下方范氏圖給出兩事件 \(A\) 與 \(B\) 各區域的機率。據此回答以下小題。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="x1-title x1-desc" viewBox="0 0 600 420" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="x1-title">Two-event Venn diagram for exercise 1</title>
+      <desc id="x1-desc">A rectangle labelled S holds overlapping circles A and B. The only-A region shows 0.25, the overlap shows 0.15, the only-B region shows 0.35, and outside both shows 0.25.</desc>
+      <defs>
+        <style>
+          .space { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+          .region { fill: var(--hdl-blue); fill-opacity: .16; stroke: var(--hdl-blue); stroke-width: 2.5; }
+          .setlbl { font: 700 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--hdl-blue); text-anchor: middle; }
+          .spacelbl { font: 700 17px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .rval { font: 700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
+        </style>
+      </defs>
+      <rect class="space" x="20" y="20" width="560" height="380" rx="10"></rect>
+      <text class="spacelbl" x="40" y="48">S</text>
+      <circle class="region" cx="235" cy="220" r="130"></circle>
+      <circle class="region" cx="365" cy="220" r="130"></circle>
+      <text class="setlbl" x="150" y="80">A</text>
+      <text class="setlbl" x="450" y="80">B</text>
+      <text class="rval" x="175" y="220">0.25</text>
+      <text class="rval" x="300" y="220">0.15</text>
+      <text class="rval" x="425" y="220">0.35</text>
+      <text class="rval" x="515" y="370">0.25</text>
+    </svg>
+  </div>
+
+  <p><span class="en">Answer all five parts:</span><span class="zh">回答以下五個小題：</span></p>
+  <ol class="concepts">
+    <li><span class="en">Find \(P(A\cap B)\).</span><span class="zh">求 \(P(A\cap B)\)。</span></li>
+    <li><span class="en">Find \(P(A)\).</span><span class="zh">求 \(P(A)\)。</span></li>
+    <li><span class="en">Find \(P(B)\).</span><span class="zh">求 \(P(B)\)。</span></li>
+    <li><span class="en">Find \(P(\overline{B})\), the probability that \(B\) does not occur.</span><span class="zh">求 \(P(\overline{B})\)，即 \(B\) 不發生的機率。</span></li>
+    <li><span class="en">Verify that the four region probabilities sum to \(1\).</span><span class="zh">驗證四個區域機率之和為 \(1\)。</span></li>
+  </ol>
+
+  <div class="hint"><strong><span class="en">Hint:</span><span class="zh">提示：</span></strong> <span class="en">A circle&rsquo;s probability is the sum of the regions it covers. For \(P(\overline{B})\), use \(1-P(B)\) or add every region the \(B\) circle does <em>not</em> cover.</span><span class="zh">一個圓的機率是其涵蓋各區域之和。求 \(P(\overline{B})\) 時，用 \(1-P(B)\)，或把 \(B\) 圓<em>未</em>涵蓋的所有區域相加。</span></span></div>
+
+  <details class="solution">
+    <summary><span class="en">Show full solution</span><span class="zh">顯示完整解答</span></summary>
+
+    <p><span class="en"><strong>(1) Overlap.</strong> Read the central lens directly:</span><span class="zh"><strong>(1) 重疊。</strong>直接讀中央透鏡：</span></p>
+    <p class="eq">\[ P(A\cap B)=0.15. \]</p>
+
+    <p><span class="en"><strong>(2) \(P(A)\).</strong> The \(A\) circle covers only-\(A\) and the overlap:</span><span class="zh"><strong>(2) \(P(A)\)。</strong>\(A\) 圓涵蓋「僅 \(A\)」與重疊：</span></p>
+    <p class="eq">\[ P(A)=0.25+0.15=0.40. \]</p>
+
+    <p><span class="en"><strong>(3) \(P(B)\).</strong> The \(B\) circle covers only-\(B\) and the overlap:</span><span class="zh"><strong>(3) \(P(B)\)。</strong>\(B\) 圓涵蓋「僅 \(B\)」與重疊：</span></p>
+    <p class="eq">\[ P(B)=0.35+0.15=0.50. \]</p>
+
+    <p><span class="en"><strong>(4) Complement of \(B\).</strong> Everything outside the \(B\) circle, namely only-\(A\) plus neither, or simply \(1-P(B)\):</span><span class="zh"><strong>(4) \(B\) 的補集。</strong>\(B\) 圓之外的一切，即「僅 \(A\)」加「皆非」，或直接 \(1-P(B)\)：</span></p>
+    <p class="eq">\[ P(\overline{B})=0.25+0.25=0.50=1-0.50. \]</p>
+
+    <p><span class="en"><strong>(5) Sum check.</strong></span><span class="zh"><strong>(5) 總和驗證。</strong></span></p>
+    <p class="eq">\[ 0.25+0.15+0.35+0.25=1.00. \]</p>
+
+    <p><span class="en"><strong>Sense check.</strong> Every probability lies in \([0,1]\); \(P(A\cap B)=0.15\) is no larger than either \(P(A)=0.40\) or \(P(B)=0.50\), as an overlap must be. Consistent.</span><span class="zh"><strong>合理性檢查。</strong>每個機率都落在 \([0,1]\)；\(P(A\cap B)=0.15\) 不大於 \(P(A)=0.40\) 或 \(P(B)=0.50\)，符合重疊的性質。一致。</span></p>
+  </details>
+
+  <!-- ---------- Exercise 2: reasoning with counts ---------- -->
+  <h3><span class="en">Exercise 2 &middot; Filling in the regions</span><span class="zh">練習 2 &middot; 補齊各區域</span></h3>
+
+  <p><span class="en">A batch of \(100\) boards is tested for two defects. The diagram shows only what is known directly: \(12\) boards have <em>both</em> defects, the \(A\) circle holds \(30\) boards in total, and the \(B\) circle holds \(25\) boards in total. The single-defect regions are left blank for you to work out.</span><span class="zh">一批 \(100\) 片電路板檢測兩種瑕疵。圖中只標出直接已知的部分：\(12\) 片<em>同時</em>有兩種瑕疵、\(A\) 圓共有 \(30\) 片、\(B\) 圓共有 \(25\) 片。單一瑕疵的區域留白，由你求出。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="x2-title x2-desc" viewBox="0 0 600 420" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="x2-title">Two-defect Venn diagram with only totals and overlap given</title>
+      <desc id="x2-desc">A rectangle labelled S equals 100 holds overlapping circles A and B. The overlap shows 12. The only-A and only-B regions are blank. The totals given in the text are A equals 30 and B equals 25.</desc>
+      <defs>
+        <style>
+          .space { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+          .region { fill: var(--hdl-blue); fill-opacity: .16; stroke: var(--hdl-blue); stroke-width: 2.5; }
+          .setlbl { font: 700 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--hdl-blue); text-anchor: middle; }
+          .spacelbl { font: 700 17px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .rval { font: 700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
+          .rq { font: 700 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); text-anchor: middle; dominant-baseline: central; }
+        </style>
+      </defs>
+      <rect class="space" x="20" y="20" width="560" height="380" rx="10"></rect>
+      <text class="spacelbl" x="40" y="48">S = 100</text>
+      <circle class="region" cx="235" cy="220" r="130"></circle>
+      <circle class="region" cx="365" cy="220" r="130"></circle>
+      <text class="setlbl" x="150" y="80">A</text>
+      <text class="setlbl" x="450" y="80">B</text>
+      <text class="rq" x="175" y="220">?</text>
+      <text class="rval" x="300" y="220">12</text>
+      <text class="rq" x="425" y="220">?</text>
+    </svg>
+  </div>
+
+  <p><span class="en">Answer all five parts:</span><span class="zh">回答以下五個小題：</span></p>
+  <ol class="concepts">
+    <li><span class="en">How many boards have defect \(A\) <em>only</em>?</span><span class="zh">有<em>僅</em> \(A\) 瑕疵的板子有幾片？</span></li>
+    <li><span class="en">How many boards have defect \(B\) <em>only</em>?</span><span class="zh">有<em>僅</em> \(B\) 瑕疵的板子有幾片？</span></li>
+    <li><span class="en">How many boards have <em>neither</em> defect?</span><span class="zh">兩種瑕疵<em>皆無</em>的板子有幾片？</span></li>
+    <li><span class="en">Find \(P(A\cap B)\) and \(P(\overline{A})\).</span><span class="zh">求 \(P(A\cap B)\) 與 \(P(\overline{A})\)。</span></li>
+    <li><span class="en">Are \(A\) and \(B\) mutually exclusive? Justify from the diagram.</span><span class="zh">\(A\) 與 \(B\) 互斥嗎？請依圖說明。</span></li>
+  </ol>
+
+  <div class="hint"><strong><span class="en">Hint:</span><span class="zh">提示：</span></strong> <span class="en">&ldquo;Only \(A\)&rdquo; is the \(A\) total minus the overlap. Once all four regions are filled, they must add to \(100\).</span><span class="zh">「僅 \(A\)」是 \(A\) 的總數減去重疊。四個區域填齊後，總和必為 \(100\)。</span></span></div>
+
+  <details class="solution">
+    <summary><span class="en">Show full solution</span><span class="zh">顯示完整解答</span></summary>
+
+    <p><span class="en"><strong>(1) Only \(A\).</strong> The \(A\) circle holds \(30\) boards and \(12\) of them are in the overlap, so the rest are \(A\) only:</span><span class="zh"><strong>(1) 僅 \(A\)。</strong>\(A\) 圓有 \(30\) 片，其中 \(12\) 片在重疊區，其餘為僅 \(A\)：</span></p>
+    <p class="eq">\[ 30-12=18. \]</p>
+
+    <p><span class="en"><strong>(2) Only \(B\).</strong> Likewise from the \(B\) total of \(25\):</span><span class="zh"><strong>(2) 僅 \(B\)。</strong>同理，由 \(B\) 的總數 \(25\)：</span></p>
+    <p class="eq">\[ 25-12=13. \]</p>
+
+    <p><span class="en"><strong>(3) Neither.</strong> The four regions fill the batch of \(100\):</span><span class="zh"><strong>(3) 皆無。</strong>四個區域填滿這批 \(100\) 片：</span></p>
+    <p class="eq">\[ 100-(18+12+13)=100-43=57. \]</p>
+
+    <p><span class="en"><strong>(4) Two probabilities.</strong> Divide counts by \(100\):</span><span class="zh"><strong>(4) 兩個機率。</strong>把計數除以 \(100\)：</span></p>
+    <p class="eq">\[ P(A\cap B)=\frac{12}{100}=0.12,\qquad P(\overline{A})=1-\frac{30}{100}=0.70. \]</p>
+
+    <p><span class="en"><strong>(5) Mutually exclusive?</strong> No. The overlap holds \(12\) boards, so \(A\) and \(B\) do occur together; mutually exclusive would require an empty overlap.</span><span class="zh"><strong>(5) 互斥嗎？</strong>否。重疊區有 \(12\) 片，所以 \(A\) 與 \(B\) 確實會同時發生；互斥必須是重疊區為空。</span></p>
+
+    <p><span class="en"><strong>Sense check.</strong> All four regions \(18+12+13+57=100\) recover the batch, and each &ldquo;only&rdquo; count is below its circle total, exactly as carving out the overlap demands.</span><span class="zh"><strong>合理性檢查。</strong>四區 \(18+12+13+57=100\) 還原整批，且每個「僅」的計數都小於其圓總數，正符合扣除重疊的要求。</span></p>
+  </details>
+
+  <!-- ============ AI TUTOR ============ -->
+  <div class="ai-tutor">
+    <p class="ai-title"><span class="en">Ask an AI tutor</span><span class="zh">問問 AI 家教</span></p>
+    <ul>
+      <li><strong>Explain</strong> &middot; <span class="en">Explain the difference between mutually exclusive events and complementary events.</span><span class="zh">解釋互斥事件與互補事件的差別。</span></li>
+      <li><strong>Practice</strong> &middot; <span class="en">Give me one more Venn-diagram problem with counts out of 250 units.</span><span class="zh">再給我一題以 250 個單元計數的范氏圖題目。</span></li>
+      <li><strong>Reflect</strong> &middot; <span class="en">Why is the overlap probability counted inside both P(A) and P(B)?</span><span class="zh">為什麼重疊機率在 P(A) 與 P(B) 裡都要算到？</span></li>
+      <li><strong>Extend</strong> &middot; <span class="en">How would a third fault type C change the diagram, and how many regions appear?</span><span class="zh">如果加入第三種故障 C，圖會怎麼改變？會出現幾個區域？</span></li>
+    </ul>
+  </div>
+
+  <div class="backlink"><a href="01-probability-models-and-the-sample-space.html"><span class="en">&larr; Previous</span><span class="zh">&larr; 上一節</span></a> &nbsp;|&nbsp; <a href="../../chapters/ch1-probability-models-sets.html"><span class="en">Chapter 1</span><span class="zh">第 1 章</span></a> &nbsp;|&nbsp; <a href="03-set-operations-on-events.html"><span class="en">Next &rarr;</span><span class="zh">下一節 &rarr;</span></a></div>
+</main>
+<script src="../../js/ui.js"></script>
+</body>
+</html>

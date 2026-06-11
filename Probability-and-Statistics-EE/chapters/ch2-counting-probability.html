@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ch 2 Counting and Basic Probability - Probability and Statistics</title>
+<link rel="stylesheet" href="../css/style.css">
+<script>
+  /* Apply saved theme / language before paint to avoid a flash. */
+  (function () {
+    var d = document.documentElement, t, l;
+    try { t = localStorage.getItem("prob-theme"); } catch (e) {}
+    if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    d.setAttribute("data-theme", t);
+    try { l = localStorage.getItem("prob-lang"); } catch (e) {}
+    d.setAttribute("data-lang", l || "en");
+  })();
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="en">Probability and Statistics &middot; Learn by Doing</span><span class="zh">機率與統計 &middot; 做中學</span></div>
+  <div class="sub"><span class="en">For Electronic Engineering &middot; STUST &middot; 36D00301</span><span class="zh">電子工程系 &middot; 南臺科技大學 &middot; 36D00301</span></div>
+</header>
+<main class="container">
+  <div class="toolbar">
+    <button id="theme-toggle" type="button" aria-label="Toggle dark / light theme"></button>
+    <button id="lang-toggle" type="button" aria-label="Switch language English / 中文"></button>
+  </div>
+  <div class="breadcrumb"><a href="../index.html"><span class="en">Course Home</span><span class="zh">課程首頁</span></a> &rsaquo; <span class="en">Chapter 2</span><span class="zh">第 2 章</span></div>
+
+  <h1><span class="en">Chapter 2. Counting and Basic Probability</span><span class="zh">第 2 章 &middot; 計數與基本機率</span></h1>
+  <p><span class="en">Weeks 3&ndash;4. When outcomes are equally likely, probability is counting. We learn permutations and combinations, then state the probability axioms that every model must obey.</span><span class="zh">第 3&ndash;4 週。當結果等可能時，機率問題通常會回到「怎麼數」。本章先學排列與組合，再整理所有機率模型都必須遵守的基本公理。</span></p>
+
+  <ol class="problist">
+    <li>
+      <a href="../problems/ch2/01-permutations-and-combinations.html"><span class="en">Permutations and combinations</span><span class="zh">排列與組合</span></a>
+      <div class="blurb"><span class="en">Count arrangements and selections, applied to passwords and communication codes.</span><span class="zh">學會計算排序與選取方式，並套用到密碼與通訊編碼情境。</span></div>
+    </li>
+    <li>
+      <a href="../problems/ch2/02-the-probability-axioms.html"><span class="en">The probability axioms</span><span class="zh">機率公理</span></a>
+      <div class="blurb"><span class="en">The three axioms and the rules (complement, addition) that follow from them.</span><span class="zh">掌握三條機率公理，以及由公理推出的補集律與加法律。</span></div>
+    </li>
+    <li>
+      <a href="../problems/ch2/03-equally-likely-outcomes.html"><span class="en">Equally likely outcomes</span><span class="zh">等可能結果</span></a>
+      <div class="blurb"><span class="en">Turn a count of favourable outcomes into a probability, with a simulation check.</span><span class="zh">在等可能模型下，把有利結果數轉成機率，並用模擬檢查。</span></div>
+    </li>
+  </ol>
+
+  <div class="backlink"><a href="ch1-probability-models-sets.html"><span class="en">&larr; Chapter 1</span><span class="zh">&larr; 第 1 章</span></a> &nbsp;|&nbsp; <a href="../index.html"><span class="en">Course Home</span><span class="zh">課程首頁</span></a> &nbsp;|&nbsp; <a href="ch3-conditional-independence.html"><span class="en">Chapter 3 &rarr;</span><span class="zh">第 3 章 &rarr;</span></a></div>
+</main>
+<script src="../js/ui.js"></script>
+</body>
+</html>

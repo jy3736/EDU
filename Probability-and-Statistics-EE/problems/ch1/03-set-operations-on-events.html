@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Set Operations on Events - Probability and Statistics</title>
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../vendor/katex/katex.min.css">
+<script defer src="../../vendor/katex/katex.min.js"></script>
+<script defer src="../../vendor/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../js/render-math.js"></script>
+<script defer src="../../js/run-sim.js"></script>
+<script>
+  /* Apply saved theme / language before paint to avoid a flash. */
+  (function () {
+    var d = document.documentElement, t, l;
+    try { t = localStorage.getItem("prob-theme"); } catch (e) {}
+    if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    d.setAttribute("data-theme", t);
+    try { l = localStorage.getItem("prob-lang"); } catch (e) {}
+    d.setAttribute("data-lang", l || "en");
+  })();
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="en">Probability and Statistics &middot; Learn by Doing</span><span class="zh">機率與統計 &middot; 做中學</span></div>
+  <div class="sub"><span class="en">For Electronic Engineering &middot; STUST &middot; 36D00301</span><span class="zh">電子工程系 &middot; 南臺科技大學 &middot; 36D00301</span></div>
+</header>
+<main class="container">
+  <div class="toolbar">
+    <button id="theme-toggle" type="button" aria-label="Toggle dark / light theme"></button>
+    <button id="lang-toggle" type="button" aria-label="Switch language English / 中文"></button>
+  </div>
+  <div class="breadcrumb"><a href="../../index.html"><span class="en">Course Home</span><span class="zh">課程首頁</span></a> &rsaquo; <a href="../../chapters/ch1-probability-models-sets.html"><span class="en">Chapter 1</span><span class="zh">第 1 章</span></a> &rsaquo; <span class="en">Set Operations on Events</span><span class="zh">事件的集合運算</span></div>
+  <h1><span class="en">1.3 Set Operations on Events</span><span class="zh">1.3 事件的集合運算</span></h1>
+
+  <!-- ============ 1. CONCEPT / FUNDAMENTAL KNOWLEDGE ============ -->
+  <h2><span class="en">1 &middot; Concept and Fundamental Knowledge</span><span class="zh">1 &middot; 概念與基礎知識</span></h2>
+
+  <figure class="mascot-panel">
+    <img src="../../assets/mascots/yu27.png" alt="Mascot with a statistics book and formula bubble">
+    <figcaption><span class="en"><strong>Formula focus:</strong> translate each phrase into a shaded region before using union, intersection, complement, or difference rules.</span><span class="zh"><strong>公式焦點：</strong>先把每個語句翻成著色區域，再使用聯集、交集、補集或差集規則。</span></figcaption>
+  </figure>
+
+  <p><span class="en"><strong>Why an electronic engineer needs this.</strong> Engineering questions are built from &ldquo;and,&rdquo; &ldquo;or,&rdquo; and &ldquo;not.&rdquo; A backup link works if the main link <em>or</em> the spare works; a board passes if it fails <em>neither</em> test; an alarm fires if temperature <em>and</em> current are both high. Each phrase is a set operation on events, and each has a probability you can compute from a Venn diagram.</span><span class="zh"><strong>電子工程師為什麼需要這個。</strong>工程問題常由「且」「或」「非」組成。主鏈路<em>或</em>備援鏈路只要有一條可用，備援路徑就可用；一片板子在<em>兩項</em>測試都沒有失敗時通過；溫度<em>且</em>電流都偏高時警報會觸發。每個語句都是事件上的集合運算，也都有可以從范氏圖算出的機率。</span></p>
+
+  <div class="callout definition">
+  <p class="callout-title"><span class="en">Definition &middot; union, intersection, complement, difference</span><span class="zh">定義 &middot; 聯集、交集、補集、差集</span></p>
+  <p><span class="en">For events \(A\) and \(B\) in a sample space \(S\): the <strong>union</strong> \(A\cup B\) is &ldquo;\(A\) or \(B\) (or both),&rdquo; the <strong>intersection</strong> \(A\cap B\) is &ldquo;\(A\) and \(B\),&rdquo; the <strong>complement</strong> \(\overline{A}\) is &ldquo;not \(A\),&rdquo; and the <strong>difference</strong> \(A\setminus B\) is &ldquo;\(A\) but not \(B\).&rdquo; The &ldquo;or&rdquo; here is always <em>inclusive</em>: \(A\cup B\) includes the overlap.</span><span class="zh">對樣本空間 \(S\) 中的事件 \(A\) 與 \(B\)：<strong>聯集</strong> \(A\cup B\) 是「\(A\) 或 \(B\)（也可以兩者都發生）」，<strong>交集</strong> \(A\cap B\) 是「\(A\) 且 \(B\)」，<strong>補集</strong> \(\overline{A}\) 是「非 \(A\)」，<strong>差集</strong> \(A\setminus B\) 是「\(A\) 但非 \(B\)」。這裡的「或」一律是<em>相容或</em>：\(A\cup B\) 會包含重疊區。</span></p>
+  </div>
+
+  <p><span class="en">The shaded region below is the union \(A\cup B\): every outcome in either circle, with the overlap included once. Operations are just different regions you shade on the same diagram.</span><span class="zh">下方著色區域是聯集 \(A\cup B\)：屬於任一圓的所有結果，重疊區只算一次。各種運算其實就是在同一張圖上著色不同區域。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="u-title u-desc" viewBox="0 0 600 420" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="u-title">The union of two events shaded</title>
+      <desc id="u-desc">A rectangle labelled S holds two overlapping circles A and B. The entire area covered by either circle is shaded, illustrating the union A or B.</desc>
+      <defs>
+        <style>
+          .space { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+          .region { fill: none; stroke: var(--hdl-blue); stroke-width: 2.5; }
+          .shade { opacity: .28; }
+          .fillpt { fill: var(--hdl-blue); }
+          .setlbl { font: 700 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--hdl-blue); text-anchor: middle; }
+          .spacelbl { font: 700 17px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+        </style>
+      </defs>
+      <rect class="space" x="20" y="20" width="560" height="380" rx="10"></rect>
+      <text class="spacelbl" x="40" y="48">S</text>
+      <g class="shade">
+        <circle class="fillpt" cx="235" cy="220" r="130"></circle>
+        <circle class="fillpt" cx="365" cy="220" r="130"></circle>
+      </g>
+      <circle class="region" cx="235" cy="220" r="130"></circle>
+      <circle class="region" cx="365" cy="220" r="130"></circle>
+      <text class="setlbl" x="150" y="80">A</text>
+      <text class="setlbl" x="450" y="80">B</text>
+    </svg>
+  </div>
+
+  <div class="callout rule">
+  <p class="callout-title"><span class="en">Rule &middot; the addition (inclusion-exclusion) law</span><span class="zh">規則 &middot; 加法（排容）律</span></p>
+  <p><span class="en">If you add \(P(A)\) and \(P(B)\) you count the overlap twice, so subtract it once:</span><span class="zh">如果直接把 \(P(A)\) 與 \(P(B)\) 相加，重疊區會被算兩次，所以要扣回一次：</span></p>
+  <p class="eq">\[ P(A\cup B)=P(A)+P(B)-P(A\cap B). \]</p>
+  <p><span class="en">When \(A\) and \(B\) are mutually exclusive, \(P(A\cap B)=0\) and this collapses to \(P(A\cup B)=P(A)+P(B)\).</span><span class="zh">當 \(A\) 與 \(B\) 互斥時，\(P(A\cap B)=0\)，此式化為 \(P(A\cup B)=P(A)+P(B)\)。</span></p>
+  </div>
+
+  <div class="callout term">
+  <p class="callout-title"><span class="en">Key terms &middot; complement and De Morgan</span><span class="zh">重要名詞 &middot; 補集與笛摩根</span></p>
+  <ul class="concepts">
+    <li><span class="en"><strong>Complement rule.</strong> \(P(\overline{A})=1-P(A)\). Often the fastest route: &ldquo;at least one&rdquo; is usually easier as &ldquo;\(1-\) none.&rdquo;</span><span class="zh"><strong>補集律。</strong>\(P(\overline{A})=1-P(A)\)。這常是最快的算法：「至少一個」通常改成「\(1-\) 一個都沒有」會更好算。</span></li>
+    <li><span class="en"><strong>De Morgan laws.</strong> &ldquo;Not (\(A\) or \(B\))&rdquo; equals &ldquo;(not \(A\)) and (not \(B\)),&rdquo; and &ldquo;not (\(A\) and \(B\))&rdquo; equals &ldquo;(not \(A\)) or (not \(B\))&rdquo;: \(\overline{A\cup B}=\overline{A}\cap\overline{B}\) and \(\overline{A\cap B}=\overline{A}\cup\overline{B}\).</span><span class="zh"><strong>笛摩根定律。</strong>「非（\(A\) 或 \(B\)）」等於「（非 \(A\)）且（非 \(B\)）」，「非（\(A\) 且 \(B\)）」等於「（非 \(A\)）或（非 \(B\)）」：\(\overline{A\cup B}=\overline{A}\cap\overline{B}\) 且 \(\overline{A\cap B}=\overline{A}\cup\overline{B}\)。</span></li>
+    <li><span class="en"><strong>Difference.</strong> \(A\setminus B\) is the &ldquo;only \(A\)&rdquo; region, with probability \(P(A)-P(A\cap B)\).</span><span class="zh"><strong>差集。</strong>\(A\setminus B\) 是「僅 \(A\)」區域，機率為 \(P(A)-P(A\cap B)\)。</span></li>
+  </ul>
+  </div>
+
+  <div class="sim">
+    <p class="sim-title"><span class="en">Simulate it first</span><span class="zh">先模擬看看</span></p>
+    <p><span class="en"><strong>Predict:</strong> with region probabilities only-\(A\) \(0.30\), both \(0.20\), only-\(B\) \(0.20\), neither \(0.30\), what is \(P(A\cup B)\)? Guess, then check that the simulation agrees with the addition law.</span><span class="zh"><strong>預測：</strong>區域機率為僅 \(A\) \(0.30\)、兩者 \(0.20\)、僅 \(B\) \(0.20\)、皆非 \(0.30\)，那麼 \(P(A\cup B)\) 是多少？先猜，再確認模擬與加法律一致。</span></p>
+    <pre><code class="language-python">import numpy as np
+rng = np.random.default_rng(0)
+
+regions = ["onlyA", "both", "onlyB", "neither"]
+probs   = [0.30,    0.20,   0.20,    0.30]
+draws = rng.choice(regions, size=200_000, p=probs)
+
+A = np.isin(draws, ["onlyA", "both"])
+B = np.isin(draws, ["onlyB", "both"])
+union = A | B            # A or B
+inter = A &amp; B            # A and B
+print(union.mean())                                  # estimate of P(A or B)
+print(A.mean() + B.mean() - inter.mean())            # addition law, same value</code></pre>
+    <p class="sim-note"><span class="en"><strong>Observed:</strong> both print about \(0.700\), matching \(P(A\cup B)=0.50+0.40-0.20=0.70\).</span><span class="zh"><strong>觀察結果：</strong>兩者都印出約 \(0.700\)，對應 \(P(A\cup B)=0.50+0.40-0.20=0.70\)。</span></p>
+  </div>
+
+  <!-- ============ 2. WORKED EXAMPLES (three) ============ -->
+  <h2><span class="en">2 &middot; Worked Examples</span><span class="zh">2 &middot; 範例（詳解）</span></h2>
+
+  <figure class="mascot-panel">
+    <img src="../../assets/mascots/yu18.png" alt="Mascot pointing up with emphasis marks">
+    <figcaption><span class="en"><strong>Rule check:</strong> when you use the addition law, make sure the overlap is subtracted exactly once.</span><span class="zh"><strong>規則檢查：</strong>使用加法律時，確認重疊區恰好只被扣除一次。</span></figcaption>
+  </figure>
+
+  <!-- ---------- Example 1: union by inclusion-exclusion ---------- -->
+  <h3><span class="en">Example 1 &middot; Union by the addition law</span><span class="zh">範例 1 &middot; 以加法律求聯集</span></h3>
+
+  <p><span class="en">Two events satisfy \(P(A)=0.50\), \(P(B)=0.40\), and \(P(A\cap B)=0.20\). The shaded region \(A\cup B\) is below. Find \(P(A\cup B)\) and the difference \(P(A\setminus B)\).</span><span class="zh">兩事件滿足 \(P(A)=0.50\)、\(P(B)=0.40\)、\(P(A\cap B)=0.20\)。下方為著色的 \(A\cup B\)。求 \(P(A\cup B)\) 與差集 \(P(A\setminus B)\)。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="ex1u-title ex1u-desc" viewBox="0 0 600 420" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="ex1u-title">Union of A and B shaded for example 1</title>
+      <desc id="ex1u-desc">A rectangle labelled S holds overlapping circles A and B; the whole area of both circles is shaded to show A union B.</desc>
+      <defs>
+        <style>
+          .space { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+          .region { fill: none; stroke: var(--hdl-blue); stroke-width: 2.5; }
+          .shade { opacity: .28; }
+          .fillpt { fill: var(--hdl-blue); }
+          .setlbl { font: 700 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--hdl-blue); text-anchor: middle; }
+          .spacelbl { font: 700 17px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+        </style>
+      </defs>
+      <rect class="space" x="20" y="20" width="560" height="380" rx="10"></rect>
+      <text class="spacelbl" x="40" y="48">S</text>
+      <g class="shade">
+        <circle class="fillpt" cx="235" cy="220" r="130"></circle>
+        <circle class="fillpt" cx="365" cy="220" r="130"></circle>
+      </g>
+      <circle class="region" cx="235" cy="220" r="130"></circle>
+      <circle class="region" cx="365" cy="220" r="130"></circle>
+      <text class="setlbl" x="150" y="80">A</text>
+      <text class="setlbl" x="450" y="80">B</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td>\(P(A\cup B)\)</td>
+      <td>\(0.70\)</td>
+      <td><span class="en">Addition law: \(0.50+0.40-0.20\); the overlap is removed so it is not double counted.</span><span class="zh">加法律：\(0.50+0.40-0.20\)；扣除重疊以免重複計算。</span></td>
+    </tr>
+    <tr>
+      <td>\(P(A\setminus B)\)</td>
+      <td>\(0.30\)</td>
+      <td><span class="en">&ldquo;Only \(A\)&rdquo; is \(P(A)-P(A\cap B)=0.50-0.20\).</span><span class="zh">「僅 \(A\)」為 \(P(A)-P(A\cap B)=0.50-0.20\)。</span></td>
+    </tr>
+    <tr>
+      <td>\(P(\overline{A\cup B})\)</td>
+      <td>\(0.30\)</td>
+      <td><span class="en">Complement of the shaded region: \(1-0.70\).</span><span class="zh">著色區的補集：\(1-0.70\)。</span></td>
+    </tr>
+  </table>
+
+  <p><span class="en">The one move that matters is subtracting the overlap exactly once. Skipping it would give \(0.90\), which over-counts the \(0.20\) shared by both events.</span><span class="zh">關鍵動作是把重疊恰好扣一次。略過它會得到 \(0.90\)，這多算了兩事件共用的 \(0.20\)。</span></p>
+
+  <!-- ---------- Example 2: complement of a union, De Morgan ---------- -->
+  <h3><span class="en">Example 2 &middot; &ldquo;Neither&rdquo; and De Morgan</span><span class="zh">範例 2 &middot; 「皆非」與笛摩根</span></h3>
+
+  <p><span class="en">Using the same numbers (\(P(A)=0.50\), \(P(B)=0.40\), \(P(A\cap B)=0.20\)), find the probability that <em>neither</em> event happens. The shaded region below is everything outside both circles. The new wrinkle is recognising it two ways, which is De Morgan&rsquo;s law in action.</span><span class="zh">沿用相同數據（\(P(A)=0.50\)、\(P(B)=0.40\)、\(P(A\cap B)=0.20\)），求<em>兩者都不</em>發生的機率。下方著色區是兩圓之外的全部。這題的新重點，是用兩種方式認出同一塊區域，也就是笛摩根定律的用法。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="ex2n-title ex2n-desc" viewBox="0 0 600 420" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="ex2n-title">The neither region shaded for example 2</title>
+      <desc id="ex2n-desc">A rectangle labelled S holds overlapping circles A and B; everything outside both circles is shaded, illustrating the complement of A union B.</desc>
+      <defs>
+        <mask id="neither2">
+          <rect x="20" y="20" width="560" height="380" fill="#ffffff"></rect>
+          <circle cx="235" cy="220" r="130" fill="#000000"></circle>
+          <circle cx="365" cy="220" r="130" fill="#000000"></circle>
+        </mask>
+        <style>
+          .space { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+          .region { fill: none; stroke: var(--hdl-blue); stroke-width: 2.5; }
+          .shade { opacity: .28; }
+          .fillpt { fill: var(--hdl-blue); }
+          .setlbl { font: 700 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--hdl-blue); text-anchor: middle; }
+          .spacelbl { font: 700 17px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+        </style>
+      </defs>
+      <rect class="space" x="20" y="20" width="560" height="380" rx="10"></rect>
+      <text class="spacelbl" x="40" y="48">S</text>
+      <g class="shade">
+        <rect class="fillpt" x="20" y="20" width="560" height="380" mask="url(#neither2)"></rect>
+      </g>
+      <circle class="region" cx="235" cy="220" r="130"></circle>
+      <circle class="region" cx="365" cy="220" r="130"></circle>
+      <text class="setlbl" x="150" y="80">A</text>
+      <text class="setlbl" x="450" y="80">B</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td>\(P(A\cup B)\)</td>
+      <td>\(0.70\)</td>
+      <td><span class="en">From Example 1, the union.</span><span class="zh">承範例 1 的聯集。</span></td>
+    </tr>
+    <tr>
+      <td>\(P(\overline{A\cup B})\)</td>
+      <td>\(0.30\)</td>
+      <td><span class="en">Complement rule: \(1-P(A\cup B)=1-0.70\).</span><span class="zh">補集律：\(1-P(A\cup B)=1-0.70\)。</span></td>
+    </tr>
+    <tr>
+      <td>\(P(\overline{A}\cap\overline{B})\)</td>
+      <td>\(0.30\)</td>
+      <td><span class="en">De Morgan: &ldquo;neither&rdquo; is the same shaded region, so the value is identical.</span><span class="zh">笛摩根：「皆非」就是同一塊著色區，所以數值相同。</span></td>
+    </tr>
+  </table>
+
+  <div class="callout notice">
+  <p class="callout-title"><span class="en">Notice &middot; two names, one region</span><span class="zh">注意 &middot; 兩種名稱，同一區域</span></p>
+  <p><span class="en">\(\overline{A\cup B}\) (&ldquo;not (\(A\) or \(B\))&rdquo;) and \(\overline{A}\cap\overline{B}\) (&ldquo;(not \(A\)) and (not \(B\))&rdquo;) describe the very same shaded area. That equality is De Morgan&rsquo;s law; the diagram makes it obvious rather than something to memorise.</span><span class="zh">\(\overline{A\cup B}\)（「非（\(A\) 或 \(B\)）」）與 \(\overline{A}\cap\overline{B}\)（「（非 \(A\)）且（非 \(B\)）」）描述的是同一塊著色區。這個相等就是笛摩根定律；用圖看會很直覺，不需要硬背。</span></p>
+  </div>
+
+  <!-- ---------- Example 3: engineering, parallel redundancy ---------- -->
+  <h3><span class="en">Example 3 &middot; A redundant link (engineering)</span><span class="zh">範例 3 &middot; 備援鏈路（工程應用）</span></h3>
+
+  <p><span class="en">A data path has a main link and a spare. Let \(A=\{\text{main works}\}\) and \(B=\{\text{spare works}\}\), with \(P(A)=0.90\), \(P(B)=0.80\), and (from field data) \(P(A\cap B)=0.74\). The path carries data if <em>either</em> link works, the event \(A\cup B\). Find the probability the path works, and the probability it fails.</span><span class="zh">一條資料路徑有主鏈路與備援鏈路。令 \(A=\{\text{主鏈路可用}\}\)、\(B=\{\text{備援可用}\}\)，且 \(P(A)=0.90\)、\(P(B)=0.80\)，（依現場資料）\(P(A\cap B)=0.74\)。只要<em>任一</em>鏈路可用，路徑即可傳資料，即事件 \(A\cup B\)。求路徑可用的機率，以及失效的機率。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="ex3r-title ex3r-desc" viewBox="0 0 600 420" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="ex3r-title">Union of main and spare link working, shaded</title>
+      <desc id="ex3r-desc">A rectangle labelled S holds overlapping circles A main works and B spare works; the whole area of both circles is shaded to show the path works when either works.</desc>
+      <defs>
+        <style>
+          .space { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+          .region { fill: none; stroke: var(--hdl-blue); stroke-width: 2.5; }
+          .shade { opacity: .28; }
+          .fillpt { fill: var(--hdl-blue); }
+          .setlbl { font: 700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--hdl-blue); text-anchor: middle; }
+          .spacelbl { font: 700 17px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+        </style>
+      </defs>
+      <rect class="space" x="20" y="20" width="560" height="380" rx="10"></rect>
+      <text class="spacelbl" x="40" y="48">S</text>
+      <g class="shade">
+        <circle class="fillpt" cx="235" cy="220" r="130"></circle>
+        <circle class="fillpt" cx="365" cy="220" r="130"></circle>
+      </g>
+      <circle class="region" cx="235" cy="220" r="130"></circle>
+      <circle class="region" cx="365" cy="220" r="130"></circle>
+      <text class="setlbl en" x="150" y="72">A: main</text><text class="setlbl zh" x="150" y="72">A：主</text>
+      <text class="setlbl en" x="450" y="72">B: spare</text><text class="setlbl zh" x="450" y="72">B：備援</text>
+    </svg>
+  </div>
+
+  <h4><span class="en">Reading it off, step by step</span><span class="zh">逐步判讀</span></h4>
+  <table class="ports">
+    <tr>
+      <th><span class="en">Quantity</span><span class="zh">量</span></th>
+      <th><span class="en">Value</span><span class="zh">值</span></th>
+      <th><span class="en">How you read it</span><span class="zh">判讀方式</span></th>
+    </tr>
+    <tr>
+      <td>\(P(A\cup B)\)</td>
+      <td>\(0.96\)</td>
+      <td><span class="en">Addition law: \(0.90+0.80-0.74\). The path works.</span><span class="zh">加法律：\(0.90+0.80-0.74\)。路徑可用。</span></td>
+    </tr>
+    <tr>
+      <td>\(P(\text{fails})\)</td>
+      <td>\(0.04\)</td>
+      <td><span class="en">Path fails only if <em>both</em> links fail: \(1-P(A\cup B)=\overline{A}\cap\overline{B}\).</span><span class="zh">路徑僅在<em>兩條</em>鏈路皆失效時才失效：\(1-P(A\cup B)=\overline{A}\cap\overline{B}\)。</span></td>
+    </tr>
+  </table>
+
+  <p><span class="en">Redundancy pays off: each link alone fails \(10\%\) or \(20\%\) of the time, but the pair fails only \(4\%\) of the time. Note we used the measured \(P(A\cap B)=0.74\) directly; we did <em>not</em> assume the links fail independently, a separate idea coming in Chapter 3.</span><span class="zh">備援確實有效：單一鏈路各有 \(10\%\) 或 \(20\%\) 的失效率，但兩條一起看時只剩 \(4\%\) 失效。注意這裡直接使用量測值 \(P(A\cap B)=0.74\)；我們<em>沒有</em>假設兩條鏈路獨立失效，獨立性會在第 3 章另外討論。</span></p>
+
+  <!-- ============ 3. EXERCISES (two) ============ -->
+  <h2><span class="en">3 &middot; Exercises</span><span class="zh">3 &middot; 練習</span></h2>
+
+  <figure class="mascot-panel">
+    <img src="../../assets/mascots/yu23.png" alt="Mascot thinking with an idea bubble">
+    <figcaption><span class="en"><strong>Challenge mode:</strong> work backward from the known probabilities, and reject any result that makes a union smaller than one of its events.</span><span class="zh"><strong>挑戰模式：</strong>由已知機率反推，並排除任何讓聯集小於其中一個事件的結果。</span></figcaption>
+  </figure>
+
+  <!-- ---------- Exercise 1: operations off region probs ---------- -->
+  <h3><span class="en">Exercise 1 &middot; Shading the operations</span><span class="zh">練習 1 &middot; 為運算著色</span></h3>
+
+  <p><span class="en">The Venn diagram gives the four region probabilities for events \(A\) and \(B\). Use them for every part.</span><span class="zh">下方范氏圖給出事件 \(A\) 與 \(B\) 的四個區域機率。各小題均使用之。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="x1op-title x1op-desc" viewBox="0 0 600 420" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="x1op-title">Two-event Venn diagram with region probabilities for exercise 1</title>
+      <desc id="x1op-desc">A rectangle labelled S holds overlapping circles A and B. The only-A region shows 0.35, the overlap shows 0.15, the only-B region shows 0.25, and outside both shows 0.25.</desc>
+      <defs>
+        <style>
+          .space { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+          .region { fill: var(--hdl-blue); fill-opacity: .16; stroke: var(--hdl-blue); stroke-width: 2.5; }
+          .setlbl { font: 700 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--hdl-blue); text-anchor: middle; }
+          .spacelbl { font: 700 17px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .rval { font: 700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
+        </style>
+      </defs>
+      <rect class="space" x="20" y="20" width="560" height="380" rx="10"></rect>
+      <text class="spacelbl" x="40" y="48">S</text>
+      <circle class="region" cx="235" cy="220" r="130"></circle>
+      <circle class="region" cx="365" cy="220" r="130"></circle>
+      <text class="setlbl" x="150" y="80">A</text>
+      <text class="setlbl" x="450" y="80">B</text>
+      <text class="rval" x="175" y="220">0.35</text>
+      <text class="rval" x="300" y="220">0.15</text>
+      <text class="rval" x="425" y="220">0.25</text>
+      <text class="rval" x="515" y="370">0.25</text>
+    </svg>
+  </div>
+
+  <p><span class="en">Answer all five parts:</span><span class="zh">回答以下五個小題：</span></p>
+  <ol class="concepts">
+    <li><span class="en">Find \(P(A)\) and \(P(B)\).</span><span class="zh">求 \(P(A)\) 與 \(P(B)\)。</span></li>
+    <li><span class="en">Find \(P(A\cup B)\) using the addition law, and check it against the regions.</span><span class="zh">以加法律求 \(P(A\cup B)\)，並用各區域核對。</span></li>
+    <li><span class="en">Find \(P(A\setminus B)\), the probability of &ldquo;\(A\) but not \(B\).&rdquo;</span><span class="zh">求 \(P(A\setminus B)\)，即「\(A\) 但非 \(B\)」的機率。</span></li>
+    <li><span class="en">Find \(P(\overline{A\cup B})\).</span><span class="zh">求 \(P(\overline{A\cup B})\)。</span></li>
+    <li><span class="en">Confirm De Morgan numerically: check \(P(\overline{A}\cap\overline{B})\) equals your answer to part 4.</span><span class="zh">用數值確認笛摩根定律：檢查 \(P(\overline{A}\cap\overline{B})\) 是否等於第 4 小題的答案。</span></li>
+  </ol>
+
+  <div class="hint"><strong><span class="en">Hint:</span><span class="zh">提示：</span></strong> <span class="en">Adding the three shaded regions that make up \(A\cup B\) should give the same number as the addition law. The &ldquo;neither&rdquo; region is the complement of that.</span><span class="zh">把組成 \(A\cup B\) 的三塊著色區相加，應與加法律得到相同數值。「皆非」區即其補集。</span></span></div>
+
+  <details class="solution">
+    <summary><span class="en">Show full solution</span><span class="zh">顯示完整解答</span></summary>
+
+    <p><span class="en"><strong>(1) Single events.</strong> Each circle is its two regions:</span><span class="zh"><strong>(1) 單一事件。</strong>每個圓為其兩塊區域：</span></p>
+    <p class="eq">\[ P(A)=0.35+0.15=0.50,\qquad P(B)=0.25+0.15=0.40. \]</p>
+
+    <p><span class="en"><strong>(2) Union.</strong> Addition law, then the region check:</span><span class="zh"><strong>(2) 聯集。</strong>加法律，再以區域核對：</span></p>
+    <p class="eq">\[ P(A\cup B)=0.50+0.40-0.15=0.75=\underbrace{0.35+0.15+0.25}_{\text{three regions}}. \]</p>
+
+    <p><span class="en"><strong>(3) Difference.</strong> &ldquo;Only \(A\)&rdquo; is the left crescent:</span><span class="zh"><strong>(3) 差集。</strong>「僅 \(A\)」為左側月牙：</span></p>
+    <p class="eq">\[ P(A\setminus B)=P(A)-P(A\cap B)=0.50-0.15=0.35. \]</p>
+
+    <p><span class="en"><strong>(4) Complement of the union.</strong></span><span class="zh"><strong>(4) 聯集的補集。</strong></span></p>
+    <p class="eq">\[ P(\overline{A\cup B})=1-0.75=0.25. \]</p>
+
+    <p><span class="en"><strong>(5) De Morgan check.</strong> &ldquo;Neither&rdquo; is the region outside both circles, read directly as \(0.25\), which equals \(P(\overline{A}\cap\overline{B})\). It matches part 4, confirming \(\overline{A\cup B}=\overline{A}\cap\overline{B}\).</span><span class="zh"><strong>(5) 笛摩根驗證。</strong>「皆非」是兩圓之外的區域，直接讀得 \(0.25\)，即 \(P(\overline{A}\cap\overline{B})\)。與第 4 小題相符，確認 \(\overline{A\cup B}=\overline{A}\cap\overline{B}\)。</span></p>
+
+    <p><span class="en"><strong>Sense check.</strong> The shaded union \(0.75\) and the &ldquo;neither&rdquo; \(0.25\) add to \(1\), as a region and its complement must.</span><span class="zh"><strong>合理性檢查。</strong>著色聯集 \(0.75\) 與「皆非」\(0.25\) 相加為 \(1\)，符合區域與其補集之關係。</span></p>
+  </details>
+
+  <!-- ---------- Exercise 2: solve for the overlap (reasoning) ---------- -->
+  <h3><span class="en">Exercise 2 &middot; Working back to the overlap</span><span class="zh">練習 2 &middot; 反推重疊</span></h3>
+
+  <p><span class="en">A production line is monitored for two alarms. From the logs, \(P(A)=0.60\), \(P(B)=0.50\), and \(P(A\cup B)=0.80\). The overlap is <em>not</em> given; the diagram leaves it as a question mark for you to find.</span><span class="zh">一條產線監看兩種警報。由紀錄可知 \(P(A)=0.60\)、\(P(B)=0.50\)、\(P(A\cup B)=0.80\)。重疊<em>沒有</em>直接給出；圖中以問號標示，要由你求出。</span></p>
+
+  <div class="diagram">
+    <svg role="img" aria-labelledby="x2op-title x2op-desc" viewBox="0 0 600 420" width="100%" style="max-width: 600px; height: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--diagram-bg); padding: 8px;">
+      <title id="x2op-title">Two-event Venn diagram with unknown overlap for exercise 2</title>
+      <desc id="x2op-desc">A rectangle labelled S holds overlapping circles A and B with the overlap region marked by a question mark. The totals given in the text are P(A) equals 0.60, P(B) equals 0.50, and P(A union B) equals 0.80.</desc>
+      <defs>
+        <style>
+          .space { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+          .region { fill: var(--hdl-blue); fill-opacity: .16; stroke: var(--hdl-blue); stroke-width: 2.5; }
+          .setlbl { font: 700 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--hdl-blue); text-anchor: middle; }
+          .spacelbl { font: 700 17px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); }
+          .rq { font: 700 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: var(--muted); text-anchor: middle; dominant-baseline: central; }
+        </style>
+      </defs>
+      <rect class="space" x="20" y="20" width="560" height="380" rx="10"></rect>
+      <text class="spacelbl" x="40" y="48">S</text>
+      <circle class="region" cx="235" cy="220" r="130"></circle>
+      <circle class="region" cx="365" cy="220" r="130"></circle>
+      <text class="setlbl" x="150" y="80">A</text>
+      <text class="setlbl" x="450" y="80">B</text>
+      <text class="rq" x="300" y="220">?</text>
+    </svg>
+  </div>
+
+  <p><span class="en">Answer all five parts:</span><span class="zh">回答以下五個小題：</span></p>
+  <ol class="concepts">
+    <li><span class="en">Rearrange the addition law to find \(P(A\cap B)\).</span><span class="zh">重排加法律以求 \(P(A\cap B)\)。</span></li>
+    <li><span class="en">Find \(P(A\setminus B)\) and \(P(B\setminus A)\).</span><span class="zh">求 \(P(A\setminus B)\) 與 \(P(B\setminus A)\)。</span></li>
+    <li><span class="en">Find \(P(\overline{A\cup B})\), the probability that no alarm fires.</span><span class="zh">求 \(P(\overline{A\cup B})\)，即沒有警報觸發的機率。</span></li>
+    <li><span class="en">Find \(P(\overline{A\cap B})\), the probability that not both alarms fire, and confirm it equals \(\,P(\overline{A}\cup\overline{B})\,\) (De Morgan).</span><span class="zh">求 \(P(\overline{A\cap B})\)，即非兩警報同時觸發的機率，並確認其等於 \(\,P(\overline{A}\cup\overline{B})\,\)（笛摩根）。</span></li>
+    <li><span class="en">Could \(P(A\cup B)\) have been \(0.40\) with these \(P(A)\) and \(P(B)\)? Explain.</span><span class="zh">在這組 \(P(A)\) 與 \(P(B)\) 下，\(P(A\cup B)\) 有可能是 \(0.40\) 嗎？請說明。</span></li>
+  </ol>
+
+  <div class="hint"><strong><span class="en">Hint:</span><span class="zh">提示：</span></strong> <span class="en">Solve \(P(A\cup B)=P(A)+P(B)-P(A\cap B)\) for the overlap. For part 5, recall that \(A\cup B\) can never be smaller than \(A\) alone.</span><span class="zh">由 \(P(A\cup B)=P(A)+P(B)-P(A\cap B)\) 解出重疊。第 5 小題請記得 \(A\cup B\) 永遠不可能小於單獨的 \(A\)。</span></span></div>
+
+  <details class="solution">
+    <summary><span class="en">Show full solution</span><span class="zh">顯示完整解答</span></summary>
+
+    <p><span class="en"><strong>(1) The overlap.</strong> Rearranging the addition law:</span><span class="zh"><strong>(1) 重疊。</strong>重排加法律：</span></p>
+    <p class="eq">\[ P(A\cap B)=P(A)+P(B)-P(A\cup B)=0.60+0.50-0.80=0.30. \]</p>
+
+    <p><span class="en"><strong>(2) The two differences.</strong></span><span class="zh"><strong>(2) 兩個差集。</strong></span></p>
+    <p class="eq">\[ P(A\setminus B)=0.60-0.30=0.30,\qquad P(B\setminus A)=0.50-0.30=0.20. \]</p>
+
+    <p><span class="en"><strong>(3) No alarm.</strong></span><span class="zh"><strong>(3) 無警報。</strong></span></p>
+    <p class="eq">\[ P(\overline{A\cup B})=1-0.80=0.20. \]</p>
+
+    <p><span class="en"><strong>(4) Not both.</strong> Use the complement rule, then De Morgan:</span><span class="zh"><strong>(4) 不是兩者都發生。</strong>用補集律，再用笛摩根：</span></p>
+    <p class="eq">\[ P(\overline{A\cap B})=1-P(A\cap B)=1-0.30=0.70=P(\overline{A}\cup\overline{B}). \]</p>
+
+    <p><span class="en"><strong>(5) Could it be \(0.40\)?</strong> No. Since \(A\) is part of \(A\cup B\), we must have \(P(A\cup B)\ge P(A)=0.60\). A union of \(0.40\) would be smaller than \(A\) alone, which is impossible. (Equivalently, it would force \(P(A\cap B)=0.70\), larger than \(P(B)=0.50\).)</span><span class="zh"><strong>(5) 有可能是 \(0.40\) 嗎？</strong>否。由於 \(A\) 是 \(A\cup B\) 的一部分，必有 \(P(A\cup B)\ge P(A)=0.60\)。聯集為 \(0.40\) 會小於單獨的 \(A\)，不可能。（等價地，這會迫使 \(P(A\cap B)=0.70\)，大於 \(P(B)=0.50\)。）</span></p>
+
+    <p><span class="en"><strong>Sense check.</strong> The four regions are only-\(A\) \(0.30\), both \(0.30\), only-\(B\) \(0.20\), neither \(0.20\); they sum to \(1\), and the overlap \(0.30\) does not exceed either \(P(A)\) or \(P(B)\). Consistent.</span><span class="zh"><strong>合理性檢查。</strong>四個區域為僅 \(A\) \(0.30\)、兩者 \(0.30\)、僅 \(B\) \(0.20\)、皆非 \(0.20\)；總和為 \(1\)，且重疊 \(0.30\) 未超過 \(P(A)\) 或 \(P(B)\)。一致。</span></p>
+  </details>
+
+  <!-- ============ AI TUTOR ============ -->
+  <div class="ai-tutor">
+    <p class="ai-title"><span class="en">Ask an AI tutor</span><span class="zh">問問 AI 家教</span></p>
+    <ul>
+      <li><strong>Explain</strong> &middot; <span class="en">Explain the inclusion-exclusion law using a Venn diagram and why we subtract the overlap.</span><span class="zh">用范氏圖解釋排容律，以及為什麼要扣除重疊。</span></li>
+      <li><strong>Practice</strong> &middot; <span class="en">Give me one more redundancy problem where a system works if either of two parts works.</span><span class="zh">再給我一題備援題目，系統在兩零件其一可用時即運作。</span></li>
+      <li><strong>Reflect</strong> &middot; <span class="en">Why is &ldquo;at least one&rdquo; often easier to compute as &ldquo;1 minus none&rdquo;?</span><span class="zh">為什麼「至少一個」常改成「1 減去一個都沒有」會更好算？</span></li>
+      <li><strong>Extend</strong> &middot; <span class="en">State the inclusion-exclusion law for three events A, B, C.</span><span class="zh">寫出三事件 A、B、C 的排容律。</span></li>
+    </ul>
+  </div>
+
+  <div class="backlink"><a href="02-sets-events-and-venn-diagrams.html"><span class="en">&larr; Previous</span><span class="zh">&larr; 上一節</span></a> &nbsp;|&nbsp; <a href="../../chapters/ch1-probability-models-sets.html"><span class="en">Chapter 1</span><span class="zh">第 1 章</span></a> &nbsp;|&nbsp; <a href="../ch2/01-permutations-and-combinations.html"><span class="en">Next &rarr;</span><span class="zh">下一節 &rarr;</span></a></div>
+</main>
+<script src="../../js/ui.js"></script>
+</body>
+</html>

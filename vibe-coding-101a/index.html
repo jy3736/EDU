@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibe Coding 101A 工作坊（3 小時）</title>
+<style>
+  :root{
+    --brand:#a5b4fc;
+    --brand2:#c4b5fd;
+    --accent:#67e8f9;
+    --ok:#34d399;
+    --warn:#fbbf24;
+    --danger:#fb7185;
+    --grad:linear-gradient(135deg,#93c5fd 0%,#a5b4fc 48%,#67e8f9 100%);
+    --title-grad:var(--grad);
+    --shadow:0 16px 36px rgba(2,6,23,.34);
+    --bg:#0b1020;
+    --bg2:#1a2442;
+    --paper:#111a2e;
+    --paper2:#1b2950;
+    --surface:#17233d;
+    --surface-2:#10182c;
+    --ink:#f8fbff;
+    --text:#dde7f5;
+    --muted:#b9c5d9;
+    --line:#51607f;
+    --soft:#1b2942;
+    --brand-soft:rgba(165,180,252,.18);
+    --brand-soft-2:rgba(196,181,253,.18);
+    --accent-soft:rgba(103,232,249,.14);
+    --toolbar-bg:rgba(9,15,31,.94);
+    --toolbar-ink:#eff6ff;
+    --toolbar-border:#5b6a88;
+    --title-ink:#e0e7ff;
+    --heading-ink:#ffffff;
+    --heading-soft:#eef4ff;
+    --heading-accent:#e9ddff;
+    --table-head:linear-gradient(135deg,#4f46e5,#7c3aed);
+    --table-row-hover:rgba(165,180,252,.18);
+    --field-bg:#10182d;
+    --field-ph:#8291ab;
+    font-family:"PingFang TC","Microsoft JhengHei","Noto Sans CJK TC","Heiti TC","Segoe UI",system-ui,sans-serif;
+  }
+  body[data-theme="light"]{
+    --bg:#0f172a;--bg2:#1e293b;--paper:#e6eaf1;--paper2:#dde3ee;--surface:#f3f6fb;--surface-2:#e9edf4;
+    --ink:#1e293b;--text:#334155;--muted:#5f6b7e;--line:#cfd7e3;--soft:#eaeef5;
+    --brand-soft:#e5e9f6;--brand-soft-2:#ece8fb;--accent-soft:#e1eff3;
+    --toolbar-bg:rgba(15,23,42,.92);--toolbar-ink:#e2e8f0;--toolbar-border:#334155;--title-ink:#c7d2fe;
+    --heading-ink:#1e293b;--heading-soft:#4338ca;--heading-accent:#6d28d9;
+    --table-head:linear-gradient(135deg,#4f46e5,#7c3aed);--table-row-hover:#eef2ff;
+    --field-bg:#f1f4fa;--field-ph:#aeb8c8;--shadow:0 10px 30px rgba(15,23,42,.12);
+    --brand:#4338ca;--brand2:#6d28d9;--accent:#0e7490;
+    --title-grad:linear-gradient(135deg,#4338ca 0%,#6d28d9 50%,#0e7490 100%);
+  }
+  body[data-theme="light"] .cover h1{text-shadow:none;}
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);color:var(--ink);-webkit-font-smoothing:antialiased;}
+
+  /* ===== Deck / Slide ===== */
+  .deck{position:fixed;inset:0;overflow:hidden;}
+  .deck-group{display:contents;}
+  .slide{position:absolute;inset:0;display:none;padding:132px max(7vw,calc((100% - 1200px)/2)) 96px;overflow-y:auto;
+    background:linear-gradient(180deg,var(--paper) 0%,var(--paper2) 100%);animation:fade .35s ease;zoom:var(--fs,1);}
+  .slide.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  .slide.cover{display:none;align-items:center;justify-content:center;}
+  .slide.cover.active{display:flex;}
+  .cover-inner{max-width:1000px;margin:auto;display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .cover-banner{display:flex;flex-direction:column;align-items:center;gap:12px;margin:30px auto 0;}
+  .cover-banner img{width:min(560px,82vw);height:auto;filter:drop-shadow(0 8px 22px rgba(0,0,0,.32));}
+  .cover-logo{display:flex;flex-direction:column;align-items:center;gap:14px;margin:28px auto 0;max-width:900px;}
+  .cover-logo .logo-ext{font-size:17px;font-weight:800;letter-spacing:.04em;color:var(--heading-soft);
+    line-height:1.2;white-space:nowrap;text-align:center;}
+  .cover .eyebrow{display:inline-block;letter-spacing:.18em;font-size:14px;font-weight:700;color:var(--heading-soft);
+    border:1px solid var(--brand-soft-2);background:var(--brand-soft);padding:6px 14px;border-radius:999px;margin-bottom:18px;}
+  .cover h1{font-size:clamp(38px,5.3vw,62px);line-height:1.15;margin:0 0 24px;
+    background:var(--title-grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;text-shadow:0 0 24px rgba(165,180,252,.16);}
+  .cover h1 .line{display:block;}
+  .cover h1 .line+.line{margin-top:20px;}
+  .cover .sub{font-size:clamp(18px,1.8vw,23px);color:var(--muted);line-height:1.7;max-width:900px;margin-left:auto;margin-right:auto;text-align:left;}
+  .cover .tags{margin-top:36px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;}
+  .cover .tag{background:rgba(99,102,241,.10);color:var(--brand);border:1px solid rgba(99,102,241,.22);padding:8px 16px;border-radius:10px;font-size:15px;}
+
+  .s-head{display:flex;align-items:center;gap:18px;margin-bottom:28px;flex-wrap:wrap;}
+  .badge{flex:none;display:grid;place-items:center;min-width:108px;height:46px;padding:0 16px;border-radius:12px;color:#0b1020;font-weight:800;font-size:17px;letter-spacing:.04em;background:var(--grad);box-shadow:var(--shadow);}
+  .badge.alt{background:linear-gradient(135deg,#0e7490,#0891b2);color:#ffffff;}
+  .badge.hot{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#111827;}
+  .s-head h2{font-size:clamp(22px,2.6vw,34px);margin:0;font-weight:800;color:var(--heading-ink);text-shadow:0 0 18px rgba(165,180,252,.14);}
+  .s-head .kicker{display:block;font-size:14px;font-weight:700;color:var(--heading-soft);margin-bottom:2px;letter-spacing:.02em;}
+
+  h3.block{font-size:18px;margin:26px 0 12px;color:var(--heading-accent);font-weight:800;display:flex;align-items:center;gap:8px;}
+  h3.block::before{content:"";width:6px;height:20px;border-radius:3px;background:var(--grad);}
+  p.lead{font-size:18px;line-height:1.9;color:var(--text);max-width:1000px;}
+
+  ul.clean{list-style:none;padding:0;margin:10px 0;max-width:1040px;}
+  ul.clean li{position:relative;padding:8px 0 8px 30px;font-size:16.5px;line-height:1.7;color:var(--text);border-bottom:1px dashed var(--line);}
+  ul.clean li::before{content:"▸";position:absolute;left:6px;color:var(--accent);font-weight:700;}
+
+  table{border-collapse:separate;border-spacing:0 6px;width:100%;max-width:1200px;margin:10px 0 14px;font-size:14px;}
+  thead th{background:var(--table-head);color:#fff;font-weight:700;text-align:left;padding:8px 12px;font-size:13px;line-height:1.4;}
+  thead th:first-child{border-top-left-radius:10px;border-bottom-left-radius:10px;}
+  thead th:last-child{border-top-right-radius:10px;border-bottom-right-radius:10px;}
+  tbody td{padding:7px 12px;background:var(--surface);color:var(--text);vertical-align:top;line-height:1.55;}
+  tbody tr td:first-child{border-top-left-radius:9px;border-bottom-left-radius:9px;}
+  tbody tr td:last-child{border-top-right-radius:9px;border-bottom-right-radius:9px;}
+  thead th:first-child,tbody tr td:first-child{white-space:nowrap;}
+  tbody tr:nth-child(even) td{background:var(--soft);}
+  tbody tr:hover td{background:var(--table-row-hover);}
+
+  .grid{display:grid;gap:16px;margin:14px 0;}
+  .grid.c2{grid-template-columns:repeat(2,1fr);}
+  .grid.c3{grid-template-columns:repeat(3,1fr);}
+  .grid.c4{grid-template-columns:repeat(4,1fr);}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);}
+  .card h4{margin:0 0 8px;font-size:16.5px;color:var(--ink);}
+  .card p{margin:0;color:var(--text);font-size:15px;line-height:1.7;}
+  .card .t{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--brand);}
+  .card .pill{display:inline-block;margin-bottom:8px;font-size:12px;font-weight:800;letter-spacing:.04em;padding:3px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);}
+
+  .trap{background:linear-gradient(135deg,var(--brand-soft),var(--brand-soft-2));border:1px solid #c7d2fe;border-left:6px solid var(--brand2);border-radius:12px;padding:16px 20px;margin:16px 0;max-width:1200px;}
+  .trap h3.block{color:var(--brand2);margin-top:0;}
+  .trap h3.block::before{background:var(--brand2);}
+  .trap ul.clean li::before{content:"⚠";color:var(--brand2);}
+  .trap ul.clean li{border-bottom-color:#ddd6fe;}
+  .out{background:linear-gradient(135deg,var(--accent-soft),var(--brand-soft));border:1px solid #bae6fd;border-left:6px solid var(--accent);border-radius:12px;padding:16px 20px;margin:16px 0;max-width:1200px;}
+  .out h3.block{color:var(--accent);margin-top:0;}
+  .out h3.block::before{background:var(--accent);}
+  .out ul.clean li::before{content:"✓";color:var(--accent);}
+  .out ul.clean li{border-bottom-color:#cffafe;}
+
+  blockquote.pat{background:linear-gradient(135deg,var(--brand-soft),var(--brand-soft-2));border:1px solid #ddd6fe;border-radius:14px;padding:20px 24px;margin:16px 0;font-size:18px;line-height:2;color:var(--ink);font-weight:600;max-width:1200px;}
+  blockquote.ex{background:linear-gradient(135deg,var(--accent-soft),var(--brand-soft));border:1px solid #bae6fd;border-left:6px solid var(--accent);border-radius:12px;padding:16px 22px;margin:16px 0;font-size:16px;line-height:1.95;color:var(--text);max-width:1200px;white-space:pre-wrap;}
+  blockquote.ex .lab,blockquote.pat .lab{display:block;font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--accent);margin-bottom:6px;}
+
+  code,.kbd{font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;font-size:.92em;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:1px 7px;color:var(--accent);}
+  pre.term{background:#06101f;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow-x:auto;font-family:"SFMono-Regular",Consolas,Menlo,monospace;font-size:13.5px;line-height:1.7;color:#cfe6ff;max-width:1100px;box-shadow:var(--shadow);}
+  pre.term .c{color:#7d8aa6;}
+  pre.term .p{color:#67e8f9;}
+
+  /* ===== flow diagram ===== */
+  .flow{display:flex;flex-direction:column;align-items:center;gap:8px;margin:16px auto;max-width:780px;}
+  .flow .node{width:100%;background:var(--surface);border:2px solid var(--brand2);border-left:7px solid var(--brand2);border-radius:14px;padding:14px 20px;box-shadow:var(--shadow);text-align:center;}
+  .flow .node b{color:var(--ink);font-size:18px;font-weight:800;}
+  .flow .node small{display:block;color:var(--muted);font-size:14px;margin-top:5px;line-height:1.65;}
+  .flow .node.start{background:linear-gradient(135deg,#4f46e5,#7c3aed);border:none;}
+  .flow .node.start b{color:#ffffff;}
+  .flow .node.start small{color:#e9e6ff;}
+  .flow .node.end{background:linear-gradient(135deg,#0e7490,#0891b2);border:none;}
+  .flow .node.end b{color:#ffffff;}
+  .flow .node.end small{color:#d7f3fb;}
+  .flow .arrow{color:var(--brand2);font-size:24px;line-height:1;font-weight:900;}
+  body[data-theme="light"] .flow .node{border-color:#6366f1;border-left-color:#6366f1;}
+
+  ul.check{list-style:none;padding:0;margin:10px 0;max-width:1040px;}
+  ul.check li{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:16px;color:var(--text);}
+  ul.check input[type=checkbox]{width:22px;height:22px;margin-top:2px;accent-color:var(--brand);flex:none;cursor:pointer;}
+  ul.check label{cursor:pointer;line-height:1.6;}
+  .sub-h{font-weight:800;color:var(--heading-accent);margin:18px 0 6px;font-size:16px;}
+  .note{font-size:14px;color:var(--muted);margin-top:8px;}
+  a.link{color:var(--accent);text-decoration:none;border-bottom:1px dashed var(--accent);}
+  a.link:hover{border-bottom-style:solid;}
+
+  /* ===== 語言切換（中文／English）：只隱藏，不強制 display 類型 ===== */
+  body[data-lang="zh"] .lang-en{display:none;}
+  body[data-lang="en"] .lang-zh{display:none;}
+
+  /* ===== 本單元導讀 ===== */
+  .intro{background:linear-gradient(135deg,var(--brand-soft),var(--brand-soft-2));border:1px solid var(--line);border-left:6px solid var(--brand2);border-radius:14px;padding:18px 24px;margin:0 0 24px;max-width:1140px;}
+  .intro .intro-tag{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:800;letter-spacing:.08em;color:var(--brand2);margin-bottom:10px;}
+  .intro .intro-tag::before{content:"";width:9px;height:9px;border-radius:999px;background:var(--brand2);}
+  .intro p{margin:0 0 12px;font-size:16.5px;line-height:2.02;color:var(--text);}
+  .intro p:last-child{margin-bottom:0;}
+  .intro .hl{color:var(--heading-accent);font-weight:700;}
+  /* ===== 吉祥物 mascot：必須面向／指向文字 ===== */
+  .mascot{width:auto;height:auto;max-height:140px;max-width:190px;position:relative;z-index:6;filter:drop-shadow(0 4px 10px rgba(0,0,0,.18));}
+  .mascot-l{float:left;margin:2px 22px 8px 0;}
+  .mascot-r{float:right;margin:2px 0 8px 22px;}
+  .intro::after,.trap::after,.out::after,blockquote.pat::after{content:"";display:block;clear:both;}
+  @media(max-width:640px){.mascot{max-height:98px;max-width:132px;}.mascot-l{margin-right:14px;}.mascot-r{margin-left:14px;}}
+
+  /* ===== 推廣海報 promo poster ===== */
+  .promo-poster{display:flex;flex-direction:column;align-items:center;gap:16px;padding:6px 0 50px;}
+  .promo-poster img{width:auto;height:auto;max-width:min(640px,92%);max-height:82vh;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);}
+  .promo-poster .promo-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+
+  .glossary{display:grid;gap:10px;margin:12px 0;max-width:1140px;}
+  .gterm{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px;}
+  .gterm b{color:var(--accent);font-size:15.5px;}
+  .gterm em{font-style:normal;color:var(--muted);font-size:13px;margin-left:8px;}
+  .gterm span{display:block;color:var(--text);font-size:15px;line-height:1.75;margin-top:4px;}
+
+  .teach{background:linear-gradient(135deg,var(--accent-soft),var(--brand-soft));border:1px solid var(--line);border-left:6px solid var(--accent);border-radius:12px;padding:16px 20px;margin:18px 0;max-width:1140px;}
+  .teach h3.block{color:var(--accent);margin-top:0;}
+  .teach h3.block::before{background:var(--accent);}
+  .teach p{margin:0;color:var(--text);font-size:16px;line-height:1.92;}
+
+  /* ===== 手把手步驟 ===== */
+  .steps{counter-reset:stepc;display:grid;gap:14px;margin:14px 0;max-width:1160px;}
+  .step-item{position:relative;background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--brand2);border-radius:14px;padding:15px 20px 15px 66px;box-shadow:var(--shadow);counter-increment:stepc;}
+  .step-item::before{content:counter(stepc);position:absolute;left:16px;top:15px;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--grad);color:#0b1020;font-weight:900;font-size:18px;}
+  .step-item h4{margin:0 0 6px;font-size:17px;color:var(--ink);font-weight:800;}
+  .step-item p{margin:0;color:var(--text);font-size:15.5px;line-height:1.85;}
+  .step-item p+p{margin-top:8px;}
+  .step-item code{font-family:"SFMono-Regular",Consolas,Menlo,monospace;font-size:.9em;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:1px 7px;color:var(--accent);}
+
+  /* ===== 教材與資料瀏覽器 ===== */
+  .browser{display:grid;grid-template-columns:300px 1fr;gap:18px;margin:14px 0;max-width:1260px;}
+  .browser-list{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px;overflow-y:auto;max-height:68vh;}
+  .res-group{margin-bottom:14px;}
+  .res-gh{font-size:12.5px;font-weight:800;letter-spacing:.06em;color:var(--brand2);margin:6px 4px 8px;text-transform:uppercase;}
+  .res-item{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+  .res-btn{flex:1;text-align:left;font:inherit;font-size:14px;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:8px 11px;color:var(--text);cursor:pointer;line-height:1.45;}
+  .res-btn:hover{border-color:var(--brand);color:var(--ink);}
+  .res-btn.active{background:var(--grad);color:#0b1020;border-color:transparent;font-weight:700;}
+  .res-zip{width:100%;text-align:left;font:inherit;font-size:14px;font-weight:700;background:var(--accent-soft);border:1px solid var(--accent);border-radius:9px;padding:9px 12px;color:var(--accent);cursor:pointer;line-height:1.45;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+  .res-zip:hover{background:var(--accent);color:#06283b;}
+  .res-zip[disabled]{opacity:.6;cursor:progress;}
+  .res-zip .zi{font-size:16px;}
+  .res-dlzip{flex:none;font:inherit;font-size:12.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent);border-radius:9px;padding:8px 10px;cursor:pointer;white-space:nowrap;}
+  .res-dlzip:hover{background:var(--accent);color:#06283b;}
+  .res-dlzip[disabled]{opacity:.6;cursor:progress;}
+  .res-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .browser-view{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 22px 22px;overflow-y:auto;max-height:68vh;box-shadow:var(--shadow);}
+  .res-empty,.res-loading{color:var(--muted);font-size:15px;padding:20px 4px;line-height:1.8;}
+  .res-head{position:sticky;top:0;z-index:1;background:var(--surface);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 0 10px;border-bottom:1px solid var(--line);margin-bottom:10px;}
+  .res-path{font-family:Menlo,Consolas,monospace;font-size:13px;color:var(--accent);word-break:break-all;}
+  .res-err{color:var(--text);font-size:15px;line-height:1.85;padding:14px 0;}
+  .csv-meta{font-size:13px;color:var(--muted);margin:10px 0;}
+  @media (max-width:880px){.browser{grid-template-columns:1fr;}.browser-list{max-height:280px;}}
+
+  /* 渲染後的 Markdown 內文 */
+  .md-body{color:var(--text);font-size:15.5px;line-height:1.85;}
+  .md-body h1{font-size:24px;color:var(--heading-ink);margin:14px 0 10px;}
+  .md-body h2{font-size:20px;color:var(--heading-accent);margin:18px 0 8px;border-bottom:1px solid var(--line);padding-bottom:5px;}
+  .md-body h3{font-size:17px;color:var(--heading-soft);margin:14px 0 6px;}
+  .md-body p{margin:8px 0;}
+  .md-body ul,.md-body ol{margin:8px 0;padding-left:24px;}
+  .md-body li{margin:4px 0;}
+  .md-body li.md-task{list-style:none;margin-left:-20px;}
+  .md-body li.md-task input{margin-right:8px;}
+  .md-body code{font-family:Menlo,Consolas,monospace;font-size:.9em;background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--accent);}
+  .md-body pre.md-pre{background:#06101f;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;}
+  .md-body pre.md-pre code{background:none;border:none;color:#cfe6ff;padding:0;}
+  .md-body blockquote{border-left:4px solid var(--brand2);margin:10px 0;padding:6px 14px;background:var(--brand-soft);border-radius:0 10px 10px 0;color:var(--text);}
+  .md-body hr{border:none;border-top:1px solid var(--line);margin:16px 0;}
+  .md-body table.md-table{border-collapse:separate;border-spacing:0 5px;width:100%;font-size:13.5px;}
+  .md-body .md-table th{background:var(--table-head);color:#fff;padding:7px 11px;text-align:left;position:sticky;top:0;}
+  .md-body .md-table td{background:var(--surface-2);padding:6px 11px;color:var(--text);vertical-align:top;}
+  .md-body .md-table tbody tr:nth-child(even) td{background:var(--soft);}
+  .md-body .md-table tbody tr:hover td{background:var(--table-row-hover);}
+  .md-body .md-table tr td:first-child,.md-body .md-table th:first-child{white-space:nowrap;}
+  .md-body a.link{color:var(--accent);}
+
+  /* ===== top toolbar ===== */
+  .toolbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;flex-direction:column;background:var(--toolbar-bg);backdrop-filter:blur(8px);color:var(--toolbar-ink);border-bottom:1px solid rgba(148,163,184,.12);}
+  .toolbar-main{min-height:58px;display:flex;align-items:center;gap:10px;padding:8px 14px 6px;}
+  .toolbar .title{font-size:20px;font-weight:800;color:var(--title-ink);margin-right:8px;white-space:nowrap;flex:none;}
+  .toolbar .title .brand{background:linear-gradient(135deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--brand);font-weight:900;}
+  .toolbar button{font:inherit;font-size:13px;border-radius:8px;border:1px solid var(--toolbar-border);background:rgba(15,23,42,.18);color:var(--toolbar-ink);padding:6px 10px;cursor:pointer;}
+  .toolbar button:hover{border-color:var(--brand);}
+  .toolbar-tabs{padding:10px 14px 12px;border-top:1px solid rgba(148,163,184,.1);}
+  .tabs{display:flex;gap:10px;align-items:center;overflow-x:auto;scrollbar-width:none;min-width:0;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{font:inherit;font-size:21px;font-weight:700;border-radius:999px;border:1px solid var(--toolbar-border);background:rgba(15,23,42,.12);color:var(--toolbar-ink);padding:9px 16px;cursor:pointer;white-space:nowrap;flex:none;line-height:1.2;}
+  .tab:hover{border-color:var(--brand);}
+  .tab.active{background:var(--grad);border-color:transparent;color:#0b1020;font-weight:800;}
+  .deck-tabs{flex:1;min-width:0;margin-left:2px;}
+  .deck-tabs .tab{font-size:18px;font-weight:800;padding:8px 19px;}
+  .sub-tabs .tab{font-size:15px;font-weight:700;padding:7px 14px;}
+  .sub-tabs:empty{display:none;}
+  .toolbar-actions{display:flex;gap:8px;align-items:center;flex:none;}
+  .fs-ctl{display:flex;align-items:center;gap:2px;border:1px solid var(--toolbar-border);border-radius:8px;padding:2px;}
+  .fs-ctl button{border:none;background:transparent;padding:5px 9px;font-weight:800;border-radius:6px;}
+  .fs-ctl button:hover{background:var(--brand-soft);border-color:transparent;}
+  .fs-ctl #fsLabel{font-size:12.5px;min-width:42px;text-align:center;color:var(--toolbar-ink);font-variant-numeric:tabular-nums;cursor:pointer;user-select:none;}
+
+  /* ===== bottom nav ===== */
+  .nav{position:fixed;left:0;right:0;bottom:0;height:54px;z-index:50;display:flex;align-items:center;gap:14px;padding:0 18px;background:var(--toolbar-bg);backdrop-filter:blur(8px);color:var(--toolbar-ink);border-top:1px solid rgba(148,163,184,.12);}
+  .nav .bar{flex:1;height:6px;border-radius:999px;background:var(--toolbar-border);overflow:hidden;}
+  .nav .bar i{display:block;height:100%;background:var(--grad);width:0;transition:width .3s;}
+  .nav .count{font-variant-numeric:tabular-nums;font-size:14px;color:var(--muted);min-width:64px;text-align:center;}
+  .nav .copyright{flex:none;font-size:12.5px;color:var(--muted);white-space:nowrap;letter-spacing:.01em;}
+  .nav button{font:inherit;border:1px solid var(--toolbar-border);background:rgba(15,23,42,.18);color:var(--toolbar-ink);border-radius:8px;width:40px;height:34px;cursor:pointer;font-size:16px;}
+  .nav button:hover{border-color:var(--brand);background:rgba(99,102,241,.2);}
+  .corner-nav{position:fixed;left:0;right:0;bottom:64px;z-index:48;pointer-events:none;}
+  .corner-nav button{position:absolute;bottom:0;width:48px;height:48px;border-radius:12px;border:1px solid var(--toolbar-border);background:rgba(9,15,31,.74);color:var(--toolbar-ink);box-shadow:var(--shadow);font:inherit;font-size:24px;font-weight:900;cursor:pointer;pointer-events:auto;backdrop-filter:blur(8px);}
+  .corner-nav button:hover{border-color:var(--brand);background:rgba(99,102,241,.34);}
+  .corner-nav .corner-prev{left:18px;}
+  .corner-nav .corner-next{right:18px;}
+
+  @media print{
+    .toolbar,.nav,.corner-nav{display:none!important;}
+    body{background:#fff;}
+    .deck{position:static;overflow:visible;}
+    .slide{position:static!important;display:block!important;inset:auto;page-break-after:always;min-height:auto;padding:24px 28px;animation:none;box-shadow:none;border-bottom:2px solid var(--line);zoom:1;}
+    .slide.cover{display:flex!important;color:#1e293b;background:#fff;min-height:60vh;}
+    .cover h1{color:#4338ca;-webkit-text-fill-color:#4338ca;}
+    .cover .sub,.cover .tag{color:#475569;}
+    table,.card,.flow .node{box-shadow:none;}
+  }
+  @media (max-width:880px){
+    .grid.c2,.grid.c3,.grid.c4{grid-template-columns:1fr;}
+    .slide{padding-left:5vw;padding-right:5vw;}
+    .toolbar-main{padding:8px 10px 6px;gap:8px;}
+    .toolbar .title{display:none;}
+    .nav .copyright{display:none;}
+    .toolbar-actions{margin-left:auto;}
+    .tab{font-size:18px;padding:8px 13px;}
+    .corner-nav{display:none;}
+  }
+</style>
+</head>
+<body data-theme="dark" data-lang="zh">
+
+<div class="toolbar">
+  <div class="toolbar-main">
+    <span class="title"><span class="brand">Vibe Coding 101A</span>（3 小時）</span>
+    <div class="tabs deck-tabs" id="deckTabs" aria-label="投影片組切換"></div>
+    <div class="toolbar-actions">
+      <div class="fs-ctl" title="調整字級縮放（點數字可重設為 100%）">
+        <button id="fsMinus" aria-label="縮小字級">A−</button>
+        <span id="fsLabel" title="重設為 100%">100%</span>
+        <button id="fsPlus" aria-label="放大字級">A＋</button>
+      </div>
+      <button id="btnLang" title="切換語言 · Switch language">🌐 EN</button>
+      <button id="btnTheme" title="切換深色或淺色主題">☾ 深色</button>
+      <button id="btnFull" title="切換全螢幕檢視">⛶ 全螢幕</button>
+    </div>
+  </div>
+  <div class="toolbar-tabs">
+    <div class="tabs sub-tabs" id="jumpTabs" aria-label="子頁快速切換"></div>
+  </div>
+</div>
+
+<div class="deck" id="deck">
+
+  <!-- ===================== 投影片組（首）：推廣海報 ===================== -->
+  <div class="deck-group" data-deck-name="推廣海報" data-deck-name-en="Print poster">
+
+  <section class="slide" data-sec="推廣海報" data-sec-en="Print poster">
+    <div class="s-head"><span class="badge"><span class="lang-zh">宣傳</span><span class="lang-en">Promo</span></span><div><span class="kicker"><span class="lang-zh">推廣海報 · 列印用</span><span class="lang-en">Print poster</span></span><h2><span class="lang-zh">Vibe Coding 101A 工作坊推廣海報</span><span class="lang-en">Vibe Coding 101A workshop print poster</span></h2></div></div>
+    <div class="promo-poster">
+      <img src="assets/imgs/vibe-coding-101a-print-poster.png" alt="Vibe Coding 101A 工作坊推廣海報">
+      <div class="promo-actions">
+        <a class="link" href="assets/imgs/vibe-coding-101a-print-poster.png" target="_blank" rel="noopener"><span class="lang-zh">開啟原圖</span><span class="lang-en">Open full image</span></a>
+        <a class="link" href="assets/imgs/vibe-coding-101a-print-poster.pdf" download><span class="lang-zh">下載 PDF</span><span class="lang-en">Download PDF</span></a>
+      </div>
+    </div>
+  </section>
+
+  </div>
+  <!-- ===================== /投影片組（首）推廣海報 ===================== -->
+
+  <!-- ===================== 投影片組一：完整講義（學員） ===================== -->
+  <div class="deck-group" data-deck-name="完整講義（學員）" data-deck-name-en="Student handout">
+
+  <!-- 封面 -->
+  <section class="slide cover" data-sec="封面" data-sec-en="Cover">
+    <div class="cover-inner">
+      <span class="eyebrow"><span class="lang-zh">Agentic AI · 三小時 · 一條真實資料分析流水線</span><span class="lang-en">Agentic AI · 3 hours · a real data-analysis pipeline</span></span>
+      <h1><span class="line"><span class="lang-zh">Vibe Coding 101A 工作坊</span><span class="lang-en">Vibe Coding 101A Workshop</span></span><span class="line"><span class="lang-zh">從資料分析到教學洞察的 AI 工作流</span><span class="lang-en">An AI workflow from survey analysis to teaching insight</span></span></h1>
+      <p class="sub"><span class="lang-zh">還在為問卷資料整理與統計分析耗費大量時間嗎？三小時，帶你運用 <b>AI 代理</b>（Claude Code、Codex 或 Copilot），把一份<b>真實的 SIMS 學習動機問卷</b>從原始資料一路做到可交付的分析成果：資料清理、信度檢驗、配對 t 檢定、圖表製作到研究報告撰寫，全程實作一次完成。不需程式設計背景，只要會<b>提問、判讀、驗證</b>，就能讓 AI 成為你的教學研究助理，把時間留給教學與研究思考，而不是重複性的資料處理工作。</span><span class="lang-en">Still spending hours wrangling survey data and running statistics? In three hours, learn to put an <b>AI agent</b> (Claude Code, Codex, or Copilot) to work, taking a <b>real SIMS learning-motivation survey</b> from raw data all the way to a deliverable analysis: data cleaning, reliability testing, a paired t-test, chart-making, and writing the research report, built end to end in one sitting. No programming background needed, only the ability to <b>ask, read, and verify</b>, so AI becomes your teaching-research assistant and frees your time for teaching and research thinking instead of repetitive data work.</span></p>
+      <div class="cover-banner">
+        <img src="assets/imgs/stust01.png" alt="南臺科技大學 · 智慧雨林">
+      </div>
+      <div class="cover-logo">
+        <span class="logo-ext"><span class="lang-zh">智慧雨林（MOE）· 南臺科技大學</span><span class="lang-en">Smart Rainforest (MOE) · STUST</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 今日地圖 -->
+  <section class="slide" data-sec="① 今日地圖" data-sec-en="① Map">
+    <div class="s-head"><span class="badge"><span class="lang-zh">地圖</span><span class="lang-en">Map</span></span><div><span class="kicker"><span class="lang-zh">Agenda · 180 分鐘</span><span class="lang-en">Agenda · 180 minutes</span></span><h2><span class="lang-zh">今日地圖：三小時跑完一條流水線</span><span class="lang-en">Today's map: one pipeline in 3 hours</span></h2></div></div>
+    <div class="intro">
+      <span class="intro-tag"><span class="lang-zh">本單元導讀</span><span class="lang-en">Overview</span></span>
+      <p><span class="lang-zh">整個工作坊只圍繞一條<span class="hl">不漂移的資料契約</span>：每一段的產出都是下一段的輸入，全部存到 <code>labs/_results/</code>。核心節奏是<b>提問 → 驗證 → 修正</b>。</span><span class="lang-en">The whole workshop follows one <span class="hl">data contract that never drifts</span>: each block's output feeds the next, all saved to <code>labs/_results/</code>. The loop is <b>Prompt → Verify → Iterate</b>.</span></p>
+    </div>
+    <div class="flow">
+      <div class="node start"><b>pre/post-test.xlsx</b><small><span class="lang-zh">header=1；實際分數 score = 8 − 選項編號</span><span class="lang-en">header=1; score = 8 − option number</span></small></div>
+      <div class="arrow">▼</div>
+      <div class="node"><b><span class="lang-zh">清理 → 信效度 → t 檢定 → 圖表</span><span class="lang-en">clean → reliability → t-test → charts</span></b><small>clean_*.csv · reliability.csv · ttest_results.csv · figures/*.png</small></div>
+      <div class="arrow">▼</div>
+      <div class="node end"><b>mini_report.md</b><small><span class="lang-zh">可交付分析報告，誠實寫限制</span><span class="lang-en">deliverable report, honest caveats</span></small></div>
+    </div>
+    <table class="lang-zh">
+      <thead><tr><th>區段</th><th>內容</th><th>時長</th></tr></thead>
+      <tbody>
+        <tr><td>準備階段</td><td>環境設置與 AI 代理</td><td>20 分</td></tr>
+        <tr><td>練習 0–2</td><td>認識資料 → 清理資料 → 信效度檢測</td><td>65 分</td></tr>
+        <tr><td>休息</td><td>中場休息</td><td>10 分</td></tr>
+        <tr><td>練習 3–5</td><td>t 檢定 → 圖表生成 → 分析報告</td><td>75 分</td></tr>
+        <tr><td>收尾階段</td><td>資安與隱私收尾</td><td>10 分</td></tr>
+        <tr><td>合計</td><td></td><td>180 分</td></tr>
+      </tbody>
+    </table>
+    <table class="lang-en">
+      <thead><tr><th>Block</th><th>Content</th><th>Min</th></tr></thead>
+      <tbody>
+        <tr><td>Prep</td><td>Setup check + agentic mindset</td><td>20</td></tr>
+        <tr><td>Ex 0–2</td><td>Meet data → clean → reliability</td><td>65</td></tr>
+        <tr><td>Break</td><td>Mid-session break</td><td>10</td></tr>
+        <tr><td>Ex 3–5</td><td>t-test → charts → report</td><td>75</td></tr>
+        <tr><td>Closing</td><td>Privacy wrap-up</td><td>10</td></tr>
+        <tr><td>Total</td><td></td><td>180</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 準備階段 環境設置 -->
+  <section class="slide" data-sec="② 環境設置" data-sec-en="② Setup">
+    <div class="s-head"><span class="badge"><span class="lang-zh">準備階段</span><span class="lang-en">Prep</span></span><div><span class="kicker"><span class="lang-zh">環境設置 · 20 分</span><span class="lang-en">Setup · 20 min</span></span><h2><span class="lang-zh">教室電腦已就緒；自備筆電現場協助</span><span class="lang-en">Classroom PCs are ready; notebook setup is supported</span></h2></div></div>
+    <div class="intro">
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <img class="mascot mascot-l" src="assets/imgs/mascots/yang04.png" alt="講師示意：歡迎進入環境設置">
+      <p><span class="lang-zh"><b>這一段的目標：讓全場 20 分鐘內站上同一條起跑線。</b>工作坊最常卡關的不是分析，而是<span class="hl">環境不一致</span> - 有人指令找不到、有人套件版本不對、有人還沒登入代理。教室電腦已預先安裝好 VS Code、Codex extension、Codex CLI、Python、Node.js 與必要 Python 套件；自備筆電的學員不用先卡在安裝細節，講師會帶著安裝，TA 會協助排除問題。把這一關當成<b>暖身與排雷</b>，後面五個練習才不會在環境問題上流失時間。</span><span class="lang-en"><b>Goal of this block: get the whole room onto the same starting line within 20 minutes.</b> The usual blocker in a workshop is not the analysis but an <span class="hl">inconsistent environment</span> - a missing command here, a wrong package version there, an agent not yet signed in. Classroom PCs are preinstalled with VS Code, the Codex extension, Codex CLI, Python, Node.js, and required Python packages; learners on personal notebooks should not get stuck on install details, the instructor walks them through it and TAs help clear problems. Treat this unit as <b>warm-up and de-risking</b> so the five later labs do not bleed time on setup.</span></p>
+      <p><span class="lang-zh"><b>每樣工具的角色：</b><span class="hl">VS Code</span> 是編輯器與工作台；<span class="hl">Codex extension</span> 讓代理直接在編輯器裡讀寫檔案；<span class="hl">Codex CLI</span> 是終端機版的同一個代理；<span class="hl">Python</span> 負責真正的資料分析，<span class="hl">Node.js</span> 則是代理工具鏈的執行環境；<span class="hl">必要套件</span>（<code>pandas</code>、<code>scipy</code>、<code>openpyxl</code>、<code>matplotlib</code>）分別處理表格、統計、Excel 讀取與畫圖。不需要背這些名字，只要知道少了哪一個、後面哪一關會出錯。</span><span class="lang-en"><b>What each tool is for:</b> <span class="hl">VS Code</span> is the editor and workbench; the <span class="hl">Codex extension</span> lets the agent read and write files right inside the editor; the <span class="hl">Codex CLI</span> is the same agent from the terminal; <span class="hl">Python</span> does the actual data analysis while <span class="hl">Node.js</span> runs the agent toolchain; the <span class="hl">required packages</span> (<code>pandas</code>, <code>scipy</code>, <code>openpyxl</code>, <code>matplotlib</code>) handle tables, statistics, Excel reading, and charts. You need not memorize the names, only which later lab breaks if one is missing.</span></p>
+      <p><span class="lang-zh"><b>怎麼算「就緒」：</b>真正的驗收不是看安裝有沒有跑完，而是讓代理做一件實事 - 請它「列出 <code>labs/data/</code> 內所有檔案，每個用一句話說明」。<b>看到資料檔清單</b>就代表編輯器、代理、檔案存取三者都通了。這也順手示範了本工作坊的核心習慣：<span class="hl">先讓代理動手、再自己核對結果</span>，而不是相信安裝畫面上的綠色勾勾。</span><span class="lang-en"><b>What "ready" means:</b> the real check is not whether installs finished but whether the agent can do something real - ask it to "list every file in <code>labs/data/</code> with a one-line description". <b>A file list</b> proves the editor, the agent, and file access are all wired up. It also previews the workshop's core habit: <span class="hl">let the agent act, then verify the result yourself</span>, rather than trusting a green checkmark on an installer.</span></p>
+    </div>
+    <div class="glossary">
+      <div class="gterm"><b><span class="lang-zh">教室電腦</span><span class="lang-en">Classroom PC</span></b><span><span class="lang-zh">已安裝 Codex、VS Code + Codex extension、Python、Node.js 與必要套件。</span><span class="lang-en">Already has Codex, VS Code + Codex extension, Python, Node.js, and packages.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">自備筆電</span><span class="lang-en">Personal notebook</span></b><span><span class="lang-zh">跟著講師安裝；TA 協助處理登入、指令找不到、套件缺少等問題。</span><span class="lang-en">Install with instructor guidance; TAs help with sign-in, missing commands, and packages.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">必要套件</span><span class="lang-en">Packages</span></b><span><span class="lang-zh"><code>pandas</code>、<code>scipy</code>、<code>openpyxl</code>、<code>matplotlib</code>。</span><span class="lang-en"><code>pandas</code>, <code>scipy</code>, <code>openpyxl</code>, <code>matplotlib</code>.</span></span></div>
+    </div>
+    <p class="lead"><span class="lang-zh">本段先確認每個人都能進入同一個工作流程：開工作坊資料夾、啟動代理、讓代理讀到資料檔。</span><span class="lang-en">This block confirms everyone can enter the same workflow: open the workshop folder, launch an agent, and let it read the data files.</span></p>
+    <div class="steps">
+      <div class="step-item"><h4><span class="lang-zh">1. 教室電腦</span><span class="lang-en">1. Classroom PCs</span></h4><p><span class="lang-zh">直接開 VS Code，確認 Codex extension 可用；再用內建終端機確認 <code>codex</code>、<code>python3</code>、<code>node</code> 可執行。</span><span class="lang-en">Open VS Code, confirm the Codex extension works, then check <code>codex</code>, <code>python3</code>, and <code>node</code> from the integrated terminal.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">2. 自備筆電</span><span class="lang-en">2. Personal notebooks</span></h4><p><span class="lang-zh">照講師步驟安裝 VS Code、Node.js、Python、Codex；TA 協助處理安裝與登入問題。</span><span class="lang-en">Follow the instructor to install VS Code, Node.js, Python, and Codex; TAs help with installation and sign-in issues.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">3. 第一個驗證</span><span class="lang-en">3. First check</span></h4><p><span class="lang-zh">請代理：「列出 <code>labs/data/</code> 內所有檔案，每個檔案用一句話說明。」看到資料檔清單就代表環境可用。</span><span class="lang-en">Ask the agent: "List every file in <code>labs/data/</code> with a one-line description." A file list means the environment is ready.</span></p></div>
+    </div>
+    <div class="out">
+      <img class="mascot mascot-l" src="assets/imgs/mascots/yang10.png" alt="講師指引：這裡有下載連結">
+      <h3 class="block"><span class="lang-zh">下載連結</span><span class="lang-en">Required links</span></h3>
+      <ul class="clean"><li><a class="link" href="https://code.visualstudio.com/" target="_blank" rel="noopener">VS Code</a> · <a class="link" href="https://developers.openai.com/codex/ide" target="_blank" rel="noopener">Codex extension</a> · <a class="link" href="https://developers.openai.com/codex/cli" target="_blank" rel="noopener">Codex CLI</a> · <a class="link" href="https://nodejs.org/en/download" target="_blank" rel="noopener">Node.js</a> · <a class="link" href="https://www.python.org/downloads/" target="_blank" rel="noopener">Python</a></li><li><span class="lang-zh">可選代理：</span><span class="lang-en">Optional agents: </span><a class="link" href="https://code.claude.com/docs/en/quickstart" target="_blank" rel="noopener">Claude Code</a> · <a class="link" href="https://marketplace.visualstudio.com/items?itemName=GitHub.copilot" target="_blank" rel="noopener">GitHub Copilot</a></li></ul>
+    </div>
+    <p class="note"><span class="lang-zh">完整安裝細節見「教材資料 → 安裝與設定」中的 <code>agent-setup.md</code> 與 <code>vscode-setup.md</code>。</span><span class="lang-en">Full setup details are in <code>agent-setup.md</code> and <code>vscode-setup.md</code> under Materials -> Setup.</span></p>
+  </section>
+
+  <!-- 準備階段 AI 代理 + 提問→驗證→修正 -->
+  <section class="slide" data-sec="③ AI 代理" data-sec-en="③ AI Agents">
+    <div class="s-head"><span class="badge"><span class="lang-zh">準備階段</span><span class="lang-en">Prep</span></span><div><span class="kicker">AI Agents · Prompt → Verify → Iterate</span><h2><span class="lang-zh">Chat 和 Agent 差在哪？</span><span class="lang-en">Chat vs agent: what changes?</span></h2></div></div>
+    <div class="intro">
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <img class="mascot mascot-l" src="assets/imgs/mascots/yang09.png" alt="講師示意：AI 代理的核心概念">
+      <p><span class="lang-zh"><b>這一段的目標：先把「代理」和「聊天」的差別講清楚，後面五關才有共同語言。</b>Chat 主要回覆，Agent 會動手。傳統 Chat 你問一句、它回一段，<span class="hl">複製貼上、開檔案、執行、Debug 全是你在搬運</span>；AI 代理則是你給目標與限制，它<span class="hl">自己規劃步驟、讀寫檔案、跑程式、看錯誤再修正</span>，你退一步當審查者。本工作坊要練的不是背指令，而是把目標交代清楚，讓代理動手，再由你核對結果。</span><span class="lang-en"><b>Goal of this block: pin down the difference between an "agent" and a "chat" so the five labs share one vocabulary.</b> Chat mainly replies; an agent acts. With plain chat you ask and it answers, and <span class="hl">copy-paste, opening files, running, and debugging are all on you</span>; an AI agent takes your goal and constraints and <span class="hl">plans the steps, reads and writes files, runs code, and fixes its own errors</span> while you step back as the reviewer. This workshop is not about memorizing commands but about stating the goal clearly, letting the agent act, and verifying the result.</span></p>
+      <p><span class="lang-zh"><b>為什麼這個差別重要：</b>因為代理會真的改你的檔案、執行你的指令，<span class="hl">它的能力越大，你「核對」的責任就越大</span>。代理會出錯、會幻想不存在的欄位、會把分析方向弄反 - 這不是它壞掉，而是它本來就會這樣，所以每一關都刻意保留需要你判斷的環節。<span class="hl">Computer Use</span> 更進一步讓代理看螢幕、點介面、跑流程；因為它會影響電腦狀態，任務要小、權限要看清楚。今天的練習聚焦在讀寫檔案型的代理，但同一套把關心法對 Computer Use 一樣適用。</span><span class="lang-en"><b>Why the difference matters:</b> because an agent really edits your files and runs your commands, <span class="hl">the more capable it is, the more responsibility you carry to verify</span>. Agents err, hallucinate columns that do not exist, and flip the direction of an analysis - that is not them breaking, it is how they normally behave, which is why every lab keeps a judgment call for you. <span class="hl">Computer Use</span> goes further, letting an agent see the screen, click the UI, and run flows; since it can change computer state, keep tasks narrow and review permissions. Today's labs focus on file-editing agents, but the same review mindset transfers to Computer Use.</span></p>
+      <p><span class="lang-zh"><b>核心節奏 - 提問 → 驗證 → 修正：</b>這是貫穿全工作坊的迴圈，後面每一關都會再走一次。每次拿到結果，先問自己一句<b>「我怎麼知道它是對的？」</b>，再決定要接受、追問還是要它重做。把這句話練成反射，比學會任何一個指令都重要；它就是「人為什麼要留在迴圈裡」的答案。</span><span class="lang-en"><b>The core loop - Prompt, Verify, Iterate:</b> this is the rhythm running through the whole workshop, repeated in every later lab. Each time you get a result, first ask yourself <b>"how do I know it's right?"</b> before you accept it, probe further, or ask for a redo. Making that question a reflex matters more than learning any single command; it is the answer to "why a human stays in the loop".</span></p>
+    </div>
+    <div class="glossary">
+      <div class="gterm"><b><span class="lang-zh">Chat</span><span class="lang-en">Chat</span></b><span><span class="lang-zh">適合問概念、改文字、產生片段；通常不直接碰你的檔案。</span><span class="lang-en">Good for concepts, wording, and snippets; usually does not touch your files.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">Agent</span><span class="lang-en">Agent</span></b><span><span class="lang-zh">能在授權範圍內讀寫檔案、執行指令、看錯誤、修正產出。</span><span class="lang-en">Can read/write files, run commands, inspect errors, and revise outputs within permission scope.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">Computer Use</span><span class="lang-en">Computer Use</span></b><span><span class="lang-zh">讓代理看見並操作圖形介面；適合需要點擊、輸入、瀏覽器或桌面 app 的任務。</span><span class="lang-en">Lets an agent see and operate GUIs; useful for clicking, typing, browsers, or desktop apps.</span></span></div>
+    </div>
+    <div class="grid c2">
+      <div class="card"><span class="pill"><span class="lang-zh">傳統 Chat</span><span class="lang-en">Plain chat</span></span><h4><span class="lang-zh">你負責搬運</span><span class="lang-en">You shuttle</span></h4><p><span class="lang-zh">你問一句，AI 回一段建議或程式碼；你自己複製貼上、開檔案、執行與 Debug。</span><span class="lang-en">You ask, it replies with advice or code; you copy-paste, open files, run it, and debug.</span></p></div>
+      <div class="card"><span class="pill"><span class="lang-zh">AI 代理</span><span class="lang-en">AI agent</span></span><h4><span class="lang-zh">代理負責執行</span><span class="lang-en">The agent executes</span></h4><p><span class="lang-zh">你給目標與限制，代理規劃步驟、讀寫檔案、跑程式、修正錯誤；你審查結果。</span><span class="lang-en">You give the goal and constraints; the agent plans, edits files, runs code, fixes errors; you review.</span></p></div>
+    </div>
+    <div class="grid c2">
+      <div class="card"><span class="pill">OpenClaw</span><h4><span class="lang-zh">自架、常駐的個人助理</span><span class="lang-en">Self-hosted, always-on assistant</span></h4><p><span class="lang-zh">OpenClaw 是跑在自己裝置上的個人助理，可從 WhatsApp、Telegram、Slack 等通訊通道互動，透過 Gateway 串接瀏覽器、檔案、行事曆與各種工具。它比較像「長期在線的數位同事」。</span><span class="lang-en">OpenClaw is a personal assistant that runs on your own devices. You can reach it from channels like WhatsApp, Telegram, and Slack, while its Gateway connects to browsers, files, calendars, and tools. Think of it as a long-running digital coworker.</span></p></div>
+      <div class="card"><span class="pill">Computer Use</span><h4><span class="lang-zh">看螢幕、點介面、跑流程</span><span class="lang-en">See the screen, click UI, run flows</span></h4><p><span class="lang-zh">Computer Use 適合處理圖形介面任務：操作桌面 app、使用已登入瀏覽器、調整設定、重現只有 UI 才看得到的錯誤。因為它會影響電腦狀態，任務要小、權限要看清楚。</span><span class="lang-en">Computer Use fits GUI tasks: operating desktop apps, using a signed-in browser, changing settings, or reproducing bugs only visible in UI. Since it can affect computer state, keep tasks narrow and review permissions.</span></p></div>
+    </div>
+    <blockquote class="pat"><img class="mascot mascot-r" src="assets/imgs/mascots/yang08.png" alt="講師提醒：記住這個核心節奏"><span class="lab"><span class="lang-zh">核心節奏</span><span class="lang-en">The loop</span></span><span class="lang-zh">提問 → 驗證 → 修正：每次拿到結果都問自己「<b>我怎麼知道它是對的？</b>」代理會出錯、會幻想欄位、會把方向弄反，自己核對是你的工作。</span><span class="lang-en">Prompt → Verify → Iterate. Every result: ask "<b>How do I know it's right?</b>" Agents err, invent columns, and flip directions; verifying is your job.</span></blockquote>
+  </section>
+
+  <!-- 練習0 認識資料 -->
+  <section class="slide" data-sec="④ 練習0 認識資料" data-sec-en="④ Ex0 Meet data">
+    <div class="s-head"><span class="badge alt"><span class="lang-zh">練習 0</span><span class="lang-en">Ex 0</span></span><div><span class="kicker"><span class="lang-zh">認識資料 · 12 分</span><span class="lang-en">Meet the data · 12 min</span></span><h2><span class="lang-zh">認識代理與資料</span><span class="lang-en">Meet the agent and the data</span></h2></div></div>
+    <div class="intro">
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <img class="mascot mascot-l" src="assets/imgs/mascots/yang07.png" alt="講師指向：先認識資料">
+      <p><span class="lang-zh"><b>這一關的目標：先不要分析，先讓代理帶你認識資料。</b>請它列出資料夾、打開前測 Excel、摘要工作表與欄位，再讀 SIMS 題目說明、解釋四個構面。重點是把<span class="hl">檔案位置與問題講清楚</span>，並養成「AI 說完，我自己對照原檔確認」的習慣。先把地圖看懂，後面五關才不會走歪。</span><span class="lang-en"><b>Goal of this unit: do not analyze yet; first let the agent introduce the data.</b> Have it list the folder, open the pre-test Excel, summarize sheets and columns, then read the SIMS item guide and explain the four subscales. The point is <span class="hl">stating the files and the question clearly</span> and building the habit of "after the AI answers, I check the source myself". Read the map first so the next five labs stay on course.</span></p>
+      <p><span class="lang-zh"><b>這份量表是什麼：</b>本問卷改編自情境動機量表 <span class="hl">SIMS（Situational Motivation Scale）</span>，背後理論是 Deci 與 Ryan 的<span class="hl">自我決定理論（SDT）</span>。共 <b>16 題</b>，採 <b>7 點李克特量表</b>（1＝完全不符合 ～ 7＝完全符合），每題前面都接同一句題幹：<b>「你現在為什麼正在進行這個活動？」</b>，四個構面就是四種不同的回答理由。</span><span class="lang-en"><b>What the instrument is:</b> this survey is adapted from the <span class="hl">Situational Motivation Scale (SIMS)</span>, grounded in Deci and Ryan's <span class="hl">Self-Determination Theory (SDT)</span>. It has <b>16 items</b> on a <b>7-point Likert scale</b> (1 = strongly disagree to 7 = strongly agree), each following the same stem: <b>"Why are you currently doing this activity?"</b> The four subscales are four different reasons people give.</span></p>
+      <p><span class="lang-zh"><b>四個構面（依自我決定程度由高到低）：</b><span class="hl">IM ＞ IR ＞ ER ＞ AM</span>。<b>IM 內在動機</b>（題 1,5,9,13）：因為本身有趣、做起來愉快，越高越好。<b>IR 認同調節</b>（題 2,6,10,14）：不一定好玩，但認同它的價值而自願去做，越高越好。<b>ER 外在調節</b>（題 3,7,11,15）：因被要求、想要獎勵或怕被當而做，越高代表越靠外在壓力、品質較低。<b>AM 無動機</b>（題 4,8,12,16）：根本不知為何而做、覺得沒意義。</span><span class="lang-en"><b>The four subscales (high to low self-determination):</b> <span class="hl">IM &gt; IR &gt; ER &gt; AM</span>. <b>IM intrinsic</b> (items 1,5,9,13): doing it because it is interesting and enjoyable, higher is better. <b>IR identified</b> (items 2,6,10,14): not necessarily fun, but you value it and choose it, higher is better. <b>ER external</b> (items 3,7,11,15): doing it because required, for a reward, or to avoid failing, higher means more external pressure and lower quality. <b>AM amotivation</b> (items 4,8,12,16): no idea why, sees no meaning.</span></p>
+      <p><span class="lang-zh"><b>最關鍵的一個提醒（方向相反）：</b><span class="hl">AM 是唯一「分數越高越糟」的構面</span>。AM 越高代表學生越沒有動機，所以課程結束後 <b>AM 下降才是好消息、AM 上升是壞消息</b>。其他三個構面都是越高越好；解讀時千萬別把 AM 也當成「越高越好」，這是後面 t 檢定最容易讀反的地方。</span><span class="lang-en"><b>The one critical warning (reversed direction):</b> <span class="hl">AM is the only subscale where higher is worse</span>. A higher AM means less motivation, so after the course <b>AM falling is good news and AM rising is bad news</b>. The other three are better when higher; never treat AM as "higher is better", which is exactly where the later t-test is most often misread.</span></p>
+      <p><span class="lang-zh"><b>資料夾裡有什麼：</b><code>sims-questionnaire-items.md</code>（量表說明）、<code>pre-test.xlsx</code> 與 <code>post-test.xlsx</code>（前測第 3 輪、後測第 4 輪，各 4 個工作表）、<code>grade-report.csv</code>（51 位學生的成績）、<code>instructor-spoken-reflection.md</code>（教師口述省思，練習 6 才用）。我們之後只會用到工作表 <code>答題記錄(選項編號)</code>；<code>答題分數比重</code> 是平台自算的彙總分，任何練習都不採用。</span><span class="lang-en"><b>What is in the folder:</b> <code>sims-questionnaire-items.md</code> (the item guide), <code>pre-test.xlsx</code> and <code>post-test.xlsx</code> (pre = round 3, post = round 4, four sheets each), <code>grade-report.csv</code> (51 students' grades), and <code>instructor-spoken-reflection.md</code> (the spoken reflection, used only in Ex 6). Later we use only the <code>答題記錄(選項編號)</code> sheet; <code>答題分數比重</code> is a platform-computed summary that no lab uses.</span></p>
+      <p><span class="lang-zh"><b>動手步驟與埋下的線：</b>① 列出 <code>data/</code> 檔案；② 看 <code>pre-test.xlsx</code> 的工作表與欄位；③ 讀題目說明、解釋四構面並指出 AM；④ 看 <code>grade-report.csv</code> 的人數與欄位；⑤ 加分：比前後測作答人數。你會發現<b>前測 43、後測 44，人數不一樣</b>，而且每張表第一列其實是大標題 - 這正是練習 1 要處理的兩個陷阱。下面「跟著解答一步一步問」就是這五步。</span><span class="lang-en"><b>The hands-on steps and the threads they plant:</b> (1) list the <code>data/</code> files; (2) inspect <code>pre-test.xlsx</code> sheets and columns; (3) read the item guide, explain the four subscales, name AM; (4) check <code>grade-report.csv</code> counts and columns; (5) bonus, compare pre/post respondent counts. You will find <b>43 took the pre and 44 the post, a mismatch</b>, and that row 1 of each sheet is a banner title - exactly the two traps Ex 1 handles. The "Follow the solution" steps below are these five.</span></p>
+    </div>
+    <div class="glossary">
+      <div class="gterm"><b>SIMS</b><span><span class="lang-zh">情境動機量表：16 題、7 點量表，分四個動機構面。</span><span class="lang-en">Situational Motivation Scale: 16 items, 7-point, four subscales.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">構面</span><span class="lang-en">subscale</span></b><span><span class="lang-zh">把多題合成一個概念分數（IM／IR／ER／AM）。</span><span class="lang-en">Several items combined into one concept score (IM/IR/ER/AM).</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">反向題（AM）</span><span class="lang-en">reverse item (AM)</span></b><span><span class="lang-zh">分數越高代表動機越差，方向與其他構面相反。</span><span class="lang-en">Higher means worse motivation, opposite to the other subscales.</span></span></div>
+    </div>
+    <p class="lead"><span class="lang-zh">任務：認出資料檔、工作表、欄位、四個構面，以及哪個構面「分數越高越不好」。本階段先不清理、不算統計。</span><span class="lang-en">Task: identify the files, sheets, columns, four subscales, and which subscale is worse when higher. No cleaning or statistics yet.</span></p>
+    <div class="out">
+      <h3 class="block"><span class="lang-zh">先試做，再對答案</span><span class="lang-en">Try first, then compare</span></h3>
+      <ul class="clean">
+        <li><span class="lang-zh">先打開 </span><span class="lang-en">Open </span><a class="link" href="view.html?f=labs/data/sims-questionnaire-items.md" target="_blank" rel="noopener">sims-questionnaire-items.md</a><span class="lang-zh">，讓代理用自己的話解釋四個構面。</span><span class="lang-en"> and ask the agent to explain the four subscales in its own words.</span></li>
+        <li><span class="lang-zh">學員先用 </span><span class="lang-en">Learners first try with </span><a class="link" href="view.html?f=sample-solution/zh/00-meet-the-data/prompt.md" target="_blank" rel="noopener">sample prompt</a><span class="lang-zh"> 跑一次；完成後再看 </span><span class="lang-en">; after finishing, compare with </span><a class="link" href="view.html?f=sample-solution/zh/00-meet-the-data/response.md" target="_blank" rel="noopener">sample solution</a><span class="lang-zh"> 對照。</span><span class="lang-en">.</span></li>
+      </ul>
+    </div>
+    <div class="grid c4">
+      <div class="card"><span class="t">IM</span><h4><span class="lang-zh">內在動機</span><span class="lang-en">Intrinsic</span></h4><p><span class="lang-zh">題 1,5,9,13 · 越高越好</span><span class="lang-en">Items 1,5,9,13 · higher = better</span></p></div>
+      <div class="card"><span class="t">IR</span><h4><span class="lang-zh">認同調節</span><span class="lang-en">Identified</span></h4><p><span class="lang-zh">題 2,6,10,14 · 越高越好</span><span class="lang-en">Items 2,6,10,14 · higher = better</span></p></div>
+      <div class="card"><span class="t">ER</span><h4><span class="lang-zh">外在調節</span><span class="lang-en">External</span></h4><p><span class="lang-zh">題 3,7,11,15 · 外在壓力</span><span class="lang-en">Items 3,7,11,15 · external pressure</span></p></div>
+      <div class="card"><span class="t">AM</span><h4><span class="lang-zh">無動機</span><span class="lang-en">Amotivation</span></h4><p><span class="lang-zh">題 4,8,12,16 · ⚠ 越高越糟</span><span class="lang-en">Items 4,8,12,16 · ⚠ higher = worse</span></p></div>
+    </div>
+    <h3 class="block"><span class="lang-zh">跟著解答一步一步問</span><span class="lang-en">Follow the solution, one ask at a time</span></h3>
+    <p class="lead"><span class="lang-zh">在<b>同一個對話</b>裡，一則訊息一則訊息送出、看完回覆再送下一則；這種一來一往才是真正要練的。</span><span class="lang-en">In the <b>same conversation</b>, send one message at a time and read the reply before the next; this back-and-forth is what you are really practising.</span></p>
+    <div class="steps">
+      <div class="step-item"><h4><span class="lang-zh">開場，認識檔案</span><span class="lang-en">Open up, meet the files</span></h4><p><span class="lang-zh">先請代理看 <code>data/</code> 裡有哪些檔案，每個用一句話說明就好，<b>先不要做分析</b>。</span><span class="lang-en">First ask the agent what files are in <code>data/</code>, one line each, and <b>no analysis yet</b>.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">看前測檔的結構</span><span class="lang-en">Inspect the pre-test file</span></h4><p><span class="lang-zh">接著打開 <code>pre-test.xlsx</code>，告訴你它有哪些工作表、每個工作表大概有哪些欄位、幾列。正解是 <b>4 個工作表</b>。</span><span class="lang-en">Then open <code>pre-test.xlsx</code> and have it tell you the sheets, and roughly the columns and row counts of each. The answer is <b>4 sheets</b>.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">看懂四個構面（記得自己核對）</span><span class="lang-en">Understand the four subscales</span></h4><p><span class="lang-zh">請它讀 <code>sims-questionnaire-items.md</code>，用白話解釋 IM／IR／ER／AM，並指出哪一個是「分數越高反而越糟」。正解是 <b>AM</b>。對照原檔自己確認一次。</span><span class="lang-en">Have it read <code>sims-questionnaire-items.md</code>, explain IM/IR/ER/AM in plain words, and name which is "higher is worse". The answer is <b>AM</b>. Check it against the source yourself.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">看成績檔</span><span class="lang-en">Check the grades file</span></h4><p><span class="lang-zh">最後看一下 <code>grade-report.csv</code>，有幾位學生、有哪些欄位？正解是 <b>51 位</b>，欄位 <code>id, rank, course, normal, midterm, final</code>。</span><span class="lang-en">Finally look at <code>grade-report.csv</code>: how many students and what columns? The answer is <b>51 students</b> with columns <code>id, rank, course, normal, midterm, final</code>.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">順手的小發現（Bonus，下關會用到）</span><span class="lang-en">A side finding (bonus, used next)</span></h4><p><span class="lang-zh">順手比一下 pre-test 和 post-test 的答題記錄，兩邊作答人數一不一樣？正解是<b>前測 43、後測 44，不一樣</b> - 這是刻意設計，練習 1 會處理。</span><span class="lang-en">In passing, compare the pre-test and post-test response records: are the respondent counts the same? The answer is <b>43 pre, 44 post, not equal</b> - by design, and Ex 1 handles it.</span></p></div>
+    </div>
+    <div class="trap">
+      <img class="mascot mascot-r" src="assets/imgs/mascots/yang06.png" alt="講師提醒：AM 方向相反">
+      <h3 class="block"><span class="lang-zh">AM 方向相反</span><span class="lang-en">AM is reverse</span></h3>
+      <ul class="clean"><li><span class="lang-zh">AM 分數越高代表動機越差，所以 AM <b>上升是壞消息</b>。</span><span class="lang-en">A higher AM score means worse motivation, so a <b>rise is bad news</b>.</span></li><li><span class="lang-zh">問卷為 7 點量表（1 完全不同意 ～ 7 完全同意）。</span><span class="lang-en">7-point Likert scale (1 = strongly disagree to 7 = strongly agree).</span></li></ul>
+    </div>
+    <div class="out">
+      <img class="mascot mascot-l" src="assets/imgs/mascots/yang13.png" alt="講師示意：對照檢查點">
+      <h3 class="block"><span class="lang-zh">同步檢查點</span><span class="lang-en">Sync checkpoint</span></h3>
+      <ul class="clean"><li><span class="lang-zh">代理回報 <code>pre-test.xlsx</code> 有 4 個工作表，並能列出各表欄位與列數。</span><span class="lang-en">The agent reports 4 sheets in <code>pre-test.xlsx</code> and can list each sheet's columns and row counts.</span></li><li><span class="lang-zh">代理回報 <code>grade-report.csv</code> 有 51 位學生；指出 AM 為分數越高越不好的構面。</span><span class="lang-en">The agent reports 51 students in <code>grade-report.csv</code>; AM is identified as worse when higher.</span></li></ul>
+    </div>
+    <p class="note"><span class="lang-zh">完整題目與提示起手式：</span><span class="lang-en">Full worksheets and prompt starters: </span><a class="link" data-zip="labs"><span class="lang-zh">📦 下載練習整包 .zip</span><span class="lang-en">📦 Download the labs .zip</span></a><span class="lang-zh">（含 <code>labs/zh</code>、<code>labs/en</code> 與資料）。</span><span class="lang-en"> (includes <code>labs/zh</code>, <code>labs/en</code> and data).</span></p>
+  </section>
+
+  <!-- 練習1 資料清理 -->
+  <section class="slide" data-sec="⑤ 練習1 清理資料" data-sec-en="⑤ Ex1 Clean">
+    <div class="s-head"><span class="badge alt"><span class="lang-zh">練習 1</span><span class="lang-en">Ex 1</span></span><div><span class="kicker"><span class="lang-zh">資料清理 · 28 分</span><span class="lang-en">Data cleaning · 28 min</span></span><h2><span class="lang-zh">原始資料清理與萃取</span><span class="lang-en">Clean and extract the raw data</span></h2></div></div>
+    <div class="intro">
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <img class="mascot mascot-r" src="assets/imgs/mascots/yang12.png" alt="講師示意：依步驟清理資料">
+      <p><span class="lang-zh"><b>這一關的目標：把「給人看」的 Excel 變成「給程式算」的乾淨表格。</b>真實資料永遠不乾淨：這份問卷每張工作表的<span class="hl">第一列是大標題</span>、欄名是一整句中文長題目，而且前測與後測的<span class="hl">填答人數不一樣</span>。沒先清乾淨，後面的信度與 t 檢定全會算錯。這一關真正在練一句話：<b>先檢查、再相信</b>。</span><span class="lang-en"><b>Goal of this unit: turn human-readable Excel into clean, computable tables.</b> Real data is never tidy: every sheet here has a <span class="hl">title banner in row 1</span>, column names that are full Chinese sentences, and a <span class="hl">different number of respondents</span> in pre vs post. Skip the cleaning and the later reliability and t-test all come out wrong. The real skill this unit drills is one rule: <b>check first, then trust</b>.</span></p>
+      <p><span class="lang-zh"><b>需要的觀念：</b><span class="hl">資料清理</span>是把雜亂原始檔整理成一致、可計算的表格；<span class="hl">header=1</span> 告訴程式真正欄名在第二列、不是第一列標題；<span class="hl">分數反向</span>是因為表中存的是「選項編號」不是同意分數，選項 1 其實代表 7 分，所以要換算 <code>actual_score = 8 - option_number</code>；<span class="hl">配對資料</span>指同一人前後測都有，才能做配對比較。</span><span class="lang-en"><b>Concepts you need:</b> <span class="hl">data cleaning</span> turns messy raw files into a consistent, computable table; <span class="hl">header=1</span> tells the code the real headers are on row 2, not the row-1 title; the <span class="hl">score reversal</span> is needed because the cells store an option number, not an agreement score (option 1 actually means 7 points), so convert with <code>actual_score = 8 - option_number</code>; <span class="hl">paired data</span> means a student present in both pre and post, the only ones you can compare pairwise.</span></p>
+      <p><span class="lang-zh"><b>資料與三個刻意陷阱：</b>只取每份 xlsx 的 <code>答題記錄(選項編號)</code> 工作表。陷阱一，第一列是像「第三次學習問卷調查」的大標題，真正欄名在第二列；陷阱二，數字是選項編號、不是分數；陷阱三，前測 43 人、後測 44 人，人數不同，必須用 <code>帳號</code> 合併。</span><span class="lang-en"><b>The data and three built-in traps:</b> use only the <code>答題記錄(選項編號)</code> sheet in each xlsx. Trap 1, row 1 is a banner title like "the 3rd learning survey" and the real headers are on row 2. Trap 2, the numbers are option codes, not scores. Trap 3, 43 took the pre and 44 the post, so counts differ and you must merge on <code>帳號</code>.</span></p>
+      <p><span class="lang-zh"><b>動手步驟：</b>① 讀兩份工作表並清理（跳過標題、改名 <code>Q1</code>–<code>Q16</code>、換算分數），存 <code>clean_pre.csv</code>／<code>clean_post.csv</code>；② 用 <code>帳號</code> 找出前後測都做的人，存 <code>matched_ids.csv</code>，回報各組人數與帳號；③ 檢查所有作答都在 1–7、沒有缺漏；④ 加分：比對第 11 題前後測題目文字是否被改寫。下面「跟著解答一步一步問」就是把這四步拆成可直接送出的訊息。</span><span class="lang-en"><b>The hands-on steps:</b> (1) read both sheets and clean them (skip the title, rename to <code>Q1</code>–<code>Q16</code>, convert scores), saving <code>clean_pre.csv</code>/<code>clean_post.csv</code>; (2) match students present in both on <code>帳號</code>, save <code>matched_ids.csv</code>, and report each group's count and accounts; (3) check every answer is 1–7 with no blanks; (4) bonus, compare Q11's wording across pre and post. The "Follow the solution" steps below break these four into messages you can send as-is.</span></p>
+      <p><span class="lang-zh"><b>正確長相：</b><code>clean_pre.csv</code> 43 列、<code>clean_post.csv</code> 44 列，欄位皆為 <code>帳號, Q1…Q16</code>，值在 1–7 且無缺漏；配對 41 人，只做前測 <span class="hl">S05、S47</span>，只做後測 <span class="hl">S01、S38、S41</span>。若算出 44／45，多半是沒跳過大標題、或把空白列也算進去了。</span><span class="lang-en"><b>What "correct" looks like:</b> <code>clean_pre.csv</code> has 43 rows and <code>clean_post.csv</code> 44, columns <code>帳號, Q1…Q16</code>, values 1–7 with no blanks; 41 matched, pre-only <span class="hl">S05, S47</span>, post-only <span class="hl">S01, S38, S41</span>. If you get 44/45, you probably did not skip the title row or counted blank rows.</span></p>
+      <p><span class="lang-zh"><b>為下一關埋的線：</b>第 11 題屬於 <span class="hl">ER 構面</span>，它在前後測被改寫，正是練習 2「ER 前測信度只有約 0.36」的線索，也是練習 3 要談的「工具一致性」。之後所有構面平均、t 檢定與圖表，都要用這一關清好的 clean 檔，不可再回頭改原始 xlsx。</span><span class="lang-en"><b>The thread to the next units:</b> Q11 belongs to the <span class="hl">ER subscale</span>, and its rewording across pre/post is exactly the clue behind "ER pre reliability is only about 0.36" in Ex 2 and the "tool consistency" question in Ex 3. Every later subscale mean, t-test, and chart must use these cleaned files; never edit the raw xlsx again.</span></p>
+    </div>
+    <div class="glossary">
+      <div class="gterm"><b><span class="lang-zh">資料清理</span><span class="lang-en">data cleaning</span></b><span><span class="lang-zh">把雜亂原始檔整理成一致、可計算的表格。</span><span class="lang-en">Turning messy raw files into a consistent, computable table.</span></span></div>
+      <div class="gterm"><b>header=1</b><span><span class="lang-zh">告訴程式真正的欄名在第二列，而非第一列標題。</span><span class="lang-en">Tells the code the real headers are on row 2, not the row-1 title.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">配對資料</span><span class="lang-en">paired data</span></b><span><span class="lang-zh">同一人前後測都有，才能做配對比較。</span><span class="lang-en">Only people present in both pre and post can be compared pairwise.</span></span></div>
+    </div>
+    <p class="lead"><span class="lang-zh">任務：輸出 <code>clean_pre.csv</code>、<code>clean_post.csv</code>、<code>matched_ids.csv</code>，並回報前測、後測、配對、只做單次的人數與帳號。</span><span class="lang-en">Task: output <code>clean_pre.csv</code>, <code>clean_post.csv</code>, and <code>matched_ids.csv</code>, then report pre, post, matched, and one-time-only counts/accounts.</span></p>
+    <div class="flow">
+      <div class="node start"><b>pre/post-test.xlsx</b><small><span class="lang-zh">4 個工作表，header=1</span><span class="lang-en">4 sheets, header=1</span></small></div>
+      <div class="arrow">▼</div>
+      <div class="node"><b><span class="lang-zh">清理</span><span class="lang-en">clean</span></b><small><span class="lang-zh">只留帳號＋Q1–Q16；實際分數 = 8 − 選項編號</span><span class="lang-en">keep account + Q1–Q16; score = 8 − option</span></small></div>
+      <div class="arrow">▼</div>
+      <div class="node end"><b>clean_pre/post.csv · matched_ids.csv</b><small><span class="lang-zh">存到 labs/_results/</span><span class="lang-en">saved to labs/_results/</span></small></div>
+    </div>
+    <h3 class="block"><span class="lang-zh">跟著解答一步一步問</span><span class="lang-en">Follow the solution, one ask at a time</span></h3>
+    <p class="lead"><span class="lang-zh">在<b>同一個對話</b>裡，一則訊息一則訊息送出；每一步都接續前一步，不必重講前提。照著做就能跑完整條清理流程。</span><span class="lang-en">Send the messages <b>one at a time in the same conversation</b>; each step builds on the last, so you never re-explain. Follow them in order to run the whole cleaning flow.</span></p>
+    <div class="steps">
+      <div class="step-item"><h4><span class="lang-zh">設定情境，清出乾淨表格</span><span class="lang-en">Situate, then clean</span></h4><p><span class="lang-zh">請代理讀兩份 xlsx 裡名為 <code>答題記錄(選項編號)</code> 的工作表，提醒它真正欄名在第二列（<code>header=1</code>），並把選項編號換算成實際分數 <code>actual_score = 8 - option_number</code>；只留 <code>帳號</code>，把 16 題依序改名成 <code>Q1</code>–<code>Q16</code>，存成 <code>clean_pre.csv</code> 與 <code>clean_post.csv</code>。</span><span class="lang-en">Ask the agent to read the <code>答題記錄(選項編號)</code> sheet in both xlsx files, remind it the real headers are on row 2 (<code>header=1</code>), and convert option numbers with <code>actual_score = 8 - option_number</code>; keep only <code>帳號</code>, rename the 16 items <code>Q1</code>–<code>Q16</code>, and save <code>clean_pre.csv</code> and <code>clean_post.csv</code>.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">配對前後測（不必重講前面）</span><span class="lang-en">Match pre and post</span></h4><p><span class="lang-zh">接著請它用 <code>帳號</code> 找出前後測都做的學生，存成 <code>matched_ids.csv</code>，並印出：前測幾人、後測幾人、配對幾人，以及只出現在單邊的帳號是誰。正解是 <b>前測 43、後測 44、配對 41</b>；若得到 44／45，多半是沒跳過大標題或把空白列也算進去了。</span><span class="lang-en">Then have it match students present in both surveys on <code>帳號</code>, save <code>matched_ids.csv</code>, and print pre, post, and matched counts plus the accounts that appear on only one side. The right answer is <b>43 pre, 44 post, 41 matched</b>; 44/45 usually means the title row was not skipped or blank rows got counted.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">品質檢查</span><span class="lang-en">Quality check</span></h4><p><span class="lang-zh">再請它核對：所有作答是不是都落在 1 到 7 之間？有沒有缺漏（空白）？這一步是替你的資料把關，別跳過。</span><span class="lang-en">Next, ask it to confirm every answer falls between 1 and 7 with no blanks. This step guards your data, so do not skip it.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">工具一致性（Bonus，練習 3 再回來）</span><span class="lang-en">Tool consistency (bonus, back in Ex 3)</span></h4><p><span class="lang-zh">最後問一句：第 11 題在前後測的「題目文字」一樣嗎？若被改寫過，前後測還能不能直接比較？先記下這個線索，練習 2／03 會用到。</span><span class="lang-en">Finally ask: is Q11's wording the same across pre and post? If it was reworded, can pre and post still be compared directly? Note the clue now; Ex 2/03 will use it.</span></p></div>
+    </div>
+    <div class="out">
+      <h3 class="block"><span class="lang-zh">先試做，再對答案</span><span class="lang-en">Try first, then compare</span></h3>
+      <ul class="clean"><li><span class="lang-zh">學員先用 </span><span class="lang-en">Learners first try with the </span><a class="link" href="view.html?f=sample-solution/zh/01-data-cleaning/prompt.md" target="_blank" rel="noopener">sample prompt</a><span class="lang-zh"> 跑一次；完成後再看 </span><span class="lang-en">; after finishing, compare with the </span><a class="link" href="view.html?f=sample-solution/zh/01-data-cleaning/response.md" target="_blank" rel="noopener">sample solution</a><span class="lang-zh"> 對照。</span><span class="lang-en">.</span></li></ul>
+    </div>
+    <div class="trap">
+      <img class="mascot mascot-r" src="assets/imgs/mascots/yang08.png" alt="講師提醒：小心標題列陷阱">
+      <h3 class="block"><span class="lang-zh">刻意陷阱</span><span class="lang-en">Built-in traps</span></h3>
+      <ul class="clean"><li><span class="lang-zh">第一列是大標題，真正欄名在第二列（<code>header=1</code>）。</span><span class="lang-en">Row 1 is a title; the real headers are on row 2 (<code>header=1</code>).</span></li><li><span class="lang-zh">表中的數字是選項編號，不是實際分數；要轉成 <code>actual_score = 8 - option_number</code>。</span><span class="lang-en">The numbers are option numbers, not real scores; convert with <code>actual_score = 8 - option_number</code>.</span></li><li><span class="lang-zh">前測 43、後測 44、只有 41 人配對，需用帳號合併。</span><span class="lang-en">Pre 43, post 44, only 41 matched; merge on account id.</span></li></ul>
+    </div>
+    <div class="out">
+      <h3 class="block"><span class="lang-zh">驗收檢查</span><span class="lang-en">Acceptance checks</span></h3>
+      <ul class="clean"><li><span class="lang-zh"><code>clean_pre.csv</code> 43 列、<code>clean_post.csv</code> 44 列，值都在 1–7。</span><span class="lang-en"><code>clean_pre.csv</code> 43 rows, <code>clean_post.csv</code> 44 rows, all values 1–7.</span></li><li><span class="lang-zh">配對 41 人；前測獨有 S05,S47；後測獨有 S01,S38,S41。</span><span class="lang-en">41 matched; pre-only S05,S47; post-only S01,S38,S41.</span></li></ul>
+    </div>
+  </section>
+
+  <!-- 練習2 信度 -->
+  <section class="slide" data-sec="⑥ 練習2 信效度檢測" data-sec-en="⑥ Ex2 Reliability">
+    <div class="s-head"><span class="badge alt"><span class="lang-zh">練習 2</span><span class="lang-en">Ex 2</span></span><div><span class="kicker"><span class="lang-zh">信度 · 25 分</span><span class="lang-en">Reliability · 25 min</span></span><h2><span class="lang-zh">信度與效度</span><span class="lang-en">Reliability and validity</span></h2></div></div>
+    <div class="intro">
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <img class="mascot mascot-l" src="assets/imgs/mascots/yang02.png" alt="講師思考：資料一致嗎">
+      <p><span class="lang-zh"><b>這一關的目標：先把 16 題合成 4 個構面，再檢查這些構面靠不靠得住。</b>分數算得出來不代表可信。這一關練的是<span class="hl">在分析之前先問「這份問卷可不可信」</span>，並抓到真正的警訊：ER 前測信度只有約 0.36。</span><span class="lang-en"><b>Goal of this unit: combine the 16 items into 4 subscales, then check whether those subscales hold up.</b> Getting a number does not make it trustworthy. This unit drills <span class="hl">asking "is this instrument reliable" before analyzing</span>, and catching the real red flag: ER pre reliability is only about 0.36.</span></p>
+      <p><span class="lang-zh"><b>需要的觀念：</b><span class="hl">構面分數</span>是把一個構面的四題取平均，合成一個概念分數；<span class="hl">信度（reliability）</span>問的是同一構面各題是否量到同一件事、結果穩不穩定；<span class="hl">Cronbach's α</span>是 0 到 1 的一致性指標，越接近 1 越好，常以 0.7 為可接受門檻；<span class="hl">效度（validity）</span>則問是否真的量到你想量的概念。</span><span class="lang-en"><b>Concepts you need:</b> a <span class="hl">subscale score</span> averages a subscale's four items into one concept score; <span class="hl">reliability</span> asks whether those items measure the same thing consistently; <span class="hl">Cronbach's alpha</span> is a 0 to 1 consistency index, closer to 1 is better, with 0.7 a common acceptable threshold; <span class="hl">validity</span> asks whether it truly measures the concept you intend.</span></p>
+      <p><span class="lang-zh"><b>用到的資料與對應：</b>讀練習 1 清好的 <code>clean_pre.csv</code>／<code>clean_post.csv</code>，構面對題目的對應是 IM=Q1,Q5,Q9,Q13；IR=Q2,Q6,Q10,Q14；ER=Q3,Q7,Q11,Q15；AM=Q4,Q8,Q12,Q16。每位學生的構面分數＝該構面四題的平均。</span><span class="lang-en"><b>The data and the mapping:</b> read Ex 1's cleaned <code>clean_pre.csv</code>/<code>clean_post.csv</code>; the subscale-to-item map is IM=Q1,Q5,Q9,Q13; IR=Q2,Q6,Q10,Q14; ER=Q3,Q7,Q11,Q15; AM=Q4,Q8,Q12,Q16. Each student's subscale score is the mean of that subscale's four items.</span></p>
+      <p><span class="lang-zh"><b>動手步驟：</b>① 算每人四個構面分數，前後測分開存 <code>subscale_scores_pre/post.csv</code>（欄位 帳號, IM, IR, ER, AM）；② 算每構面前後測的 Cronbach's α，存 <code>reliability.csv</code> 並印表；③ 標出低於 0.7 的、猜原因、用一句話判斷整體可不可信；④ 加分：把前測 ER 的 Q11 拿掉只留 Q3、Q7、Q15，α 會不會變好。下面「跟著解答一步一步問」就是這四步。</span><span class="lang-en"><b>The hands-on steps:</b> (1) compute each student's four subscale scores, saved separately as <code>subscale_scores_pre/post.csv</code> (columns 帳號, IM, IR, ER, AM); (2) compute each subscale's pre and post Cronbach's alpha into <code>reliability.csv</code> and print it; (3) flag any below 0.7, guess the cause, and judge overall trust in one line; (4) bonus, drop Q11 from pre ER (keep Q3, Q7, Q15) and see whether alpha recovers. The "Follow the solution" steps below are these four.</span></p>
+      <p><span class="lang-zh"><b>正確長相：</b><code>subscale_scores_pre.csv</code> 43 列、<code>subscale_scores_post.csv</code> 44 列，分數皆在 1 到 7；八個 α 大致為 IM 0.93／0.95、IR 0.90／0.96、ER <b>0.36</b>／0.92、AM 0.86／0.87。唯一過低的是 <span class="hl">ER 前測 α ≈ 0.36</span>，其餘七個都在 0.85 以上。</span><span class="lang-en"><b>What "correct" looks like:</b> <code>subscale_scores_pre.csv</code> has 43 rows and <code>subscale_scores_post.csv</code> 44, scores all 1 to 7; the eight alphas run roughly IM 0.93/0.95, IR 0.90/0.96, ER <b>0.36</b>/0.92, AM 0.86/0.87. The only low one is <span class="hl">ER pre alpha ≈ 0.36</span>; the other seven are above 0.85.</span></p>
+      <p><span class="lang-zh"><b>承先啟後：</b>低 ER 前測信度的線索來自練習 1 - 第 11 題（ER 的一題）在前後測被改寫，一題字句不一致就足以把整個構面的信度拉垮（後測改寫後 ER 跳回 0.92）。記住這點：練習 3 解讀 ER 的「顯著上升」、練習 7 丟掉 Q11 重算，都會回到這裡。</span><span class="lang-en"><b>The thread across units:</b> the clue to low ER pre reliability comes from Ex 1 - Q11 (an ER item) was reworded across waves, and one inconsistent item is enough to drag a whole subscale down (ER jumps back to 0.92 once reworded in post). Remember this: Ex 3's reading of ER's "significant rise" and Ex 7's drop-Q11 recompute both come back here.</span></p>
+    </div>
+    <div class="glossary">
+      <div class="gterm"><b><span class="lang-zh">信度</span><span class="lang-en">reliability</span></b><span><span class="lang-zh">同一構面各題是否量到同一件事、結果是否穩定。</span><span class="lang-en">Whether items in a subscale measure the same thing consistently.</span></span></div>
+      <div class="gterm"><b>Cronbach's α</b><span><span class="lang-zh">0 到 1 的一致性指標，常以 0.7 為可接受門檻。</span><span class="lang-en">A 0–1 consistency index; 0.7 is a common acceptable threshold.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">效度</span><span class="lang-en">validity</span></b><span><span class="lang-zh">是否真的量到你想量的那個概念。</span><span class="lang-en">Whether it truly measures the concept you intend.</span></span></div>
+    </div>
+    <p class="lead"><span class="lang-zh">任務：輸出 <code>subscale_scores_pre.csv</code>、<code>subscale_scores_post.csv</code>、<code>reliability.csv</code>，標出 α &lt; 0.7 的構面並寫一句信度判斷。</span><span class="lang-en">Task: output <code>subscale_scores_pre.csv</code>, <code>subscale_scores_post.csv</code>, and <code>reliability.csv</code>, flag alpha &lt; 0.7, and write one reliability judgment.</span></p>
+    <table class="lang-zh">
+      <thead><tr><th>構面</th><th>前測 α</th><th>後測 α</th></tr></thead>
+      <tbody>
+        <tr><td>IM 內在動機</td><td>0.93</td><td>0.95</td></tr>
+        <tr><td>IR 認同調節</td><td>0.90</td><td>0.96</td></tr>
+        <tr><td>ER 外在調節</td><td>0.36 ⚠</td><td>0.92</td></tr>
+        <tr><td>AM 無動機</td><td>0.86</td><td>0.87</td></tr>
+      </tbody>
+    </table>
+    <table class="lang-en">
+      <thead><tr><th>Subscale</th><th>Pre α</th><th>Post α</th></tr></thead>
+      <tbody>
+        <tr><td>IM Intrinsic</td><td>0.93</td><td>0.95</td></tr>
+        <tr><td>IR Identified</td><td>0.90</td><td>0.96</td></tr>
+        <tr><td>ER External</td><td>0.36 ⚠</td><td>0.92</td></tr>
+        <tr><td>AM Amotivation</td><td>0.86</td><td>0.87</td></tr>
+      </tbody>
+    </table>
+    <h3 class="block"><span class="lang-zh">跟著解答一步一步問</span><span class="lang-en">Follow the solution, one ask at a time</span></h3>
+    <p class="lead"><span class="lang-zh">在<b>同一個對話</b>裡，一則訊息一則訊息送出；每一步都接續前一步，不必重講前提。</span><span class="lang-en">Send the messages <b>one at a time in the same conversation</b>; each step builds on the last, so you never re-explain.</span></p>
+    <div class="steps">
+      <div class="step-item"><h4><span class="lang-zh">設定情境，算出構面分數</span><span class="lang-en">Situate, then compute subscale scores</span></h4><p><span class="lang-zh">請代理讀 <code>_results/clean_pre.csv</code>、<code>clean_post.csv</code>，並給它構面對應（IM=Q1,Q5,Q9,Q13；IR=Q2,Q6,Q10,Q14；ER=Q3,Q7,Q11,Q15；AM=Q4,Q8,Q12,Q16）。每位學生算 4 個構面分數（各為該構面四題平均），前後測分開存 <code>subscale_scores_pre.csv</code>、<code>subscale_scores_post.csv</code>（欄位 帳號, IM, IR, ER, AM）。</span><span class="lang-en">Ask the agent to read <code>clean_pre.csv</code> and <code>clean_post.csv</code> from <code>_results/</code>, and give it the mapping (IM=Q1,Q5,Q9,Q13; IR=Q2,Q6,Q10,Q14; ER=Q3,Q7,Q11,Q15; AM=Q4,Q8,Q12,Q16). Compute each student's four subscale scores (mean of the four items) and save pre/post separately as <code>subscale_scores_pre.csv</code> and <code>subscale_scores_post.csv</code> (columns 帳號, IM, IR, ER, AM).</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">算信度（沿用上面的對應）</span><span class="lang-en">Compute reliability</span></h4><p><span class="lang-zh">用這些分數，算每構面前測與後測的 Cronbach's α，放進 <code>reliability.csv</code>（欄位 subscale, pre_alpha, post_alpha），並把表印出來給你看。</span><span class="lang-en">Using those scores, compute each subscale's pre and post Cronbach's alpha into <code>reliability.csv</code> (columns subscale, pre_alpha, post_alpha), and print the table.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">讓代理幫你解讀</span><span class="lang-en">Let it interpret</span></h4><p><span class="lang-zh">請它把任何低於 0.7 的 α 標出來、猜原因，再用一句話告訴你這份問卷整體可不可信、哪裡要小心。正解：只有 <b>ER 前測 α ≈ 0.36</b> 過低，其餘七個都在 0.85 以上。</span><span class="lang-en">Ask it to flag any alpha below 0.7, guess the cause, and say in one line whether the instrument is trustworthy overall and where to be careful. The answer: only <b>ER pre alpha ≈ 0.36</b> is too low; the other seven are above 0.85.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">追一個問題（Bonus）</span><span class="lang-en">Chase one question (bonus)</span></h4><p><span class="lang-zh">那如果把前測 ER 的 Q11 拿掉、只留 Q3、Q7、Q15，α 會不會變好？請它試一下。會明顯回升，因為 Q11 原本和其他三題反向，是它一題在拖累整體。</span><span class="lang-en">What if you drop Q11 from pre ER and keep only Q3, Q7, Q15, does alpha improve? Have it try. It rises clearly, because Q11 was negatively correlated with the other three and was dragging the whole subscale down.</span></p></div>
+    </div>
+    <div class="out">
+      <h3 class="block"><span class="lang-zh">先試做，再對答案</span><span class="lang-en">Try first, then compare</span></h3>
+      <ul class="clean"><li><span class="lang-zh">學員先用 </span><span class="lang-en">Learners first try with the </span><a class="link" href="view.html?f=sample-solution/zh/02-reliability/prompt.md" target="_blank" rel="noopener">sample prompt</a><span class="lang-zh"> 跑一次；完成後再看 </span><span class="lang-en">; after finishing, compare with the </span><a class="link" href="view.html?f=sample-solution/zh/02-reliability/response.md" target="_blank" rel="noopener">sample solution</a><span class="lang-zh"> 對照。</span><span class="lang-en">.</span></li></ul>
+    </div>
+    <div class="trap">
+      <img class="mascot mascot-r" src="assets/imgs/mascots/yang08.png" alt="講師提醒：信度可能崩掉">
+      <h3 class="block"><span class="lang-zh">唯一警訊</span><span class="lang-en">The one red flag</span></h3>
+      <ul class="clean"><li><span class="lang-zh">ER 前測 α ≈ <b>0.36</b>，遠低於 0.7；這提醒我們後續解讀 ER 要保守。</span><span class="lang-en">ER pre α ≈ <b>0.36</b>, far below 0.7; interpret later ER findings cautiously.</span></li><li><span class="lang-zh">線索來自練習 1：Q11 前後測題目文字被改寫，可能拖垮 ER 前測信度。</span><span class="lang-en">The clue came from Ex 1: Q11 was reworded across pre/post and may drag down ER pre reliability.</span></li></ul>
+    </div>
+    <div class="out">
+      <h3 class="block"><span class="lang-zh">驗收檢查</span><span class="lang-en">Acceptance checks</span></h3>
+      <ul class="clean"><li><span class="lang-zh"><code>subscale_scores_pre/post.csv</code> 與 <code>reliability.csv</code>（8 個 α）。</span><span class="lang-en"><code>subscale_scores_pre/post.csv</code> and <code>reliability.csv</code> (8 alphas).</span></li><li><span class="lang-zh">抓到 ER 前測 ≈ 0.36，並能說出可能原因。</span><span class="lang-en">Catch ER pre ≈ 0.36 and explain a likely cause.</span></li></ul>
+    </div>
+  </section>
+
+  <!-- 中場休息 -->
+  <section class="slide" data-sec="⑦ 中場休息" data-sec-en="⑦ Break">
+    <div class="s-head"><span class="badge hot"><span class="lang-zh">休息</span><span class="lang-en">Break</span></span><div><span class="kicker"><span class="lang-zh">中場休息 · 10 分</span><span class="lang-en">Break · 10 min</span></span><h2><span class="lang-zh">中場休息與保險包</span><span class="lang-en">Break and restore points</span></h2></div></div>
+    <div class="intro">
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <img class="mascot mascot-l" src="assets/imgs/mascots/yang05.png" alt="講師慶祝：中場休息一下">
+      <p><span class="lang-zh"><b>中場不只是休息。</b>它的設計意圖是「對齊起跑線」：講師趁空檔用<b>分段解答包</b>把落後的人接上進度，確保下半場（從 t 檢定起）全班站在同一個資料基礎上。沒有人因為前面卡住就整場掉隊。</span><span class="lang-en"><b>The break is not only rest.</b> Its intent is to align the starting line: the facilitator uses <b>staged answer packs</b> to catch up anyone behind, so the second half (from the t-test) starts on the same data footing. No one is lost for the whole session over an early snag.</span></p>
+    </div>
+    <div class="glossary">
+      <div class="gterm"><b><span class="lang-zh">分段保險包</span><span class="lang-en">staged restore point</span></b><span><span class="lang-zh">每個階段都有現成的 outputs，可就近接續而不必從頭。</span><span class="lang-en">Each stage has ready-made outputs to resume from, no restart needed.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">同步檢查點</span><span class="lang-en">sync checkpoint</span></b><span><span class="lang-zh">全班達標才往下，避免進度越拉越開。</span><span class="lang-en">Move on only when the class is aligned, so gaps don't widen.</span></span></div>
+    </div>
+    <p class="lead"><span class="lang-zh">講師趁此巡場，協助落後者用解答包接續，讓全班在練習 3 站上同一起跑線。</span><span class="lang-en">The facilitator circulates and helps anyone behind continue from the answer key, so everyone starts Ex 3 together.</span></p>
+    <div class="card"><span class="pill"><span class="lang-zh">保險包</span><span class="lang-en">Restore point</span></span><h4><span class="lang-zh">分段解答 outputs</span><span class="lang-en">Staged outputs</span></h4><p><span class="lang-zh">把 <code>sample-solution/&lt;語言&gt;/01-data-cleaning/outputs/</code> 的 <code>clean_pre.csv</code>、<code>clean_post.csv</code>、<code>matched_ids.csv</code> 複製到你的 <code>labs/_results/</code> 即可接續。</span><span class="lang-en">Copy <code>clean_pre.csv</code>, <code>clean_post.csv</code>, <code>matched_ids.csv</code> from <code>sample-solution/&lt;lang&gt;/01-data-cleaning/outputs/</code> into your <code>labs/_results/</code> to continue.</span></p></div>
+  </section>
+
+  <!-- 練習3 t檢定 -->
+  <section class="slide" data-sec="⑧ 練習3 t 檢定" data-sec-en="⑧ Ex3 t-test">
+    <div class="s-head"><span class="badge alt"><span class="lang-zh">練習 3</span><span class="lang-en">Ex 3</span></span><div><span class="kicker"><span class="lang-zh">配對 t 檢定 · 30 分 · 全場核心</span><span class="lang-en">Paired t-test · 30 min · the centerpiece</span></span><h2><span class="lang-zh">前後測有沒有顯著差異</span><span class="lang-en">Did pre vs post differ?</span></h2></div></div>
+    <div class="intro">
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <img class="mascot mascot-r" src="assets/imgs/mascots/yang08.png" alt="講師提醒：注意 AM 方向相反">
+      <p><span class="lang-zh"><b>這一關的目標：用 41 位配對學生回答一句話 - 前後測的差異是真的，還是運氣？</b>這是全場的核心。把前後測構面分數依帳號對齊，只留兩次都填的人，對 IM／IR／ER／AM 各做一次配對 t 檢定，並學會<span class="hl">不只看「有沒有差」，也看「差多大」「往哪個方向」</span>。</span><span class="lang-en"><b>Goal of this unit: use the 41 paired students to answer one question - is the pre/post difference real, or chance?</b> This is the centerpiece. Align subscale scores by account, keep only students present in both waves, run a paired t-test on IM/IR/ER/AM, and learn to read <span class="hl">not just whether there is a difference, but how big and in which direction</span>.</span></p>
+      <p><span class="lang-zh"><b>需要的觀念：</b><span class="hl">配對 t 檢定</span>比較同一群人前後兩次的平均差異是否顯著；<span class="hl">p 值</span>是「差異純屬隨機」的機率，常以 0.05 為界；<span class="hl">效果量 Cohen's dz</span>說的是差異「有多大」（差值平均除以差值標準差），不只是「有沒有」。</span><span class="lang-en"><b>Concepts you need:</b> a <span class="hl">paired t-test</span> tests whether the same people's pre/post means differ significantly; the <span class="hl">p-value</span> is the chance the difference is just random, with 0.05 a common cutoff; the <span class="hl">effect size Cohen's dz</span> (mean difference over its standard deviation) says how big the difference is, not merely whether it exists.</span></p>
+      <p><span class="lang-zh"><b>用到的資料：</b>練習 2 的 <code>subscale_scores_pre.csv</code>、<code>subscale_scores_post.csv</code> 與練習 1 的 <code>matched_ids.csv</code>。方向一律是<b>後測減前測</b>，正值代表後測較高。注意這裡只用得上 <span class="hl">41 位配對</span>學生，自由度 df = 40。</span><span class="lang-en"><b>The data you use:</b> Ex 2's <code>subscale_scores_pre.csv</code> and <code>subscale_scores_post.csv</code> plus Ex 1's <code>matched_ids.csv</code>. Direction is always <b>post minus pre</b>, so a positive value means post is higher. Only the <span class="hl">41 paired</span> students count here, giving df = 40.</span></p>
+      <p><span class="lang-zh"><b>動手步驟：</b>① 留 41 人、依帳號對齊，對四構面做成對 t 檢定，存 <code>ttest_results.csv</code>（前後測 M(SD)、ΔM、t、df、p、dz）；② 逐一白話解讀，<b>特別小心 AM 方向</b>；③ 因 n=41 或 Q11 改寫而要講保守的地方；④ 加分：用成績中位數切高低分組，比較後測 IM（獨立 t 檢定）。下面「跟著解答一步一步問」就是這四步。</span><span class="lang-en"><b>The hands-on steps:</b> (1) keep the 41, align by account, run paired t-tests on the four subscales into <code>ttest_results.csv</code> (pre/post M(SD), ΔM, t, df, p, dz); (2) read each in plain words, <b>watching the AM direction</b>; (3) note what to soften because of n=41 or the Q11 reword; (4) bonus, split by grade median into high/low groups and compare post IM (independent t-test). The "Follow the solution" steps below are these four.</span></p>
+      <p><span class="lang-zh"><b>正確長相：</b>成對 <span class="hl">n = 41、df = 40</span>；四構面都顯著上升，ΔM 約 IM +0.51、IR +0.44、ER +0.68、AM +0.53，效果量約 0.5 到 0.7（中等）。最重要的判讀：IM／IR 上升是正向訊號，但 <b>AM 上升＝無動機增加＝壞消息</b>，千萬別讀反。</span><span class="lang-en"><b>What "correct" looks like:</b> paired <span class="hl">n = 41, df = 40</span>; all four rise significantly, ΔM about IM +0.51, IR +0.44, ER +0.68, AM +0.53, with effect sizes around 0.5 to 0.7 (medium). The key reading: IM/IR rising is positive, but <b>AM up = more amotivation = bad news</b>, so never flip it.</span></p>
+      <p><span class="lang-zh"><b>承先啟後：</b><span class="hl">ER 最該保守</span>：前測信度只有 0.36（練習 2），加上 Q11 在前後測被改寫，等於前後測量的不完全是同一件事，ER 的「顯著上升」可能部分來自題目改了。這些 t 檢定數字會被練習 4 畫成圖、練習 5 寫進報告。</span><span class="lang-en"><b>The thread across units:</b> <span class="hl">read ER most cautiously</span>: its pre reliability was only 0.36 (Ex 2), and Q11 was reworded across waves, so pre and post do not measure quite the same thing and ER's "significant rise" may partly come from the changed item. These t-test numbers get charted in Ex 4 and written into the report in Ex 5.</span></p>
+    </div>
+    <div class="glossary">
+      <div class="gterm"><b><span class="lang-zh">配對 t 檢定</span><span class="lang-en">paired t-test</span></b><span><span class="lang-zh">比較同一群人前後兩次的平均差異是否顯著。</span><span class="lang-en">Tests whether the same people's pre/post means differ significantly.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">p 值</span><span class="lang-en">p-value</span></b><span><span class="lang-zh">差異純屬隨機的機率；常以 0.05 為界。</span><span class="lang-en">Probability the difference is just chance; 0.05 is a common cutoff.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">效果量</span><span class="lang-en">effect size (dz)</span></b><span><span class="lang-zh">差異「有多大」，不只是「有沒有」。</span><span class="lang-en">How big the difference is, not just whether it exists.</span></span></div>
+    </div>
+    <p class="lead"><span class="lang-zh">任務：輸出 <code>ttest_results.csv</code>，每個構面包含前後測 M(SD)、ΔM、t、df、p、Cohen's dz，方向一律是後測減前測。</span><span class="lang-en">Task: output <code>ttest_results.csv</code> with pre/post M(SD), ΔM, t, df, p, and Cohen's dz for each subscale; direction is always post minus pre.</span></p>
+    <table class="lang-zh">
+      <thead><tr><th>構面</th><th>ΔM</th><th>t(40)</th><th>p</th><th>dz</th><th>解讀</th></tr></thead>
+      <tbody>
+        <tr><td>IM 內在動機</td><td>+0.51</td><td>3.52</td><td>0.001</td><td>0.55</td><td>上升＝正面</td></tr>
+        <tr><td>IR 認同調節</td><td>+0.44</td><td>3.42</td><td>0.002</td><td>0.53</td><td>上升＝正面</td></tr>
+        <tr><td>ER 外在調節</td><td>+0.68</td><td>4.63</td><td>&lt;0.001</td><td>0.72</td><td>外在壓力增強</td></tr>
+        <tr><td>AM 無動機</td><td>+0.53</td><td>3.24</td><td>0.002</td><td>0.51</td><td>⚠ 上升＝變差</td></tr>
+      </tbody>
+    </table>
+    <table class="lang-en">
+      <thead><tr><th>Subscale</th><th>ΔM</th><th>t(40)</th><th>p</th><th>dz</th><th>Reading</th></tr></thead>
+      <tbody>
+        <tr><td>IM Intrinsic</td><td>+0.51</td><td>3.52</td><td>0.001</td><td>0.55</td><td>up = good</td></tr>
+        <tr><td>IR Identified</td><td>+0.44</td><td>3.42</td><td>0.002</td><td>0.53</td><td>up = good</td></tr>
+        <tr><td>ER External</td><td>+0.68</td><td>4.63</td><td>&lt;0.001</td><td>0.72</td><td>stronger pressure</td></tr>
+        <tr><td>AM Amotivation</td><td>+0.53</td><td>3.24</td><td>0.002</td><td>0.51</td><td>⚠ up = worse</td></tr>
+      </tbody>
+    </table>
+    <h3 class="block"><span class="lang-zh">跟著解答一步一步問</span><span class="lang-en">Follow the solution, one ask at a time</span></h3>
+    <p class="lead"><span class="lang-zh">在<b>同一個對話</b>裡，一則訊息一則訊息送出；每一步都接續前一步，不必重講前提。</span><span class="lang-en">Send the messages <b>one at a time in the same conversation</b>; each step builds on the last, so you never re-explain.</span></p>
+    <div class="steps">
+      <div class="step-item"><h4><span class="lang-zh">設定情境，跑成對 t 檢定</span><span class="lang-en">Situate, then run the paired t-test</span></h4><p><span class="lang-zh">請代理讀 <code>_results/</code> 裡的 <code>subscale_scores_pre.csv</code>、<code>subscale_scores_post.csv</code>、<code>matched_ids.csv</code>，只留前後測都做的 41 人、依帳號對齊，對 IM／IR／ER／AM 各做一次成對 t 檢定（方向＝後測減前測），存成 <code>ttest_results.csv</code>：前後測 M(SD)、ΔM、t、df、p、Cohen's dz。</span><span class="lang-en">Ask the agent to read <code>subscale_scores_pre.csv</code>, <code>subscale_scores_post.csv</code>, and <code>matched_ids.csv</code> from <code>_results/</code>, keep the 41 present in both, align by account, and run a paired t-test on IM/IR/ER/AM (post minus pre) into <code>ttest_results.csv</code>: pre/post M(SD), ΔM, t, df, p, Cohen's dz.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">逐一解讀（特別提醒 AM 方向）</span><span class="lang-en">Read each (watch AM's direction)</span></h4><p><span class="lang-zh">請它用一句白話解讀每個構面。明確提醒：<b>AM 是無動機，分數越高越糟，AM 上升是壞消息</b>，別讀反。正解是四構面都顯著上升、效果量約 0.5 到 0.7。</span><span class="lang-en">Have it read each subscale in one plain sentence. Spell out the warning: <b>AM is amotivation, higher is worse, so AM rising is bad news</b>, do not flip it. The answer: all four rise significantly with effect sizes around 0.5 to 0.7.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">請它幫你想限制</span><span class="lang-en">Ask it for the caveats</span></h4><p><span class="lang-zh">問它：哪些結論因為<b>只有 41 人</b>、或因為<b>第 11 題在前後測被改寫</b>，需要講得保守一點？這一步把「會算」提升成「會解讀」。</span><span class="lang-en">Ask which conclusions need softening because there are <b>only 41 students</b>, or because <b>Q11 was reworded across waves</b>. This step turns "can compute" into "can interpret".</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">換個角度（Bonus，獨立 t 檢定）</span><span class="lang-en">Another angle (bonus, independent t-test)</span></h4><p><span class="lang-zh">把 <code>grade-report.csv</code> 依 <code>final</code> 用全班中位數切成高分組與低分組，先用 <code>帳號</code>／<code>id</code> 把成績和問卷對起來，比較兩組的後測 IM。高分學生內在動機真的比較高嗎？這跟成對檢定差在哪？</span><span class="lang-en">Split <code>grade-report.csv</code> by <code>final</code> at the class median into high and low groups, join grades to the survey on <code>帳號</code>/<code>id</code>, and compare the two groups' post IM. Do higher-scoring students really have higher intrinsic motivation, and how does this differ from the paired test?</span></p></div>
+    </div>
+    <div class="out">
+      <h3 class="block"><span class="lang-zh">先試做，再對答案</span><span class="lang-en">Try first, then compare</span></h3>
+      <ul class="clean"><li><span class="lang-zh">學員先用 </span><span class="lang-en">Learners first try with the </span><a class="link" href="view.html?f=sample-solution/zh/03-t-test/prompt.md" target="_blank" rel="noopener">sample prompt</a><span class="lang-zh"> 跑一次；完成後再看 </span><span class="lang-en">; after finishing, compare with the </span><a class="link" href="view.html?f=sample-solution/zh/03-t-test/response.md" target="_blank" rel="noopener">sample solution</a><span class="lang-zh"> 對照。</span><span class="lang-en">.</span></li></ul>
+    </div>
+    <div class="trap">
+      <img class="mascot mascot-r" src="assets/imgs/mascots/yang06.png" alt="講師提醒：別把方向讀反">
+      <h3 class="block"><span class="lang-zh">讀法與 caveat</span><span class="lang-en">How to read it</span></h3>
+      <ul class="clean"><li><span class="lang-zh">四構面都顯著上升，效果量約 0.5–0.7；但 <b>AM 上升＝無動機增加＝壞消息</b>。</span><span class="lang-en">All four rise significantly with effect sizes around 0.5–0.7; but <b>AM up = more amotivation = bad news</b>.</span></li><li><span class="lang-zh">ER 最該保守：前測信度只有 0.36，且 Q11 前後測題目文字被改寫。</span><span class="lang-en">Read ER most cautiously: pre reliability was only 0.36, and Q11 was reworded across waves.</span></li></ul>
+    </div>
+    <p class="note"><span class="lang-zh">範例解答：n=41、df=40；IM +0.51、IR +0.44、ER +0.68、AM +0.53。</span><span class="lang-en">Answer key: n=41, df=40; IM +0.51, IR +0.44, ER +0.68, AM +0.53.</span></p>
+  </section>
+
+  <!-- 練習4 畫圖 -->
+  <section class="slide" data-sec="⑨ 練習4 圖表生成" data-sec-en="⑨ Ex4 Charts">
+    <div class="s-head"><span class="badge alt"><span class="lang-zh">練習 4</span><span class="lang-en">Ex 4</span></span><div><span class="kicker"><span class="lang-zh">畫圖 · 22 分</span><span class="lang-en">Charts · 22 min</span></span><h2><span class="lang-zh">畫圖說故事</span><span class="lang-en">Charts that tell the story</span></h2></div></div>
+    <div class="intro">
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <img class="mascot mascot-r" src="assets/imgs/mascots/yang11.png" alt="講師示意：用圖表呈現結果">
+      <p><span class="lang-zh"><b>這一關的目標：把練習 3 的數字畫成能被一眼看懂的圖。</b>圖不是裝飾，而是把結論說清楚的工具。這一關真正在練的是<span class="hl">迭代</span>：先要一張，看不懂就請代理改，逐步逼近清楚。</span><span class="lang-en"><b>Goal of this unit: turn the Ex 3 numbers into charts people grasp at a glance.</b> Charts are not decoration; they are how a conclusion is made clear. The real skill here is <span class="hl">iteration</span>: ask for one chart, and when it does not read well, ask the agent to fix it until it does.</span></p>
+      <p><span class="lang-zh"><b>需要的觀念：</b><span class="hl">斜率圖</span>用線段連起前後兩點，升降一眼可見，是本關主圖；<span class="hl">迭代</span>是不滿意就再要求修正、逐步逼近清楚；<span class="hl">CJK 字型</span>若沒設好，中文標籤會變成空白方塊，這時改設定或乾脆改用英文標籤。</span><span class="lang-en"><b>Concepts you need:</b> a <span class="hl">slope chart</span> links pre and post points with a line so rises and falls are obvious, the hero chart here; <span class="hl">iteration</span> means asking for fixes until it reads clearly; the <span class="hl">CJK font</span>, if unset, turns Chinese labels into empty boxes, so fix the setting or just use English labels.</span></p>
+      <p><span class="lang-zh"><b>用到的資料：</b>練習 2 的 <code>subscale_scores_pre.csv</code>／<code>subscale_scores_post.csv</code>（41 位配對學生）與成績表 <code>grade-report.csv</code>。所有圖都存到 <code>labs/_results/figures/</code>，每張都要有標題、座標軸標籤，必要時加圖例。</span><span class="lang-en"><b>The data you use:</b> Ex 2's <code>subscale_scores_pre.csv</code>/<code>subscale_scores_post.csv</code> (41 paired students) and the grades <code>grade-report.csv</code>. Save every chart to <code>labs/_results/figures/</code>; each needs a title, axis labels, and a legend where useful.</span></p>
+      <p><span class="lang-zh"><b>動手步驟：</b>① 分組長條圖（四構面前後測平均並排）；② 盒鬚圖（看分布與離群）；③ 斜率圖（前後測連線，方向一眼可見）；④ 期末成績直方圖（60 分及格線）；⑤ 迭代：把疊住的標籤錯開、把空白方塊修好；⑥ 加分：把斜率圖潤成可用主圖。下面「跟著解答一步一步問」就是這六步。</span><span class="lang-en"><b>The hands-on steps:</b> (1) grouped bar (four subscale pre/post means side by side); (2) box plot (spread and outliers); (3) slope chart (pre-to-post lines, direction obvious); (4) final-grade histogram (pass line at 60); (5) iterate: separate overlapping labels, fix empty boxes; (6) bonus: polish the slope chart into a usable hero. The "Follow the solution" steps below are these six.</span></p>
+      <p><span class="lang-zh"><b>正確長相：</b><code>labs/_results/figures/</code> 有 <span class="hl">四張可開啟的 PNG</span>；長條圖與斜率圖都顯示<b>四構面都上升</b>（與練習 3 一致）；圖上沒有中文空白方塊；成績直方圖標出 60 分線，左側看得見一叢低分／0 分。</span><span class="lang-en"><b>What "correct" looks like:</b> <code>labs/_results/figures/</code> holds <span class="hl">four openable PNGs</span>; the bar and slope charts both show <b>all four subscales rising</b> (matching Ex 3); no empty boxes in any label; the grade histogram marks the 60 line and shows a low/zero-score cluster on the left.</span></p>
+      <p><span class="lang-zh"><b>承先啟後：</b>主圖 <code>slope.png</code> 會成為練習 5 一頁報告的主視覺。讀圖時記得分開看方向：IM／IR 上升是正向訊號，ER 上升代表外在壓力變強，<b>AM 上升是無動機增加、是警訊</b>，別把四條都上升讀成全是好事。</span><span class="lang-en"><b>The thread to the next unit:</b> the hero <code>slope.png</code> becomes the lead visual of the Ex 5 one-page report. Read directions separately: IM/IR rising is positive, ER rising means stronger external pressure, and <b>AM rising is more amotivation, a warning</b>, so do not read all four rising as all good.</span></p>
+    </div>
+    <div class="glossary">
+      <div class="gterm"><b><span class="lang-zh">斜率圖</span><span class="lang-en">slope chart</span></b><span><span class="lang-zh">用線段連起前後兩點，升降一眼可見。</span><span class="lang-en">Lines link pre and post points so rises and falls are obvious.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">迭代</span><span class="lang-en">iterate</span></b><span><span class="lang-zh">不滿意就再要求修正，逐步逼近清楚。</span><span class="lang-en">Keep asking for fixes until it reads clearly.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">CJK 字型</span><span class="lang-en">CJK font</span></b><span><span class="lang-zh">沒設好，中文會變成空白方塊。</span><span class="lang-en">Without it, Chinese labels render as empty boxes.</span></span></div>
+    </div>
+    <p class="lead"><span class="lang-zh">任務：輸出 <code>figures/grouped_bar.png</code>、<code>box.png</code>、<code>slope.png</code>、<code>final_hist.png</code>；每張都要有標題、軸標籤，必要時加圖例。</span><span class="lang-en">Task: output <code>figures/grouped_bar.png</code>, <code>box.png</code>, <code>slope.png</code>, and <code>final_hist.png</code>; each needs a title, axis labels, and legends where useful.</span></p>
+    <div class="grid c4">
+      <div class="card"><span class="pill">BAR</span><h4><span class="lang-zh">分組長條</span><span class="lang-en">grouped bar</span></h4><p><span class="lang-zh">四構面前後測並排</span><span class="lang-en">pre vs post side by side</span></p></div>
+      <div class="card"><span class="pill">BOX</span><h4><span class="lang-zh">盒鬚圖</span><span class="lang-en">box plot</span></h4><p><span class="lang-zh">看分散與離群</span><span class="lang-en">spread and outliers</span></p></div>
+      <div class="card"><span class="pill">SLOPE ★</span><h4><span class="lang-zh">斜率圖</span><span class="lang-en">slope chart</span></h4><p><span class="lang-zh">主角：四條線都往上</span><span class="lang-en">the hero: all four rise</span></p></div>
+      <div class="card"><span class="pill">HIST</span><h4><span class="lang-zh">直方圖</span><span class="lang-en">histogram</span></h4><p><span class="lang-zh">期末成績分佈，60 分及格線</span><span class="lang-en">final-grade distribution, pass line 60</span></p></div>
+    </div>
+    <h3 class="block"><span class="lang-zh">跟著解答一步一步問</span><span class="lang-en">Follow the solution, one ask at a time</span></h3>
+    <p class="lead"><span class="lang-zh">在<b>同一個對話</b>裡，一張一張畫，看完再叫下一張，不必重講資料來源。畫圖最適合練「迭代」這個習慣。</span><span class="lang-en">In the <b>same conversation</b>, draw one chart at a time and call the next only after seeing the last, never re-explaining the data source. Charting is the best place to practise iteration.</span></p>
+    <div class="steps">
+      <div class="step-item"><h4><span class="lang-zh">設定情境，畫第一張</span><span class="lang-en">Situate, then the first chart</span></h4><p><span class="lang-zh">告訴代理圖都存到 <code>_results/figures/</code>，資料用 <code>subscale_scores_pre/post.csv</code>（41 位配對）與 <code>grade-report.csv</code>，每張要有標題與座標軸標籤。先畫四構面前後測平均的<b>並排長條圖</b>。</span><span class="lang-en">Tell the agent to save charts to <code>_results/figures/</code>, use <code>subscale_scores_pre/post.csv</code> (41 paired) and <code>grade-report.csv</code>, and give each a title and axis labels. Start with the <b>grouped bar</b> of four subscale pre/post means.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">盒鬚圖</span><span class="lang-en">Box plot</span></h4><p><span class="lang-zh">再畫一張四構面分數的<b>盒鬚圖</b>，看分布與離群值。</span><span class="lang-en">Next, a <b>box plot</b> of the four subscale scores to see spread and outliers.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">斜率圖（主圖）</span><span class="lang-en">Slope chart (hero)</span></h4><p><span class="lang-zh">接著畫<b>斜率圖</b>，把每個構面的前測點連到後測點，方向一眼就看得出來。</span><span class="lang-en">Then a <b>slope chart</b> linking each subscale's pre point to its post point so direction is obvious at a glance.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">成績直方圖</span><span class="lang-en">Grade histogram</span></h4><p><span class="lang-zh">最後畫 <code>final</code> 期末成績的<b>直方圖</b>，在 60 分畫一條及格線。</span><span class="lang-en">Finally a <b>histogram</b> of <code>final</code> grades, with a pass line drawn at 60.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">看了不滿意就請它改（迭代）</span><span class="lang-en">Iterate on what reads poorly</span></h4><p><span class="lang-zh">斜率圖右邊標籤疊在一起就請它錯開；若有中文變成空白方塊，請改成正常顯示或乾脆用英文標籤。改完把每張圖的檔名給你。這一步才是本關真正的重點。</span><span class="lang-en">If the slope chart's right-side labels overlap, ask it to spread them out; if Chinese shows as empty boxes, have it fix the font or switch to English labels. Then get each filename. This step is the real point of the unit.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">把主圖打磨成可用（Bonus）</span><span class="lang-en">Polish the hero (bonus)</span></h4><p><span class="lang-zh">把斜率圖當主圖再潤：配色、字級調一下，加一行註解「課後四構面都上升，但 AM 上升是警訊」。若要放進給主管看的一頁報告，還缺什麼？</span><span class="lang-en">Polish the slope chart as the hero: adjust colors and font size, add a note "all four subscales rose after the course, but AM rising is a warning". Ask what it still needs to go into a manager's one-page report.</span></p></div>
+    </div>
+    <div class="out">
+      <h3 class="block"><span class="lang-zh">先試做，再對答案</span><span class="lang-en">Try first, then compare</span></h3>
+      <ul class="clean"><li><span class="lang-zh">學員先用 </span><span class="lang-en">Learners first try with the </span><a class="link" href="view.html?f=sample-solution/zh/04-charts/prompt.md" target="_blank" rel="noopener">sample prompt</a><span class="lang-zh"> 跑一次；完成後再看 </span><span class="lang-en">; after finishing, compare with the </span><a class="link" href="view.html?f=sample-solution/zh/04-charts/response.md" target="_blank" rel="noopener">sample solution</a><span class="lang-zh"> 對照。</span><span class="lang-en">.</span></li></ul>
+    </div>
+    <div class="out">
+      <img class="mascot mascot-l" src="assets/imgs/mascots/yang13.png" alt="講師示意：逐項驗收圖表">
+      <h3 class="block"><span class="lang-zh">驗收檢查</span><span class="lang-en">Acceptance checks</span></h3>
+      <ul class="clean"><li><span class="lang-zh"><code>labs/_results/figures/</code> 有 4 張 PNG，長條圖與斜率圖都呈現四構面上升。</span><span class="lang-en"><code>labs/_results/figures/</code> has 4 PNGs; bar and slope charts both show all four subscales rising.</span></li><li><span class="lang-zh">圖上沒有中文空白方塊；成績直方圖標出 60 分線，左側可看見低分／0 分群。</span><span class="lang-en">No empty boxes in labels; the grade histogram marks 60 and shows the low/zero-score cluster.</span></li></ul>
+    </div>
+  </section>
+
+  <!-- 練習5 整合報告 -->
+  <section class="slide" data-sec="⑩ 練習5 分析報告" data-sec-en="⑩ Ex5 Report">
+    <div class="s-head"><span class="badge alt"><span class="lang-zh">練習 5</span><span class="lang-en">Ex 5</span></span><div><span class="kicker"><span class="lang-zh">整合報告 · 23 分</span><span class="lang-en">Capstone · 23 min</span></span><h2><span class="lang-zh">整合一頁報告</span><span class="lang-en">One-page capstone report</span></h2></div></div>
+    <div class="intro">
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <img class="mascot mascot-l" src="assets/imgs/mascots/yang13.png" alt="講師示意：完成分析報告">
+      <p><span class="lang-zh"><b>這一關的目標：把前面四關整合成一頁能交付、卻不誇大的報告。</b>會做分析還不夠，<span class="hl">能誠實地說出結論與限制</span>才是研究素養。報告要寫清楚發現了什麼，也要主動寫出哪裡不能講太滿。</span><span class="lang-en"><b>Goal of this unit: integrate the first four labs into one deliverable, non-overclaimed report.</b> Doing the analysis is not enough; <span class="hl">stating both the findings and the limits honestly</span> is the real research skill. Say what you found, and say where you must not overclaim.</span></p>
+      <p><span class="lang-zh"><b>需要的觀念：</b><span class="hl">整合報告</span>是把各步驟串成一頁可讀、可交付的結論；<span class="hl">相關 ≠ 因果</span>，一起變動不代表誰造成誰；<span class="hl">限制（limitations）</span>是誠實標註樣本小、信度問題與設計瑕疵，讓讀者知道結論能信到哪。</span><span class="lang-en"><b>Concepts you need:</b> a <span class="hl">capstone report</span> stitches every step into one readable, deliverable page; <span class="hl">correlation is not causation</span>, moving together does not mean one causes the other; <span class="hl">limitations</span> means honestly flagging small n, reliability problems, and design flaws so readers know how far to trust the conclusion.</span></p>
+      <p><span class="lang-zh"><b>用到的資料：</b>後測構面分數 <code>subscale_scores_post.csv</code> 與成績表 <code>grade-report.csv</code>，外加練習 2／03／04 的信度、t 檢定與主圖 <code>slope.png</code>。這一關不產生新數字，而是把既有結果<span class="hl">如實</span>組裝起來，不可回頭杜撰。</span><span class="lang-en"><b>The data you use:</b> post-test subscale scores <code>subscale_scores_post.csv</code> and grades <code>grade-report.csv</code>, plus the reliability, t-test, and hero chart <code>slope.png</code> from Ex 2/03/04. This unit produces no new numbers; it <span class="hl">faithfully</span> assembles existing results and must not invent anything.</span></p>
+      <p><span class="lang-zh"><b>動手步驟：</b>① 用 id 把後測分數接上成績，存 <code>survey_grades_merged.csv</code>；② 算後測 IM 與期末成績的相關，用一句白話說它代表什麼；③ 寫 <code>mini_report.md</code>（背景與樣本數、信度摘要、四構面 t 檢定主結果、嵌入主圖、三點收穫），結論別講太滿；④ 加分：轉成可分享的 HTML 版並想三張投影片標題。下面「跟著解答一步一步問」就是這四步。</span><span class="lang-en"><b>The hands-on steps:</b> (1) join post scores to grades by id, saving <code>survey_grades_merged.csv</code>; (2) correlate post IM with final grade and say in one line what it means; (3) write <code>mini_report.md</code> (background and sample sizes, reliability summary, four-subscale t-test results, embedded hero chart, three takeaways), without overclaiming; (4) bonus, convert to a shareable HTML version and draft three slide titles. The "Follow the solution" steps below are these four.</span></p>
+      <p><span class="lang-zh"><b>正確長相：</b>合併檔只含問卷與成績<b>都有</b>的學生，共 <span class="hl">44 位</span>；後測 IM × 期末成績相關 <span class="hl">r = 0.06、p = 0.678</span>，幾乎沒有關係且不顯著，不能拿來下結論。報告必須提到<b>前測 ER 信度只有 0.36</b> 的警告，而非只報好消息。</span><span class="lang-en"><b>What "correct" looks like:</b> the merged file keeps only students present in <b>both</b> survey and grades, <span class="hl">44 in total</span>; post IM by final grade is <span class="hl">r = 0.06, p = 0.678</span>, essentially no relationship and not significant, so it supports no conclusion. The report must surface the <b>ER pre reliability of only 0.36</b> warning, not only the good news.</span></p>
+      <p><span class="lang-zh"><b>承先啟後：</b>這份報告收束整條資料契約（清理 → 信度 → t 檢定 → 圖 → 報告）。課後延伸：<span class="hl">練習 6</span> 把講師口述省思整理成五大主題（平均數可能把兩種學生混在一起）；<span class="hl">練習 7</span> 丟掉 Q11 後 ER 前測 α 從 0.36 升到 0.92、ER 差異變成 p=0.0752 不再顯著。</span><span class="lang-en"><b>The thread across units:</b> this report closes the whole data contract (clean to reliability to t-test to charts to report). Post-class extensions: <span class="hl">Ex 6</span> distils the spoken reflection into five themes (averages may mix two student groups); <span class="hl">Ex 7</span> shows that dropping Q11 lifts ER pre alpha from 0.36 to 0.92 and turns the ER change into p=0.0752, no longer significant.</span></p>
+    </div>
+    <div class="glossary">
+      <div class="gterm"><b><span class="lang-zh">整合報告</span><span class="lang-en">capstone</span></b><span><span class="lang-zh">把各步驟串成一頁可讀、可交付的結論。</span><span class="lang-en">Stitching all steps into one readable, deliverable page.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">相關 ≠ 因果</span><span class="lang-en">correlation ≠ causation</span></b><span><span class="lang-zh">一起變動不代表誰造成誰。</span><span class="lang-en">Moving together does not mean one causes the other.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">限制</span><span class="lang-en">limitations</span></b><span><span class="lang-zh">誠實標註樣本小、信度問題、設計瑕疵。</span><span class="lang-en">Honestly flag small n, reliability issues, design flaws.</span></span></div>
+    </div>
+    <p class="lead"><span class="lang-zh">任務：輸出 <code>survey_grades_merged.csv</code> 與 <code>mini_report.md</code>，嵌入 <code>slope.png</code>，並清楚寫出 ER/Q11、AM 方向、n=41 與相關≠因果。</span><span class="lang-en">Task: output <code>survey_grades_merged.csv</code> and <code>mini_report.md</code>, embed <code>slope.png</code>, and clearly state ER/Q11, AM direction, n=41, and correlation ≠ causation.</span></p>
+    <h3 class="block"><span class="lang-zh">跟著解答一步一步問</span><span class="lang-en">Follow the solution, one ask at a time</span></h3>
+    <p class="lead"><span class="lang-zh">在<b>同一個對話</b>裡，一則訊息一則訊息送出；每一步都接續前一步，不必重講前提。</span><span class="lang-en">Send the messages <b>one at a time in the same conversation</b>; each step builds on the last, so you never re-explain.</span></p>
+    <div class="steps">
+      <div class="step-item"><h4><span class="lang-zh">把問卷接上成績</span><span class="lang-en">Join survey to grades</span></h4><p><span class="lang-zh">請代理用學生 <code>id</code> 把 <code>subscale_scores_post.csv</code> 和 <code>grade-report.csv</code> 對起來，只留兩邊都有的人，存成 <code>survey_grades_merged.csv</code>。</span><span class="lang-en">Ask the agent to match <code>subscale_scores_post.csv</code> to <code>grade-report.csv</code> on student <code>id</code>, keep only those present in both, and save <code>survey_grades_merged.csv</code>.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">一個簡單的相關</span><span class="lang-en">One simple correlation</span></h4><p><span class="lang-zh">用合併資料算後測 IM 與期末成績的相關，請它用一句白話說代表什麼。正解是 <b>r = 0.06、p = 0.678</b>，幾乎沒關係又不顯著，不能拿來下結論。</span><span class="lang-en">On the merged data, correlate post IM with final grade and ask for a one-line plain meaning. The answer is <b>r = 0.06, p = 0.678</b>, essentially no relationship and not significant, so it supports no conclusion.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">寫出一頁報告</span><span class="lang-en">Write the one-page report</span></h4><p><span class="lang-zh">請它寫成 <code>mini_report.md</code>：背景與樣本數、信度摘要（提醒<b>前測 ER 偏低</b>）、四構面成對 t 檢定主結果（四個都顯著上升，且 <b>AM 上升＝無動機增加＝壞消息</b>）、嵌入練習 4 主圖 <code>slope.png</code>、三點教學收穫。結論別講太滿，不確定處標出來。</span><span class="lang-en">Have it write <code>mini_report.md</code>: background and sample sizes, a reliability summary (flagging <b>low pre ER</b>), the four-subscale paired t-test results (all rise significantly, and <b>AM up = more amotivation = bad news</b>), the embedded Ex 4 hero chart <code>slope.png</code>, and three takeaways. Do not overclaim; mark anything uncertain.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">換包裝（Bonus）</span><span class="lang-en">Repackage (bonus)</span></h4><p><span class="lang-zh">再請它把報告轉成可在瀏覽器打開、方便分享的 HTML 版；若要做成三張投影片，每張標題會下什麼？</span><span class="lang-en">Then ask it to convert the report into a shareable, browser-openable HTML version, and what three slide titles it would use.</span></p></div>
+    </div>
+    <div class="out">
+      <h3 class="block"><span class="lang-zh">先試做，再對答案</span><span class="lang-en">Try first, then compare</span></h3>
+      <ul class="clean"><li><span class="lang-zh">學員先用 </span><span class="lang-en">Learners first try with the </span><a class="link" href="view.html?f=sample-solution/zh/05-capstone/prompt.md" target="_blank" rel="noopener">sample prompt</a><span class="lang-zh"> 跑一次；完成後再看 </span><span class="lang-en">; after finishing, compare with the </span><a class="link" href="view.html?f=sample-solution/zh/05-capstone/response.md" target="_blank" rel="noopener">sample solution</a><span class="lang-zh"> 對照。</span><span class="lang-en">.</span></li></ul>
+    </div>
+    <div class="out">
+      <h3 class="block"><span class="lang-zh">一頁報告該有</span><span class="lang-en">The report should cover</span></h3>
+      <ul class="clean"><li><span class="lang-zh">背景與樣本數：前測 43、後測 44、配對 t 檢定 n=41；成績合併 44 位。</span><span class="lang-en">Background and sample sizes: pre 43, post 44, paired t-test n=41; grade merge n=44.</span></li><li><span class="lang-zh">信度摘要：IM/IR/AM 可信，<b>ER 前測 α=0.36</b> 必須標警告。</span><span class="lang-en">Reliability summary: IM/IR/AM reliable, but <b>ER pre α=0.36</b> must be flagged.</span></li><li><span class="lang-zh">主結果：四構面顯著上升；AM 上升是壞消息；後測 IM × 期末成績 r=0.06、p=0.678。</span><span class="lang-en">Main result: all four subscales rose; AM up is bad; post IM × final grade r=0.06, p=0.678.</span></li></ul>
+    </div>
+    <div class="trap">
+      <img class="mascot mascot-r" src="assets/imgs/mascots/yang08.png" alt="講師提醒：報告別誇大結果">
+      <h3 class="block"><span class="lang-zh">延伸（課後）</span><span class="lang-en">Extensions (post-class)</span></h3>
+      <ul class="clean"><li><span class="lang-zh">練習 6：把講師口述省思整理成五大主題，核心洞見是「平均數可能把兩種學生混在一起」；不可杜撰數字。</span><span class="lang-en">Ex 6: summarize the spoken reflection into five themes; core insight: averages may mix two student groups; do not invent numbers.</span></li><li><span class="lang-zh">練習 7：丟掉 Q11 後，ER 前測 α 從 0.36 升到 0.92；ER 差異變成 p=0.0752，不再達 0.05 顯著。</span><span class="lang-en">Ex 7: after dropping Q11, ER pre α rises from 0.36 to 0.92; ER change becomes p=0.0752, no longer significant at 0.05.</span></li></ul>
+    </div>
+    <p class="note"><span class="lang-zh">範例解答報告的三個 takeaways：動機變化方向混合、下次需固定 Q11 字句、平均值後面可能藏著子群差異。</span><span class="lang-en">Answer-key takeaways: motivation moved in mixed-quality directions, Q11 wording should be fixed next round, and averages may hide subgroup differences.</span></p>
+  </section>
+
+  <!-- 五個陷阱 -->
+  <section class="slide" data-sec="⑪ 五個陷阱" data-sec-en="⑪ Traps">
+    <div class="s-head"><span class="badge"><span class="lang-zh">總覽</span><span class="lang-en">Overview</span></span><div><span class="kicker">The five deliberate traps</span><h2><span class="lang-zh">五個刻意設計的陷阱</span><span class="lang-en">Five built-in traps</span></h2></div></div>
+    <div class="intro">
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <img class="mascot mascot-r" src="assets/imgs/mascots/yang06.png" alt="講師提醒：小心五個陷阱">
+      <p><span class="lang-zh"><b>這一段把全場「故意設計的坑」收攏成一張清單。</b>它的意圖不是嚇人，而是提醒：<b>AI 很強但會出錯</b>，這五個陷阱正是練習「驗證」的最佳教材。它們不是 bug，而是把真實資料裡最常見的麻煩濃縮進這份問卷，讓你在安全的場合先踩過一次。看懂它們，你就懂了為什麼人要留在迴圈裡把關。</span><span class="lang-en"><b>This block gathers the workshop's deliberate pitfalls into one list.</b> The intent is not to scare but to remind: <b>AI is powerful yet fallible</b>, and these five traps are the best material for practicing verification. They are not bugs but the most common troubles of real data condensed into this survey, so you step on them once in a safe place. Understanding them is understanding why a human stays in the loop.</span></p>
+      <p><span class="lang-zh"><b>五個陷阱各埋在哪、為什麼會讓代理出錯：</b><span class="hl">標題列</span> - 每張工作表第一列是大標題，真正欄名在第二列，沒用 <code>header=1</code> 就會把整份資料讀錯一格（練習 1）。<span class="hl">人數不一</span> - 前測 43、後測 44、配對 41，不先用帳號合併就會把不同人硬湊成一對（練習 1）。<span class="hl">Q11 改題</span> - 這題在前後測被改寫，是 ER 前測信度掉到約 0.36 的元兇，提醒你「工具本身變了，前後測就不能直接比」（練習 2／03）。<span class="hl">AM 反向</span> - 唯一越高越糟的構面，AM 上升是壞消息，是 t 檢定最容易讀反的地方（練習 0／03）。<span class="hl">成績長尾</span> - 6 個 0 分、13 人低於 60，平均數會被拉低，要看分布而非只看一個數字（練習 4）。</span><span class="lang-en"><b>Where each trap lives and why it trips the agent:</b> <span class="hl">Title row</span> - row 1 of every sheet is a banner and the real headers are on row 2, so without <code>header=1</code> the whole table reads off by one (Ex 1). <span class="hl">Mismatched n</span> - 43 pre, 44 post, 41 matched, and without merging on account id you pair up different people (Ex 1). <span class="hl">Q11 reworded</span> - this item changed between pre and post, the culprit behind ER pre-test reliability dropping to about 0.36, a reminder that "if the instrument itself changed, pre and post are not directly comparable" (Ex 2/03). <span class="hl">Reverse AM</span> - the only subscale where higher is worse, so a rising AM is bad news and the spot the t-test is most often misread (Ex 0/03). <span class="hl">Grade tail</span> - 6 zeros and 13 students below 60 drag the mean down, so read the distribution, not a single number (Ex 4).</span></p>
+      <p><span class="lang-zh"><b>真正要帶走的一課：</b>這五個坑的共同點是 - <span class="hl">每一個都「看起來合理、跑得出數字」，但數字是錯的</span>。代理不會主動告訴你它踩到坑，是你問對問題、回頭對照原檔，才把它抓出來。所以這張表不是要你背五個答案，而是要你養成一個反射：<b>任何漂亮的結果，先問「它哪裡可能錯了？」再相信。</b>抓出這些錯，就是你在這條 AI 工作流裡無法被取代的價值。</span><span class="lang-en"><b>The real lesson to take away:</b> what these five share is that <span class="hl">each one "looks reasonable and produces a number", yet the number is wrong</span>. The agent will not volunteer that it fell in; you catch it by asking the right question and checking against the source. So this table is not five answers to memorize but a reflex to build: <b>before trusting any clean-looking result, ask "where could this be wrong?"</b> Catching these errors is exactly the value you bring that the AI pipeline cannot replace.</span></p>
+    </div>
+    <div class="glossary">
+      <div class="gterm"><b><span class="lang-zh">刻意陷阱</span><span class="lang-en">built-in trap</span></b><span><span class="lang-zh">教學設計的已知坑，用來練習驗證能力。</span><span class="lang-en">A known pitfall by design, used to train your verification.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">人在迴圈</span><span class="lang-en">human in the loop</span></b><span><span class="lang-zh">關鍵判斷由人把關，不全部交給 AI。</span><span class="lang-en">Key judgments stay with a human, not fully delegated to AI.</span></span></div>
+    </div>
+    <p class="lead"><span class="lang-zh">這些「地雷」是故意的，用來練習<b>驗證</b>，代理常踩，抓出來就是你的價值。</span><span class="lang-en">These pitfalls are intentional, to practice <b>verifying</b>. Agents fall for them; catching that is the skill.</span></p>
+    <table class="lang-zh">
+      <thead><tr><th>陷阱</th><th>說明</th></tr></thead>
+      <tbody>
+        <tr><td>標題列</td><td>真正欄名在第二列（header=1）</td></tr>
+        <tr><td>人數不一</td><td>43 / 44 / 41，需配對合併</td></tr>
+        <tr><td>Q11 改題</td><td>ER 前測信度崩掉的元兇</td></tr>
+        <tr><td>AM 反向</td><td>越高越糟，上升是壞消息</td></tr>
+        <tr><td>成績長尾</td><td>6 個 0 分、13 人低於 60</td></tr>
+      </tbody>
+    </table>
+    <table class="lang-en">
+      <thead><tr><th>Trap</th><th>What</th></tr></thead>
+      <tbody>
+        <tr><td>Title row</td><td>real headers on row 2 (header=1)</td></tr>
+        <tr><td>Mismatched n</td><td>43 / 44 / 41, merge on account id</td></tr>
+        <tr><td>Q11 reworded</td><td>breaks ER pre-test reliability</td></tr>
+        <tr><td>Reverse AM</td><td>higher = worse; a rise is bad</td></tr>
+        <tr><td>Grade tail</td><td>6 zeros, 13 students below 60</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 收尾階段 資安與隱私 -->
+  <section class="slide" data-sec="⑫ 資安與隱私" data-sec-en="⑫ Privacy">
+    <div class="s-head"><span class="badge"><span class="lang-zh">收尾階段</span><span class="lang-en">Closing</span></span><div><span class="kicker">Security &amp; Privacy · 10 min</span><h2><span class="lang-zh">資安與隱私收尾</span><span class="lang-en">Privacy wrap-up</span></h2></div></div>
+    <div class="intro">
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <img class="mascot mascot-r" src="assets/imgs/mascots/yang01.png" alt="講師提醒：資安與隱私守則">
+      <p><span class="lang-zh"><b>這一段的目標：在收尾前，把「能不能放心帶回真實課堂」這件事講清楚。</b>工具再強，也不能拿真人資料冒險。今天用的 <code>pre/post-test.xlsx</code> 裡是<span class="hl">真實學生的帳號與姓名</span>，不是假資料；一旦這些內容被外流或被拿去訓練模型，就收不回來了。本單元建立四條企業級使用守則：<b>真實個資不外流、產出去識別化、關閉模型訓練回傳、保留人工複核</b>。把資料安全當成預設，而不是事後補救，這套流程才真的能用在你自己的學生身上。</span><span class="lang-en"><b>Goal of this block: before wrapping up, settle whether you can safely take this back to a real classroom.</b> However powerful the tools, never gamble with real people's data. The <code>pre/post-test.xlsx</code> used today hold <span class="hl">real student accounts and names</span>, not fake data; once that leaks or gets used to train a model, you cannot pull it back. This unit sets four enterprise-grade rules: <b>keep real PII in, de-identify outputs, turn off training feedback, keep human review</b>. Make data safety the default rather than an afterthought, and this pipeline becomes something you can actually use on your own students.</span></p>
+      <p><span class="lang-zh"><b>四條守則為什麼這樣定：</b><span class="hl">真實個資不外流</span> - 所有產出（CSV、圖、報告）都只輸出去識別化的構面分數與統計量，絕不帶出姓名或帳號；前面練習刻意只留 <code>帳號</code> 當代號、再去掉，就是這個道理。<span class="hl">產出去識別化</span> - 移除可識別欄位，只留分析真正需要的資料。<span class="hl">關閉訓練回傳</span> - 在代理設定裡關掉「以我的內容協助改善模型」之類選項（如 Settings → Data Controls），避免你的資料變成別人模型的養分。<span class="hl">人工複核</span> - AI 產出在上線或外流前，一定由人檢查一次，呼應整場「人在迴圈」的主軸。</span><span class="lang-en"><b>Why each rule is set this way:</b> <span class="hl">Keep real PII in</span> - every output (CSV, chart, report) emits only de-identified subscale scores and statistics, never names or accounts; the earlier labs deliberately kept just <code>帳號</code> as a code and then dropped it for this reason. <span class="hl">De-identify outputs</span> - remove identifying fields and keep only what the analysis truly needs. <span class="hl">Turn off training feedback</span> - in the agent settings disable "improve the model with my content" style options (e.g. Settings → Data Controls) so your data does not feed someone else's model. <span class="hl">Human review</span> - a person checks AI output once before it ships or leaves, echoing the "human in the loop" theme of the whole day.</span></p>
+      <p><span class="lang-zh"><b>帶回課堂的安全起手式：</b>最穩的做法是<span class="hl">先用假資料把流程練熟，再換上真實資料只跑一次</span>。流程沒問題、輸出已去識別化、訓練回傳已關閉、最後一道由你親自複核 - 四件事都做到，才算真的把今天學的東西安全落地。資料安全不是這場工作坊的附錄，而是讓整套 AI 工作流可以信任的前提。</span><span class="lang-en"><b>A safe way to bring it home:</b> the most reliable approach is to <span class="hl">rehearse the pipeline on fake data first, then run it on real data only once</span>. The flow is sound, outputs are de-identified, training feedback is off, and you personally do the final review - only when all four hold have you landed today's work safely. Data safety is not an appendix to this workshop but the precondition that makes the whole AI pipeline trustworthy.</span></p>
+    </div>
+    <div class="glossary">
+      <div class="gterm"><b><span class="lang-zh">個資</span><span class="lang-en">PII</span></b><span><span class="lang-zh">能識別到個人的資訊，如姓名、帳號。</span><span class="lang-en">Information that identifies a person, such as name or account.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">去識別化</span><span class="lang-en">de-identify</span></b><span><span class="lang-zh">移除可識別欄位，只留分析所需的資料。</span><span class="lang-en">Remove identifying fields, keep only what analysis needs.</span></span></div>
+      <div class="gterm"><b><span class="lang-zh">人工複核</span><span class="lang-en">human review</span></b><span><span class="lang-zh">AI 產出上線或外流前，由人檢查一次。</span><span class="lang-en">A human checks AI output before it ships or leaves.</span></span></div>
+    </div>
+    <div class="steps">
+      <div class="step-item"><h4><span class="lang-zh">真實個資守則</span><span class="lang-en">Real-PII rule</span></h4><p><span class="lang-zh"><code>pre/post-test.xlsx</code> 含真實學生帳號與姓名。<b>所有產出都不得帶出姓名或帳號</b>，只輸出去識別化的構面分數與統計量。</span><span class="lang-en"><code>pre/post-test.xlsx</code> hold real student accounts and names. <b>No output may carry names or accounts</b>, only de-identified scores.</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">代理隱私設定</span><span class="lang-en">Agent privacy</span></h4><p><span class="lang-zh">關閉「以我的內容協助改善模型」之類的訓練回傳選項（如 Settings → Data Controls）。</span><span class="lang-en">Turn off "improve the model with my content" style training (e.g. Settings → Data Controls).</span></p></div>
+      <div class="step-item"><h4><span class="lang-zh">人工複核</span><span class="lang-en">Human review</span></h4><p><span class="lang-zh">AI 產出不要不檢查就上線；真實個資先用假資料練流程。</span><span class="lang-en">Never ship AI output unchecked; practice the pipeline with fake data first.</span></p></div>
+    </div>
+  </section>
+
+  <!-- 收尾 -->
+  <section class="slide" data-sec="⑬ 收尾" data-sec-en="⑬ Wrap-up">
+    <div class="s-head"><span class="badge"><span class="lang-zh">收尾</span><span class="lang-en">Wrap-up</span></span><div><span class="kicker">Wrap-up</span><h2>Prompt → Verify → Iterate</h2></div></div>
+    <blockquote class="pat"><span class="lang-zh">把今天的工作流帶回你自己的真實任務：先把目標講清楚，當審查者看懂代理的每一步，用「我怎麼知道它是對的？」一路驗到可信，並把資料安全放第一。</span><span class="lang-en">Take today's loop back to your own real work: state the goal clearly, review every step as the Reviewer, keep asking "how do I know it's right?", and put data safety first.</span></blockquote>
+    <p class="note"><span class="lang-zh">延伸練習 6／07 與完整解答見「教材資料」與 <code>sample-solution/</code>。</span><span class="lang-en">Extensions 06/07 and the full answer key are in the Materials deck and <code>sample-solution/</code>.</span></p>
+  </section>
+
+  </div>
+  <!-- ===================== /投影片組一 ===================== -->
+
+  <!-- ===================== 投影片組二：講師 ===================== -->
+  <div class="deck-group" data-deck-name="講師" data-deck-name-en="Instructor">
+
+  <section class="slide" data-sec="講師總覽" data-sec-en="Overview">
+    <div class="s-head"><span class="badge alt"><span class="lang-zh">講師</span><span class="lang-en">Tutor</span></span><div><span class="kicker">Instructor Guide</span><h2><span class="lang-zh">講師總覽：三小時怎麼跑</span><span class="lang-en">Instructor overview: how to run the 3 hours</span></h2></div></div>
+    <p class="lead"><span class="lang-zh">這一組投影片只給講師看。核心原則：安裝前置於課前，課堂時間留給「提問 → 驗證 → 修正」。</span><span class="lang-en">This deck is for the facilitator. Principle: setup before class; room time for Prompt → Verify → Iterate.</span></p>
+    <div class="teach">
+      <h3 class="block"><span class="lang-zh">這是緊湊的一輪</span><span class="lang-en">This is a tight run</span></h3>
+      <p><span class="lang-zh">不像更長版本留有大緩衝。若班級落後，可捨棄練習 5（改示範解答包）換回時間。最大卡點是網路與代理額度，備好離線可展示的 <code>sample-solution/</code> 成果。</span><span class="lang-en">There is no fat buffer. If a cohort lags, drop Ex 5 and demo the answer key to recover time. The biggest risks are network and agent quota, so keep offline <code>sample-solution/</code> results ready.</span></p>
+    </div>
+    <p class="note"><span class="lang-zh">完整講師手冊（預期數字、五個陷阱、現場驗算腳本）見 </span><span class="lang-en">Full facilitator guide (expected numbers, five traps, live verify script): </span><a class="link" href="view.html?f=docs/facilitator-guide.md" target="_blank" rel="noopener">docs/facilitator-guide.md</a>。</p>
+  </section>
+
+  <section class="slide" data-sec="時間配置" data-sec-en="Timing">
+    <div class="s-head"><span class="badge alt"><span class="lang-zh">講師</span><span class="lang-en">Tutor</span></span><div><span class="kicker">Timing</span><h2><span class="lang-zh">時間配置速查</span><span class="lang-en">Timing cheat sheet</span></h2></div></div>
+    <table class="lang-zh">
+      <thead><tr><th>區段</th><th>內容</th><th>時長</th><th>講師重點</th></tr></thead>
+      <tbody>
+        <tr><td>準備階段</td><td>環境設置與 AI 代理</td><td>20 分</td><td>設置確認、Chat vs Agent、工具差異</td></tr>
+        <tr><td>練習 0</td><td>認識資料</td><td>12 分</td><td>讓代理自己讀目錄、報工作表</td></tr>
+        <tr><td>練習 1</td><td>資料清理</td><td>28 分</td><td>盯標題列、人數 43/44/41</td></tr>
+        <tr><td>練習 2</td><td>信度</td><td>25 分</td><td>ER 前測 α≈0.36 是唯一警訊</td></tr>
+        <tr><td>休息</td><td>中場休息</td><td>10 分</td><td>巡場發解答包，拉齊起跑線</td></tr>
+        <tr><td>練習 3</td><td>t 檢定</td><td>30 分</td><td>強調讀對 AM 方向（上升＝壞）</td></tr>
+        <tr><td>練習 4</td><td>畫圖</td><td>22 分</td><td>迭代到看得懂；CJK 字型</td></tr>
+        <tr><td>練習 5</td><td>整合報告</td><td>23 分</td><td>誠實寫限制；相關≠因果</td></tr>
+        <tr><td>收尾階段</td><td>資安與隱私</td><td>10 分</td><td>真實個資守則＋隱私設定</td></tr>
+      </tbody>
+    </table>
+    <table class="lang-en">
+      <thead><tr><th>Block</th><th>Content</th><th>Min</th><th>Focus</th></tr></thead>
+      <tbody>
+        <tr><td>Prep</td><td>Setup check + mindset</td><td>20</td><td>verify; rescue stragglers, rest move on</td></tr>
+        <tr><td>Ex 0</td><td>Meet the data</td><td>12</td><td>let the agent read the dir and report sheets</td></tr>
+        <tr><td>Ex 1</td><td>Data cleaning</td><td>28</td><td>watch title row; counts 43/44/41</td></tr>
+        <tr><td>Ex 2</td><td>Reliability</td><td>25</td><td>ER pre α≈0.36 is the only red flag</td></tr>
+        <tr><td>Break</td><td>Mid-session break</td><td>10</td><td>hand out answer key, align the class</td></tr>
+        <tr><td>Ex 3</td><td>t-test</td><td>30</td><td>stress reading AM direction (up = bad)</td></tr>
+        <tr><td>Ex 4</td><td>Charts</td><td>22</td><td>iterate to legible; CJK font</td></tr>
+        <tr><td>Ex 5</td><td>Capstone report</td><td>23</td><td>honest limits; correlation ≠ causation</td></tr>
+        <tr><td>Closing</td><td>Privacy</td><td>10</td><td>real-PII rule + privacy settings</td></tr>
+      </tbody>
+    </table>
+    <p class="note"><span class="lang-zh">合計 180 分。練習 6／07 為課後延伸。</span><span class="lang-en">Total 180 min. Ex 6/07 are post-class extensions.</span></p>
+  </section>
+
+  <section class="slide" data-sec="檢查點與保險包" data-sec-en="Checkpoints">
+    <div class="s-head"><span class="badge alt"><span class="lang-zh">講師</span><span class="lang-en">Tutor</span></span><div><span class="kicker">Checkpoints</span><h2><span class="lang-zh">同步檢查點與還原策略</span><span class="lang-en">Sync checkpoints and restore points</span></h2></div></div>
+    <table class="lang-zh">
+      <thead><tr><th>練習</th><th>同步檢查點</th></tr></thead>
+      <tbody>
+        <tr><td>01</td><td>clean_pre 43、clean_post 44、matched 41；S05,S47 / S01,S38,S41</td></tr>
+        <tr><td>02</td><td>ER 前測 α ≈ 0.36（唯一警訊），其餘 &gt; 0.8</td></tr>
+        <tr><td>03</td><td>四構面皆顯著上升；AM 上升＝動機變差</td></tr>
+        <tr><td>04</td><td>figures/ 有 4 張 PNG，斜率圖為主角</td></tr>
+        <tr><td>05</td><td>mini_report.md 結論一致、提及 ER 與 Q11 caveat</td></tr>
+      </tbody>
+    </table>
+    <table class="lang-en">
+      <thead><tr><th>Ex</th><th>Sync checkpoint</th></tr></thead>
+      <tbody>
+        <tr><td>01</td><td>clean_pre 43, clean_post 44, matched 41; S05,S47 / S01,S38,S41</td></tr>
+        <tr><td>02</td><td>ER pre α ≈ 0.36 (only red flag), the rest &gt; 0.8</td></tr>
+        <tr><td>03</td><td>all four rise significantly; AM up = worse motivation</td></tr>
+        <tr><td>04</td><td>figures/ has 4 PNGs, the slope chart is the hero</td></tr>
+        <tr><td>05</td><td>mini_report.md conclusions match, flags ER and Q11 caveats</td></tr>
+      </tbody>
+    </table>
+    <div class="trap">
+      <h3 class="block"><span class="lang-zh">解答包即分段保險包</span><span class="lang-en">The answer key doubles as restore points</span></h3>
+      <ul class="clean">
+        <li><span class="lang-zh">落後者：把 <code>sample-solution/&lt;語言&gt;/&lt;練習&gt;/outputs/</code> 對應檔複製到學員 <code>labs/_results/</code> 接續。</span><span class="lang-en">For stragglers: copy the matching files from <code>sample-solution/&lt;lang&gt;/&lt;ex&gt;/outputs/</code> into the learner's <code>labs/_results/</code>.</span></li>
+        <li><span class="lang-zh">例：卡在 01 → 發 <code>clean_pre.csv</code>、<code>clean_post.csv</code>、<code>matched_ids.csv</code>。</span><span class="lang-en">E.g. stuck at 01 → hand over <code>clean_pre.csv</code>, <code>clean_post.csv</code>, <code>matched_ids.csv</code>.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="slide" data-sec="課前檢核" data-sec-en="Checklist">
+    <div class="s-head"><span class="badge alt"><span class="lang-zh">講師</span><span class="lang-en">Tutor</span></span><div><span class="kicker">Pre-class Checklist</span><h2><span class="lang-zh">課前準備檢核</span><span class="lang-en">Pre-class checklist</span></h2></div></div>
+    <ul class="check">
+      <li><input type="checkbox" data-id="t-mail"><label><span class="lang-zh">課前一週寄安裝確認信：Python 3.10+（建議備好含 <code>pandas scipy openpyxl matplotlib</code> 的環境）、VS Code、以及<b>一個</b>可用的 AI 代理（Claude Code / Codex / Copilot 擇一）。</span><span class="lang-en">Send a setup mail one week ahead: Python 3.10+ (with <code>pandas scipy openpyxl matplotlib</code>), VS Code, and <b>one</b> working AI agent (Claude Code / Codex / Copilot).</span></label></li>
+      <li><input type="checkbox" data-id="t-report"><label><span class="lang-zh">課前驗證回報：請學員回傳「代理成功列出某資料夾檔案」的截圖。</span><span class="lang-en">Ask for a screenshot proving the agent can list a folder's files.</span></label></li>
+      <li><input type="checkbox" data-id="t-assets"><label><span class="lang-zh">發放練習資料：把 <code>labs/data/</code>（兩份 <code>.xlsx</code> ＋ <code>grade-report.csv</code>）放進學員專案；提醒這是真實個資。</span><span class="lang-en">Hand out <code>labs/data/</code> (two <code>.xlsx</code> + <code>grade-report.csv</code>); remind learners this is real PII.</span></label></li>
+      <li><input type="checkbox" data-id="t-insurance"><label><span class="lang-zh">解答包即保險包：確認 <code>sample-solution/</code> 各階段 <code>outputs/</code> 齊全，作為分段還原點。</span><span class="lang-en">Answer key as restore points: confirm every <code>sample-solution/</code> stage has its <code>outputs/</code>.</span></label></li>
+      <li><input type="checkbox" data-id="t-quota"><label><span class="lang-zh">離線備援：備好 <code>sample-solution/</code> 的圖與報告可直接投影，以防網路／額度不穩。</span><span class="lang-en">Offline backup: have the <code>sample-solution/</code> charts and report ready to project in case of network/quota trouble.</span></label></li>
+    </ul>
+    <p class="note"><span class="lang-zh">勾選狀態會存在這台瀏覽器（localStorage）。</span><span class="lang-en">Checkbox state persists in this browser (localStorage).</span></p>
+  </section>
+
+  </div>
+  <!-- ===================== /投影片組二 ===================== -->
+
+  <!-- ===================== 投影片組三：教材資料 ===================== -->
+  <div class="deck-group" data-deck-name="教材資料" data-deck-name-en="Materials">
+
+    <section class="slide" data-sec="講義與練習" data-sec-en="Handouts">
+      <div class="s-head"><span class="badge"><span class="lang-zh">資源</span><span class="lang-en">Docs</span></span><div><span class="kicker">Resource Browser</span><h2><span class="lang-zh">講義與練習（可檢視・可下載）</span><span class="lang-en">Handouts and worksheets (view・download)</span></h2></div></div>
+      <p class="lead"><span class="lang-zh">工作坊講義、練習 0–07、Prompt 心法與驗收清單，跟著上方語言切換顯示。左側點選文件，右側即時排版；可按上方按鈕整組打包成 HTML <span class="hl">.zip</span>。</span><span class="lang-en">Workshop handouts, worksheets 00–07, the prompt cookbook, and the checklist, following the language toggle above. Click a file on the left to render it; bundle the set as an HTML <span class="hl">.zip</span> with the button above.</span></p>
+      <div class="browser">
+        <div class="browser-list" data-res-group="講義"></div>
+        <div class="browser-view"><p class="res-empty"><span class="lang-zh">← 從左側選一份文件，內容會顯示在這裡。<br><br>提示：教材已預先打包，直接雙擊檔案（file://）也可檢視。</span><span class="lang-en">← Pick a file on the left and it renders here.<br><br>Tip: materials are prebuilt, so file:// works too.</span></p></div>
+      </div>
+    </section>
+
+    <section class="slide" data-sec="安裝與設定" data-sec-en="Setup">
+      <div class="s-head"><span class="badge"><span class="lang-zh">資源</span><span class="lang-en">Docs</span></span><div><span class="kicker">Setup Docs</span><h2><span class="lang-zh">安裝與設定（可檢視・可下載）</span><span class="lang-en">Setup docs (view・download)</span></h2></div></div>
+      <p class="lead"><span class="lang-zh">AI 代理（agent-agnostic）與 VS Code 的安裝、整合與常見問題排解。左側點選文件即時檢視，或整組打包成 HTML <span class="hl">.zip</span>。</span><span class="lang-en">Agent-agnostic setup, VS Code, and troubleshooting. Click a file to view it, or bundle the set as an HTML <span class="hl">.zip</span>.</span></p>
+      <div class="browser">
+        <div class="browser-list" data-res-group="安裝與設定"></div>
+        <div class="browser-view"><p class="res-empty"><span class="lang-zh">← 從左側選一份文件，內容會顯示在這裡。<br><br>提示：教材已預先打包，直接雙擊檔案（file://）也可檢視。</span><span class="lang-en">← Pick a file on the left and it renders here.<br><br>Tip: materials are prebuilt, so file:// works too.</span></p></div>
+      </div>
+    </section>
+
+    <section class="slide" data-sec="練習資料" data-sec-en="Data">
+      <div class="s-head"><span class="badge"><span class="lang-zh">資源</span><span class="lang-en">Docs</span></span><div><span class="kicker">Practice Data</span><h2><span class="lang-zh">練習資料</span><span class="lang-en">Practice data</span></h2></div></div>
+      <p class="lead"><span class="lang-zh">SIMS 量表說明與成績報表預覽。左側點選即時檢視；兩份 <code>.xlsx</code> 含真實個資，請整包下載後在本機處理。</span><span class="lang-en">SIMS scale doc and grade-report preview. Click to view; the two <code>.xlsx</code> files hold real PII, so download and handle them locally.</span></p>
+      <div class="browser">
+        <div class="browser-list" data-res-group="練習資料"></div>
+        <div class="browser-view"><p class="res-empty"><span class="lang-zh">← 從左側選一份檔案，內容會顯示在這裡。<br><br>提示：即時載入需透過本機伺服器或已部署的 GitHub Pages。</span><span class="lang-en">← Pick a file on the left and it renders here.<br><br>Tip: live loading needs a local server or the deployed GitHub Pages.</span></p></div>
+      </div>
+    </section>
+
+  </div>
+  <!-- ===================== /投影片組三 ===================== -->
+
+</div>
+
+<div class="corner-nav" aria-label="投影片角落翻頁">
+  <button class="corner-prev" id="cornerPrev" type="button" title="上一張 (←)" aria-label="上一張">‹</button>
+  <button class="corner-next" id="cornerNext" type="button" title="下一張 (→ / 空白鍵)" aria-label="下一張">›</button>
+</div>
+
+<div class="nav">
+  <span class="copyright">© 2026 智慧雨林（MOE）· 南臺科技大學</span>
+  <button id="prev" title="上一張 (←)">‹</button>
+  <div class="bar"><i id="prog"></i></div>
+  <span class="count" id="count">1 / 1</span>
+  <button id="next" title="下一張 (→ / 空白鍵)">›</button>
+</div>
+
+<script src="assets/md-render.js"></script>
+<script src="assets/content-data.js"></script>
+<script>
+(function(){
+  "use strict";
+  var STORE="vibews3_v1", THEME_KEY="vibews_theme", FS_KEY="vibews_fs";
+
+  /* ---- 勾選持久化 ---- */
+  function load(){try{return JSON.parse(localStorage.getItem(STORE)||"{}");}catch(e){return {};}}
+  function save(d){try{localStorage.setItem(STORE,JSON.stringify(d));}catch(e){}}
+  var data=load();
+  document.querySelectorAll('input[type=checkbox][data-id]').forEach(function(c){
+    if(data[c.dataset.id]) c.checked=true;
+    c.addEventListener("change",function(){data[c.dataset.id]=c.checked;save(data);});
+  });
+
+  /* ---- 主題 ---- */
+  var body=document.body, btnTheme=document.getElementById("btnTheme");
+  function applyTheme(theme){
+    var next=(theme==="light")?"light":"dark";
+    body.setAttribute("data-theme",next);
+    btnTheme.textContent=next==="dark"?"☀ 淺色":"☾ 深色";
+    btnTheme.title=next==="dark"?"切換為淺色主題":"切換為深色主題";
+    try{localStorage.setItem(THEME_KEY,next);}catch(e){}
+  }
+  btnTheme.addEventListener("click",function(){applyTheme(body.getAttribute("data-theme")==="dark"?"light":"dark");});
+  applyTheme((function(){try{return localStorage.getItem(THEME_KEY)||"dark";}catch(e){return "dark";}})());
+
+  /* ---- 語言（中文／English）全站切換 ---- */
+  var LANG_KEY="vibews_lang", btnLang=document.getElementById("btnLang");
+  var rerenderBrowser=function(){};
+  function curLang(){return body.getAttribute("data-lang")==="en"?"en":"zh";}
+  function setLangLabel(){
+    var en=curLang()==="en";
+    btnLang.textContent=en?"🌐 中":"🌐 EN";
+    btnLang.title=en?"切換為中文 · Switch to Chinese":"切換為 English · Switch to English";
+  }
+  function applyLang(l){
+    body.setAttribute("data-lang", l==="en"?"en":"zh");
+    setLangLabel();
+    try{localStorage.setItem(LANG_KEY,curLang());}catch(e){}
+    if(deckTabs.length) buildDeckTabs();
+    if(slides.length){ buildSubTabs(); show(idx); }
+    rerenderBrowser();
+  }
+  btnLang.addEventListener("click",function(){applyLang(curLang()==="en"?"zh":"en");});
+  body.setAttribute("data-lang",(function(){try{return localStorage.getItem(LANG_KEY)||"zh";}catch(e){return "zh";}})());
+  setLangLabel();
+
+  /* ---- 字級縮放 ---- */
+  var FS_MIN=0.7,FS_MAX=1.8,FS_STEP=0.1,fsLabel=document.getElementById("fsLabel"),fs=1;
+  function applyFs(v){
+    fs=Math.round(Math.min(FS_MAX,Math.max(FS_MIN,v))*10)/10;
+    document.documentElement.style.setProperty("--fs",String(fs));
+    fsLabel.textContent=Math.round(fs*100)+"%";
+    try{localStorage.setItem(FS_KEY,String(fs));}catch(e){}
+  }
+  document.getElementById("fsPlus").addEventListener("click",function(){applyFs(fs+FS_STEP);});
+  document.getElementById("fsMinus").addEventListener("click",function(){applyFs(fs-FS_STEP);});
+  fsLabel.addEventListener("click",function(){applyFs(1);});
+  applyFs((function(){try{return parseFloat(localStorage.getItem(FS_KEY))||1;}catch(e){return 1;}})());
+
+  /* ---- 兩層分頁（第一層投影片組 / 第二層子頁）＋ 翻頁 ---- */
+  var groups=[].slice.call(document.querySelectorAll(".deck-group"));
+  var prog=document.getElementById("prog"),count=document.getElementById("count");
+  var deckTabsWrap=document.getElementById("deckTabs");
+  var subTabsWrap=document.getElementById("jumpTabs");
+  var deckTabs=[],subTabs=[];
+  var deck=0,idx=0,slides=[];
+  function show(i){
+    idx=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach(function(s,n){s.classList.toggle("active",n===idx);});
+    var cur=slides[idx]; if(cur) cur.scrollTop=0;
+    prog.style.width=(slides.length?((idx+1)/slides.length*100):0)+"%";
+    count.textContent=(idx+1)+" / "+slides.length;
+    subTabs.forEach(function(t,n){t.classList.toggle("active",n===idx);});
+    var st=subTabs[idx];
+    if(st&&typeof st.scrollIntoView==="function") st.scrollIntoView({block:"nearest",inline:"center"});
+    location.hash="d"+deck+"s"+idx;
+  }
+  function buildSubTabs(){
+    subTabsWrap.innerHTML=slides.map(function(s,i){
+      var name=(curLang()==="en"&&s.dataset.secEn)?s.dataset.secEn:(s.dataset.sec||("第 "+(i+1)+" 張"));
+      return '<button class="tab" type="button" data-sub="'+i+'">'+name+'</button>';
+    }).join("");
+    subTabs=[].slice.call(subTabsWrap.querySelectorAll(".tab"));
+    subTabs.forEach(function(tab){tab.addEventListener("click",function(){show(+tab.dataset.sub);});});
+  }
+  function switchDeck(n,startIdx){
+    deck=Math.max(0,Math.min(groups.length-1,n));
+    groups.forEach(function(g,k){g.classList.toggle("active",k===deck);});
+    groups.forEach(function(g){if(g!==groups[deck]){[].forEach.call(g.querySelectorAll(".slide.active"),function(s){s.classList.remove("active");});}});
+    slides=[].slice.call(groups[deck].querySelectorAll(".slide"));
+    deckTabs.forEach(function(t,k){t.classList.toggle("active",k===deck);});
+    var at=deckTabs[deck];
+    if(at&&typeof at.scrollIntoView==="function") at.scrollIntoView({block:"nearest",inline:"center"});
+    buildSubTabs();
+    show(startIdx||0);
+  }
+  function next(){show(idx+1);} function prev(){show(idx-1);}
+  document.getElementById("next").addEventListener("click",next);
+  document.getElementById("prev").addEventListener("click",prev);
+  document.getElementById("cornerNext").addEventListener("click",next);
+  document.getElementById("cornerPrev").addEventListener("click",prev);
+  function editing(){var a=document.activeElement;return a&&(a.isContentEditable||a.tagName==="INPUT"||a.tagName==="TEXTAREA");}
+  document.addEventListener("keydown",function(e){
+    if(editing()&&e.key!=="Escape") return;
+    if(e.key==="ArrowRight"||e.key===" "||e.key==="PageDown"){e.preventDefault();next();}
+    else if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();prev();}
+    else if(e.key==="Home"){e.preventDefault();show(0);}
+    else if(e.key==="End"){e.preventDefault();show(slides.length-1);}
+    else if(e.key==="f"||e.key==="F"){e.preventDefault();toggleFull();}
+    else if(e.key==="d"||e.key==="D"){applyTheme("dark");}
+    else if(e.key==="l"||e.key==="L"){applyTheme("light");}
+  });
+
+  /* ---- 第一層：投影片組分頁（語言感知，可重建） ---- */
+  function buildDeckTabs(){
+    deckTabsWrap.innerHTML=groups.map(function(g,i){
+      var name=(curLang()==="en"&&g.getAttribute("data-deck-name-en"))?g.getAttribute("data-deck-name-en"):(g.getAttribute("data-deck-name")||("投影片組 "+(i+1)));
+      return '<button class="tab" type="button" data-deck="'+i+'">'+name+'</button>';
+    }).join("");
+    deckTabs=[].slice.call(deckTabsWrap.querySelectorAll(".tab"));
+    deckTabs.forEach(function(tab,k){
+      tab.classList.toggle("active",k===deck);
+      tab.addEventListener("click",function(){switchDeck(+tab.dataset.deck,0);});
+    });
+  }
+  buildDeckTabs();
+
+  /* ---- 全螢幕切換 ---- */
+  var btnFull=document.getElementById("btnFull");
+  function fsElement(){return document.fullscreenElement||document.webkitFullscreenElement||null;}
+  function syncFullLabel(){
+    var on=!!fsElement();
+    btnFull.textContent=on?"⛶ 離開全螢幕":"⛶ 全螢幕";
+    btnFull.title=on?"離開全螢幕檢視":"切換全螢幕檢視";
+  }
+  function toggleFull(){
+    if(fsElement()){
+      var ex=document.exitFullscreen||document.webkitExitFullscreen;
+      if(ex) ex.call(document);
+      return;
+    }
+    var el=document.documentElement;
+    var req=el.requestFullscreen||el.webkitRequestFullscreen;
+    if(!req){alert("此瀏覽器不支援全螢幕 API。");return;}
+    var p;
+    try{p=req.call(el);}catch(e){p=null;}
+    if(p&&p.catch){p.catch(function(){
+      alert("此檢視環境不允許進入全螢幕（常見於 VS Code 內建預覽或被嵌入的視窗）。\n請改用瀏覽器分頁開啟本頁（或已部署的網址），即可正常全螢幕。");
+    });}
+  }
+  btnFull.addEventListener("click",toggleFull);
+  document.addEventListener("fullscreenchange",syncFullLabel);
+  document.addEventListener("webkitfullscreenchange",syncFullLabel);
+
+  /* ---- 教材與資料瀏覽器 ---- */
+  var mdToHtml=window.VibeMD.mdToHtml, csvToHtml=window.VibeMD.csvToHtml, escHtml=window.VibeMD.esc;
+
+  /* ---- 純前端 ZIP 打包（store 法，無相依套件） ---- */
+  var crcTable=(function(){var t=[];for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++){c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);}t[n]=c>>>0;}return t;})();
+  function crc32(b){var c=0xFFFFFFFF;for(var i=0;i<b.length;i++){c=crcTable[(c^b[i])&0xFF]^(c>>>8);}return (c^0xFFFFFFFF)>>>0;}
+  function u16(n){return [n&255,(n>>8)&255];}
+  function u32(n){return [n&255,(n>>8)&255,(n>>16)&255,(n>>24)&255];}
+  function b64ToBytes(b64){
+    var s=atob(b64),out=new Uint8Array(s.length);
+    for(var i=0;i<s.length;i++) out[i]=s.charCodeAt(i);
+    return out;
+  }
+  function fileBytesFromStore(path,pre,enc){
+    if(pre&&pre.t!=null) return {name:path,data:enc.encode(pre.t)};
+    if(pre&&pre.b!=null) return {name:path,data:b64ToBytes(pre.b)};
+    return null;
+  }
+  function buildZip(files){
+    var parts=[],central=[],offset=0,enc=new TextEncoder();
+    files.forEach(function(f){
+      var nb=enc.encode(f.name),crc=crc32(f.data),sz=f.data.length;
+      var lh=new Uint8Array([].concat(u32(0x04034b50),u16(20),u16(0x0800),u16(0),u16(0),u16(0),u32(crc),u32(sz),u32(sz),u16(nb.length),u16(0)));
+      parts.push(lh,nb,f.data);
+      central.push(new Uint8Array([].concat(u32(0x02014b50),u16(20),u16(20),u16(0x0800),u16(0),u16(0),u16(0),u32(crc),u32(sz),u32(sz),u16(nb.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(offset))),nb);
+      offset+=lh.length+nb.length+f.data.length;
+    });
+    var cenSize=central.reduce(function(a,c){return a+c.length;},0);
+    var eocd=new Uint8Array([].concat(u32(0x06054b50),u16(0),u16(0),u16(files.length),u16(files.length),u32(cenSize),u32(offset),u16(0)));
+    return new Blob(parts.concat(central,[eocd]),{type:"application/zip"});
+  }
+  // 練習專案清單（投影片內的「下載」連結與「教材與資料瀏覽」共用同一份）
+  var PROJECTS=[
+    {folder:"labs",label:"SIMS 練習與資料 / labs",files:[
+      "labs/README.md",
+      "labs/zh/README.md","labs/zh/00-setup-and-orientation.md","labs/zh/01-data-cleaning-extraction.md",
+      "labs/zh/02-reliability-validation.md","labs/zh/03-t-test.md","labs/zh/04-charts.md",
+      "labs/zh/05-capstone-report.md","labs/zh/06-qualitative-reflection.md","labs/zh/07-q11-sensitivity-reevaluation.md",
+      "labs/en/README.md","labs/en/00-setup-and-orientation.md","labs/en/01-data-cleaning-extraction.md",
+      "labs/en/02-reliability-validation.md","labs/en/03-t-test.md","labs/en/04-charts.md",
+      "labs/en/05-capstone-report.md","labs/en/06-qualitative-reflection.md","labs/en/07-q11-sensitivity-reevaluation.md",
+      "labs/data/sims-questionnaire-items.md","labs/data/grade-report.csv","labs/data/instructor-spoken-reflection.md",
+      "labs/data/pre-test.xlsx","labs/data/post-test.xlsx"]},
+    {folder:"labs-data",label:"練習資料 / data",files:[
+      "labs/data/sims-questionnaire-items.md","labs/data/grade-report.csv","labs/data/instructor-spoken-reflection.md",
+      "labs/data/pre-test.xlsx","labs/data/post-test.xlsx"]}
+  ];
+  function downloadProject(proj,btn){
+    var enc=new TextEncoder(),label=btn.innerHTML;
+    btn.disabled=true;btn.innerHTML='<span class="zi">⏳</span>打包中…';
+    var STORE2=window.VIBE_CONTENT||{};
+    Promise.all(proj.files.map(function(p){
+      var key=proj.folder+"/",at=p.indexOf(key);
+      var rel=at>=0?p.slice(at+key.length):p.split("/").pop();
+      var nm=proj.folder+"/"+rel;
+      var pre=STORE2[p];
+      var packed=fileBytesFromStore(nm,pre,enc);
+      if(packed) return Promise.resolve(packed);
+      return fetch(p).then(function(r){if(!r.ok)throw p;return r.arrayBuffer();})
+        .then(function(buf){return {name:nm,data:new Uint8Array(buf)};});
+    })).then(function(files){
+      var url=URL.createObjectURL(buildZip(files));
+      var a=document.createElement("a");a.href=url;a.download=proj.folder+".zip";document.body.appendChild(a);a.click();
+      document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},2000);
+      btn.disabled=false;btn.innerHTML=label;
+    }).catch(function(){
+      btn.disabled=false;btn.innerHTML=label;
+      alert("無法打包下載。若是以雙擊檔案（file://）開啟本頁，瀏覽器會擋下讀取；請改用本機伺服器或 GitHub Pages 版本開啟。");
+    });
+  }
+  function projByFolder(folder){for(var i=0;i<PROJECTS.length;i++){if(PROJECTS[i].folder===folder)return PROJECTS[i];}return null;}
+  document.addEventListener("click",function(ev){
+    var a=ev.target.closest&&ev.target.closest("a[data-zip]");
+    if(!a)return;
+    ev.preventDefault();
+    var proj=projByFolder(a.getAttribute("data-zip"));
+    if(proj)downloadProject(proj,a);
+  });
+
+  (function initBrowser(){
+    var browserLists=[].slice.call(document.querySelectorAll(".browser-list[data-res-group]"));
+    if(!browserLists.length) return;
+    var RES=[
+      {group:"講義",labelEn:"Handouts",htmlzip:1,items:[
+        {name:"工作坊使用說明 README",nameEn:"Workshop README",path:"README.md"},
+        {name:"練習總覽 Labs README",nameEn:"Labs README",path:"labs/README.md"},
+        {name:"Prompt 心法手冊",nameEn:"Prompt cookbook",path:"prompts/prompt-cookbook.md"},
+        {name:"驗收清單",nameEn:"Acceptance checklist",path:"rubric/checklist.md"},
+        {lang:"zh",name:"中文練習 · 入口 README",path:"labs/zh/README.md"},
+        {lang:"zh",name:"中文 · 00 認識資料",path:"labs/zh/00-setup-and-orientation.md"},
+        {lang:"zh",name:"中文 · 01 資料清理",path:"labs/zh/01-data-cleaning-extraction.md"},
+        {lang:"zh",name:"中文 · 02 信度",path:"labs/zh/02-reliability-validation.md"},
+        {lang:"zh",name:"中文 · 03 t 檢定",path:"labs/zh/03-t-test.md"},
+        {lang:"zh",name:"中文 · 04 畫圖",path:"labs/zh/04-charts.md"},
+        {lang:"zh",name:"中文 · 05 整合報告",path:"labs/zh/05-capstone-report.md"},
+        {lang:"zh",name:"中文 · 06 口語省思（延伸）",path:"labs/zh/06-qualitative-reflection.md"},
+        {lang:"zh",name:"中文 · 07 Q11 敏感度（延伸）",path:"labs/zh/07-q11-sensitivity-reevaluation.md"},
+        {lang:"en",name:"English · entry README",path:"labs/en/README.md"},
+        {lang:"en",name:"EN · 00 Meet the data",path:"labs/en/00-setup-and-orientation.md"},
+        {lang:"en",name:"EN · 01 Data cleaning",path:"labs/en/01-data-cleaning-extraction.md"},
+        {lang:"en",name:"EN · 02 Reliability",path:"labs/en/02-reliability-validation.md"},
+        {lang:"en",name:"EN · 03 t-test",path:"labs/en/03-t-test.md"},
+        {lang:"en",name:"EN · 04 Charts",path:"labs/en/04-charts.md"},
+        {lang:"en",name:"EN · 05 Capstone report",path:"labs/en/05-capstone-report.md"},
+        {lang:"en",name:"EN · 06 Qualitative (ext.)",path:"labs/en/06-qualitative-reflection.md"},
+        {lang:"en",name:"EN · 07 Q11 sensitivity (ext.)",path:"labs/en/07-q11-sensitivity-reevaluation.md"}
+      ]},
+      {group:"安裝與設定",labelEn:"Setup",htmlzip:1,items:[
+        {name:"AI 代理安裝與驗證",nameEn:"AI agent setup",path:"setup/agent-setup.md"},
+        {name:"VS Code 安裝與整合",nameEn:"VS Code setup",path:"setup/vscode-setup.md"},
+        {name:"常見問題排解",nameEn:"Troubleshooting",path:"setup/troubleshooting.md"},
+        {name:"三小時課程規劃",nameEn:"Workshop plan",path:"docs/workshop-3hr-plan.md"},
+        {name:"講師手冊",nameEn:"Facilitator guide",path:"docs/facilitator-guide.md"},
+        {name:"資安與隱私收尾",nameEn:"Privacy wrap-up",path:"security/privacy-data-controls.md"}
+      ]},
+      {group:"練習資料",labelEn:"Data",datazip:"labs-data",
+        note:"SIMS 量表與成績預覽；按上方 📦 一次下載所有資料檔（單一壓縮包）。兩份 .xlsx 含真實個資，請下載後在本機處理。",
+        noteEn:"SIMS scale and grade preview; use the 📦 button above to download all data files in one zip. The two .xlsx files hold real PII, so handle them locally.",
+        items:[
+        {name:"SIMS 量表說明",nameEn:"SIMS questionnaire items",path:"labs/data/sims-questionnaire-items.md"},
+        {name:"成績報表 grade-report",nameEn:"Grade report",path:"labs/data/grade-report.csv",csv:1},
+        {name:"講師口述省思（練習 6）",nameEn:"Spoken reflection (Ex 6)",path:"labs/data/instructor-spoken-reflection.md"},
+        {name:"前測原始檔 pre-test.xlsx（含個資）",nameEn:"pre-test.xlsx (PII)",path:"labs/data/pre-test.xlsx"},
+        {name:"後測原始檔 post-test.xlsx（含個資）",nameEn:"post-test.xlsx (PII)",path:"labs/data/post-test.xlsx"}
+      ]}
+    ];
+    function visibleItems(g){return g.items.filter(function(it){return !it.lang||it.lang===curLang();});}
+    function itemName(it){return (curLang()==="en"&&it.nameEn)?it.nameEn:it.name;}
+    function groupLabel(g){return (curLang()==="en"&&g.labelEn)?g.labelEn:g.group;}
+    function groupNote(g){return (curLang()==="en"&&g.noteEn)?g.noteEn:g.note;}
+    var STORE2=window.VIBE_CONTENT||{};
+    function groupByName(name){return RES.filter(function(g){return g.group===name;})[0];}
+    function renderInto(viewEl,path,body){
+      var viewUrl="view.html?f="+encodeURIComponent(path);
+      viewEl.innerHTML='<div class="res-head"><span class="res-path">'+path+'</span><span class="res-actions"><a class="link res-newtab" href="'+viewUrl+'" target="_blank" rel="noopener">'+(curLang()==="en"?"open in a new tab":"在新分頁排版開啟")+'</a></span></div><div class="md-body">'+body+"</div>";
+      viewEl.scrollTop=0;
+    }
+    function downloadStoredBinary(path,pre){
+      var bytes=b64ToBytes(pre.b);
+      var url=URL.createObjectURL(new Blob([bytes],{type:pre.m||"application/octet-stream"}));
+      var a=document.createElement("a");a.href=url;a.download=path.split("/").pop();document.body.appendChild(a);a.click();
+      document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},2000);
+    }
+    function showFile(listEl,viewEl,path,isCsv,btn){
+      listEl.querySelectorAll(".res-btn").forEach(function(b){b.classList.toggle("active",b===btn);});
+      viewEl.innerHTML='<p class="res-loading">'+(curLang()==="en"?"Loading…":"載入中…")+'</p>';
+      var pre=STORE2[path];
+      if(pre&&pre.b!=null){
+        var label=curLang()==="en"?"Download file":"下載檔案";
+        viewEl.innerHTML='<div class="res-head"><span class="res-path">'+path+'</span><span class="res-actions"><button class="res-dlzip" type="button" data-bin-download="'+path+'">'+label+'</button></span></div>'+
+          '<div class="res-err"><p>'+(curLang()==="en"?"This is a binary workbook and cannot be previewed in the browser. Use the button above or the data zip to download it.":"這是二進位 Excel 活頁簿，瀏覽器內不直接預覽。請用上方按鈕或資料 zip 下載。")+'</p></div>';
+        return;
+      }
+      if(pre&&pre.h!=null){renderInto(viewEl,path,pre.h);return;}
+      fetch(path).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){
+        renderInto(viewEl,path,isCsv?csvToHtml(t):mdToHtml(t));
+      }).catch(function(){
+        viewEl.innerHTML='<div class="res-err"><p>無法在此即時載入內容。若你是用「雙擊檔案」開啟本頁（file://），瀏覽器基於安全限制會擋下讀取。</p><p>請改用工作坊提供的本機伺服器或已部署的 GitHub Pages 版本開啟；或直接點下方連結檢視：</p><p><a class="link" href="'+path+'" target="_blank" rel="noopener">開啟 '+path+'</a></p></div>';
+      });
+    }
+    var HANDOUT_CSS='body{margin:0;background:#0b1020;color:#f8fbff;font-family:"PingFang TC","Microsoft JhengHei","Noto Sans CJK TC","Heiti TC","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased;}'+
+      '.doc{max-width:900px;margin:32px auto;padding:28px 34px;background:#17233d;border:1px solid #51607f;border-radius:16px;}'+
+      '.md-body{font-size:16px;line-height:1.9;color:#dde7f5;}'+
+      '.md-body h1{font-size:27px;color:#fff;margin:8px 0 14px;}'+
+      '.md-body h2{font-size:21px;color:#e9ddff;margin:22px 0 10px;border-bottom:1px solid #51607f;padding-bottom:6px;}'+
+      '.md-body h3{font-size:18px;color:#eef4ff;margin:18px 0 8px;}'+
+      '.md-body p{margin:10px 0;}.md-body ul,.md-body ol{margin:10px 0;padding-left:26px;}.md-body li{margin:5px 0;}'+
+      '.md-body li.md-task{list-style:none;margin-left:-22px;}.md-body li.md-task input{margin-right:8px;}'+
+      '.md-body code{font-family:Menlo,Consolas,monospace;font-size:.9em;background:#10182c;border:1px solid #51607f;border-radius:5px;padding:1px 6px;color:#67e8f9;}'+
+      '.md-body pre.md-pre{background:#06101f;border:1px solid #51607f;border-radius:10px;padding:15px 18px;overflow-x:auto;}'+
+      '.md-body pre.md-pre code{background:none;border:none;color:#cfe6ff;padding:0;}'+
+      '.md-body blockquote{border-left:4px solid #c4b5fd;margin:12px 0;padding:8px 16px;background:rgba(165,180,252,.18);border-radius:0 10px 10px 0;}'+
+      '.md-body hr{border:none;border-top:1px solid #51607f;margin:18px 0;}'+
+      '.md-body table.md-table{border-collapse:separate;border-spacing:0 5px;width:100%;font-size:14px;}'+
+      '.md-body .md-table th{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;padding:8px 12px;text-align:left;}'+
+      '.md-body .md-table td{background:#10182c;padding:7px 12px;color:#dde7f5;vertical-align:top;}'+
+      '.md-body .md-table tr td:first-child,.md-body .md-table th:first-child{white-space:nowrap;}'+
+      '.md-body a{color:#67e8f9;}';
+    function handoutDoc(title,bodyHtml){
+      return '<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="UTF-8">'+
+        '<meta name="viewport" content="width=device-width, initial-scale=1.0">'+
+        '<title>'+escHtml(title)+' · Vibe Coding 工作坊</title><style>'+HANDOUT_CSS+'</style></head>'+
+        '<body><div class="doc"><div class="md-body">'+bodyHtml+'</div></div></body></html>';
+    }
+    function downloadHandouts(btn){
+      var enc=new TextEncoder(),label=btn.innerHTML;
+      var groupName=btn.dataset.htmlzip;
+      var g=(RES.filter(function(x){return x.group===groupName;})[0])||{items:[]};
+      var items=visibleItems(g).filter(function(it){return /\.md$/i.test(it.path);});
+      var folder=(curLang()==="en"&&g.labelEn)?g.labelEn:groupName;
+      btn.disabled=true;btn.innerHTML='<span class="zi">⏳</span>'+(curLang()==="en"?"packing…":"打包中…");
+      Promise.all(items.map(function(it){
+        var fname=folder+"/"+it.path.replace(/\.md$/i,"").replace(/[\/]/g,"_")+".html";
+        function pack(bodyHtml){return {name:fname,data:enc.encode(handoutDoc(itemName(it),bodyHtml))};}
+        var pre=STORE2[it.path];
+        if(pre&&pre.h!=null) return Promise.resolve(pack(pre.h));
+        if(pre&&pre.t!=null) return Promise.resolve(pack(mdToHtml(pre.t)));
+        return fetch(it.path).then(function(r){if(!r.ok)throw it.path;return r.text();})
+          .then(function(t){return pack(mdToHtml(t));});
+      })).then(function(files){
+        var url=URL.createObjectURL(buildZip(files));
+        var a=document.createElement("a");a.href=url;a.download=groupName+".zip";document.body.appendChild(a);a.click();
+        document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},2000);
+        btn.disabled=false;btn.innerHTML=label;
+      }).catch(function(){
+        btn.disabled=false;btn.innerHTML=label;
+        alert("無法打包下載。若是以雙擊檔案（file://）開啟本頁，瀏覽器會擋下讀取；請改用本機伺服器或 GitHub Pages 版本開啟。");
+      });
+    }
+    function fillList(listEl,g){
+      var headBtn=g.htmlzip
+        ? '<button class="res-zip" data-htmlzip="'+g.group+'"><span class="zi">📦</span>'+(curLang()==="en"?("Download "+groupLabel(g)+" .zip (HTML)"):("下載「"+groupLabel(g)+"」.zip（HTML）"))+'</button>'
+        : (g.datazip
+          ? '<button class="res-zip" data-zipfolder="'+g.datazip+'"><span class="zi">📦</span>'+(curLang()==="en"?"Download all data .zip":"一次下載所有資料 .zip")+'</button>'
+          : "");
+      var dlTitle=curLang()==="en"?"Download the full labs .zip":"下載整包練習專案 .zip";
+      var items=visibleItems(g).map(function(it){
+        var zipBtn=it.zip?'<button class="res-dlzip" data-zipfolder="'+it.zip+'" title="'+dlTitle+'">📦 .zip</button>':"";
+        return '<div class="res-item"><button class="res-btn" data-path="'+it.path+'" data-csv="'+(it.csv?1:0)+'">'+itemName(it)+
+          '</button>'+zipBtn+'</div>';
+      }).join("");
+      var noteTxt=groupNote(g);
+      var note=noteTxt?'<div class="csv-meta" style="margin:4px 4px 0">'+noteTxt+'</div>':"";
+      listEl.innerHTML='<div class="res-group">'+headBtn+items+note+"</div>";
+    }
+    browserLists.forEach(function(listEl){
+      var g=groupByName(listEl.getAttribute("data-res-group"));
+      if(!g) return;
+      var viewEl=listEl.parentElement.querySelector(".browser-view");
+      if(!viewEl) return;
+      fillList(listEl,g);
+
+      viewEl.addEventListener("click",function(e){
+        var a=e.target.closest&&e.target.closest("a.res-newtab");
+        var bin=e.target.closest&&e.target.closest("[data-bin-download]");
+        if(bin){
+          var pre=STORE2[bin.getAttribute("data-bin-download")];
+          if(pre&&pre.b!=null) downloadStoredBinary(bin.getAttribute("data-bin-download"),pre);
+          return;
+        }
+        if(!a) return;
+        e.preventDefault();
+        var url=a.getAttribute("href");
+        if(document.fullscreenElement&&!/[?&]fs=1\b/.test(url)){url+=(url.indexOf("?")>=0?"&":"?")+"fs=1";}
+        window.open(url,"_blank");
+      });
+      listEl.addEventListener("click",function(ev){
+        if(!ev.target.closest) return;
+        var z=ev.target.closest(".res-zip");
+        if(z){ if(z.dataset.htmlzip){ downloadHandouts(z); } else if(z.dataset.zipfolder){ var pj=projByFolder(z.dataset.zipfolder); if(pj) downloadProject(pj,z); } return; }
+        var dz=ev.target.closest(".res-dlzip");
+        if(dz){ var pz=projByFolder(dz.dataset.zipfolder); if(pz) downloadProject(pz,dz); return; }
+        var b=ev.target.closest(".res-btn");if(!b)return;
+        showFile(listEl,viewEl,b.dataset.path,b.dataset.csv==="1",b);
+      });
+    });
+    rerenderBrowser=function(){
+      browserLists.forEach(function(listEl){
+        var g=groupByName(listEl.getAttribute("data-res-group"));
+        if(g) fillList(listEl,g);
+      });
+    };
+  })();
+
+  /* ---- 啟動 ---- */
+  var hd=location.hash.match(/^#d(\d+)s(\d+)$/);
+  var hs=location.hash.match(/^#s(\d+)$/);
+  if(hd){switchDeck(+hd[1],+hd[2]);}
+  else if(hs){switchDeck(0,+hs[1]);}
+  else{switchDeck(0,0);}
+})();
+</script>
+</body>
+</html>

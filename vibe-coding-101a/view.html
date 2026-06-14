@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教材檢視 · Vibe Coding 工作坊</title>
+<style>
+  :root{
+    --bg:#0b1020;--bg2:#1a2442;--surface:#17233d;--surface-2:#10182c;--soft:#1b2942;
+    --ink:#f8fbff;--text:#dde7f5;--muted:#b9c5d9;--line:#51607f;--accent:#67e8f9;--brand:#a5b4fc;--brand2:#c4b5fd;
+    --brand-soft:rgba(165,180,252,.18);--heading-ink:#ffffff;--heading-accent:#e9ddff;--heading-soft:#eef4ff;
+    --table-head:linear-gradient(135deg,#4f46e5,#7c3aed);--table-row-hover:rgba(165,180,252,.18);
+    --shadow:0 16px 36px rgba(2,6,23,.34);
+    font-family:"PingFang TC","Microsoft JhengHei","Noto Sans CJK TC","Heiti TC","Segoe UI",system-ui,sans-serif;
+  }
+  body[data-theme="light"]{
+    --bg:#eef1f6;--bg2:#e3e8f1;--surface:#f3f6fb;--surface-2:#e9edf4;--soft:#eaeef5;
+    --ink:#1e293b;--text:#334155;--muted:#5f6b7e;--line:#cfd7e3;--accent:#0e7490;--brand:#4338ca;--brand2:#6d28d9;
+    --brand-soft:#e5e9f6;--heading-ink:#1e293b;--heading-accent:#6d28d9;--heading-soft:#4338ca;
+    --table-head:linear-gradient(135deg,#4f46e5,#7c3aed);--table-row-hover:#eef2ff;
+    --shadow:0 10px 30px rgba(15,23,42,.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;}
+  .bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    padding:12px 22px;background:rgba(9,15,31,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(148,163,184,.14);}
+  body[data-theme="light"] .bar{background:rgba(255,255,255,.92);}
+  .bar .path{font-family:Menlo,Consolas,monospace;font-size:13.5px;color:var(--accent);word-break:break-all;flex:1;min-width:160px;}
+  .bar a,.bar button{font:inherit;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;
+    border:1px solid var(--line);border-radius:8px;padding:6px 12px;color:var(--text);background:var(--surface);}
+  .bar a:hover,.bar button:hover{border-color:var(--accent);color:var(--ink);}
+  .fs-ctl{display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:8px;padding:2px;}
+  .fs-ctl button{border:none;background:transparent;padding:5px 9px;font-weight:800;border-radius:6px;color:var(--text);}
+  .fs-ctl button:hover{background:var(--brand-soft);color:var(--ink);}
+  .fs-ctl #fsLabel{font-size:12.5px;min-width:42px;text-align:center;color:var(--text);font-variant-numeric:tabular-nums;cursor:pointer;user-select:none;}
+  .wrap{max-width:980px;margin:26px auto 80px;padding:0 22px;zoom:var(--fs,1);}
+  .doc{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px 34px;box-shadow:var(--shadow);}
+  /* 渲染後的 Markdown 內文（與工作坊主頁一致） */
+  .md-body{color:var(--text);font-size:16px;line-height:1.9;}
+  .md-body h1{font-size:27px;color:var(--heading-ink);margin:8px 0 14px;}
+  .md-body h2{font-size:21px;color:var(--heading-accent);margin:22px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px;}
+  .md-body h3{font-size:18px;color:var(--heading-soft);margin:18px 0 8px;}
+  .md-body p{margin:10px 0;}
+  .md-body ul,.md-body ol{margin:10px 0;padding-left:26px;}
+  .md-body li{margin:5px 0;}
+  .md-body li.md-task{list-style:none;margin-left:-22px;}
+  .md-body li.md-task input{margin-right:8px;}
+  .md-body code{font-family:Menlo,Consolas,monospace;font-size:.9em;background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--accent);}
+  .md-body pre.md-pre{background:#06101f;border:1px solid var(--line);border-radius:10px;padding:15px 18px;overflow-x:auto;}
+  .md-body pre.md-pre code{background:none;border:none;color:#cfe6ff;padding:0;}
+  .md-body blockquote{border-left:4px solid var(--brand2);margin:12px 0;padding:8px 16px;background:var(--brand-soft);border-radius:0 10px 10px 0;color:var(--text);}
+  .md-body hr{border:none;border-top:1px solid var(--line);margin:18px 0;}
+  .md-body table.md-table{border-collapse:separate;border-spacing:0 5px;width:100%;font-size:14px;}
+  .md-body .md-table th{background:var(--table-head);color:#fff;padding:8px 12px;text-align:left;position:sticky;top:60px;}
+  .md-body .md-table td{background:var(--surface-2);padding:7px 12px;color:var(--text);vertical-align:top;}
+  .md-body .md-table tbody tr:nth-child(even) td{background:var(--soft);}
+  .md-body .md-table tbody tr:hover td{background:var(--table-row-hover);}
+  .md-body .md-table tr td:first-child,.md-body .md-table th:first-child{white-space:nowrap;}
+  .md-body a.link,.md-body a{color:var(--accent);}
+  /* 被攤平的本地檔案連結（不可點，避免在檢視分頁誤觸下載／離開） */
+  .md-body .md-flat{color:var(--accent);text-decoration:none;cursor:text;}
+  .csv-meta{font-size:13px;color:var(--muted);margin:10px 0;}
+  .err{color:var(--text);font-size:15.5px;line-height:1.9;}
+  .err a{color:var(--accent);}
+  @media (max-width:680px){.doc{padding:20px 18px;}}
+</style>
+</head>
+<body data-theme="dark">
+<div class="bar">
+  <span class="path" id="path">載入中…</span>
+  <div class="fs-ctl" title="調整字級縮放（點數字可重設為 100%）">
+    <button id="fsMinus" type="button" aria-label="縮小字級">A−</button>
+    <span id="fsLabel" title="重設為 100%">100%</span>
+    <button id="fsPlus" type="button" aria-label="放大字級">A＋</button>
+  </div>
+  <button id="full" type="button">⛶ 全螢幕</button>
+  <button id="close" type="button">✕ 關閉分頁</button>
+  <button id="theme" type="button">☀ 淺色</button>
+</div>
+<div class="wrap"><div class="doc"><div class="md-body" id="out"><p class="csv-meta">載入中…</p></div></div></div>
+
+<script src="assets/md-render.js"></script>
+<script src="assets/content-data.js"></script>
+<script>
+(function(){
+  "use strict";
+  var THEME_KEY="vibews_theme", FS_KEY="vibews_fs";
+  var body=document.body, btn=document.getElementById("theme");
+  function applyTheme(t){var n=(t==="light")?"light":"dark";body.setAttribute("data-theme",n);
+    btn.textContent=n==="dark"?"☀ 淺色":"☾ 深色";try{localStorage.setItem(THEME_KEY,n);}catch(e){}}
+  btn.addEventListener("click",function(){applyTheme(body.getAttribute("data-theme")==="dark"?"light":"dark");});
+  applyTheme((function(){try{return localStorage.getItem(THEME_KEY)||"dark";}catch(e){return "dark";}})());
+
+  function qp(name){var m=location.search.match(new RegExp("[?&]"+name+"=([^&]*)"));return m?decodeURIComponent(m[1]):"";}
+
+  // 字級縮放（與主頁共用 vibews_fs，跨頁一致）
+  var FS_MIN=0.7,FS_MAX=1.8,FS_STEP=0.1,fsLabel=document.getElementById("fsLabel"),fs=1;
+  function applyFs(v){
+    fs=Math.round(Math.min(FS_MAX,Math.max(FS_MIN,v))*10)/10;
+    document.documentElement.style.setProperty("--fs",String(fs));
+    fsLabel.textContent=Math.round(fs*100)+"%";
+    try{localStorage.setItem(FS_KEY,String(fs));}catch(e){}
+  }
+  document.getElementById("fsPlus").addEventListener("click",function(){applyFs(fs+FS_STEP);});
+  document.getElementById("fsMinus").addEventListener("click",function(){applyFs(fs-FS_STEP);});
+  fsLabel.addEventListener("click",function(){applyFs(1);});
+  applyFs((function(){try{return parseFloat(localStorage.getItem(FS_KEY))||1;}catch(e){return 1;}})());
+
+  // 全螢幕切換按鈕
+  var fullBtn=document.getElementById("full");
+  function enterFull(){var el=document.documentElement,req=el.requestFullscreen||el.webkitRequestFullscreen;if(req&&!document.fullscreenElement){try{req.call(el);}catch(e){}}}
+  function exitFull(){var ex=document.exitFullscreen||document.webkitExitFullscreen;if(ex&&document.fullscreenElement){try{ex.call(document);}catch(e){}}}
+  function syncFull(){var on=!!document.fullscreenElement;fullBtn.textContent=on?"⛶ 離開全螢幕":"⛶ 全螢幕";}
+  fullBtn.addEventListener("click",function(){document.fullscreenElement?exitFull():enterFull();});
+  document.addEventListener("fullscreenchange",syncFull);
+  document.addEventListener("webkitfullscreenchange",syncFull);
+
+  // 關閉分頁（本頁由主頁的 window.open 開啟，可自行關閉）；若瀏覽器擋下，退回工作坊主頁
+  document.getElementById("close").addEventListener("click",function(){
+    window.close();
+    setTimeout(function(){if(!window.closed){location.href="index.html";}},120);
+  });
+
+  // 若由主頁的全螢幕狀態開啟（fs=1），讓本檢視頁也接續全螢幕。
+  // 瀏覽器規定全螢幕必須由使用者操作觸發，新分頁無法自動進入，
+  // 因此先試一次，失敗則在「第一個點擊／按鍵」時補進全螢幕。
+  if(qp("fs")==="1"){
+    var once=function(){enterFull();window.removeEventListener("pointerdown",once);window.removeEventListener("keydown",once);};
+    window.addEventListener("pointerdown",once);
+    window.addEventListener("keydown",once);
+    enterFull();
+  }
+
+  var path=qp("f"), out=document.getElementById("out");
+  // 僅允許工作坊資料夾內的相對路徑，擋掉協定/絕對路徑
+  if(!path || /^[a-z]+:/i.test(path) || path.charAt(0)==="/" || path.indexOf("..")>=0){
+    out.innerHTML='<p class="err">沒有指定有效的檔案。請從工作坊「教材與資料瀏覽」單元點選文件開啟。</p>';
+    document.getElementById("path").textContent="（未指定檔案）";
+    return;
+  }
+  document.getElementById("path").textContent=path;
+  document.title=path.split("/").pop()+" · 教材檢視";
+  var isCsv=/\.csv$/i.test(path), isMd=/\.md$/i.test(path);
+  function setTitle(raw){document.title=(isMd?(raw.match(/^#\s+(.*)$/m)||[])[1]||path.split("/").pop():path.split("/").pop())+" · 教材檢視";}
+  // 攤平所有本地／相對連結為純文字（保留 http(s)、mailto 與頁內 #錨點），避免在檢視分頁誤觸下載或離開
+  function flattenLinks(){
+    var as=out.querySelectorAll("a[href]");
+    for(var i=0;i<as.length;i++){
+      var href=as[i].getAttribute("href")||"";
+      if(/^(https?:|mailto:)/i.test(href)||href.charAt(0)==="#") continue;
+      var s=document.createElement("span");s.className="md-flat";s.textContent=as[i].textContent;
+      as[i].parentNode.replaceChild(s,as[i]);
+    }
+  }
+  function b64ToBytes(b64){
+    var s=atob(b64),out=new Uint8Array(s.length);
+    for(var i=0;i<s.length;i++) out[i]=s.charCodeAt(i);
+    return out;
+  }
+  function downloadStoredBinary(pre){
+    var bytes=b64ToBytes(pre.b);
+    var url=URL.createObjectURL(new Blob([bytes],{type:pre.m||"application/octet-stream"}));
+    var a=document.createElement("a");a.href=url;a.download=path.split("/").pop();document.body.appendChild(a);a.click();
+    document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},2000);
+  }
+  // 預先渲染好的內容（完全靜態，免 fetch）優先；沒有才退回即時抓取
+  var pre=(window.VIBE_CONTENT||{})[path];
+  if(pre&&(pre.h!=null||pre.t!=null)){
+    if(pre.h!=null){out.innerHTML=pre.h;}
+    else{out.innerHTML='<pre class="md-pre"><code>'+window.VibeMD.esc(pre.t)+"</code></pre>";}
+    flattenLinks();
+    setTitle(pre.t!=null?pre.t:"");
+    return;
+  }
+  if(pre&&pre.b!=null){
+    out.innerHTML='<div class="err"><p>這是二進位資料檔，瀏覽器內不直接預覽。</p><p><button id="downloadBin" type="button">下載 '+window.VibeMD.esc(path.split("/").pop())+'</button></p></div>';
+    document.getElementById("downloadBin").addEventListener("click",function(){downloadStoredBinary(pre);});
+    return;
+  }
+  fetch(path).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){
+    if(isCsv){out.innerHTML=window.VibeMD.csvToHtml(t);}
+    else if(isMd){out.innerHTML=window.VibeMD.mdToHtml(t);}
+    else{out.innerHTML='<pre class="md-pre"><code>'+window.VibeMD.esc(t)+"</code></pre>";}
+    flattenLinks();
+    setTitle(t);
+  }).catch(function(){
+    out.innerHTML='<div class="err"><p>無法載入內容。若你是用「雙擊檔案」開啟（file://），瀏覽器基於安全限制會擋下讀取。</p>'+
+      '<p>請改用本機伺服器或已部署的 GitHub Pages 版本開啟。最簡單的本機方式：在工作坊資料夾執行 <code>python3 -m http.server</code>，再用瀏覽器開 <code>http://localhost:8000/view.html?f='+encodeURIComponent(path)+'</code>。</p></div>';
+  });
+})();
+</script>
+</body>
+</html>

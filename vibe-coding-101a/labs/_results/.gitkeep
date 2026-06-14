@@ -1,0 +1,3 @@
+# 學員產出資料夾 Learner output folder
+# 你的 AI 代理產生的 CSV、圖檔、報告都存到這裡。此資料夾內容不納入 git。
+# Your agent saves CSVs, figures, and reports here. Contents are git-ignored.

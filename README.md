@@ -5,5 +5,5 @@ published with GitHub Pages at <https://jy3736.github.io/EDU/>.
 
 ## Pages
 
-## Notes
-
+- **[Vibe Coding 101A — Workshop Materials](https://jy3736.github.io/EDU/vibe-coding-101a/)**
+  — interactive workshop site with slides, labs, facilitator guide, and downloadable assets.

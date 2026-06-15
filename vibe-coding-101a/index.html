@@ -269,6 +269,8 @@
   .deck-tabs{flex:1;min-width:0;margin-left:2px;}
   .deck-tabs .tab{font-size:18px;font-weight:800;padding:8px 19px;}
   .sub-tabs .tab{font-size:15px;font-weight:700;padding:7px 14px;}
+  .sub-tabs .tab.tab-action{border-style:dashed;border-color:var(--brand2);color:var(--brand2);}
+  .sub-tabs .tab.tab-action:hover{background:var(--grad);border-color:transparent;color:#0b1020;}
   .sub-tabs:empty{display:none;}
   .toolbar-actions{display:flex;gap:8px;align-items:center;flex:none;}
   .fs-ctl{display:flex;align-items:center;gap:2px;border:1px solid var(--toolbar-border);border-radius:8px;padding:2px;}
@@ -337,16 +339,11 @@
 <div class="deck" id="deck">
 
   <!-- ===================== 投影片組（首）：推廣海報 ===================== -->
-  <div class="deck-group" data-deck-name="推廣海報" data-deck-name-en="Print poster">
+  <div class="deck-group" data-deck-name="推廣海報" data-deck-name-en="Print poster" data-actions='[{"zh":"開啟原圖 ↗","en":"Open full image ↗","href":"assets/imgs/poster/vibe-coding-101a-print-poster.png","open":true},{"zh":"下載 PDF ↓","en":"Download PDF ↓","href":"assets/imgs/poster/vibe-coding-101a-print-poster.pdf","download":true}]'>
 
   <section class="slide" data-sec="推廣海報" data-sec-en="Print poster">
-    <div class="s-head"><span class="badge"><span class="lang-zh">宣傳</span><span class="lang-en">Promo</span></span><div><span class="kicker"><span class="lang-zh">推廣海報 · 列印用</span><span class="lang-en">Print poster</span></span><h2><span class="lang-zh">Vibe Coding 101A 工作坊推廣海報</span><span class="lang-en">Vibe Coding 101A workshop print poster</span></h2></div></div>
     <div class="promo-poster">
-      <img src="assets/imgs/vibe-coding-101a-print-poster.png" alt="Vibe Coding 101A 工作坊推廣海報">
-      <div class="promo-actions">
-        <a class="link" href="assets/imgs/vibe-coding-101a-print-poster.png" target="_blank" rel="noopener"><span class="lang-zh">開啟原圖</span><span class="lang-en">Open full image</span></a>
-        <a class="link" href="assets/imgs/vibe-coding-101a-print-poster.pdf" download><span class="lang-zh">下載 PDF</span><span class="lang-en">Download PDF</span></a>
-      </div>
+      <img src="assets/imgs/poster/vibe-coding-101a-print-poster.png" alt="Vibe Coding 101A 工作坊推廣海報">
     </div>
   </section>
 
@@ -376,34 +373,27 @@
     <div class="s-head"><span class="badge"><span class="lang-zh">地圖</span><span class="lang-en">Map</span></span><div><span class="kicker"><span class="lang-zh">Agenda · 180 分鐘</span><span class="lang-en">Agenda · 180 minutes</span></span><h2><span class="lang-zh">今日地圖：三小時跑完一條流水線</span><span class="lang-en">Today's map: one pipeline in 3 hours</span></h2></div></div>
     <div class="intro">
       <span class="intro-tag"><span class="lang-zh">本單元導讀</span><span class="lang-en">Overview</span></span>
-      <p><span class="lang-zh">整個工作坊只圍繞一條<span class="hl">不漂移的資料契約</span>：每一段的產出都是下一段的輸入，全部存到 <code>labs/_results/</code>。核心節奏是<b>提問 → 驗證 → 修正</b>。</span><span class="lang-en">The whole workshop follows one <span class="hl">data contract that never drifts</span>: each block's output feeds the next, all saved to <code>labs/_results/</code>. The loop is <b>Prompt → Verify → Iterate</b>.</span></p>
-    </div>
-    <div class="flow">
-      <div class="node start"><b>pre/post-test.xlsx</b><small><span class="lang-zh">header=1；實際分數 score = 8 − 選項編號</span><span class="lang-en">header=1; score = 8 − option number</span></small></div>
-      <div class="arrow">▼</div>
-      <div class="node"><b><span class="lang-zh">清理 → 信效度 → t 檢定 → 圖表</span><span class="lang-en">clean → reliability → t-test → charts</span></b><small>clean_*.csv · reliability.csv · ttest_results.csv · figures/*.png</small></div>
-      <div class="arrow">▼</div>
-      <div class="node end"><b>mini_report.md</b><small><span class="lang-zh">可交付分析報告，誠實寫限制</span><span class="lang-en">deliverable report, honest caveats</span></small></div>
+      <p><span class="lang-zh"><b>這一段的目標：在動手之前，先用一頁把三小時的路線看完，讓你清楚「今天會走到哪裡」。</b>整個工作坊不是六個各自獨立的練習，而是<span class="hl">一條從頭到尾接得起來的資料分析流水線</span>。原始資料是同一份、產出一段接一段，最後收斂成一份可交付的報告。先看懂這張地圖，你在後面每一關才知道自己站在流程的哪個位置。</span><span class="lang-en"><b>Goal of this block: before touching any tool, walk the whole 3-hour route on a single page so you know where today is headed.</b> This workshop is not six separate exercises but <span class="hl">one analysis pipeline that connects end to end</span>. The raw data is one file, each output feeds the next, and everything converges into one deliverable report. Read this map first and every later lab knows exactly where it sits in the flow.</span></p>
+      <p><span class="lang-zh"><b>這條流水線長什麼樣：</b>起點是 <code>pre/post-test.xlsx</code>（讀取時 <code>header=1</code>，實際分數 <span class="hl">score = 8 − 選項編號</span>），接著<b>清理 → 信度檢驗 → t 檢定 → 圖表</b>，分別產出 <code>clean_*.csv</code>、<code>reliability.csv</code>、<code>ttest_results.csv</code> 與 <code>figures/*.png</code>，最後整合成一頁 <code>mini_report.md</code>。關鍵是這是一條<span class="hl">不漂移的資料契約</span>：每一段的產出就是下一段的輸入，全部存到 <code>labs/_results/</code>，而 <code>labs/data/</code> 裡的原始資料<b>全程不可修改</b>。</span><span class="lang-en"><b>What the pipeline looks like:</b> it starts from <code>pre/post-test.xlsx</code> (read with <code>header=1</code>, actual <span class="hl">score = 8 − option number</span>), then runs <b>clean → reliability → t-test → charts</b>, emitting <code>clean_*.csv</code>, <code>reliability.csv</code>, <code>ttest_results.csv</code>, and <code>figures/*.png</code>, finally folding into a one-page <code>mini_report.md</code>. The point is a <span class="hl">data contract that never drifts</span>: each block's output is the next block's input, all saved to <code>labs/_results/</code>, while the raw files in <code>labs/data/</code> are <b>never edited</b>.</span></p>
+      <p><span class="lang-zh"><b>怎麼跑這三小時：</b>時間切成<span class="hl">準備階段 → 模組一 → 休息 → 模組二</span>四段（見下表）。準備階段把環境與代理對齊到同一條起跑線；模組一帶你認識、清理資料並做信度檢驗；模組二完成 t 檢定、畫圖與分析報告。貫穿全程的核心節奏只有一個 - <b>提問 → 驗證 → 修正</b>：每次拿到結果都先問自己「<b>我怎麼知道它是對的？</b>」，把人留在迴圈裡當審查者，而不是照單全收。</span><span class="lang-en"><b>How the 3 hours run:</b> time splits into four blocks - <span class="hl">Prep → Module 1 → Break → Module 2</span> (see the table below). Prep aligns the environment and agent onto one starting line; Module 1 has you meet the data, clean it, and check reliability; Module 2 finishes the t-test, charts, and report. One rhythm runs through all of it - <b>Prompt → Verify → Iterate</b>: every result starts with asking yourself "<b>how do I know it's right?</b>", keeping a human in the loop as the reviewer rather than accepting output wholesale.</span></p>
     </div>
     <table class="lang-zh">
       <thead><tr><th>區段</th><th>內容</th><th>時長</th></tr></thead>
       <tbody>
-        <tr><td>準備階段</td><td>環境設置與 AI 代理</td><td>20 分</td></tr>
-        <tr><td>練習 0–2</td><td>認識資料 → 清理資料 → 信效度檢測</td><td>65 分</td></tr>
+        <tr><td>準備階段</td><td>環境設置與 AI 代理</td><td>30 分</td></tr>
+        <tr><td>模組一</td><td>認識資料 → 清理資料 → 信度檢驗</td><td>65 分</td></tr>
         <tr><td>休息</td><td>中場休息</td><td>10 分</td></tr>
-        <tr><td>練習 3–5</td><td>t 檢定 → 圖表生成 → 分析報告</td><td>75 分</td></tr>
-        <tr><td>收尾階段</td><td>資安與隱私收尾</td><td>10 分</td></tr>
+        <tr><td>模組二</td><td>t 檢定 → 圖表生成 → 分析報告</td><td>75 分</td></tr>
         <tr><td>合計</td><td></td><td>180 分</td></tr>
       </tbody>
     </table>
     <table class="lang-en">
       <thead><tr><th>Block</th><th>Content</th><th>Min</th></tr></thead>
       <tbody>
-        <tr><td>Prep</td><td>Setup check + agentic mindset</td><td>20</td></tr>
-        <tr><td>Ex 0–2</td><td>Meet data → clean → reliability</td><td>65</td></tr>
+        <tr><td>Prep</td><td>Setup check + agentic mindset</td><td>30</td></tr>
+        <tr><td>Module 1</td><td>Meet data → clean → reliability</td><td>65</td></tr>
         <tr><td>Break</td><td>Mid-session break</td><td>10</td></tr>
-        <tr><td>Ex 3–5</td><td>t-test → charts → report</td><td>75</td></tr>
-        <tr><td>Closing</td><td>Privacy wrap-up</td><td>10</td></tr>
+        <tr><td>Module 2</td><td>t-test → charts → report</td><td>75</td></tr>
         <tr><td>Total</td><td></td><td>180</td></tr>
       </tbody>
     </table>
@@ -413,9 +403,9 @@
   <section class="slide" data-sec="② 環境設置" data-sec-en="② Setup">
     <div class="s-head"><span class="badge"><span class="lang-zh">準備階段</span><span class="lang-en">Prep</span></span><div><span class="kicker"><span class="lang-zh">環境設置 · 20 分</span><span class="lang-en">Setup · 20 min</span></span><h2><span class="lang-zh">教室電腦已就緒；自備筆電現場協助</span><span class="lang-en">Classroom PCs are ready; notebook setup is supported</span></h2></div></div>
     <div class="intro">
-      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給學員</span><span class="lang-en">Unit guide · for you</span></span>
       <img class="mascot mascot-l" src="assets/imgs/mascots/yang04.png" alt="講師示意：歡迎進入環境設置">
-      <p><span class="lang-zh"><b>這一段的目標：讓全場 20 分鐘內站上同一條起跑線。</b>工作坊最常卡關的不是分析，而是<span class="hl">環境不一致</span> - 有人指令找不到、有人套件版本不對、有人還沒登入代理。教室電腦已預先安裝好 VS Code、Codex extension、Codex CLI、Python、Node.js 與必要 Python 套件；自備筆電的學員不用先卡在安裝細節，講師會帶著安裝，TA 會協助排除問題。把這一關當成<b>暖身與排雷</b>，後面五個練習才不會在環境問題上流失時間。</span><span class="lang-en"><b>Goal of this block: get the whole room onto the same starting line within 20 minutes.</b> The usual blocker in a workshop is not the analysis but an <span class="hl">inconsistent environment</span> - a missing command here, a wrong package version there, an agent not yet signed in. Classroom PCs are preinstalled with VS Code, the Codex extension, Codex CLI, Python, Node.js, and required Python packages; learners on personal notebooks should not get stuck on install details, the instructor walks them through it and TAs help clear problems. Treat this unit as <b>warm-up and de-risking</b> so the five later labs do not bleed time on setup.</span></p>
+      <p><span class="lang-zh"><b>這一段的目標：讓你在 20 分鐘內和大家站上同一條起跑線。</b>工作坊最常卡關的不是分析，而是<span class="hl">環境不一致</span> - 指令找不到、套件版本不對、代理還沒登入。教室電腦已預先安裝好 VS Code、Codex extension、Codex CLI、Python、Node.js 與必要 Python 套件；如果你用自備筆電，不用先卡在安裝細節，跟著講師一步步裝，遇到問題就舉手請 TA 協助。把這一關當成<b>暖身與排雷</b>，後面五個練習才不會在環境問題上流失時間。</span><span class="lang-en"><b>Goal of this block: get you onto the same starting line as everyone else within 20 minutes.</b> The usual blocker in a workshop is not the analysis but an <span class="hl">inconsistent environment</span> - a missing command, a wrong package version, an agent not yet signed in. Classroom PCs are preinstalled with VS Code, the Codex extension, Codex CLI, Python, Node.js, and required Python packages; if you are on a personal notebook, do not get stuck on install details, follow the instructor step by step and raise your hand for a TA. Treat this unit as <b>warm-up and de-risking</b> so the five later labs do not bleed time on setup.</span></p>
       <p><span class="lang-zh"><b>每樣工具的角色：</b><span class="hl">VS Code</span> 是編輯器與工作台；<span class="hl">Codex extension</span> 讓代理直接在編輯器裡讀寫檔案；<span class="hl">Codex CLI</span> 是終端機版的同一個代理；<span class="hl">Python</span> 負責真正的資料分析，<span class="hl">Node.js</span> 則是代理工具鏈的執行環境；<span class="hl">必要套件</span>（<code>pandas</code>、<code>scipy</code>、<code>openpyxl</code>、<code>matplotlib</code>）分別處理表格、統計、Excel 讀取與畫圖。不需要背這些名字，只要知道少了哪一個、後面哪一關會出錯。</span><span class="lang-en"><b>What each tool is for:</b> <span class="hl">VS Code</span> is the editor and workbench; the <span class="hl">Codex extension</span> lets the agent read and write files right inside the editor; the <span class="hl">Codex CLI</span> is the same agent from the terminal; <span class="hl">Python</span> does the actual data analysis while <span class="hl">Node.js</span> runs the agent toolchain; the <span class="hl">required packages</span> (<code>pandas</code>, <code>scipy</code>, <code>openpyxl</code>, <code>matplotlib</code>) handle tables, statistics, Excel reading, and charts. You need not memorize the names, only which later lab breaks if one is missing.</span></p>
       <p><span class="lang-zh"><b>怎麼算「就緒」：</b>真正的驗收不是看安裝有沒有跑完，而是讓代理做一件實事 - 請它「列出 <code>labs/data/</code> 內所有檔案，每個用一句話說明」。<b>看到資料檔清單</b>就代表編輯器、代理、檔案存取三者都通了。這也順手示範了本工作坊的核心習慣：<span class="hl">先讓代理動手、再自己核對結果</span>，而不是相信安裝畫面上的綠色勾勾。</span><span class="lang-en"><b>What "ready" means:</b> the real check is not whether installs finished but whether the agent can do something real - ask it to "list every file in <code>labs/data/</code> with a one-line description". <b>A file list</b> proves the editor, the agent, and file access are all wired up. It also previews the workshop's core habit: <span class="hl">let the agent act, then verify the result yourself</span>, rather than trusting a green checkmark on an installer.</span></p>
     </div>
@@ -442,7 +432,7 @@
   <section class="slide" data-sec="③ AI 代理" data-sec-en="③ AI Agents">
     <div class="s-head"><span class="badge"><span class="lang-zh">準備階段</span><span class="lang-en">Prep</span></span><div><span class="kicker">AI Agents · Prompt → Verify → Iterate</span><h2><span class="lang-zh">Chat 和 Agent 差在哪？</span><span class="lang-en">Chat vs agent: what changes?</span></h2></div></div>
     <div class="intro">
-      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給學員</span><span class="lang-en">Unit guide · for you</span></span>
       <img class="mascot mascot-l" src="assets/imgs/mascots/yang09.png" alt="講師示意：AI 代理的核心概念">
       <p><span class="lang-zh"><b>這一段的目標：先把「代理」和「聊天」的差別講清楚，後面五關才有共同語言。</b>Chat 主要回覆，Agent 會動手。傳統 Chat 你問一句、它回一段，<span class="hl">複製貼上、開檔案、執行、Debug 全是你在搬運</span>；AI 代理則是你給目標與限制，它<span class="hl">自己規劃步驟、讀寫檔案、跑程式、看錯誤再修正</span>，你退一步當審查者。本工作坊要練的不是背指令，而是把目標交代清楚，讓代理動手，再由你核對結果。</span><span class="lang-en"><b>Goal of this block: pin down the difference between an "agent" and a "chat" so the five labs share one vocabulary.</b> Chat mainly replies; an agent acts. With plain chat you ask and it answers, and <span class="hl">copy-paste, opening files, running, and debugging are all on you</span>; an AI agent takes your goal and constraints and <span class="hl">plans the steps, reads and writes files, runs code, and fixes its own errors</span> while you step back as the reviewer. This workshop is not about memorizing commands but about stating the goal clearly, letting the agent act, and verifying the result.</span></p>
       <p><span class="lang-zh"><b>為什麼這個差別重要：</b>因為代理會真的改你的檔案、執行你的指令，<span class="hl">它的能力越大，你「核對」的責任就越大</span>。代理會出錯、會幻想不存在的欄位、會把分析方向弄反 - 這不是它壞掉，而是它本來就會這樣，所以每一關都刻意保留需要你判斷的環節。<span class="hl">Computer Use</span> 更進一步讓代理看螢幕、點介面、跑流程；因為它會影響電腦狀態，任務要小、權限要看清楚。今天的練習聚焦在讀寫檔案型的代理，但同一套把關心法對 Computer Use 一樣適用。</span><span class="lang-en"><b>Why the difference matters:</b> because an agent really edits your files and runs your commands, <span class="hl">the more capable it is, the more responsibility you carry to verify</span>. Agents err, hallucinate columns that do not exist, and flip the direction of an analysis - that is not them breaking, it is how they normally behave, which is why every lab keeps a judgment call for you. <span class="hl">Computer Use</span> goes further, letting an agent see the screen, click the UI, and run flows; since it can change computer state, keep tasks narrow and review permissions. Today's labs focus on file-editing agents, but the same review mindset transfers to Computer Use.</span></p>
@@ -468,7 +458,7 @@
   <section class="slide" data-sec="④ 練習0 認識資料" data-sec-en="④ Ex0 Meet data">
     <div class="s-head"><span class="badge alt"><span class="lang-zh">練習 0</span><span class="lang-en">Ex 0</span></span><div><span class="kicker"><span class="lang-zh">認識資料 · 12 分</span><span class="lang-en">Meet the data · 12 min</span></span><h2><span class="lang-zh">認識代理與資料</span><span class="lang-en">Meet the agent and the data</span></h2></div></div>
     <div class="intro">
-      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給學員</span><span class="lang-en">Unit guide · for you</span></span>
       <img class="mascot mascot-l" src="assets/imgs/mascots/yang07.png" alt="講師指向：先認識資料">
       <p><span class="lang-zh"><b>這一關的目標：先不要分析，先讓代理帶你認識資料。</b>請它列出資料夾、打開前測 Excel、摘要工作表與欄位，再讀 SIMS 題目說明、解釋四個構面。重點是把<span class="hl">檔案位置與問題講清楚</span>，並養成「AI 說完，我自己對照原檔確認」的習慣。先把地圖看懂，後面五關才不會走歪。</span><span class="lang-en"><b>Goal of this unit: do not analyze yet; first let the agent introduce the data.</b> Have it list the folder, open the pre-test Excel, summarize sheets and columns, then read the SIMS item guide and explain the four subscales. The point is <span class="hl">stating the files and the question clearly</span> and building the habit of "after the AI answers, I check the source myself". Read the map first so the next five labs stay on course.</span></p>
       <p><span class="lang-zh"><b>這份量表是什麼：</b>本問卷改編自情境動機量表 <span class="hl">SIMS（Situational Motivation Scale）</span>，背後理論是 Deci 與 Ryan 的<span class="hl">自我決定理論（SDT）</span>。共 <b>16 題</b>，採 <b>7 點李克特量表</b>（1＝完全不符合 ～ 7＝完全符合），每題前面都接同一句題幹：<b>「你現在為什麼正在進行這個活動？」</b>，四個構面就是四種不同的回答理由。</span><span class="lang-en"><b>What the instrument is:</b> this survey is adapted from the <span class="hl">Situational Motivation Scale (SIMS)</span>, grounded in Deci and Ryan's <span class="hl">Self-Determination Theory (SDT)</span>. It has <b>16 items</b> on a <b>7-point Likert scale</b> (1 = strongly disagree to 7 = strongly agree), each following the same stem: <b>"Why are you currently doing this activity?"</b> The four subscales are four different reasons people give.</span></p>
@@ -522,7 +512,7 @@
   <section class="slide" data-sec="⑤ 練習1 清理資料" data-sec-en="⑤ Ex1 Clean">
     <div class="s-head"><span class="badge alt"><span class="lang-zh">練習 1</span><span class="lang-en">Ex 1</span></span><div><span class="kicker"><span class="lang-zh">資料清理 · 28 分</span><span class="lang-en">Data cleaning · 28 min</span></span><h2><span class="lang-zh">原始資料清理與萃取</span><span class="lang-en">Clean and extract the raw data</span></h2></div></div>
     <div class="intro">
-      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給學員</span><span class="lang-en">Unit guide · for you</span></span>
       <img class="mascot mascot-r" src="assets/imgs/mascots/yang12.png" alt="講師示意：依步驟清理資料">
       <p><span class="lang-zh"><b>這一關的目標：把「給人看」的 Excel 變成「給程式算」的乾淨表格。</b>真實資料永遠不乾淨：這份問卷每張工作表的<span class="hl">第一列是大標題</span>、欄名是一整句中文長題目，而且前測與後測的<span class="hl">填答人數不一樣</span>。沒先清乾淨，後面的信度與 t 檢定全會算錯。這一關真正在練一句話：<b>先檢查、再相信</b>。</span><span class="lang-en"><b>Goal of this unit: turn human-readable Excel into clean, computable tables.</b> Real data is never tidy: every sheet here has a <span class="hl">title banner in row 1</span>, column names that are full Chinese sentences, and a <span class="hl">different number of respondents</span> in pre vs post. Skip the cleaning and the later reliability and t-test all come out wrong. The real skill this unit drills is one rule: <b>check first, then trust</b>.</span></p>
       <p><span class="lang-zh"><b>需要的觀念：</b><span class="hl">資料清理</span>是把雜亂原始檔整理成一致、可計算的表格；<span class="hl">header=1</span> 告訴程式真正欄名在第二列、不是第一列標題；<span class="hl">分數反向</span>是因為表中存的是「選項編號」不是同意分數，選項 1 其實代表 7 分，所以要換算 <code>actual_score = 8 - option_number</code>；<span class="hl">配對資料</span>指同一人前後測都有，才能做配對比較。</span><span class="lang-en"><b>Concepts you need:</b> <span class="hl">data cleaning</span> turns messy raw files into a consistent, computable table; <span class="hl">header=1</span> tells the code the real headers are on row 2, not the row-1 title; the <span class="hl">score reversal</span> is needed because the cells store an option number, not an agreement score (option 1 actually means 7 points), so convert with <code>actual_score = 8 - option_number</code>; <span class="hl">paired data</span> means a student present in both pre and post, the only ones you can compare pairwise.</span></p>
@@ -568,10 +558,10 @@
   </section>
 
   <!-- 練習2 信度 -->
-  <section class="slide" data-sec="⑥ 練習2 信效度檢測" data-sec-en="⑥ Ex2 Reliability">
+  <section class="slide" data-sec="⑥ 練習2 信度檢驗" data-sec-en="⑥ Ex2 Reliability">
     <div class="s-head"><span class="badge alt"><span class="lang-zh">練習 2</span><span class="lang-en">Ex 2</span></span><div><span class="kicker"><span class="lang-zh">信度 · 25 分</span><span class="lang-en">Reliability · 25 min</span></span><h2><span class="lang-zh">信度與效度</span><span class="lang-en">Reliability and validity</span></h2></div></div>
     <div class="intro">
-      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給學員</span><span class="lang-en">Unit guide · for you</span></span>
       <img class="mascot mascot-l" src="assets/imgs/mascots/yang02.png" alt="講師思考：資料一致嗎">
       <p><span class="lang-zh"><b>這一關的目標：先把 16 題合成 4 個構面，再檢查這些構面靠不靠得住。</b>分數算得出來不代表可信。這一關練的是<span class="hl">在分析之前先問「這份問卷可不可信」</span>，並抓到真正的警訊：ER 前測信度只有約 0.36。</span><span class="lang-en"><b>Goal of this unit: combine the 16 items into 4 subscales, then check whether those subscales hold up.</b> Getting a number does not make it trustworthy. This unit drills <span class="hl">asking "is this instrument reliable" before analyzing</span>, and catching the real red flag: ER pre reliability is only about 0.36.</span></p>
       <p><span class="lang-zh"><b>需要的觀念：</b><span class="hl">構面分數</span>是把一個構面的四題取平均，合成一個概念分數；<span class="hl">信度（reliability）</span>問的是同一構面各題是否量到同一件事、結果穩不穩定；<span class="hl">Cronbach's α</span>是 0 到 1 的一致性指標，越接近 1 越好，常以 0.7 為可接受門檻；<span class="hl">效度（validity）</span>則問是否真的量到你想量的概念。</span><span class="lang-en"><b>Concepts you need:</b> a <span class="hl">subscale score</span> averages a subscale's four items into one concept score; <span class="hl">reliability</span> asks whether those items measure the same thing consistently; <span class="hl">Cronbach's alpha</span> is a 0 to 1 consistency index, closer to 1 is better, with 0.7 a common acceptable threshold; <span class="hl">validity</span> asks whether it truly measures the concept you intend.</span></p>
@@ -631,9 +621,9 @@
   <section class="slide" data-sec="⑦ 中場休息" data-sec-en="⑦ Break">
     <div class="s-head"><span class="badge hot"><span class="lang-zh">休息</span><span class="lang-en">Break</span></span><div><span class="kicker"><span class="lang-zh">中場休息 · 10 分</span><span class="lang-en">Break · 10 min</span></span><h2><span class="lang-zh">中場休息與保險包</span><span class="lang-en">Break and restore points</span></h2></div></div>
     <div class="intro">
-      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給學員</span><span class="lang-en">Unit guide · for you</span></span>
       <img class="mascot mascot-l" src="assets/imgs/mascots/yang05.png" alt="講師慶祝：中場休息一下">
-      <p><span class="lang-zh"><b>中場不只是休息。</b>它的設計意圖是「對齊起跑線」：講師趁空檔用<b>分段解答包</b>把落後的人接上進度，確保下半場（從 t 檢定起）全班站在同一個資料基礎上。沒有人因為前面卡住就整場掉隊。</span><span class="lang-en"><b>The break is not only rest.</b> Its intent is to align the starting line: the facilitator uses <b>staged answer packs</b> to catch up anyone behind, so the second half (from the t-test) starts on the same data footing. No one is lost for the whole session over an early snag.</span></p>
+      <p><span class="lang-zh"><b>中場不只是休息，也是你「對齊起跑線」的機會。</b>如果前面有哪一關卡住了，趁這 10 分鐘用<b>分段解答包</b>把進度接上，下半場（從 t 檢定起）就能和大家站在同一個資料基礎上。別讓前面一個小卡關，害自己整場掉隊。</span><span class="lang-en"><b>The break is not only rest; it is your chance to realign.</b> If any earlier lab tripped you up, use these 10 minutes and the <b>staged answer packs</b> to catch your progress up, so the second half (from the t-test) starts on the same data footing as everyone else. Do not let one early snag drop you for the whole session.</span></p>
     </div>
     <div class="glossary">
       <div class="gterm"><b><span class="lang-zh">分段保險包</span><span class="lang-en">staged restore point</span></b><span><span class="lang-zh">每個階段都有現成的 outputs，可就近接續而不必從頭。</span><span class="lang-en">Each stage has ready-made outputs to resume from, no restart needed.</span></span></div>
@@ -647,7 +637,7 @@
   <section class="slide" data-sec="⑧ 練習3 t 檢定" data-sec-en="⑧ Ex3 t-test">
     <div class="s-head"><span class="badge alt"><span class="lang-zh">練習 3</span><span class="lang-en">Ex 3</span></span><div><span class="kicker"><span class="lang-zh">配對 t 檢定 · 30 分 · 全場核心</span><span class="lang-en">Paired t-test · 30 min · the centerpiece</span></span><h2><span class="lang-zh">前後測有沒有顯著差異</span><span class="lang-en">Did pre vs post differ?</span></h2></div></div>
     <div class="intro">
-      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給學員</span><span class="lang-en">Unit guide · for you</span></span>
       <img class="mascot mascot-r" src="assets/imgs/mascots/yang08.png" alt="講師提醒：注意 AM 方向相反">
       <p><span class="lang-zh"><b>這一關的目標：用 41 位配對學生回答一句話 - 前後測的差異是真的，還是運氣？</b>這是全場的核心。把前後測構面分數依帳號對齊，只留兩次都填的人，對 IM／IR／ER／AM 各做一次配對 t 檢定，並學會<span class="hl">不只看「有沒有差」，也看「差多大」「往哪個方向」</span>。</span><span class="lang-en"><b>Goal of this unit: use the 41 paired students to answer one question - is the pre/post difference real, or chance?</b> This is the centerpiece. Align subscale scores by account, keep only students present in both waves, run a paired t-test on IM/IR/ER/AM, and learn to read <span class="hl">not just whether there is a difference, but how big and in which direction</span>.</span></p>
       <p><span class="lang-zh"><b>需要的觀念：</b><span class="hl">配對 t 檢定</span>比較同一群人前後兩次的平均差異是否顯著；<span class="hl">p 值</span>是「差異純屬隨機」的機率，常以 0.05 為界；<span class="hl">效果量 Cohen's dz</span>說的是差異「有多大」（差值平均除以差值標準差），不只是「有沒有」。</span><span class="lang-en"><b>Concepts you need:</b> a <span class="hl">paired t-test</span> tests whether the same people's pre/post means differ significantly; the <span class="hl">p-value</span> is the chance the difference is just random, with 0.05 a common cutoff; the <span class="hl">effect size Cohen's dz</span> (mean difference over its standard deviation) says how big the difference is, not merely whether it exists.</span></p>
@@ -704,7 +694,7 @@
   <section class="slide" data-sec="⑨ 練習4 圖表生成" data-sec-en="⑨ Ex4 Charts">
     <div class="s-head"><span class="badge alt"><span class="lang-zh">練習 4</span><span class="lang-en">Ex 4</span></span><div><span class="kicker"><span class="lang-zh">畫圖 · 22 分</span><span class="lang-en">Charts · 22 min</span></span><h2><span class="lang-zh">畫圖說故事</span><span class="lang-en">Charts that tell the story</span></h2></div></div>
     <div class="intro">
-      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給學員</span><span class="lang-en">Unit guide · for you</span></span>
       <img class="mascot mascot-r" src="assets/imgs/mascots/yang11.png" alt="講師示意：用圖表呈現結果">
       <p><span class="lang-zh"><b>這一關的目標：把練習 3 的數字畫成能被一眼看懂的圖。</b>圖不是裝飾，而是把結論說清楚的工具。這一關真正在練的是<span class="hl">迭代</span>：先要一張，看不懂就請代理改，逐步逼近清楚。</span><span class="lang-en"><b>Goal of this unit: turn the Ex 3 numbers into charts people grasp at a glance.</b> Charts are not decoration; they are how a conclusion is made clear. The real skill here is <span class="hl">iteration</span>: ask for one chart, and when it does not read well, ask the agent to fix it until it does.</span></p>
       <p><span class="lang-zh"><b>需要的觀念：</b><span class="hl">斜率圖</span>用線段連起前後兩點，升降一眼可見，是本關主圖；<span class="hl">迭代</span>是不滿意就再要求修正、逐步逼近清楚；<span class="hl">CJK 字型</span>若沒設好，中文標籤會變成空白方塊，這時改設定或乾脆改用英文標籤。</span><span class="lang-en"><b>Concepts you need:</b> a <span class="hl">slope chart</span> links pre and post points with a line so rises and falls are obvious, the hero chart here; <span class="hl">iteration</span> means asking for fixes until it reads clearly; the <span class="hl">CJK font</span>, if unset, turns Chinese labels into empty boxes, so fix the setting or just use English labels.</span></p>
@@ -750,7 +740,7 @@
   <section class="slide" data-sec="⑩ 練習5 分析報告" data-sec-en="⑩ Ex5 Report">
     <div class="s-head"><span class="badge alt"><span class="lang-zh">練習 5</span><span class="lang-en">Ex 5</span></span><div><span class="kicker"><span class="lang-zh">整合報告 · 23 分</span><span class="lang-en">Capstone · 23 min</span></span><h2><span class="lang-zh">整合一頁報告</span><span class="lang-en">One-page capstone report</span></h2></div></div>
     <div class="intro">
-      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給學員</span><span class="lang-en">Unit guide · for you</span></span>
       <img class="mascot mascot-l" src="assets/imgs/mascots/yang13.png" alt="講師示意：完成分析報告">
       <p><span class="lang-zh"><b>這一關的目標：把前面四關整合成一頁能交付、卻不誇大的報告。</b>會做分析還不夠，<span class="hl">能誠實地說出結論與限制</span>才是研究素養。報告要寫清楚發現了什麼，也要主動寫出哪裡不能講太滿。</span><span class="lang-en"><b>Goal of this unit: integrate the first four labs into one deliverable, non-overclaimed report.</b> Doing the analysis is not enough; <span class="hl">stating both the findings and the limits honestly</span> is the real research skill. Say what you found, and say where you must not overclaim.</span></p>
       <p><span class="lang-zh"><b>需要的觀念：</b><span class="hl">整合報告</span>是把各步驟串成一頁可讀、可交付的結論；<span class="hl">相關 ≠ 因果</span>，一起變動不代表誰造成誰；<span class="hl">限制（limitations）</span>是誠實標註樣本小、信度問題與設計瑕疵，讓讀者知道結論能信到哪。</span><span class="lang-en"><b>Concepts you need:</b> a <span class="hl">capstone report</span> stitches every step into one readable, deliverable page; <span class="hl">correlation is not causation</span>, moving together does not mean one causes the other; <span class="hl">limitations</span> means honestly flagging small n, reliability problems, and design flaws so readers know how far to trust the conclusion.</span></p>
@@ -793,7 +783,7 @@
   <section class="slide" data-sec="⑪ 五個陷阱" data-sec-en="⑪ Traps">
     <div class="s-head"><span class="badge"><span class="lang-zh">總覽</span><span class="lang-en">Overview</span></span><div><span class="kicker">The five deliberate traps</span><h2><span class="lang-zh">五個刻意設計的陷阱</span><span class="lang-en">Five built-in traps</span></h2></div></div>
     <div class="intro">
-      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
+      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給學員</span><span class="lang-en">Unit guide · for you</span></span>
       <img class="mascot mascot-r" src="assets/imgs/mascots/yang06.png" alt="講師提醒：小心五個陷阱">
       <p><span class="lang-zh"><b>這一段把全場「故意設計的坑」收攏成一張清單。</b>它的意圖不是嚇人，而是提醒：<b>AI 很強但會出錯</b>，這五個陷阱正是練習「驗證」的最佳教材。它們不是 bug，而是把真實資料裡最常見的麻煩濃縮進這份問卷，讓你在安全的場合先踩過一次。看懂它們，你就懂了為什麼人要留在迴圈裡把關。</span><span class="lang-en"><b>This block gathers the workshop's deliberate pitfalls into one list.</b> The intent is not to scare but to remind: <b>AI is powerful yet fallible</b>, and these five traps are the best material for practicing verification. They are not bugs but the most common troubles of real data condensed into this survey, so you step on them once in a safe place. Understanding them is understanding why a human stays in the loop.</span></p>
       <p><span class="lang-zh"><b>五個陷阱各埋在哪、為什麼會讓代理出錯：</b><span class="hl">標題列</span> - 每張工作表第一列是大標題，真正欄名在第二列，沒用 <code>header=1</code> 就會把整份資料讀錯一格（練習 1）。<span class="hl">人數不一</span> - 前測 43、後測 44、配對 41，不先用帳號合併就會把不同人硬湊成一對（練習 1）。<span class="hl">Q11 改題</span> - 這題在前後測被改寫，是 ER 前測信度掉到約 0.36 的元兇，提醒你「工具本身變了，前後測就不能直接比」（練習 2／03）。<span class="hl">AM 反向</span> - 唯一越高越糟的構面，AM 上升是壞消息，是 t 檢定最容易讀反的地方（練習 0／03）。<span class="hl">成績長尾</span> - 6 個 0 分、13 人低於 60，平均數會被拉低，要看分布而非只看一個數字（練習 4）。</span><span class="lang-en"><b>Where each trap lives and why it trips the agent:</b> <span class="hl">Title row</span> - row 1 of every sheet is a banner and the real headers are on row 2, so without <code>header=1</code> the whole table reads off by one (Ex 1). <span class="hl">Mismatched n</span> - 43 pre, 44 post, 41 matched, and without merging on account id you pair up different people (Ex 1). <span class="hl">Q11 reworded</span> - this item changed between pre and post, the culprit behind ER pre-test reliability dropping to about 0.36, a reminder that "if the instrument itself changed, pre and post are not directly comparable" (Ex 2/03). <span class="hl">Reverse AM</span> - the only subscale where higher is worse, so a rising AM is bad news and the spot the t-test is most often misread (Ex 0/03). <span class="hl">Grade tail</span> - 6 zeros and 13 students below 60 drag the mean down, so read the distribution, not a single number (Ex 4).</span></p>
@@ -807,52 +797,23 @@
     <table class="lang-zh">
       <thead><tr><th>陷阱</th><th>說明</th></tr></thead>
       <tbody>
-        <tr><td>標題列</td><td>真正欄名在第二列（header=1）</td></tr>
-        <tr><td>人數不一</td><td>43 / 44 / 41，需配對合併</td></tr>
-        <tr><td>Q11 改題</td><td>ER 前測信度崩掉的元兇</td></tr>
-        <tr><td>AM 反向</td><td>越高越糟，上升是壞消息</td></tr>
-        <tr><td>成績長尾</td><td>6 個 0 分、13 人低於 60</td></tr>
+        <tr><td>標題列</td><td>第一列是大標題，真正欄名在第二列，要用 header=1 讀，否則整份資料錯一格</td></tr>
+        <tr><td>人數不一</td><td>前測 43、後測 44，只有 41 人兩次都填；要用帳號配對合併，不能硬湊</td></tr>
+        <tr><td>Q11 改題</td><td>前測發現 ER 信度有問題，後測把 Q11 改寫成與同構面其他題同方向；題目本身變了，前測 α 僅約 0.36，前後測不能直接比</td></tr>
+        <tr><td>AM 反向</td><td>AM 是唯一「越高越糟」的構面，分數上升代表變差，t 檢定最容易讀反</td></tr>
+        <tr><td>成績長尾</td><td>6 人 0 分、13 人不到 60，平均被拉低；要看整體分布，別只看一個數字</td></tr>
       </tbody>
     </table>
     <table class="lang-en">
       <thead><tr><th>Trap</th><th>What</th></tr></thead>
       <tbody>
-        <tr><td>Title row</td><td>real headers on row 2 (header=1)</td></tr>
-        <tr><td>Mismatched n</td><td>43 / 44 / 41, merge on account id</td></tr>
-        <tr><td>Q11 reworded</td><td>breaks ER pre-test reliability</td></tr>
-        <tr><td>Reverse AM</td><td>higher = worse; a rise is bad</td></tr>
-        <tr><td>Grade tail</td><td>6 zeros, 13 students below 60</td></tr>
+        <tr><td>Title row</td><td>Row 1 is a banner; real headers on row 2, read with header=1 or every column is off by one</td></tr>
+        <tr><td>Mismatched n</td><td>43 pre, 44 post, only 41 took both; merge on account id, never pad to match</td></tr>
+        <tr><td>Q11 reworded</td><td>ER reliability looked off in the pre-test, so Q11 was reworded in the post-test to match the other ER items' direction; the item changed, pre α ~0.36, pre and post not directly comparable</td></tr>
+        <tr><td>Reverse AM</td><td>AM is the only subscale where higher is worse; a rise means worse, often misread</td></tr>
+        <tr><td>Grade tail</td><td>6 zeros and 13 below 60 drag the mean down; read the distribution, not one number</td></tr>
       </tbody>
     </table>
-  </section>
-
-  <!-- 收尾階段 資安與隱私 -->
-  <section class="slide" data-sec="⑫ 資安與隱私" data-sec-en="⑫ Privacy">
-    <div class="s-head"><span class="badge"><span class="lang-zh">收尾階段</span><span class="lang-en">Closing</span></span><div><span class="kicker">Security &amp; Privacy · 10 min</span><h2><span class="lang-zh">資安與隱私收尾</span><span class="lang-en">Privacy wrap-up</span></h2></div></div>
-    <div class="intro">
-      <span class="intro-tag"><span class="lang-zh">單元導讀 · 給講師與學員</span><span class="lang-en">Unit guide · for instructor and learners</span></span>
-      <img class="mascot mascot-r" src="assets/imgs/mascots/yang01.png" alt="講師提醒：資安與隱私守則">
-      <p><span class="lang-zh"><b>這一段的目標：在收尾前，把「能不能放心帶回真實課堂」這件事講清楚。</b>工具再強，也不能拿真人資料冒險。今天用的 <code>pre/post-test.xlsx</code> 裡是<span class="hl">真實學生的帳號與姓名</span>，不是假資料；一旦這些內容被外流或被拿去訓練模型，就收不回來了。本單元建立四條企業級使用守則：<b>真實個資不外流、產出去識別化、關閉模型訓練回傳、保留人工複核</b>。把資料安全當成預設，而不是事後補救，這套流程才真的能用在你自己的學生身上。</span><span class="lang-en"><b>Goal of this block: before wrapping up, settle whether you can safely take this back to a real classroom.</b> However powerful the tools, never gamble with real people's data. The <code>pre/post-test.xlsx</code> used today hold <span class="hl">real student accounts and names</span>, not fake data; once that leaks or gets used to train a model, you cannot pull it back. This unit sets four enterprise-grade rules: <b>keep real PII in, de-identify outputs, turn off training feedback, keep human review</b>. Make data safety the default rather than an afterthought, and this pipeline becomes something you can actually use on your own students.</span></p>
-      <p><span class="lang-zh"><b>四條守則為什麼這樣定：</b><span class="hl">真實個資不外流</span> - 所有產出（CSV、圖、報告）都只輸出去識別化的構面分數與統計量，絕不帶出姓名或帳號；前面練習刻意只留 <code>帳號</code> 當代號、再去掉，就是這個道理。<span class="hl">產出去識別化</span> - 移除可識別欄位，只留分析真正需要的資料。<span class="hl">關閉訓練回傳</span> - 在代理設定裡關掉「以我的內容協助改善模型」之類選項（如 Settings → Data Controls），避免你的資料變成別人模型的養分。<span class="hl">人工複核</span> - AI 產出在上線或外流前，一定由人檢查一次，呼應整場「人在迴圈」的主軸。</span><span class="lang-en"><b>Why each rule is set this way:</b> <span class="hl">Keep real PII in</span> - every output (CSV, chart, report) emits only de-identified subscale scores and statistics, never names or accounts; the earlier labs deliberately kept just <code>帳號</code> as a code and then dropped it for this reason. <span class="hl">De-identify outputs</span> - remove identifying fields and keep only what the analysis truly needs. <span class="hl">Turn off training feedback</span> - in the agent settings disable "improve the model with my content" style options (e.g. Settings → Data Controls) so your data does not feed someone else's model. <span class="hl">Human review</span> - a person checks AI output once before it ships or leaves, echoing the "human in the loop" theme of the whole day.</span></p>
-      <p><span class="lang-zh"><b>帶回課堂的安全起手式：</b>最穩的做法是<span class="hl">先用假資料把流程練熟，再換上真實資料只跑一次</span>。流程沒問題、輸出已去識別化、訓練回傳已關閉、最後一道由你親自複核 - 四件事都做到，才算真的把今天學的東西安全落地。資料安全不是這場工作坊的附錄，而是讓整套 AI 工作流可以信任的前提。</span><span class="lang-en"><b>A safe way to bring it home:</b> the most reliable approach is to <span class="hl">rehearse the pipeline on fake data first, then run it on real data only once</span>. The flow is sound, outputs are de-identified, training feedback is off, and you personally do the final review - only when all four hold have you landed today's work safely. Data safety is not an appendix to this workshop but the precondition that makes the whole AI pipeline trustworthy.</span></p>
-    </div>
-    <div class="glossary">
-      <div class="gterm"><b><span class="lang-zh">個資</span><span class="lang-en">PII</span></b><span><span class="lang-zh">能識別到個人的資訊，如姓名、帳號。</span><span class="lang-en">Information that identifies a person, such as name or account.</span></span></div>
-      <div class="gterm"><b><span class="lang-zh">去識別化</span><span class="lang-en">de-identify</span></b><span><span class="lang-zh">移除可識別欄位，只留分析所需的資料。</span><span class="lang-en">Remove identifying fields, keep only what analysis needs.</span></span></div>
-      <div class="gterm"><b><span class="lang-zh">人工複核</span><span class="lang-en">human review</span></b><span><span class="lang-zh">AI 產出上線或外流前，由人檢查一次。</span><span class="lang-en">A human checks AI output before it ships or leaves.</span></span></div>
-    </div>
-    <div class="steps">
-      <div class="step-item"><h4><span class="lang-zh">真實個資守則</span><span class="lang-en">Real-PII rule</span></h4><p><span class="lang-zh"><code>pre/post-test.xlsx</code> 含真實學生帳號與姓名。<b>所有產出都不得帶出姓名或帳號</b>，只輸出去識別化的構面分數與統計量。</span><span class="lang-en"><code>pre/post-test.xlsx</code> hold real student accounts and names. <b>No output may carry names or accounts</b>, only de-identified scores.</span></p></div>
-      <div class="step-item"><h4><span class="lang-zh">代理隱私設定</span><span class="lang-en">Agent privacy</span></h4><p><span class="lang-zh">關閉「以我的內容協助改善模型」之類的訓練回傳選項（如 Settings → Data Controls）。</span><span class="lang-en">Turn off "improve the model with my content" style training (e.g. Settings → Data Controls).</span></p></div>
-      <div class="step-item"><h4><span class="lang-zh">人工複核</span><span class="lang-en">Human review</span></h4><p><span class="lang-zh">AI 產出不要不檢查就上線；真實個資先用假資料練流程。</span><span class="lang-en">Never ship AI output unchecked; practice the pipeline with fake data first.</span></p></div>
-    </div>
-  </section>
-
-  <!-- 收尾 -->
-  <section class="slide" data-sec="⑬ 收尾" data-sec-en="⑬ Wrap-up">
-    <div class="s-head"><span class="badge"><span class="lang-zh">收尾</span><span class="lang-en">Wrap-up</span></span><div><span class="kicker">Wrap-up</span><h2>Prompt → Verify → Iterate</h2></div></div>
-    <blockquote class="pat"><span class="lang-zh">把今天的工作流帶回你自己的真實任務：先把目標講清楚，當審查者看懂代理的每一步，用「我怎麼知道它是對的？」一路驗到可信，並把資料安全放第一。</span><span class="lang-en">Take today's loop back to your own real work: state the goal clearly, review every step as the Reviewer, keep asking "how do I know it's right?", and put data safety first.</span></blockquote>
-    <p class="note"><span class="lang-zh">延伸練習 6／07 與完整解答見「教材資料」與 <code>sample-solution/</code>。</span><span class="lang-en">Extensions 06/07 and the full answer key are in the Materials deck and <code>sample-solution/</code>.</span></p>
   </section>
 
   </div>
@@ -1078,13 +1039,38 @@
     if(st&&typeof st.scrollIntoView==="function") st.scrollIntoView({block:"nearest",inline:"center"});
     location.hash="d"+deck+"s"+idx;
   }
+  function deckActions(g){
+    if(!g) return [];
+    var raw=g.getAttribute("data-actions");
+    if(!raw) return [];
+    try{return JSON.parse(raw);}catch(e){return [];}
+  }
+  function runAction(a){
+    if(!a||!a.href) return;
+    if(a.download){
+      var el=document.createElement("a");
+      el.href=a.href; el.setAttribute("download","");
+      document.body.appendChild(el); el.click(); document.body.removeChild(el);
+    }else{
+      window.open(a.href,"_blank","noopener");
+    }
+  }
   function buildSubTabs(){
-    subTabsWrap.innerHTML=slides.map(function(s,i){
+    var html=slides.map(function(s,i){
       var name=(curLang()==="en"&&s.dataset.secEn)?s.dataset.secEn:(s.dataset.sec||("第 "+(i+1)+" 張"));
       return '<button class="tab" type="button" data-sub="'+i+'">'+name+'</button>';
     }).join("");
-    subTabs=[].slice.call(subTabsWrap.querySelectorAll(".tab"));
+    var actions=deckActions(groups[deck]);
+    html+=actions.map(function(a,i){
+      var label=(curLang()==="en"&&a.en)?a.en:a.zh;
+      return '<button class="tab tab-action" type="button" data-act="'+i+'">'+label+'</button>';
+    }).join("");
+    subTabsWrap.innerHTML=html;
+    subTabs=[].slice.call(subTabsWrap.querySelectorAll(".tab[data-sub]"));
     subTabs.forEach(function(tab){tab.addEventListener("click",function(){show(+tab.dataset.sub);});});
+    [].forEach.call(subTabsWrap.querySelectorAll(".tab-action"),function(tab){
+      tab.addEventListener("click",function(){runAction(actions[+tab.dataset.act]);});
+    });
   }
   function switchDeck(n,startIdx){
     deck=Math.max(0,Math.min(groups.length-1,n));
@@ -1245,11 +1231,11 @@
         {name:"驗收清單",nameEn:"Acceptance checklist",path:"rubric/checklist.md"},
         {lang:"zh",name:"中文練習 · 入口 README",path:"labs/zh/README.md"},
         {lang:"zh",name:"中文 · 00 認識資料",path:"labs/zh/00-setup-and-orientation.md"},
-        {lang:"zh",name:"中文 · 01 資料清理",path:"labs/zh/01-data-cleaning-extraction.md"},
-        {lang:"zh",name:"中文 · 02 信度",path:"labs/zh/02-reliability-validation.md"},
+        {lang:"zh",name:"中文 · 01 清理資料",path:"labs/zh/01-data-cleaning-extraction.md"},
+        {lang:"zh",name:"中文 · 02 信度檢驗",path:"labs/zh/02-reliability-validation.md"},
         {lang:"zh",name:"中文 · 03 t 檢定",path:"labs/zh/03-t-test.md"},
-        {lang:"zh",name:"中文 · 04 畫圖",path:"labs/zh/04-charts.md"},
-        {lang:"zh",name:"中文 · 05 整合報告",path:"labs/zh/05-capstone-report.md"},
+        {lang:"zh",name:"中文 · 04 圖表生成",path:"labs/zh/04-charts.md"},
+        {lang:"zh",name:"中文 · 05 分析報告",path:"labs/zh/05-capstone-report.md"},
         {lang:"zh",name:"中文 · 06 口語省思（延伸）",path:"labs/zh/06-qualitative-reflection.md"},
         {lang:"zh",name:"中文 · 07 Q11 敏感度（延伸）",path:"labs/zh/07-q11-sensitivity-reevaluation.md"},
         {lang:"en",name:"English · entry README",path:"labs/en/README.md"},

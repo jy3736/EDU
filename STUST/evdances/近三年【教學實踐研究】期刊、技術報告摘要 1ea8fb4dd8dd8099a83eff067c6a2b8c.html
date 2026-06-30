@@ -1,0 +1,746 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>近三年【教學實踐研究】期刊、技術報告摘要</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1ea8fb4d-d8dd-8099-a83e-ff067c6a2b8c" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1535982330050-f1c2fb79ff78?ixlib=rb-4.0.3&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="800x800.png"/></div><h1 class="page-title" dir="auto">近三年【教學實踐研究】期刊、技術報告摘要</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="2038fb4d-d8dd-8093-b896-f44a92899fde" class="">坦白說，從工程背景轉向教育教學理論，對我而言確實是一條不容易的路。雖然已經在教學生涯中累積了十幾二十年的經驗，但要將過去的教學實踐細節系統性地結合教學理論，並用數據佐證反思、優化教學策略，這過程遠比想像中艱辛。回顧一路以來，不僅要持續修正自己的教學方法，也需要花費大量時間整理學生的學習成績與回饋問卷，再三推敲哪些做法真正有助於學生的學習。這些努力雖然未必光鮮亮麗，但卻真切地記錄了自己在第一線教學現場的付出與成長。</p></div><div style="display:contents" dir="auto"><p id="2038fb4d-d8dd-8024-9d3b-e9e1c083a66b" class="">很慶幸能將過去幾年於「新工程教育專班」的實地教學歷程梳理、整理成文字，這雖然不是什麼偉大的創作，但確實代表了我在翻轉教學現場持續投入與學生真實互動的足跡。<mark class="highlight-yellow"><strong>這段過程，也促成了我人生第一篇以教學實踐為主題的期刊論文</strong></mark>。</p></div><div style="display:contents" dir="auto"><div id="2038fb4d-d8dd-80de-8a40-edc5d686eb8c" class="column-list"><div style="display:contents" dir="auto"><div id="2038fb4d-d8dd-80c4-86d4-cd8aada2071f" style="width:43.75%" class="column"><div style="display:contents" dir="ltr"><figure id="2038fb4d-d8dd-80b1-99fa-d22cfacd4788" class="image"><a href="%E8%BF%91%E4%B8%89%E5%B9%B4%E3%80%90%E6%95%99%E5%AD%B8%E5%AF%A6%E8%B8%90%E7%A0%94%E7%A9%B6%E3%80%91%E6%9C%9F%E5%88%8A%E3%80%81%E6%8A%80%E8%A1%93%E5%A0%B1%E5%91%8A%E6%91%98%E8%A6%81/image.png"><img style="width:288px" src="%E8%BF%91%E4%B8%89%E5%B9%B4%E3%80%90%E6%95%99%E5%AD%B8%E5%AF%A6%E8%B8%90%E7%A0%94%E7%A9%B6%E3%80%91%E6%9C%9F%E5%88%8A%E3%80%81%E6%8A%80%E8%A1%93%E5%A0%B1%E5%91%8A%E6%91%98%E8%A6%81/image.png"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="2038fb4d-d8dd-8076-958b-f3222011f51f" style="width:56.25%" class="column"><div style="display:contents" dir="ltr"><figure id="2038fb4d-d8dd-80fe-87de-f59713db61b1" class="image"><a href="%E8%BF%91%E4%B8%89%E5%B9%B4%E3%80%90%E6%95%99%E5%AD%B8%E5%AF%A6%E8%B8%90%E7%A0%94%E7%A9%B6%E3%80%91%E6%9C%9F%E5%88%8A%E3%80%81%E6%8A%80%E8%A1%93%E5%A0%B1%E5%91%8A%E6%91%98%E8%A6%81/26a9c6a7-499a-4ff8-b460-3f00efd44c56.png"><img style="width:288px" src="%E8%BF%91%E4%B8%89%E5%B9%B4%E3%80%90%E6%95%99%E5%AD%B8%E5%AF%A6%E8%B8%90%E7%A0%94%E7%A9%B6%E3%80%91%E6%9C%9F%E5%88%8A%E3%80%81%E6%8A%80%E8%A1%93%E5%A0%B1%E5%91%8A%E6%91%98%E8%A6%81/26a9c6a7-499a-4ff8-b460-3f00efd44c56.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="auto"><h3 id="1ea8fb4d-d8dd-803d-9a0c-ec9b9fa5ebe3" class="block-color-yellow_background"><mark class="highlight-default"><mark class="highlight-default_background"><strong>1. 可持續的教學實踐：翻轉教學在電子與電機工程課程的比較研究與借鏡</strong></mark></mark><mark class="highlight-default"><mark class="highlight-default_background"> 《教學實踐研究》期刊 </mark></mark></h3></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1ea8fb4d-d8dd-80b3-b35b-fab8320b4823"><div style="font-size:1.5em"><span class="icon">📝</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-80e5-b84b-ec1631478c2e" class=""><strong><a href="https://jsotl.moe.edu.tw/article/journal_detail@0cefa29f8f0470e7018f7a981e6b0135">可持續的教學實踐：翻轉教學在電子與電機工程課程的比較研究與借鏡</a></strong> 《教學實踐研究》期刊 2025/3</p></div><div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-80a5-8460-f5348933d5a3" class="">Yang, J.-L. (2025). Sustainable Teaching Practices: Lessons from a Comparative Study on Flipped Teaching in Electronics and Electrical Engineering Courses. Journal of Scholarship of Teaching and Learning. doi:10.7007/JSoTL.202503/PP.0003 </p></div><div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-80b5-a237-c5e4f637b3d6" class=""><br/><strong>教學實踐論文摘要<br/><br/></strong>本研究針對私立大專校院在少子化背景下普遍面臨的學生學習動機低落與學習成效不彰問題，進行為期三年的翻轉教學實踐，聚焦於電子與電機工程課程，透過課程設計、教學策略與學習資源的整合，探索可持續且具擴充性的教學創新方案。<br/><br/><strong>主要貢獻</strong></p></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-8081-bda9-de6609eb0eb0" class="bulleted-list"><li style="list-style-type:disc"><strong>建構可持續的翻轉教學模式</strong>：本研究從傳統翻轉教學出發，逐年優化為「reviewed flipped approach」，整合教學影片、Podcast、Notion 筆記、生成式 AI 工具（如 ChatGPT、Copilot）與動態筆記，建立能根據學生反饋即時調整的教學架構。</li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-80d8-b947-c6a15e5d7586" class="bulleted-list"><li style="list-style-type:disc"><strong>導入行動研究機制以驅動滾動式教學優化</strong>：每學期依據學生的參與行為、學習表現、問卷回饋、課堂觀察與助教會議記錄等多元資料，持續修正課程內容、教學節奏與評量機制，有效提升課堂互動性與學習投入度。</li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-800c-928a-ca195cdf0ed0" class="bulleted-list"><li style="list-style-type:disc"><strong>實踐產業接軌導向的課程設計</strong>：透過「單晶片微處理器實務課程」，結合 Arduino、Raspberry Pi、MQTT、Node-RED 等 IoT 技術，並搭配專題實作與即時應用，強化學生對技術趨勢的理解與實作能力。</li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-80a3-8c61-feea645d0c77" class="bulleted-list"><li style="list-style-type:disc"><strong>提供多元評量與補救策略</strong>：除期中期末考與專題成果外，亦設計每週形成性評量（quiz）、線上輔導與數位補救教材，特別針對低成就學生進行支持，縮小學生學習落差。</li></ul></div><div style="display:contents" dir="auto"><h3 id="1ea8fb4d-d8dd-808b-979f-d2b8237e4f40" class=""><strong>解決的教學問題</strong></h3></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-806d-b864-c0d1992ad9df" class="bulleted-list"><li style="list-style-type:disc"><strong>低動機與高落差的學生學習困境</strong>：透過設計具彈性與即時回饋機制的教學流程，有效提升學生學習動機與課堂參與，同時減緩高低成就學生之間的學習落差擴大問題。</li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-80ff-80ef-fedb739c71c0" class="bulleted-list"><li style="list-style-type:disc"><strong>傳統翻轉教學法適應困難</strong>：原有模式在學生基礎薄弱的情況下無法有效推動學習，經優化後的翻轉策略強調課後補充教學與可選性學習資源，大幅改善教學成效。</li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-801d-95d7-d3a012f2761a" class="bulleted-list"><li style="list-style-type:disc"><strong>專題完成率低落</strong>：經由簡化專題結構、提供引導模板與引入 AI 工具協助程式設計，有效提升學生專題執行率與完成品質。</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-80c8-8cf4-c8d19b3ffe33" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1ea8fb4d-d8dd-8092-b2ab-dadbed531f4e" class="block-color-yellow_background">2. 生成式AI教學輔具實現USR整合專業課程的可行方案 【技術報告 2025/2】</h3></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1ea8fb4d-d8dd-8076-87a0-f7390a7e924c"><div style="font-size:1.5em"><span class="icon">📝</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-80ab-8d42-da1ea778d2a8" class="">生成式AI教學輔具實現USR整合專業課程的可行方案 【技術報告 2025/2】</p></div><div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-8019-bb22-d553010535db" class="">Yang, J.-L. (2025). Generative AI teaching aid tools that make USR integration feasible in professional courses (Technical Report). Southern Taiwan University of Science and Technology.<br/></p></div><div style="display:contents" dir="auto"><h3 id="1ea8fb4d-d8dd-8021-9cf4-d27cbb3d4096" class=""><strong>技術報告摘要</strong></h3></div><div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-80b0-a5ab-c2c39c0ba458" class="">本研究回應專業課程中學生學習動機普遍低落、程度差異過大與課堂時間受限等挑戰，嘗試透過開發生成式 AI 輔助教學系統，整合大學社會責任（USR）活動，實現一套可行的課程創新設計方案。研究對象為電子工程相關課程，著重於教學與服務的融合，並建立三項具實作價值的 AI 教學輔具，強化學生學習動機、自我調整能力與教師教學效率。</p></div><div style="display:contents" dir="auto"><h3 id="1ea8fb4d-d8dd-80cd-bfbf-d22ddc550801" class=""><strong>主要貢獻</strong></h3></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-80dd-bfb1-d06aa53d3820" class="bulleted-list"><li style="list-style-type:disc"><strong>開發生成式 AI 形成性評量系統（GenAI-enhanced Formative Assessment Tool）</strong>：設計一套可根據講義內容自動產生選擇題的系統，支援教師以 Markdown 檔案匯入單元知識，經由 AI 模型產出題目與選項，並可將試題與答題卡匯出至第三方系統如 Zuvio 進行班級練習與統計分析。此工具可應用於課前預習與課後診斷，有助於強化學生基礎概念與課堂參與。</li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-8041-af0e-d117bb6c9152" class="bulleted-list"><li style="list-style-type:disc"><strong>建構程式作業自動批改系統（Automatic Grading System, AGS）</strong>：支援 Python、C++、Verilog 等多種語言，提供學生即時程式錯誤回饋與測資比對結果，並能阻止學生無限提交相同錯誤程式。教師可自訂測資與輸出格式，系統亦能統計測驗通過率與提交次數，適用於多門程式實作課程。有效降低教師批改工作負擔，並提升學生自我修正與除錯能力。</li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-8090-8e8f-e9bcd9322a3b" class="bulleted-list"><li style="list-style-type:disc"><strong>實作即時學習歷程追蹤系統（Learning Performance Tracer, LPT）</strong>：整合學生每週測驗成績、程式作業進度、課堂互動參與（如即時問答系統）與出席情況，提供一頁式圖表化學習報告供學生自我檢視，亦提供教師班級整體表現分析，以進行教學節奏與難度的滾動式調整。可視化數據可作為學習歷程檔案與個別化輔導參考依據。</li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-802d-b818-c53244c6ed3b" class="bulleted-list"><li style="list-style-type:disc"><strong>結合 USR 實踐與專業課程教學</strong>：課程設計融合國小 AI 推廣活動與專業課程內容，學生需運用 AI 工具進行簡報設計與教學演示，並在活動後進行自我反思與課堂分享。該設計提升學生的教學信心與成就感，亦促進社會參與意識，建立課程學習與社會需求之間的實質連結。</li></ul></div><div style="display:contents" dir="auto"><h3 id="1ea8fb4d-d8dd-80d4-9426-e32fabd44fa3" class=""><strong>解決的教學問題</strong></h3></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-80fe-aa31-eabdb11ca87a" class="bulleted-list"><li style="list-style-type:disc"><strong>課程時間壓縮、USR 與專業學習難以兼顧</strong>：AI 工具有效節省教師備課、出題與批改時間，將時間釋放用於USR活動前的輔導與課後反思設計，使USR活動不再是專業教學的「負擔」，而是教學策略的一環。</li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-80a0-a081-d81d8cf4735c" class="bulleted-list"><li style="list-style-type:disc"><strong>學生動機不足與落差擴大</strong>：針對學習動機低落與程度差異大的問題，形成性評量工具與自動批改系統提供學生個別化進度回饋與差異化支持，有效提升中低成就學生的參與度與自信心。</li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-8035-9f90-f040ec6aa5f8" class="bulleted-list"><li style="list-style-type:disc"><strong>教師負荷過重與教學調整延遲</strong>：透過追蹤系統自動彙整學生各項學習行為與成績數據，教師可即時掌握班級整體與個別學生學習狀況，據以調整教材難度與教學方法，落實滾動式教學設計。</li></ul></div><div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-809e-895d-e730fbcd19f0" class="">本報告提出的三項 AI 教學輔具皆具模組化設計與跨課程可轉移性，未來可推廣應用於其他科系與跨校合作場域，為技術型大學在教學創新與USR融合方面提供具體可行的技術與實務架構。</p></div></div></figure></div><div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-8097-85ec-d5f28a404ac9" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1ea8fb4d-d8dd-80f0-818e-ed36463609de" class="block-color-yellow_background">教學實踐研究計畫分享：翻轉無動力世代的教學嘗試。《評鑑雙月刊》，100，11-16。</h3></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1ea8fb4d-d8dd-8073-a8bf-fd4d350803ab"><div style="font-size:1.5em"><span class="icon">📝</span></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-80e0-925e-fa7b8f50064e" class="">楊榮林（2022年11月）。<a href="https://www.heeact.edu.tw/1151/1165/43078/43085/53558/55972/">教學實踐研究計畫分享：翻轉無動力世代的教學嘗試</a>。《評鑑雙月刊》，100，11-16。<br/></p></div><div style="display:contents" dir="auto"><h3 id="1ea8fb4d-d8dd-8058-9c62-da4cb9693808" class=""><strong>教學實踐論文摘要</strong></h3></div><div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-80f3-b87c-f90647133da6" class="">本研究回應「無動力世代」學生學習意願普遍低落與自主學習能力不足的問題，提出「預習翻轉」與「複習翻轉」雙軌教學策略，並結合動態教材設計與課堂形成性評量，建立一套具實務應用性的混合式翻轉教學模式，針對高等技職教育現場進行適性化教學實驗。</p></div><div style="display:contents" dir="auto"><h3 id="1ea8fb4d-d8dd-8082-8cbe-f4c5188f19fc" class=""><strong>主要貢獻</strong></h3></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-809d-afc8-c6180a9d01b7" class="bulleted-list"><li style="list-style-type:disc"><strong>創新雙軌翻轉教學模式（預習翻轉 × 複習翻轉）</strong>：<div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-80c1-83c1-fc08e7d47796" class="">除了傳統課前觀看教學影片的「預習翻轉」，本研究首創「複習翻轉」機制，課後依據學生課堂表現與作業困難點，錄製補救型影音教材，對症下藥解決學習障礙，提升影片觀看的「學習動機」。</p></div></li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-8033-ae66-dbfff05b7ee0" class="bulleted-list"><li style="list-style-type:disc"><strong>教材系統全面滾動調整</strong>：<div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-80ed-a75c-d8d28c6a3263" class="">所有教材皆以網頁格式（Notion + HTML）發佈，配合 SoundOn 播客與影片教學，自動化整合課程目錄與補充說明，實現依學生學習狀況動態更新的線上教學內容，強化學生跨裝置學習的便利性與教材可調性。</p></div></li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-808b-9614-fdd6fc068bcf" class="bulleted-list"><li style="list-style-type:disc"><strong>導入形成性評量與即時回饋機制</strong>：<div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-8011-8f17-da49108692d5" class="">結合 Zuvio 快問快答、教學助理觀察、課堂互動筆記與課後回饋，建立課堂學習歷程監測機制，據以判讀學生需求並設計補充教材，落實精準教學與滾動式調整教學策略。</p></div></li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-80c9-b2a5-e010f4ebec29" class="bulleted-list"><li style="list-style-type:disc"><strong>推動學習動機數據化診斷</strong>：<div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-80bb-98a8-e3cc1de8cc94" class="">全學期四次學習動機問卷追蹤學生「冷漠放棄指數」與「內在動機指數」，作為課堂活化與教材設計之依據，對應觀察翻轉策略的教學效果與學習動能轉變。</p></div></li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-8017-b136-c94118a6e935" class="bulleted-list"><li style="list-style-type:disc"><strong>設計微型專題導向式學習</strong>：<div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-8020-829f-ea29da6f60bb" class="">課程後期導入「微型專題」與 Design For Change（DFC）理念，鼓勵學生發想實務解決方案、親自實作並分享成果，例如改造 RAPIRO 小機器人，推動學以致用與服務學習的結合。</p></div></li></ul></div><div style="display:contents" dir="auto"><h3 id="1ea8fb4d-d8dd-8042-9fbf-c7794cd2d2dc" class=""><strong>解決的教學問題</strong></h3></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-80a7-ad29-c7996c074168" class="bulleted-list"><li style="list-style-type:disc"><strong>學生缺乏自主學習動機與預習習慣</strong>：<div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-805f-96d0-c6efdd1c45ae" class="">傳統翻轉教學未能激發學習意願，改以課後補救型「複習翻轉」回應學生即時需求，學習動機顯著回升。</p></div></li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-8028-8aa6-c9f84ba2dbf5" class="bulleted-list"><li style="list-style-type:disc"><strong>學習落差擴大與評量失準</strong>：<div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-80f2-8ded-e671aaff1e4c" class="">對低成就學生提供期中補救評量與專屬教材支持，對高成就學生導入微型專題拉高挑戰度，兼顧多元能力發展。</p></div></li></ul></div><div style="display:contents" dir="auto"><ul id="1ea8fb4d-d8dd-805b-86d7-f0f5efd15cfc" class="bulleted-list"><li style="list-style-type:disc"><strong>教材更新困難與課程進度難控</strong>：<div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-80ae-b4ae-d8d4786c3f90" class="">拋棄傳統紙本教科書，改用模組化、可更新、具彈性的線上教材平台，提升課程調整效率與因應快速變化的實務技術內容。</p></div></li></ul></div><div style="display:contents" dir="auto"><p id="1ea8fb4d-d8dd-8005-bdbc-eac128fae44b" class="">本研究提出的翻轉教學實踐策略，特別適用於高職背景且自主性較弱的學生族群，證明課後導向的補救翻轉機制更能促成學習成效的提升。研究成果可作為未來翻轉教學推廣、技職課程改造與USR課程設計的重要參考。</p></div></div></figure></div><div style="display:contents" dir="auto"><p id="1eb8fb4d-d8dd-80a1-8208-dfaf0d92a114" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="1eb8fb4d-d8dd-8010-91ff-cb37829eb2b6" class="image"><a href="%E8%BF%91%E4%B8%89%E5%B9%B4%E3%80%90%E6%95%99%E5%AD%B8%E5%AF%A6%E8%B8%90%E7%A0%94%E7%A9%B6%E3%80%91%E6%9C%9F%E5%88%8A%E3%80%81%E6%8A%80%E8%A1%93%E5%A0%B1%E5%91%8A%E6%91%98%E8%A6%81/14.png"><img style="width:710.0000610351562px" src="%E8%BF%91%E4%B8%89%E5%B9%B4%E3%80%90%E6%95%99%E5%AD%B8%E5%AF%A6%E8%B8%90%E7%A0%94%E7%A9%B6%E3%80%91%E6%9C%9F%E5%88%8A%E3%80%81%E6%8A%80%E8%A1%93%E5%A0%B1%E5%91%8A%E6%91%98%E8%A6%81/14.png"/></a></figure></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

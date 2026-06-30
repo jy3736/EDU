@@ -1,0 +1,745 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>17 門課程學生回饋意見彙整（112、113學年度及歷屆專班）</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2048fb4d-d8dd-80d6-bf06-d531d97ff539" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1516321165247-4aa89a48be28?ixlib=rb-4.1.0&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb" style="object-position:center 60.42000000000001%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="800x800.png"/></div><h1 class="page-title" dir="auto">17 門課程學生回饋意見彙整（112、113學年度及歷屆專班）</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h3 id="2048fb4d-d8dd-801f-a28c-d2c6dace3a6b" class="block-color-yellow">學生回饋意見重點摘要</h3></div><div style="display:contents" dir="auto"><p id="2048fb4d-d8dd-8030-a0e7-e7d5684e1892" class="">本次共彙整 <strong>637 份學生回饋意見</strong>，整體結果顯示：</p></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-80b5-b1f9-f8aeeee2a073" class="bulleted-list"><li style="list-style-type:disc"><strong>正面回饋佔多數（約 68.1%）</strong>，學生高度肯定教師的教學熱忱、創新教學法，以及數位工具整合。自動批閱系統、成績追蹤系統、數位教材與 GenAI 應用，均獲得學生一致好評，認為有助於即時練習、學習成效提升與自主學習。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-80f3-80ab-edf29c1e9033" class="bulleted-list"><li style="list-style-type:disc"><strong>負面意見（約 15.3%）</strong> 主要集中於課程步調偏快、內容或作業難度較高，以及部分數位工具或硬體設備使用上有困難。基礎較弱的學生易感到壓力，部分教材翻譯與語言問題也偶有反映。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8089-8ecb-f06ee89722ab" class="bulleted-list"><li style="list-style-type:disc"><strong>建議意見（約 15.2%）</strong> 涵蓋教學步調調整、加強課堂講解與示範、增加影音教材資源、優化作業與評量方式、提升 AI 工具應用指導，以及分級課程內容等。另有建議強化互動活動與課程公平性。</li></ul></div><div style="display:contents" dir="auto"><p id="2048fb4d-d8dd-80b1-aee0-dcc969853cb1" class="">總結來看，學生普遍肯定創新教學與科技工具的導入對學習有正面幫助，但也指出課程步調、難度與工具適用性仍有待調整。這些寶貴回饋為後續教學優化提供了具體方向與參考依據。</p></div><div style="display:contents" dir="auto"><p id="2048fb4d-d8dd-80c1-baab-d62fec01cde1" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="2048fb4d-d8dd-8012-a1bb-e24026289e46"><div class="source"><a href="https://player.soundon.fm/p/5339543e-2d81-4482-9cf1-00c377ff9cc1/episodes/f28b6cf1-58b2-4667-98ac-c6592bc181b4">https://player.soundon.fm/p/5339543e-2d81-4482-9cf1-00c377ff9cc1/episodes/f28b6cf1-58b2-4667-98ac-c6592bc181b4</a></div></figure></div><div style="display:contents" dir="auto"><h3 id="2048fb4d-d8dd-8001-946c-dfdfcc306308" class="block-color-yellow">AI (Notebook LM) 摘要分析所有學生的回饋意見</h3></div><div style="display:contents" dir="auto"><p id="2048fb4d-d8dd-80e7-997a-d2e5466a3faa" class="">當前整體評價顯示，楊老師的創新教學實踐不僅展現出高度的教學熱忱與前瞻性視野，更有效促進了學生的學習動機與學習成效。學生普遍認為，這些創新舉措大幅提升了學習效率、參與度和數位素養，並讓課堂氛圍更加活潑、多元，同時拉近了師生間的距離。楊老師積極回應學生回饋、主動調整教學內容和步調，展現了以學生為中心的教學態度。雖然課程中仍有步調調整、實作指導與系統穩定性等可持續優化之處，但全體學生對於創新教學模式的肯定遠高於傳統教學，未來只要持續動態回應學生需求，將能持續擴大創新教學的正面影響，進一步強化本系學生的專業實作能力與終身學習力。</p></div><div style="display:contents" dir="auto"><p id="2048fb4d-d8dd-8062-9bae-e0616cccda94" class=""><strong>整體優點與亮點：</strong></p></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-80cc-9787-fb5e27da661e" class="bulleted-list"><li style="list-style-type:disc"><strong>教學科技應用成效顯著</strong>：包括自動批閱系統、成績追蹤平台、Zuvio即時測驗、數位教材等，讓學生能及時掌握學習進度與成果，顯著提升學習效率與透明度。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8061-82b6-c899ce32204c" class="bulleted-list"><li style="list-style-type:disc"><strong>生成式AI工具融入課堂</strong>：AI（如ChatGPT）在程式設計、報告寫作與解題輔助等方面廣受好評，有助於學生培養主動學習與新時代數位素養。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-805f-96b0-ff07c730468c" class="bulleted-list"><li style="list-style-type:disc"><strong>多元教學活動</strong>：如SDGs桌遊、翻轉教學影片、專題實作等，提升課堂互動、學習動機與參與感，使理論與實務結合更緊密。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-807a-bceb-d4ce66e6776b" class="bulleted-list"><li style="list-style-type:disc"><strong>教學熱忱與回饋重視</strong>：教師積極回應學生建議，持續調整教學策略，並鼓勵同學提出建設性意見，深受學生肯定。</li></ul></div><div style="display:contents" dir="auto"><p id="2048fb4d-d8dd-8090-8a93-ded6c57c0382" class=""><strong>主要改進建議：</strong></p></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-80b0-aec8-e4819edc68d4" class="bulleted-list"><li style="list-style-type:disc"><strong>課程步調與基礎銜接</strong>：部分同學認為課程進度偏快，建議針對基礎薄弱者增加入門練習與輔助教學，適度放慢節奏，兼顧不同學習需求。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-80c2-ae62-f9f31645b7b8" class="bulleted-list"><li style="list-style-type:disc"><strong>實作資源與指導</strong>：希望增加實作範例、設備說明與技術指導，降低操作門檻並提升學習信心。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-80d9-8019-cfef1b790f4f" class="bulleted-list"><li style="list-style-type:disc"><strong>作業與評分設計</strong>：有學生反映作業量大或難度偏高，建議細分難易程度，並優化評分標準，以更公平反映學習成果。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8097-a9c8-e08ba3bc1c5b" class="bulleted-list"><li style="list-style-type:disc"><strong>系統/平台穩定性</strong>：部分課程的教學系統、硬體設備及Zuvio平台有不穩或相容性問題，建議持續優化提升。</li></ul></div><div style="display:contents" dir="auto"><p id="2048fb4d-d8dd-80ca-a3f2-c34e6335415d" class="">總結來看，學生一致認可創新教學模式所帶來的積極改變，認為這些措施有效促進了學習成效和課堂參與。然而，針對不同學生背景和需求，未來仍可進一步細緻調整教學策略、強化個別化指導，並提升教學系統的穩定與支援。整體而言，楊老師的創新教學已為本系課程帶來顯著的質變，值得持續推廣並成為學院教學改革的重要參考。</p></div><div style="display:contents" dir="auto"><h3 id="2048fb4d-d8dd-80df-a541-e064ef981aa6" class="block-color-yellow">學生回饋意見完整彙整</h3></div><div style="display:contents" dir="ltr"><figure id="ec0a571b-8ea9-40f5-bbad-ee9a12467977" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/NEEMEC%20109%20%E6%96%B0%E5%B7%A5%E7%A8%8B%E6%95%99%E8%82%B2%E5%B0%88%E7%8F%AD%20ec0a571b8ea940f5bbadee9a12467977.html">NEEMEC 109 新工程教育專班</a></figure></div><div style="display:contents" dir="ltr"><figure id="5da5ad0d-bcd4-4be4-a783-1ddb792024b5" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/NEEMEC%20110%20%E6%96%B0%E5%B7%A5%E7%A8%8B%E6%95%99%E8%82%B2%E5%B0%88%E7%8F%AD%205da5ad0dbcd44be4a7831ddb792024b5.html">NEEMEC 110 新工程教育專班</a></figure></div><div style="display:contents" dir="ltr"><figure id="50115aa1-bbf8-484f-8b68-f6bb319c84ac" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/NEEMEC%20111%20%E6%96%B0%E5%B7%A5%E7%A8%8B%E6%95%99%E8%82%B2%E5%B0%88%E7%8F%AD%2050115aa1bbf8484f8b68f6bb319c84ac.html">NEEMEC 111 新工程教育專班</a></figure></div><div style="display:contents" dir="ltr"><figure id="7e4cbb79-1ca9-40cd-81bd-894865f2b483" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/112%20%E9%80%B2%E9%9A%8E%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88(%E6%9A%91%E4%BF%AE)%207e4cbb791ca940cd81bd894865f2b483.html">112 進階程式設計(暑修)</a></figure></div><div style="display:contents" dir="ltr"><figure id="504cec78-4596-43bd-a621-3dc52d1a44c3" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/112-1%20APP%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88%E5%AF%A6%E5%8B%99(%E5%9B%9B%E6%8A%80%E9%9B%BB%E5%AD%90%E4%B8%89%E4%B8%99)%20504cec78459643bda6213dc52d1a44c3.html">112-1 APP程式設計實務(四技電子三丙)</a></figure></div><div style="display:contents" dir="ltr"><figure id="08161615-be08-4ee9-80f0-d6f943d542e8" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/112-1%20%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99(%E5%9B%9B%E6%8A%80%E9%9B%BB%E5%AD%90%E4%BA%8C%E4%B8%99)%2008161615be084ee980f0d6f943d542e8.html">112-1 單晶片微處理機實務(四技電子二丙)</a></figure></div><div style="display:contents" dir="ltr"><figure id="d3e766b4-13aa-427a-b1ff-aecf62e80149" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/112-1%20%E5%BE%AE%E5%9E%8B%E5%B9%B3%E5%8F%B0%E9%96%8B%E7%99%BC%E5%AF%A6%E5%8B%99(%E5%9B%9B%E6%8A%80%E8%B3%87%E5%B7%A5%E4%BA%8C%E7%94%B2%E7%AD%89%E5%90%88%E9%96%8B)%20d3e766b413aa427ab1ffaecf62e80149.html">112-1 微型平台開發實務(四技資工二甲等合開)</a></figure></div><div style="display:contents" dir="ltr"><figure id="2b33d6a3-e91a-4e37-a041-6b9bd0d21fc2" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/112-1%20%E9%AB%98%E9%9A%8E%E7%A1%AC%E9%AB%94%E6%8F%8F%E8%BF%B0%E8%AA%9E%E8%A8%80(%E5%9B%9B%E6%8A%80%E8%B3%87%E5%B7%A5%E5%9B%9B%E7%94%B2%E7%AD%89%E5%90%88%E9%96%8B)%202b33d6a3e91a4e37a0416b9bd0d21fc2.html">112-1 高階硬體描述語言(四技資工四甲等合開)</a></figure></div><div style="display:contents" dir="ltr"><figure id="238ac1de-1ed6-4fdf-b880-f1a15b7d395b" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/112-2%20Python%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88(%E4%BA%94%E5%B0%88%E8%B3%87%E5%B7%A5%E5%9B%9B%E7%94%B2)%20238ac1de1ed64fdfb880f1a15b7d395b.html">112-2 Python程式設計(五專資工四甲)</a></figure></div><div style="display:contents" dir="ltr"><figure id="325043c3-a121-499b-be6b-fda8a4c19e81" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/112-2%20Python%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88(%E5%9B%9B%E6%8A%80%E9%9B%BB%E5%AD%90%E4%B8%80%E4%B8%99)%20325043c3a121499bbe6bfda8a4c19e81.html">112-2 Python程式設計(四技電子一丙)</a></figure></div><div style="display:contents" dir="ltr"><figure id="8080a37b-97b4-40af-9f1a-b9bd5fa2838a" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/112-2%20Python%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88(%E5%9B%9B%E6%8A%80%E9%9B%BB%E5%AD%90%E4%B8%80%E7%94%B2%E7%AD%89%E5%90%88%E9%96%8B)%208080a37b97b440af9f1ab9bd5fa2838a.html">112-2 Python程式設計(四技電子一甲等合開)</a></figure></div><div style="display:contents" dir="ltr"><figure id="d7c55668-e96c-4351-b7e6-4b1dd3ea4fa6" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/112-2%20%E6%95%B8%E4%BD%8D%E7%B3%BB%E7%B5%B1%E8%A8%AD%E8%A8%88%E5%AF%A6%E5%8B%99(%E5%9B%9B%E6%8A%80%E9%9B%BB%E5%AD%90%E4%B8%80%E4%B8%99)%20d7c55668e96c4351b7e64b1dd3ea4fa6.html">112-2 數位系統設計實務(四技電子一丙)</a></figure></div><div style="display:contents" dir="ltr"><figure id="a96d0042-d2af-44d5-93eb-3b2c49985ac6" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/113-1%20APP%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88%E5%AF%A6%E5%8B%99(%E5%9B%9B%E6%8A%80%E9%9B%BB%E5%AD%90%E4%B8%89%E4%B8%99)%20a96d0042d2af44d593eb3b2c49985ac6.html">113-1 APP程式設計實務(四技電子三丙)</a></figure></div><div style="display:contents" dir="ltr"><figure id="51822a36-8d4c-4a9b-a2a4-1759c1b1d8dc" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/113-1%20%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99(%E5%9B%9B%E6%8A%80%E9%9B%BB%E5%AD%90%E4%BA%8C%E4%B8%99)%2051822a368d4c4a9ba2a41759c1b1d8dc.html">113-1 單晶片微處理機實務(四技電子二丙)</a></figure></div><div style="display:contents" dir="ltr"><figure id="07475d58-edc3-40b0-859f-79098d3ce587" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/113-1%20%E5%BE%AE%E5%9E%8B%E5%B9%B3%E5%8F%B0%E9%96%8B%E7%99%BC%E5%AF%A6%E5%8B%99(%E5%9B%9B%E6%8A%80%E8%B3%87%E5%B7%A5%E4%BA%8C%E7%94%B2%E7%AD%89%E5%90%88%E9%96%8B)%2007475d58edc340b0859f79098d3ce587.html">113-1 微型平台開發實務(四技資工二甲等合開)</a></figure></div><div style="display:contents" dir="ltr"><figure id="eb8a2435-8eb1-40b5-9bbc-b7f975ef8b76" class="link-to-page"><a href="17%20%E9%96%80%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%94%9F%E5%9B%9E%E9%A5%8B%E6%84%8F%E8%A6%8B%E5%BD%99%E6%95%B4%EF%BC%88112%E3%80%81113%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%8F%8A%E6%AD%B7%E5%B1%86%E5%B0%88%E7%8F%AD%EF%BC%89/113-1%20%E8%A8%88%E7%AE%97%E6%A9%9F%E7%A8%8B%E5%BC%8F%E5%8F%8A%E5%AF%A6%E7%BF%92(%E5%9B%9B%E6%8A%80%E9%9B%BB%E5%AD%90%E4%B8%80%E7%94%B2%E7%AD%89%E5%90%88%E9%96%8B)%20eb8a24358eb140b59bbcb7f975ef8b76.html">113-1 計算機程式及實習(四技電子一甲等合開)</a></figure></div><div style="display:contents" dir="auto"><p id="2048fb4d-d8dd-80de-986a-d32f1f6a4e79" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="2048fb4d-d8dd-8004-a235-e5c4f6432437" class="image"><a href="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/14.png"><img style="width:710.0000610351562px" src="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/14.png"/></a></figure></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

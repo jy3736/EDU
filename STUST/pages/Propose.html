@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>研究計畫案 — 楊榮林</title>
+<style>
+* { box-sizing: border-box; }
+:root {
+  --bg: #f4f6f9; --text: #2c3e50; --card-bg: #fff; --border: #dce0e6;
+}
+[data-theme="dark"] {
+  --bg: #0f1521; --text: #c8d4e8; --card-bg: #1a2333; --border: #2a3548;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  transition: background .2s, color .2s;
+  font-size: 14px;
+}
+header {
+  background: linear-gradient(135deg, #1a3a5c 0%, #2e6da4 100%);
+  color: #fff;
+  padding: 0.85rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+[data-theme="dark"] header {
+  background: linear-gradient(135deg, #0a1828 0%, #1a3a5c 100%);
+}
+header a.back { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.88rem; white-space: nowrap; }
+header a.back:hover { color: #fff; }
+header h1 { margin: 0; font-size: 1rem; flex: 1; }
+.theme-toggle {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: #fff; border-radius: 20px;
+  padding: 0.25rem 0.8rem; font-size: 0.75rem;
+  cursor: pointer; white-space: nowrap;
+}
+.content { padding: 1rem 1.2rem; overflow-x: auto; }
+/* Dark-mode overrides for hardcoded inline styles */
+[data-theme="dark"] #GridView1 {
+  background-color: #1a2333 !important;
+  border-color: #2a3548 !important;
+  color: #c8d4e8 !important;
+}
+[data-theme="dark"] #GridView1 td,
+[data-theme="dark"] #GridView1 th {
+  border-color: #2a3548 !important;
+  color: inherit !important;
+}
+[data-theme="dark"] #GridView1 tr[style*="background-color:#E7E7FF"] {
+  background-color: #1a2d4a !important;
+  color: #c8d4e8 !important;
+}
+[data-theme="dark"] #GridView1 tr[style*="background-color:#F7F7F7"] {
+  background-color: #0f1929 !important;
+  color: #c8d4e8 !important;
+}
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="../index.html">← 返回總覽</a>
+  <h1>研究計畫案 — 楊榮林</h1>
+  <button class="theme-toggle" id="themeToggle" type="button">🌙 深色</button>
+</header>
+<div class="content">
+<div>
+	<table cellspacing="0" cellpadding="3" rules="rows" border="1" id="GridView1" style="background-color:White;border-color:#E7E7FF;border-width:1px;border-style:None;font-size:Small;border-collapse:collapse;">
+		<tr style="color:#F7F7F7;background-color:#4A3C8C;font-weight:bold;">
+			<th scope="col">編號</th><th scope="col">單位</th><th scope="col">姓名</th><th scope="col">專案案號</th><th scope="col">專案案名</th><th scope="col">專案類型</th><th scope="col">執行起始日期</th><th scope="col">執行結束日期</th><th scope="col">工作類別</th><th scope="col">經費狀態</th><th scope="col">計畫總金額</th><th scope="col">政府出資金額</th><th scope="col">企業出資金額</th><th scope="col">其他單位出資金額</th><th scope="col">學校出資金額</th><th scope="col">主要經費來源</th><th scope="col">主要經費來源單位名稱</th><th scope="col">次要經費來源</th><th scope="col">受惠機構名稱</th><th scope="col">國內委託單位</th><th scope="col">國外委託單位</th><th scope="col">國內合作單位</th><th scope="col">國外合作單位</th><th scope="col">他校轉入的專案</th><th scope="col">專案已轉至他校</th><th scope="col">SDGS</th><th scope="col">SDGsDesc</th><th scope="col">狀態</th>
+		</tr><tr style="color:#4A3C8C;background-color:#E7E7FF;">
+			<td>48935</td><td>電子工程系</td><td>楊榮林</td><td>12001130243-EDU</td><td>113年度大專校院教學實踐研究計畫-「生成式AI如何改寫教育場景：適性化學習的實驗探索」</td><td>政府其他案件</td><td>20240801</td><td>20250731</td><td>主持人</td><td>原核定</td><td>356500</td><td>356500</td><td>0</td><td>0</td><td>0</td><td>教育部</td><td>教育部</td><td>無</td><td>南臺學校財團法人南臺科技大學</td><td>教育部</td><td>無</td><td>教育部</td><td>無</td><td>否</td><td>否</td><td>SDG4</td><td>SDG 4 優質教育</td><td>Y</td>
+		</tr><tr style="color:#4A3C8C;background-color:#F7F7F7;">
+			<td>46428</td><td>電子工程系</td><td>楊榮林</td><td>12001120236-EDU</td><td>112年度大專校院教學實踐研究計畫-機器學習零基礎入門 - 當大學生遇上小學生</td><td>政府其他案件</td><td>20230801</td><td>20240731</td><td>主持人</td><td>原核定</td><td>322000</td><td>322000</td><td>0</td><td>0</td><td>0</td><td>教育部</td><td>教育部</td><td>無</td><td>南臺學校財團法人南臺科技大學</td><td>教育部</td><td>&nbsp;</td><td>教育部</td><td>&nbsp;</td><td>否</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>Y</td>
+		</tr>
+	</table>
+</div>
+iconv: unexpected end of file; the last character is incomplete.
+</div>
+<script>
+(function () {
+  var KEY = 'portfolio-theme';
+  var html = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  function apply(theme) {
+    if (theme === 'dark') {
+      html.setAttribute('data-theme', 'dark');
+      btn.textContent = '☀️ 淺色';
+    } else {
+      html.removeAttribute('data-theme');
+      btn.textContent = '🌙 深色';
+    }
+  }
+  try { apply(localStorage.getItem(KEY) || 'dark'); } catch(e) { apply('dark'); }
+  btn.addEventListener('click', function () {
+    var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem(KEY, next); } catch(e) {}
+    apply(next);
+  });
+})();
+</script>
+</body>
+</html>

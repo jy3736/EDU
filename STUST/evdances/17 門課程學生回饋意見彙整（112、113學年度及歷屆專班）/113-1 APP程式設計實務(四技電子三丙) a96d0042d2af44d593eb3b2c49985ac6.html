@@ -1,0 +1,743 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>113-1 APP程式設計實務(四技電子三丙)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a96d0042-d2af-44d5-93eb-3b2c49985ac6" class="page sans"><header><h1 class="page-title" dir="auto">113-1 APP程式設計實務(四技電子三丙)</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2048fb4d-d8dd-81da-a955-fbebe46a791c" class="">113-1 APP程式設計實務(四技電子三丙)</h1></div><div style="display:contents" dir="auto"><p id="2048fb4d-d8dd-8143-a44c-d051dc97dc35" class="">📊 <strong>Total responses:</strong> 48</p></div><div style="display:contents" dir="auto"><h2 id="2048fb4d-d8dd-8189-8d9e-e936b22daddf" class="">Student Feedback</h2></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d1-a746-ff22bc04f439" class="bulleted-list"><li style="list-style-type:disc">ChatGPT 撰寫及修改程式</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81b5-85b6-d373ec6b9d7f" class="bulleted-list"><li style="list-style-type:disc">ChatGPT如果有不懂的問題ChatGPT能幫助我解決問題及提供參考資料。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8185-994c-e88dafdd0f48" class="bulleted-list"><li style="list-style-type:disc">GPT對於程式碼不理解的地方，利用GPT來解釋程式碼</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81cc-a247-d8123e599ab4" class="bulleted-list"><li style="list-style-type:disc">1.給指令畫圖使我的報告更生動 工具 : chatgpt， stable diffusion， distavle diffusion2.透過簡單的提示完成一個程式專題 工具 : chatgpt， cailot3.透過簡單摘要創作小說 工具 : chatgpt</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-810c-ac70-f16fc69a389d" class="bulleted-list"><li style="list-style-type:disc">GPT系列（如ChatGPT）作用：GPT模型（包括我自己）是基於大規模語言模型訓練的，它能夠理解語言並生成回答、文本或幫助進行各種寫作和推理任務。學習幫助：文本生成與理解：GPT可以幫助解釋複雜的概念、提供問題解答、幫助理解學術材料或技術文檔。輔助寫作：從創建文章、故事到寫作代碼，這些工具都可以提供創意或技術上的支持。語言練習：使用GPT進行語言學習，能夠模擬對話，提供翻譯和語言建議。2. DALL·E 2（圖像生成）作用：DALL·E 2 是一種基於文本描述生成圖像的工具。你提供一段描述，DALL·E 2 會生成相應的圖片或插圖。學習幫助：視覺學習：這可以幫助理解抽象或難以形容的概念，尤其在藝術、設計或教育領域中，將文字轉化為圖像能夠幫助學習者更直觀地理解。創意啟發：藝術創作、設計以及產品開發等方面，這樣的工具提供了強大的視覺生成能力，幫助使用者發現更多創意方向。3. GitHub Copilot（代碼生成）作用：GitHub Copilot 是一個由 OpenAI 訓練並與 GitHub 集成的工具，能夠根據開發者的代碼提示自動生成代碼。學習幫助：編程輔助：對於學習編程的人來說，GitHub Copilot 能夠自動補全代碼或提供解決方案，幫助理解如何正確編寫代碼並節省時間。學習代碼邏輯：通過自動生成代碼，使用者可以學習如何使用各種編程語言和框架，並快速理解如何實現功能。4. Runway ML（創意與視頻生成）作用：Runway ML 提供了一個多功能的平台，支持文本到圖像、圖像編輯、視頻生成等功能，特別是在藝術創作和視覺設計方面非常強大。學習幫助：視覺與藝術創作：它能幫助設計師、藝術家及學習者進行圖像或視頻的生成，從而學習如何創作和修改視覺內容。創意實驗：Runway ML 能夠幫助學生、研究人員或愛好者實驗不同的視覺風格、效果和生成技術，激發創意。5. DeepL（翻譯工具）作用：DeepL 是一款先進的自動翻譯工具，能夠進行語言間的高質量翻譯，特別是在處理專業術語和語境方面表現優異。學習幫助：語言學習：DeepL 可以幫助學習者進行語言學習，提供精確的翻譯，並能在學習新語言的過程中提供正確的語法和詞彙用法。閱讀理解：在學習外語材料時，這個工具能夠快速翻譯並幫助理解文章、書籍和其他資料。6. Soundraw（音樂生成）作用：Soundraw 是一種音樂生成工具，可以根據用戶的需求創建各種音樂風格的曲目。學習幫助：音樂創作：這可以幫助學習者了解音樂結構和創作過程，並提供創作的靈感，對音樂愛好者和專業創作者來說尤其有幫助。7. Stable Diffusion（圖像生成）作用：Stable Diffusion 是另一個強大的生成式圖像AI，專門用來根據文本描述創建高質量的圖像。學習幫助：圖像生成與設計：它能幫助學習者在設計和視覺藝術方面進行創作，提供豐富的視覺素材並支持各種風格和主題的設計。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81bd-ac62-c79b50c0abf6" class="bulleted-list"><li style="list-style-type:disc">chatgpt，能教我再作業上不懂的地方</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8160-b05d-e6f1d5fcfc67" class="bulleted-list"><li style="list-style-type:disc">在學習過程中，我經常使用 ChatGPT、DALL·E 和 GitHub Copilot 等生成式人工智慧工具。ChatGPT 幫助我撰寫報告、學習程式設計以及準備英文演講；DALL·E 則用於設計項目外觀，像是智慧分類垃圾桶的草圖製作；而 GitHub Copilot 在撰寫程式碼時大幅提升效率，例如我用它開發 Raspberry Pi 的影像辨識程式。這些工具讓我的學習更有效率，也提升了作品的創新性和專業水準。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8165-a784-ffa268d9cb8e" class="bulleted-list"><li style="list-style-type:disc">ChatGPT幫我寫code，檢查code內容中是否有語法錯誤可以利用自己寫的小文章，幫忙優化文章內容的邏輯敘述和流暢度</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ce-887f-c43ce653ab24" class="bulleted-list"><li style="list-style-type:disc">ChatGPT，專題遇到困難找不到答案的時、程式碼寫不出來的時、報告內容需要包裝時。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81f2-be04-e7a88ff38588" class="bulleted-list"><li style="list-style-type:disc">ChatGPTgemini利用GenAI來幫助我閱讀長篇原文以及解釋code的意思 以及各種文法的限制(python、c、C++文法不同辨識錯誤代碼，以及搜尋網路的速度 直接問GPT會大於我一篇文章一篇文章查我甚至可以問她 微積分、工數、訊號與系統</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81a8-9ba6-cabf73a70ac2" class="bulleted-list"><li style="list-style-type:disc">chatgpt 讓我能更快速找到我所需的資料，並且有很高的正確率，讓我有更多的資料輔助我學習</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-817e-97ef-d0126f447383" class="bulleted-list"><li style="list-style-type:disc">ChatGPT 可以幫助我更快的找出我所需要的資料，讓我更快完成在尋找答案的過程中，會列出很多相關的解決思路或是範例，讓我有新的想法可以做出更多創新的方案我覺得ChatGPT真的是很方便的工具。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-814b-87f5-d125d08cc5f1" class="bulleted-list"><li style="list-style-type:disc">1. ChatGPT (語言生成模型)用途：這是我最常使用的工具，尤其是在寫作、解釋概念和進行自我學習時。ChatGPT 能幫助我生成創意寫作、學術報告、問題解答等各類文本。如何幫助學習：寫作輔助：當我需要撰寫報告或作文時，ChatGPT 可以快速生成初步草稿，幫助我構思文章的結構和內容。比如，當我需要寫歷史或文學報告時，我會先給它提供一些問題或主題，然後它幫助我概括相關內容，甚至給出引言、結論和分析的框架。概念解釋：在學習數學、物理、經濟學等學科時，我會向 ChatGPT 提問一些難以理解的概念，像是複雜的數學公式、經濟模型的推導等。它不僅提供公式的詳細推導過程，還能以簡單易懂的方式解釋概念，幫助我快速掌握並理解。問題解答：對於一些具體的學科問題，我會向 ChatGPT 提問，讓它幫助我解析並提供詳細的解答過程。例如，在解決數學問題或物理問題時，我會請它給出步驟和解析，這樣我可以對照自己的答案，檢查過程是否正確。影響：ChatGPT 幫助我在寫作過程中避免了創意瓶頸，能夠高效地生成內容，並為我提供結構化的框架。這不僅提高了我的學習效率，還讓我的寫作更加有條理、精緻。當遇到難以理解的學術概念時，這個工具能夠迅速提供清晰的解釋，使我能夠突破學習中的瓶頸，繼而進一步深入學習。2. Grammarly (語法檢查工具)用途：這是一個語法檢查工具，主要用來檢查我寫作中的語法、拼寫、標點符號等錯誤，並提供改進建議。它還能檢測文章的語氣、風格等，幫助我提升文章的表達水平。如何幫助學習：語法檢查：在我寫作的過程中，Grammarly 能夠自動檢查出語法錯誤、拼寫錯誤、標點錯誤等，並給出相應的修改建議。這樣，我可以避免一些低級錯誤，從而提升寫作的準確性和專業性。語句流暢度：Grammarly 還會根據我的寫作風格提供語句結構上的優化建議，使文章更加流暢，避免冗長或重複的表達。這對於提高寫作質量尤其重要，特別是在撰寫學術報告和專業文獻時。提升語言技能：由於 Grammarly 的改進建議會幫助我理解語言錯誤的根本原因，因此我在使用過程中學到了更多的語法規則和語言使用技巧，這對我的語言學習非常有幫助。影響：這工具顯著提高了我的寫作準確性和專業性，尤其對於學術寫作非常有幫助。每次檢查後，我不僅能夠改正錯誤，還能夠學到更多寫作技巧，從而進一步提高我的語言能力。3. Khan Academy (教育平台)用途：這是一個提供各類學科免費在線課程的平台，涵蓋數學、科學、經濟學、藝術等眾多領域。平台提供視頻教程、練習題和即時反饋等功能。如何幫助學習：概念學習：在我學習數學、物理等基礎學科時，Khan Academy 提供的視頻和互動課程讓我能夠循序漸進地掌握每一個知識點。視頻內容生動，講解簡單明了，讓我能夠從最基礎的概念學起，逐步深入。即時練習與測評：Khan Academy 提供的練習題和即時反饋功能，幫助我檢測學習效果，並及時了解自己在哪些方面存在不足。這樣的反饋機制讓我能夠高效掌握每個章節的知識點。影響：我利用 Khan Academy 進行自主學習時，能夠以自己的節奏深入掌握學科知識。這讓我在學習中不僅能夠理解理論，還能通過練習來強化技能，提升我的學術成果。4. Wolfram Alpha (計算引擎)用途：Wolfram Alpha 是一個強大的計算引擎，能夠進行各種數學運算、查詢科學數據、分析統計資料等。如何幫助學習：數學計算：當我在數學課程中遇到複雜的公式或需要進行高階數學計算時，Wolfram Alpha 可以迅速給出正確的計算結果，並提供詳細的計算步驟。它對於解決代數、微積分、線性代數等問題特別有效。資料可視化：在學習統計學或數據分析時，Wolfram Alpha 能夠生成數據的圖表和可視化結果，幫助我更好地理解數據分布和趨勢。影響：Wolfram Alpha 提高了我處理數學和數據問題的效率，尤其在複雜的運算過程中，節省了大量的時間和精力。同時，能夠進行圖形化分析幫助我直觀理解數據背後的規律，對學習數據科學或統計學有很大幫助。5. Mendeley (文獻管理工具)用途：Mendeley 是一個文獻管理和學術研究工具，它可以幫助我收集、組織學術文獻，並生成引用和參考文獻。如何幫助學習：文獻整理：在撰寫學術文章或報告時，我需要查找大量的學術資料和文獻，Mendeley 幫助我將這些文獻進行系統整理，並提供標註和筆記功能，讓我可以隨時查閱相關資料。引用與格式管理：在進行學術寫作時，Mendeley 可以自動生成符合學術規範的引用和參考文獻，幫助我避免格式錯誤，並節省時間。影響：Mendeley 不僅提高了我的文獻管理效率，還讓我能夠更加專注於內容創作，而不是浪費時間在引用和格式整理上。這對學術寫作的準確性和專業性有很大的幫助。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-817a-8b02-eaf47fa346c3" class="bulleted-list"><li style="list-style-type:disc">ChatGPT，Microsoft Copilot這些工具能夠幫我幫我把不會的東西處理好</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8192-bed0-e44dc57816e5" class="bulleted-list"><li style="list-style-type:disc">ChatGPT：用於解答疑問、撰寫文章和制定學習計劃，幫助快速獲取資訊、進行語言學習及深入理解知識。DALL·E：創建插圖和概念圖，幫助視覺化抽象概念，適用於設計與藝術學習及圖像記憶輔助。Canva：製作簡報、筆記與學習材料，提升學習資料的視覺吸引力與組織效率。Notion AI：自動生成筆記摘要與整理學習資料，適合知識庫管理及長期學習規劃。Grammarly：校正語法、提升寫作表現，特別對於英文寫作和學術文章有顯著幫助。Codex/AI 編程助手：協助撰寫程式碼、除錯與演算法學習，提升程式設計效率並增強技術掌握。Quizlet AI：自動生成學習卡片與測驗題，透過自測強化記憶並掌握薄弱知識點。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8134-adf7-c0f9b038325e" class="bulleted-list"><li style="list-style-type:disc">我最常使用的 GenAI 工具是 GPT。GPT 幫助我在學習過程中解答問題，提供詳細的解釋，並協助我進行寫作和思考的練習。它能夠快速生成文章或回應，無論是解釋複雜概念還是提供學習建議，都能極大提升我的學習效率。通過與 GPT 互動，我能夠加深對知識的理解，並在需要時得到即時幫助，使學習過程變得更加高效且有趣。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8135-9a3e-e896f92ecd2c" class="bulleted-list"><li style="list-style-type:disc">程式相關的課程</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8152-9fb8-cd2f4ac1db0b" class="bulleted-list"><li style="list-style-type:disc">我覺得在專題的課程最有幫助，在我們面對問題卡住時能幫助到我們。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c1-880b-edeb8154744f" class="bulleted-list"><li style="list-style-type:disc">程式設計有些程式碼上課時講過，回家時如果還有聽不清楚的，他可以快速幫我回復印象</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-814e-9be9-c0e3a9a3c858" class="bulleted-list"><li style="list-style-type:disc">我會在一些跟程式和系統相關的學科上，如果有不懂且網路上沒有更好的解決方案時，我會嘗試chatgpt幫忙解決這些學科上的問題。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8111-8d21-ef897d419f4f" class="bulleted-list"><li style="list-style-type:disc">1. 語言學習與文學（Language Learning &amp; Literature）使用工具：GPT系列、DeepL、Grammarly原因：文本生成與翻譯：生成式AI工具，如GPT和DeepL，可以幫助學習者練習語言、提高翻譯準確性，並理解語言結構。通過與AI進行對話，學習者可以練習口語和寫作，並收到即時反饋。語法與語言改進：像Grammarly這樣的工具可以提供語法檢查和句子結構的建議，有助於提升寫作技巧。創作與詩歌：AI可以協助學生創作詩歌、故事和其他文學作品，這不僅能提升他們的創意，還能幫助理解不同的寫作風格。2. 數學與科學（Mathematics &amp; Science）使用工具：WolframAlpha、GPT系列原因：數學問題求解：WolframAlpha是非常強大的數學工具，能夠解決從簡單算式到高級數學問題，並且提供詳細的步驟解析。這有助於學習者理解解題過程。解釋概念：像GPT這樣的工具能夠詳細解釋數學和科學概念，並提供範例，幫助學生理解抽象概念或解釋複雜的數學運算。實驗與模擬：在物理或化學課程中，生成式AI可以用來設計模擬實驗，幫助學生在虛擬環境中進行探索。3. 編程與計算機科學（Programming &amp; Computer Science）使用工具：GitHub Copilot、Tabnine、W3Schools、Khan Academy的編程課程原因：代碼補全與建議：GitHub Copilot和Tabnine等工具能夠根據用戶的代碼輸入提供即時建議和補全，這對學習者在編程過程中非常有幫助。它們能夠加速學習過程，特別是對於初學者來說。學習編程邏輯與最佳實踐：這些工具能幫助學生了解如何寫出更高效和可維護的代碼，從而加深對編程語言的理解。4. 藝術與設計（Art &amp; Design）使用工具：DALL·E 2、MidJourney、Runway ML原因：圖像與視覺創作：AI生成的圖像可以幫助學習者快速創建藝術作品，提供視覺靈感，並且能夠在設計過程中進行風格或效果的實驗。設計與插圖：學生可以利用AI工具進行圖像設計和插圖創作，這對學習視覺藝術、圖形設計等學科尤其有幫助，並能激發他們的創造性思維。5. 音樂（Music）使用工具：Soundraw、AIVA、OpenAI Jukedeck原因：音樂創作與理論：這些AI工具可以幫助學生創作旋律、和弦進行和其他音樂元素，從而更好地理解音樂結構。音樂理論學習：學生可以通過使用生成式AI創作音樂來學習如何組織不同的音符、節奏和和聲，並深入了解音樂理論。6. 歷史與社會科學（History &amp; Social Sciences）使用工具：GPT系列、Google Scholar、Quora原因：資料整合與分析：AI能夠幫助學生從大量的資料中提取關鍵信息，並分析歷史事件、社會現象和文化變遷，從而提供對過去和現代社會的更深刻理解。創建論文與報告：GPT可以幫助學生成立論點、提供參考資料，並協助他們創建結構化的歷史或社會科學報告。7. 商業與經濟（Business &amp; Economics）使用工具：GPT系列、WolframAlpha、Tableau（數據可視化工具）原因：數據分析與報告生成：AI可以幫助學生快速分析市場數據、財務報表等，並生成商業計劃或經濟報告。經濟模型與分析：通過AI工具，學生可以理解經濟學的各種模型，並應用數據進行模擬和預測。8. 心理學與教育（Psychology &amp; Education）使用工具：GPT系列、DeepL（翻譯）、MindMeister（思維導圖）原因：心理學理論與實驗設計：AI可以幫助學生理解心理學的核心概念，設計實驗，並模擬結果。教學輔助：教師可以使用AI生成教材或測試題目，並根據學生的需求進行個性化教學。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81fc-bdf5-fe1fdab2c017" class="bulleted-list"><li style="list-style-type:disc">程式應用，因為gpt可以給你程式碼，雖然會有點錯誤，這也是讓我們去學習找出自己所需要的程式碼</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8192-ac77-f3379bd45f59" class="bulleted-list"><li style="list-style-type:disc">我認為生成式人工智慧工具在資訊與程式設計、英文學習以及設計與創新課程中對我的幫助最大。在資訊課程中，ChatGPT 和 GitHub Copilot 能協助解決程式問題並提升開發效率；在英文課程中，ChatGPT 幫助我檢查文法錯誤並優化演講內容；在設計課程中，DALL·E 協助生成創意草圖，快速視覺化我的想法。這些工具不僅提升了我的學習效率，也讓我的作品更加專業和創新。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8107-ada3-e733629a06bb" class="bulleted-list"><li style="list-style-type:disc">能更快速的協助我給我方向去解決我的困惑</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8109-9fcf-e9ad29b92e69" class="bulleted-list"><li style="list-style-type:disc">微控制專題實務與App設計實務，例如有些感測器的資料較繁多，我們可以使用ChatGPT幫助我們簡化，讓感測器的使用方法更淺顯易懂或者程式碼中有遇到寫不出來就可以請ChatGPT幫助我們，或者Word內容太簡易也可以使用ChatGPT包裝內容。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8170-9a37-cc238f6db6f6" class="bulleted-list"><li style="list-style-type:disc">code的錯誤代碼 有些代碼我看不懂時 大部分AI工具都可以指出我錯誤的地方。可是有個缺點，沒辦法一次給太大段，太大段他有時會給出錯的code他會針對該問題給出解決方法，解釋原理</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-811d-94fd-d688a58c7540" class="bulleted-list"><li style="list-style-type:disc">程式設計 可以給我需要的程式碼並且提供註解，讓我更輕鬆地了解每行程式碼的功能，在有錯誤時也能幫我找出錯誤的地方並提供解決方案數學 給題目之後會給我完整的作答流程，清晰的解釋每行公式，讓我可以更輕鬆的攻略每個題目</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81b6-b54e-d0177f783eb5" class="bulleted-list"><li style="list-style-type:disc">數學對我來說很有幫助 在聽不懂老師講解或不知道怎麼如何解題時 運用GenAI幫忙解析題目並教學如何計算，讓我了解各種問題的解題步驟並進行練習和運用，幫助在考試中快速且準確地回答問題。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81f0-8c1e-e2226fb78a80" class="bulleted-list"><li style="list-style-type:disc">1. 語文/文學用途: 生成文章、寫作輔導、分析文學作品、構思故事情節。具體應用:寫作輔助：在寫作文、報告或短篇故事時，GenAI 可以幫助生成初步草稿，提供結構化建議或改進文句流暢度。文學分析：可以分析古典或現代文學作品中的主題、人物性格等，並提供解讀的不同角度。創意寫作：生成創意故事情節或角色設定，尤其對於創意寫作課程非常有幫助。2. 歷史用途: 整理歷史事件、提供背景知識、編寫歷史報告、分析歷史資料。具體應用:歷史報告：在撰寫歷史報告時，GenAI 可以提供詳細的事件時間表，並且幫助理解歷史背景、政治、經濟等層面的關聯。資料分析：在研究某一歷史事件或人物時，能夠快速整理大量資料，提出不同解釋和視角。時間線和事件關聯：可以幫助建立事件發展的時間線，對比不同國家的歷史觀點。3. 科學用途: 解釋科學概念、實驗設計、數據分析、撰寫科學報告。具體應用:概念解釋：可以解釋複雜的科學理論或公式，幫助學生理解如物理學、化學等學科中的抽象概念。實驗設計與報告：在撰寫科學實驗報告時，GenAI 可以幫助學生編寫引言、假設、實驗步驟和結果分析等部分。數據分析：例如在數學或統計相關科學課程中，GenAI 可以協助處理數據，進行簡單的統計計算或可視化。4. 數學用途: 解題輔助、公式推導、數學模型建構、學習數學理論。具體應用:解題輔助：在學習數學問題時，GenAI 可以幫助提供解題步驟、公式推導過程和結果驗證。數學模型：對於需要應用數學模型來解釋現象的課程（如經濟學、物理學），GenAI 能夠提供合適的模型設置和解釋。學習新概念：幫助學生理解新的數學概念或公式，並能提供範例和解釋。5. 外語學習用途: 文字翻譯、語法檢查、寫作練習、口語練習。具體應用:寫作練習：在外語寫作時，GenAI 可以幫助檢查語法錯誤，提供詞彙建議，並幫助學生改進語言表達。翻譯練習：學生可以用 GenAI 來練習翻譯句子或段落，並獲得多種翻譯方式的建議。口語練習：GenAI 還可以用來模擬日常對話，幫助學生提高口語流利度。6. 經濟學用途: 數據分析、經濟模型建構、政策分析、案例研究。具體應用:案例分析：在經濟學課程中，GenAI 可以幫助學生分析具體的經濟案例，並提出理論上的解釋或建議。經濟模型：在討論市場模型或經濟理論時，GenAI 能夠快速解釋和推導各種經濟學模型，並與實際數據進行比較。政策建議：對於需要撰寫政策分析或報告的課程，GenAI 可以提供結構化的分析框架和文獻資料支持。7. 工程學用途: 技術文檔寫作、設計輔助、代碼編程、計算機仿真。具體應用:代碼寫作與調試：在編寫程式碼時，GenAI 可以幫助檢查代碼錯誤，並提供改進建議。設計輔助：在設計課程中，GenAI 可以提供設計流程、技術規範以及相關材料的參考。工程報告撰寫：在撰寫工程技術報告時，GenAI 可以協助學生組織內容，簡化複雜的技術術語。8. 哲學用途: 思辨與辯證、理論分析、哲學問題討論。具體應用:理論解釋：可以幫助學生理解各種哲學學派的基本理論和觀點，如實證主義、唯心主義等。辯證思維：在討論哲學問題時，GenAI 能夠提供不同的辯論角度，幫助學生形成自己的思考框架。文獻分析：幫助分析哲學著作，並提供背景和歷史情境解釋。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-811a-9acb-c46f350af3f5" class="bulleted-list"><li style="list-style-type:disc">程式，作圖，做報告，做任何做不出的東西</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8124-8916-f3d3f3cbc11b" class="bulleted-list"><li style="list-style-type:disc">Codex：幫助撰寫與除錯程式碼，快速學習新語言與框架。ChatGPT：解釋演算法與資料分析技巧。Notion AI：整理技術筆記，管理程式碼片段。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8178-becb-c6d8fd28d4c5" class="bulleted-list"><li style="list-style-type:disc">我認為 GenAI 工具在以下學科（課程）對我的學習最有幫助：1. <strong>語文與寫作</strong> GPT 能幫助我生成文章、提供寫作靈感、檢查語法錯誤，甚至幫助我理解文學作品中的深層意涵。這對提高我的寫作技巧和語言表達能力至關重要。2. <strong>數學與科學</strong> 在數學和科學領域，GPT 能夠詳細解釋公式和概念，並提供解題步驟。這幫助我理解複雜的數學推導或科學原理，提升我解決問題的能力。3. <strong>歷史與社會科學</strong> GPT 能夠快速提供歷史事件的背景和分析，幫助我更全面地理解不同歷史時期及其影響。它還能解釋社會科學中的各種理論與實踐，讓我對這些學科有更深入的了解。4. <strong>外語學習</strong> 在學習外語時，GPT 能提供翻譯、語法解釋和語言學習建議，幫助我提高語言理解和表達能力。它還能模擬對話，讓我在實際語境中練習語言。總的來說，GenAI 工具能夠幫助我在這些學科中更高效地學習，提供即時幫助，並加深我對知識的理解。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8179-a99a-f34159fbd405" class="bulleted-list"><li style="list-style-type:disc">可以提升工作效率，不過有些會有錯誤，要稍做修改並理解內容。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8199-a001-c2fc9d85f0cf" class="bulleted-list"><li style="list-style-type:disc">大幅提升了學習效率，我們透過 ChatGPT 解答疑問或 Copilot 快速生成代碼。幫助我們更專注於創意和問題解決。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-814a-8ff7-f411838e6129" class="bulleted-list"><li style="list-style-type:disc">將問題寫入GPT，他能夠快速回答我的問題，雖然還是有點小錯誤，但是能夠讓我更好的去進行下一步改寫。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-813f-ac8b-c43cb3e0a246" class="bulleted-list"><li style="list-style-type:disc">我覺得使用這些工具加速專案的行程，雖然目前還不能透過一次交談得到正確解答，但透過多次詳細描述交談，還是能得到一個不錯的結果</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8143-98c0-f2d23e863c78" class="bulleted-list"><li style="list-style-type:disc">理解與生成文字內容：作為基於GPT的模型，我的主要功能就是理解並生成文本。我依靠語言模型的強大能力來生成回答、文章、報告、代碼等。這些生成的內容基於大量的語言資料，能夠在不同領域提供合適的解釋和分析。問題解決與推理：我通過分析用戶提出的問題，根據過去的訓練數據推理出最可能的解答。例如，當涉及到數學公式、編程代碼、學術問題或科學實驗時，我會利用事先學習過的知識，快速提供解決方案。創意生成：在設計、寫作、音樂或其他創意領域，我能夠根據用戶的要求生成新的內容或點子。這包括生成故事情節、創建圖像描述、音樂構思等，並能在多樣化的要求下提供靈感。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-819c-ba0b-cafae3e59b1b" class="bulleted-list"><li style="list-style-type:disc">不懂的地方問gpt可以得到所需要的答案，gpt也會跟你解釋內容再講甚麼</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8161-bdc6-d7276b6f4acd" class="bulleted-list"><li style="list-style-type:disc">我經常使用生成式人工智慧 (GenAI) 工具來輔助學習，這些工具對我的學習過程和成果產生了深遠影響。首先，在學術學習中，我使用 ChatGPT 進行報告撰寫與內容優化。例如，在準備「Shoei 安全帽」的英文演講時，它幫助我理清思路、優化句子結構，並提供更地道的表達方式。同時，我還用它檢查文法錯誤，提升寫作的準確性與流暢度。其次，在程式設計中，GitHub Copilot 和 ChatGPT 是我的得力助手。在學習 ESP32 和 Raspberry Pi 的開發時，GitHub Copilot 提供即時的程式碼補全功能，大幅提高編碼效率；而 ChatGPT 則用於解釋複雜的概念或協助排查錯誤，讓我能更快掌握技術細節。另外，在創新設計領域，DALL·E 是我視覺化想法的利器。在智慧分類垃圾桶的專案中，我使用 DALL·E 生成設計草圖，快速將概念具體化，方便團隊討論與改進。這種效率在傳統設計方法中很難實現。對於這些工具，我的感受是驚嘆與感激。它們不僅高效且直觀，還能激發我的創意思維。每次使用都讓我感到學習變得更輕鬆，並能以更專業的方式完成任務。總之，GenAI 工具讓我的學習過程更加順暢，成果更加豐富，無論是在解決問題、實現創新還是提升效率方面，都對我產生了極大的正面影響。我相信，未來它們會成為我學習和創作中的重要夥伴。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81e2-bdd1-d2c00c823d32" class="bulleted-list"><li style="list-style-type:disc">有他們的出現，能更幫助我們解答一些困惑，雖然不能夠百分之百回答正確，但多少也能夠給予我們幫助與方向</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d7-9823-e5f89a24a5cb" class="bulleted-list"><li style="list-style-type:disc">對我很有幫助，可以協助我包裝報告內容，整理繁多的資料，也可以一個隨時隨地的老師，無論任何時刻可以進行提問。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-810e-ab9f-cad11e73e637" class="bulleted-list"><li style="list-style-type:disc">有時在生活中有一些不清楚的點可以問GPT，他或許不會給出你最想要的答案。但會給你大部分人的想法給你讓我們不需要花更多的時間用於收集資料但也是要去查證它給的東西是否為正確（需要有辨別能力</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8122-bbe2-e9c3e53166e8" class="bulleted-list"><li style="list-style-type:disc">在遇到困難時，把我的困難列出來，給我最佳的解決方案，並且提供詳細的註解，有這些工具輔助，讓我在遇到困難時能快速解決，學習過程中不一定需要詢問老師或同學，隨時隨地能透過這些工具給我提供幫助，讓我學習時更輕鬆方便</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8138-9318-c4b045bd6e2a" class="bulleted-list"><li style="list-style-type:disc">使用GenAI工具我可以更快完成我所需要做的事情。在我遇到不懂的問題時，我可以透過GenAI工具更快的理解或是提供一些想法讓我可以更有效的解決問題，不會因為想不出來而一直煩惱!將複雜化變得淺顯易懂，讓人更容易了解!</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c8-8157-fb4dd6ff3739" class="bulleted-list"><li style="list-style-type:disc">1. 撰寫作業與報告如何使用：我經常使用 GenAI 工具來幫助撰寫學術報告、作文或其他類型的文字作業。當需要快速構思或找出寫作思路時，我會請求 GenAI 生成一些初步的草稿或段落，並以此為基礎進行修改和擴展。例如，在寫歷史報告或文學分析時，我會讓 GenAI 概述文章的結構，並給出每一部分的建議。感受：這讓我能夠在較短的時間內完成作業，尤其是在我對某個主題的了解還不夠深入時。GenAI 提供的思路與框架能夠幫助我理清思路，並啟發更多創意。然而，我有時會對其生成的內容進行二次修改，以確保符合學術要求，避免太過於模板化。影響：這些工具極大地提高了我的寫作效率和質量，尤其在寫作初期的構思階段，能夠快速整理大量資料，並生成邏輯清晰的文本框架。這幫助我避免了開頭難、寫作卡殼的情況，並讓我專注於深度分析和內容的精緻化。2. 解決學術問題和概念解釋如何使用：在學習數學、物理或其他理工科課程時，我經常遇到難以理解的公式或概念。我會請求 GenAI 解釋某個特定公式、理論或解題步驟，或者讓它幫助我針對具體問題提供詳細的解答過程。感受：這些工具的優勢在於能夠提供通俗易懂的解釋和步驟，並且可以針對我的理解進行調整。這樣，我可以在遇到困難時迅速理解概念，並繼續進行學習。當我有疑問時，這些工具也能提供多種解釋角度，讓我對問題有更全面的了解。影響：GenAI 提供的輔助加速了我的學習進度，特別是在複雜概念或繁瑣的公式推導中，能夠幫助我節省查找資料的時間，讓我能更集中地理解核心內容。這不僅幫助我提高了學習效率，也使我能夠更深入地掌握學科的基礎和進階知識。3. 語言學習與寫作練習如何使用：在學習外語（如英語）時，我經常使用 GenAI 來檢查我的寫作，特別是在語法、拼寫和表達方面。當我寫作文或進行翻譯練習時，會使用它來修改和改進我的文本，或者用它來生成範例句子和對話練習。感受：GenAI 能夠迅速指出語法錯誤並提供正確建議，這對提高語言能力非常有幫助。它生成的替代詞彙和句型也能擴展我的語言表達範圍。然而，有時候它的建議過於直接，並且不一定符合語境，因此我還需要自己進行篩選和調整。影響：這些工具極大地幫助我提升語言學習的精確性和流利度，尤其在語法錯誤和詞彙選擇上，讓我在較短時間內進步。特別是在進行寫作練習時，它能夠給予及時反饋，幫助我進行改進和學習。4. 資料收集與綜合分析如何使用：在研究某一主題時，GenAI 能夠迅速幫助我整理資料、列出關鍵要點、並提供不同觀點的分析。例如，寫經濟學報告時，我會讓它列出不同經濟學理論的優缺點，或者提供關於某一政策的歷史背景和實際影響。感受：這一點特別有效，因為它幫助我在處理大量信息時保持高效，避免了資料冗雜和無法篩選的情況。雖然有時候生成的資料過於簡單，但這能為我提供一個良好的起點，從而幫助我深入查詢並補充細節。影響：這些工具能夠顯著提升我的研究效率，使我能夠在短時間內整理大量資料，並且能夠從不同的資料源中萃取出有價值的信息。這不僅加快了我的學習過程，也提高了我資料分析的質量。5. 自我測試與複習如何使用：在準備考試時，我會讓 GenAI 根據課程大綱或教科書生成練習題，並通過這些題目進行自我測試。此外，我還會請它幫助我總結學過的知識點，或者以問答形式進行複習，檢查自己對重要概念的掌握程度。感受：這一功能非常方便，因為它能根據我的需求快速生成問題，並且提供詳細的解答過程。這對於自我測試和準備考試的過程中非常有幫助，尤其是在時間緊迫時。唯一的不足是，有時生成的問題可能過於簡單，沒有挑戰性。影響：這幫助我在考試前進行有針對性的複習和自我檢測，確保自己對所有重要概念和技能都有充分的理解。尤其在準備大範圍的考試時，這能顯著提高我複習的效率和效果。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81eb-878c-da4e90a534e0" class="bulleted-list"><li style="list-style-type:disc">去問AI通常都能回答到你能用到的東西</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81dc-82bd-cfc85efcfc23" class="bulleted-list"><li style="list-style-type:disc">知識獲取與問題解決：使用 ChatGPT 解答疑問，例如數學題的步驟推導、歷史事件的背景分析或文學作品的解讀。在程式設計中，使用 Codex 自動生成程式碼片段，快速解決技術問題或學習新語言的語法和邏輯。視覺化與創意支持：利用 DALL·E 創建插圖（如地理地圖或科學模型），幫助抽象概念具象化。使用 Canva 製作視覺化簡報或筆記，增強學習材料的吸引力。寫作與內容優化：使用 Grammarly 校正語法與拼寫，提升英文寫作的精準度與流暢度。借助 Notion AI 整理筆記、生成摘要或規劃學習大綱，保持內容條理清晰。自測與記憶強化：使用 Quizlet AI 生成學習卡片和測驗題，定期自測以鞏固所學知識。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8160-beb9-c7d15dee3699" class="bulleted-list"><li style="list-style-type:disc">我使用 GenAI 工具，特別是 GPT，來輔助我的學習過程，這些工具對我產生了深遠的影響。首先，當我遇到學術問題或不理解的概念時，我會向 GPT 提問。它能迅速提供清晰、詳細的解釋，並幫助我拆解複雜的問題。無論是數學題目、科學概念還是語言學習，GPT 都能提供精確的指導，幫助我更快理解。此外，我經常使用 GPT 進行寫作練習。當我需要生成文章或撰寫報告時，GPT 不僅能提供結構化的建議，還能幫助我修改語法錯誤，提升我的寫作質量。每次與 GPT 互動，我都能從中學到新的表達方式，這對我的語言能力有了顯著的提升。使用這些工具的最大感受是，學習變得更靈活和高效。它們不僅能在我有疑問時即時提供幫助，還能為我提供多角度的思考方式，擴展我的知識視野。這些工具讓我的學習過程不再是單向的，更多的是與 AI 互動、協作的過程，使我能夠深入理解並應用所學知識。總的來說，GenAI 工具顯著提升了我的學習效率，改變了我處理學術問題的方式，並且在我的學習成果上留下了積極的印記。</li></ul></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

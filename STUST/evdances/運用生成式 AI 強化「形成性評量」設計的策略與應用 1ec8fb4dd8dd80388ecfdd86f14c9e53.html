@@ -1,0 +1,751 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>運用生成式 AI 強化「形成性評量」設計的策略與應用</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1ec8fb4d-d8dd-8038-8ecf-dd86f14c9e53" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1677756119517-756a188d2d94?ixlib=rb-4.1.0&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb" style="object-position:center 27.949999999999996%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="800x800.png"/></div><h1 class="page-title" dir="auto">運用生成式 AI 強化「形成性評量」設計的策略與應用</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-809f-b69c-fc01f9997ab9" class="">為了提升學生課堂參與與學習成效，我導入生成式 AI 技術，協助每週設計符合課程主題的形成性評量。這套工具可依照我設定的學習目標，自動產生題組草稿、提供解說參考，並輸出成適用於 Zuvio 等平台的格式，大幅減輕我設計題目的時間負擔，讓我可以將更多心力放在課堂互動與內容調整上。</p></div><div style="display:contents" dir="auto"><h2 id="1ec8fb4d-d8dd-80d8-ac5a-e848512e765e" class="">系統功能與使用方式</h2></div><div style="display:contents" dir="auto"><ul id="1ec8fb4d-d8dd-8080-9b53-f2ce082e5fdf" class="bulleted-list"><li style="list-style-type:disc"><strong>題組自動生成與重組</strong>：題目設計是根據我自訂的選擇題模板（MCQ template）進行，並搭配每週講義所對應的知識點與概念進行生成。AI 可依據設定主題，產出不同難度與題型變化的題組草稿，並提供解說內容供我進一步修訂。</li></ul></div><div style="display:contents" dir="auto"><ul id="1ec8fb4d-d8dd-8036-b670-ce8f81d9009d" class="bulleted-list"><li style="list-style-type:disc"><strong>對應課程進度與難度調整</strong>：每個主題通常會設計 3 至 5 個不同難度層級的題組，從基本概念題、簡單程式碼閱讀題，到進階的完整程式理解題皆有涵蓋，幫助學生循序漸進地掌握重點與提升理解力。</li></ul></div><div style="display:contents" dir="auto"><ul id="1ec8fb4d-d8dd-80fe-bb14-d8974ccf7c4e" class="bulleted-list"><li style="list-style-type:disc"><strong>格式輸出支援 Zuvio 平台</strong>：Zuvio 主要用於施測與記錄學生作答表現。我們在設計題組時以 Markdown 格式撰寫題目與選項，便於後續轉換成結構清楚、功能完整的 HTML 格式發布至教學平台或網站，讓學生在測驗前就能以易讀形式預覽內容。這樣的流程不僅加速教師備課，也有助於學生在課前預習與課後複習的效率。</li></ul></div><div style="display:contents" dir="auto"><h2 id="1ec8fb4d-d8dd-8067-aae6-f4d9fd928645" class="">教學流程整合</h2></div><div style="display:contents" dir="auto"><ol type="1" id="1ec8fb4d-d8dd-8047-9234-f78d7d516c7d" class="numbered-list" start="1"><li><strong>課前預習題組</strong>：我會先產出一份對應週次講義的預習題組，引導學生進入主題。</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1ec8fb4d-d8dd-80df-b871-cf1d81398c8a" class="numbered-list" start="2"><li><strong>課中釐清重點</strong>：根據學生的預習回應與課堂互動狀況，適時調整教學內容與步調。</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1ec8fb4d-d8dd-80ef-adea-ebfa274c3a39" class="numbered-list" start="3"><li><strong>課後形成性評量</strong>：以重新洗牌題序與選項的方式，進行正式施測，作為學生理解度的即時指標。</li></ol></div><div style="display:contents" dir="auto"><h2 id="1ec8fb4d-d8dd-802f-ae15-d19cbc6de6c8" class="block-color-red_background">截至第 12 週評量開發進度</h2></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-801e-bad2-c91028463530" class="">這套 AI 評量工具目前已應用於我本學期開設的四門課程，涵蓋 C++、Python、Verilog 等主題。<strong>截至第 12 週</strong>，<mark class="highlight-yellow"><strong>已產出並驗證超過 1600 題選擇題</strong></mark>，涵蓋每週的形成性評量與期中小考。依照上學期的經驗推估，每門課到學期末將累積約 800 題，整體題量將突破 3000 題。面對如此龐大的出題與評量工作，若無生成式 AI 的協助，幾乎無法負荷。多虧 GenAI 技術的輔助，讓我能在每週迅速產出具教學對應性的題組，不僅協助學生釐清學習狀況，也讓我能更有效掌握全班學習進展，並即時調整教學策略。<br/></p></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-80ec-b9d1-f8c7647a560b" class="image"><a href="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image.png"><img style="width:709.982177734375px" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-802e-9446-e7ba47334929" class="image"><a href="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%201.png"><img style="width:709.9910888671875px" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%201.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-805c-bfdb-e9e22c1309a6" class="image"><a href="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%202.png"><img style="width:709.982177734375px" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%202.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-80f0-a93c-d8ca2cc412ea" class="image"><a href="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%203.png"><img style="width:709.9732666015625px" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%203.png"/></a></figure></div><div style="display:contents" dir="auto"><h2 id="1ec8fb4d-d8dd-800b-ae77-d1e27fb372a9" class="block-color-red_background">從課堂實例看形成性評量的有效運用</h2></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-807d-aec0-d52b598a9dab" class="">形成性評量與考試主要依賴兩個工具：Notion 與 Zuvio。我透過 Notion 編寫選擇題，並搭配 ChatGPT、Claude、Grok 等生成式 AI 工具輔助命題。在題目產出後，會再透過 GenAI 進行人工驗證與二次檢查。通過確認後，題目會輸入我自行開發的工具中，建立成選擇題資料庫，以利後續評量組卷使用。接著，我可以使用一段指定的腳本來選取題組，並決定如何產生本次的評量內容。這些內容會同時包含 Markdown 格式的題目，以及可匯入 Zuvio 系統的題庫，方便進行課堂內的形成性評量施測。</p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="1ec8fb4d-d8dd-8084-ac2a-d4944a4d2000"><div style="font-size:1.5em"><img class="icon" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/yang02.png"/></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80b2-85d5-c58bf59d31bf" class="">學生可以透過連結在瀏覽器中開啟題目說明，或使用手機掃描 QR-code，在手機上閱讀題目並開始作答。</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-80f3-91d9-f688cc4ff4d4" class="image"><a href="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%204.png"><img style="width:709.9732666015625px" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%204.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="1ec8fb4d-d8dd-8057-89bf-f10b5df544c8"><div style="font-size:1.5em"><img class="icon" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/yang02.png"/></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8050-b808-d5e7ff723e8c" class="">我會持續觀察學生的學習表現，以調整教學節奏並優化課堂教材內容。根據學生即時測驗表現的圖表，可以看出許多有價值的訊號，不僅反映出學生的學習成效，也揭示講授內容中哪些部分仍有不足，甚至可進一步發現更多潛在的教學問題與改進空間。</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-8084-83d4-d60069512c27" class="image"><a href="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%205.png"><img style="width:709.982177734375px" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%205.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="1ec8fb4d-d8dd-8037-b5de-e6415a872ebc"><div style="font-size:1.5em"><img class="icon" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/yang02.png"/></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8021-8c13-d4b73e417aae" class="">逐題分析學生的作答表現，不僅能幫助學生辨識自身的學習弱點，也能協助教師掌握哪些概念容易被誤解、哪些題型普遍答錯，進而調整教學重點。此外，這些數據也有助於設計更有針對性的補強活動，提升整體學習成效與教學精準度。</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-809c-bad2-ea543ec6c399" class="image"><a href="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%206.png"><img style="width:709.9910888671875px" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%206.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="1ec8fb4d-d8dd-80db-9bad-ec33a6cc0c64"><div style="font-size:1.5em"><img class="icon" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/yang02.png"/></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80d0-91fd-d9772b40837e" class="">由於所有形成性評量皆透過 Zuvio 依照學生作答即時評分，我能在學生繳交後立即看到分數。我經常為每次評量設立一個「激勵目標」，例如：「這次評量達到 18 分即可提早下課」。如果學生達標，我就會當場點名，讓他們提早幾分鐘離開教室，做為一種肯定與獎勵。因為形成性評量通常安排在預定下課前約 20 分鐘進行，實際上表現好的學生也僅能提早離開約 5 到 10 分鐘。但當我在課堂中點名說出「可以先走」的同學名字時，語氣總是帶著「做得很好」的讚賞，學生也能明顯感受到這份肯定。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8054-8c4b-fca55305485e" class="">我發現，許多學習動機強的學生會很期待被點名的那一刻，因為這代表他們的努力獲得肯定，也是一種「我證明我可以」的成就感。更重要的是，在這樣的教學氛圍下，即使是動機較弱的學生，也比較不容易輕言放棄，反而會受到同儕帶動而願意多努力一點。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8035-aa57-fa3c6624d1b6" class="">此外，這種即時回饋與小幅度的正向獎勵，不僅提升了課堂參與度，也讓評量成為學習的一部分，而不是壓力來源。透過這樣的設計，學生能夠更主動地關注自己的學習狀況，也促進了我與學生之間更良性的互動關係。</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-80e3-a4dc-d33027d40297" class="image"><a href="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%207.png"><img style="width:709.9910888671875px" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%207.png"/></a></figure></div><div style="display:contents" dir="auto"><h2 id="1ec8fb4d-d8dd-80cb-8d1e-c0b7203f7330" class="block-color-red_background">Sample Formative Assessment Problem Set</h2></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-806a-8e1a-f91b12509bb7" class="">在設計這套觀念選擇題（MCQ）系統時，我採用了<strong>多層級的題目設計策略</strong>，將題目依照<strong>理解深度</strong>與<strong>程式閱讀需求</strong>分為三個主要等級。這樣的設計，不只是為了劃分難易程度，更是希望藉由題目的層次，引導學生從<strong>基本觀念理解</strong>，逐步發展到具備<strong>分析程式邏輯、閱讀實際程式碼</strong>的能力，最終培養出面對各種語言與情境的<strong>程式素養（code literacy）</strong>。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8046-9871-cb2ed740661e" class="">每週的題組會依據當週教學內容的特性與複雜度，<strong>動態調整三種難度題目的比例</strong>。藉由這樣的安排，學生不僅能透過題目回顧關鍵概念，也能在不同層次的閱讀挑戰中慢慢建立「看懂程式」的能力。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80c6-9587-cb0bd6c2b4b4" class="">這樣的層級設計，讓形成性評量<strong>不再只是單純測驗記憶結果</strong>，而是有系統地引導學生從「看得懂」、「想得通」，進而「用得上」。對於程度不同、背景多元的學生而言，也能各自找到適合的切入點與挑戰區間，讓學習歷程更具個別化與成就感。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80ee-be66-e321927b587e" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1ec8fb4d-d8dd-80a3-a209-f050f7bea622" class="">📘<mark class="highlight-yellow"> 下列為 Level 3 完整範例</mark></h3></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-804e-8cae-ec140d041196" class=""><a href="https://www.notion.so/Formative-19-Intro-OOP-Level-3-1e58fb4dd8dd80f7885aca7ac84c9a70?pvs=21"><img class="icon" src="800x800.png"/>Formative 19 - Intro OOP Level 3</a> </p></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-8020-8fa0-c2ce9d7de739" class="image"><a href="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%208.png"><img style="width:709.982177734375px" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%208.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80da-9866-dba5bc787f2a" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1ec8fb4d-d8dd-807f-b40e-d54e1eccddac" class="block-color-yellow">📘<mark class="highlight-yellow"> </mark>題目分級與學生認知負荷的對應展示</h3></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8021-a681-fcc1c0bd4482" class="block-color-default">為了更具體地呈現這三個層級的差異，以下我將展示三個實際選擇題的畫面截圖，分別對應 <strong>Level 1（觀念理解）、Level 2（簡易程式閱讀）、Level 3（進階邏輯推理）</strong>。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80a2-8fa0-f74e1013e7d6" class="block-color-default">這三個範例不僅清楚呈現各等級對學生的不同要求，也能作為未來題目設計、學生練習、或教學策略調整的重要參考依據。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80f1-8b8e-f563122459e2" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="1ec8fb4d-d8dd-80ed-937a-c0ecfc763dff"><div style="font-size:1.5em"><img class="icon" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/yang02.png"/></div><div style="width:100%"><div style="display:contents" dir="auto"><h3 id="1ec8fb4d-d8dd-8004-b249-cc79b98bf947" class="">Level 1：直覺型題目（入門觀念確認）</h3></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8025-bff1-e8fa2a08d53d" class="">這個等級的題目屬於最基礎的概念理解，通常只要有聽課、有印象，學生就能直接作答。題目設計上不會涉及程式碼或邏輯推理，而是針對單一概念做快速確認。例如某個語法的功能、某個關鍵字的用途等。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-805b-bbe8-e06987e5b887" class="">此類題目主要目的在於<strong>降低評量進入門檻、建立學生信心</strong>，同時讓教師快速掌握學生對課堂基本觀念的掌握情形。</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-8078-b470-c1ebe3ff7d29" class="image"><a href="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%209.png"><img style="width:709.9910888671875px" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%209.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-806e-a612-e34135959acf" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="1ec8fb4d-d8dd-8037-8740-c21f6d81d0b5"><div style="font-size:1.5em"><img class="icon" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/yang02.png"/></div><div style="width:100%"><div style="display:contents" dir="auto"><h3 id="1ec8fb4d-d8dd-808d-a4da-c731d5d30ce3" class="">Level 2：基礎程式閱讀與邏輯判斷</h3></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8025-9f46-f98e814c5d1e" class="">進入第二等級後，題目開始出現簡單的程式碼片段，學生必須具備<strong>基本的閱讀能力與初步推理能力</strong>。這類題型會測試學生是否能正確判讀簡單程式邏輯、變數運作或條件判斷等。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80ca-b9cc-e92ecf9bfa66" class="">設計這一層級的目的是希望<strong>幫助學生建立程式閱讀的基本能力</strong>，即使他們不會自己從零撰寫程式，也要能夠看懂現有程式碼、理解其意圖與輸出結果。</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-801d-8d5c-cedd3f3e8bc6" class="image"><a href="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%2010.png"><img style="width:709.9910888671875px" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%2010.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80f3-a094-c8d93b37c23b" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="1ec8fb4d-d8dd-80cc-b77d-cbda16f77d24"><div style="font-size:1.5em"><img class="icon" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/yang02.png"/></div><div style="width:100%"><div style="display:contents" dir="auto"><h3 id="1ec8fb4d-d8dd-808d-94f7-c6875860d3b5" class="">Level 3：進階綜合程式理解與模擬</h3></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80a1-9643-d83b19c8e9c5" class="">第三等級屬於<strong>進階的程式閱讀測驗</strong>，題目內容包含較完整的程式碼段落，長度通常超過十行，甚至可能接近一整個小功能模組。學生必須具備一定的邏輯架構理解能力，能夠在腦中模擬整段程式的執行，從變數變化、控制流程到整體結構進行綜合分析。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80e3-88df-d04ef018c305" class="">這一層級的目的是<strong>強化學生對中大型程式碼的理解能力</strong>，讓他們能拆解與消化較為複雜的邏輯架構，進一步建立應對實務應用所需的 code literacy。這類訓練也為將來與 AI 工具的互動做準備——在大型語言模型（LLM）輔助下，學生若能看懂 AI 產出的程式，就有機會實現真正的<strong>LLM-assisted coding</strong>，在 AI 世代中有效完成實作任務。</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-809a-a40c-f1efff7b188f" class="image"><a href="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%2011.png"><img style="width:709.9910888671875px" src="%E9%81%8B%E7%94%A8%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%BC%B7%E5%8C%96%E3%80%8C%E5%BD%A2%E6%88%90%E6%80%A7%E8%A9%95%E9%87%8F%E3%80%8D%E8%A8%AD%E8%A8%88%E7%9A%84%E7%AD%96%E7%95%A5%E8%88%87%E6%87%89%E7%94%A8/image%2011.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80c8-9e2a-c1f41c775ed2" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8027-8d16-e1aafbf3d99e" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-805a-a5c4-c6f51e12e37c" class="image"><a href="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/14.png"><img style="width:710.0000610351562px" src="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/14.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8054-ab9f-d3619099b8bc" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

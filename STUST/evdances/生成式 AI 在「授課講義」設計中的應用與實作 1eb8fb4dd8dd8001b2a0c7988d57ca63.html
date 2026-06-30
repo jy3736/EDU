@@ -1,0 +1,777 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>生成式 AI 在「授課講義」設計中的應用與實作</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1eb8fb4d-d8dd-8001-b2a0-c7988d57ca63" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1677756119517-756a188d2d94?ixlib=rb-4.1.0&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb" style="object-position:center 27.949999999999996%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="800x800.png"/></div><h1 class="page-title" dir="auto">生成式 AI 在「授課講義」設計中的應用與實作</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="2038fb4d-d8dd-80da-a338-d6f54e86f46a" class="">因應專業課程教學時常面臨的<strong>課堂時間有限</strong>、<strong>學生能力差異大</strong>以及<strong>教師備課負擔沉重</strong>等挑戰，本人導入<strong>生成式 AI 技術</strong>，自主開發一套「<strong>AI 輔助講義生成範本</strong>」。該範本結合教學目標自動化設置、題庫建置、教材編排與內容補充，有效提升備課效率，並強化課程內容的針對性與系統性。教師僅需設定每週的教學目標與主題，系統即可自動完成下列工作：</p></div><div style="display:contents" dir="auto"><ul id="2038fb4d-d8dd-8026-b980-f2b095621eb9" class="bulleted-list"><li style="list-style-type:disc"><strong>AI 輔助範例產生與精選：</strong> 能根據教學進度與單元重點，自動產生並精選符合課程目標的題型及對應說明草稿，節省教師題庫蒐集與編寫時間。</li></ul></div><div style="display:contents" dir="auto"><ul id="2038fb4d-d8dd-80cc-8a16-f14da5a411fd" class="bulleted-list"><li style="list-style-type:disc"><strong>支援 Markdown/JSON 輸出格式：</strong> 講義內容可直接匯入 Notion、GitHub Pages 或 Google Classroom 等教學平台，大幅提升數位教材的更新效率與跨平台管理便利性。</li></ul></div><div style="display:contents" dir="auto"><ul id="2038fb4d-d8dd-8065-9d0b-faea04a61ae5" class="bulleted-list"><li style="list-style-type:disc"><strong>模組化輸出結構：</strong> 可依據「預習導向」、「課中講解」與「課後練習」等不同教學階段，自動調整題目難度與內容呈現方式，優化教學節奏，並強化學生理解與學習成效。</li></ul></div><div style="display:contents" dir="auto"><p id="2038fb4d-d8dd-8062-8295-e146bbd68a3e" class="">以本學期（113-2）為例，截至目前為止，本人已在所授四門課程中，<mark class="highlight-yellow"><strong>運用此系統產出 214 份全客製化講義</strong></mark>，每份講義皆依課程主題與學生學習需求量身打造，充分展現對教學品質的高度要求與個別化關懷。值得一提的是，<strong>上述數量尚未包含每週形成性評量所額外生成的試題卷與講義</strong>，更加體現本人在課程設計、備課與教學創新上的投入與努力。</p></div><div style="display:contents" dir="auto"><p id="2038fb4d-d8dd-80ed-ab3c-f32f515b2be5" class="">然而，<mark class="highlight-yellow"><strong>AI 生成內容僅能作為輔助工具</strong></mark>，目前技術尚未完美，難免會有錯誤或不合宜之處。因此，<mark class="highlight-yellow"><strong>每份講義及題目皆需由教師親自審閱與修正，確保內容的正確性與教學品質</strong></mark>。這不僅體現教師的專業責任，也反映生成式 AI 在教育現場仍需與教師專業緊密結合，才能真正發揮最佳效益。事實上，AI 再進步，也無法完全取代教師的專業判斷與教學經驗。教師的角色，正是在於把關、引導與陪伴學生學習，使 AI 真正成為提升教學品質的好幫手，而非取而代之。</p></div><div style="display:contents" dir="auto"><p id="2038fb4d-d8dd-8085-90c1-ce33297ddfca" class="">為具體呈現這些成果，本附錄將擇選實際講義樣本作為佐證，展現生成式 AI 技術如何協助教師提升教學品質與效率，推動數位教學創新。</p></div><div style="display:contents" dir="auto"><h2 id="1ec8fb4d-d8dd-803e-a4f4-c2829a192d8b" class="block-color-orange_background">近期課程教學所採用的其中一個講義樣板</h2></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80ec-9742-f12a0f727574" class="">以下是根據三份講義檔案（Verilog 模組與電路階層式結構、C++ 建構函式、C++ 類別成員存取控制），所統整設計的 <strong>「生成式 AI 講義範本製作提示（Prompt Template）」</strong>，格式為<strong>提供給 AI 使用的提示語</strong>，以利產出風格一致、具結構性與教學導向的講義內容：</p></div><div style="display:contents" dir="auto"><hr id="1ec8fb4d-d8dd-80f3-8160-eb9543e3177b"/></div><div style="display:contents" dir="auto"><h2 id="1ec8fb4d-d8dd-80ed-95e0-f631cc510496" class="">🧠 講義範本 AI 產出提示語（Template Prompt for AI）</h2></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-802c-8301-d27fa4984c36" class=""><strong>語言：繁體中文（臺灣用語）</strong></p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80d8-85ec-d328b85c440e" class=""><strong>格式：教學講義（供大學教師備課或教學用）</strong></p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-805b-b40d-eebd45c88763" class=""><strong>風格：條列有序，結構清晰，搭配完整範例程式碼，無需加上註解符號 </strong><code><strong>//</strong></code><strong> 解釋（但可於範例後以段落說明）</strong></p></div><div style="display:contents" dir="auto"><hr id="1ec8fb4d-d8dd-8094-ba8b-c576c1c1d223"/></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80c9-a0c7-e19d43d7e997" class="">請根據以下格式，生成某主題之教學講義內容：</p></div><div style="display:contents" dir="auto"><h3 id="1ec8fb4d-d8dd-80a3-9a0d-fce11a54d8aa" class="">🧾 格式要求如下：</h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1ec8fb4d-d8dd-80c2-b5a7-cb1c8b8b2fec" class="code code-wrap"><code class="language-markdown" style="white-space:pre-wrap;word-break:break-all"># {主題名稱}
+
+## 學習目標
+- 具體列出本單元學生應學會的三至五項知識或技能。
+
+## 課程導引
+- 以 1~2 段文字說明此主題的重要性、應用情境，或學習本單元的背景脈絡。
+
+## 基礎概念
+- 使用簡短段落解釋主要概念（例如：模組、建構函式、access specifier 等）
+- 以標題區分小主題（如「預設建構函式」、「名稱連接」等）
+
+## 範例說明
+- 每個概念至少提供 2 個完整且可編譯執行的範例程式碼（例如 C++ 或 Verilog）
+- 範例後附簡單文字說明其用途與觀察重點
+
+## 常見錯誤與注意事項
+- 條列式說明學生在本主題常犯的錯誤與如何避免
+- 針對使用語法或概念上的混淆給予提示
+
+## 課堂練習建議
+- 提供 2~3 題可供學生操作的練習，題目需明確、有實作方向
+- 每題附一段簡短描述指導學生如何嘗試
+
+## 總結
+- 簡明扼要回顧本單元學習重點</code></pre></div><div style="display:contents" dir="auto"><hr id="1ec8fb4d-d8dd-8096-9e55-f786b1f26f69"/></div><div style="display:contents" dir="auto"><h3 id="1ec8fb4d-d8dd-804f-a082-e47f0baa5fb4" class="">📘 範例應用主題（供 AI 參考）</h3></div><div style="display:contents" dir="auto"><ul id="1ec8fb4d-d8dd-8094-8954-f08317a47605" class="bulleted-list"><li style="list-style-type:disc">Verilog 模組例示與階層設計</li></ul></div><div style="display:contents" dir="auto"><ul id="1ec8fb4d-d8dd-8032-87d5-f415155f0052" class="bulleted-list"><li style="list-style-type:disc">C++ 建構函式（預設、帶參、複製、移動、explicit）</li></ul></div><div style="display:contents" dir="auto"><ul id="1ec8fb4d-d8dd-8035-9664-f926d19fa21b" class="bulleted-list"><li style="list-style-type:disc">C++ 類別成員存取控制（public/private/protected）</li></ul></div><div style="display:contents" dir="auto"><hr id="1ec8fb4d-d8dd-80ab-99ff-e2e4aacca34a"/></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-804d-821f-d793251dc0ab" class="">這份範本可用於「AI 教學助理」系統中，讓 AI 按照一致風格協助教師批次產出不同主題的講義草稿。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80ce-b4c2-e4a7e3d54e40" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="1ec8fb4d-d8dd-80f9-92cf-df18060e5092" class="block-color-orange_background">教學講義範例 </h2></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8013-a728-e7fc5f73efc3" class="">我所有的講義資料都會上傳至「南臺科技大學 FlipClass 數位學習平台」，學生可隨時 24 小時存取，不受時間與地點限制。我一向重視學生的課前準備，因此每週的教學內容都會至少提前一週完成並上線，包含講義、投影片與預習題組，讓學生能夠針對即將上課的主題進行預習與自我檢核。這樣的安排不僅提升學生的學習主動性，也讓課堂討論更聚焦、更有效率。基於這樣的數位教學設計，我的課程從不指定傳統教科書，所有學習資源均由我親自備妥並持續更新，確保內容符合學生程度與實務需求。本學期我共開設四門課程，<mark class="highlight-yellow"><strong>已上傳 186 份講義至平台</strong></mark>，供學生全天候查閱與複習，充分展現對課前學習支持的具體實踐。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80a3-a7cd-f46b975c0e8a" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-80f0-ae8a-d813b72cd2d4" class="image"><a href="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/image.png"><img style="width:709.982177734375px" src="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/image.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8026-a803-fc7898adbff7" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8017-9d60-e9dea60d92e7" class="">這是我近期課程中使用的一份講義，主題為「C++ 建構函式」。內容涵蓋六種常見的建構函式類型，包含預設、帶參數、複製、移動、委派與 explicit 建構函式，並搭配完整可編譯的程式碼範例，說明每種語法的特性與使用情境。此講義設計的目的是幫助學生建立正確的物件導向觀念，並透過實作提升程式設計的靈活性與可讀性。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8065-ab83-f56ac42af0a1" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1ec8fb4d-d8dd-8018-bb74-c5972a767926" class="block-color-yellow">範例1：進階程式設計實務 四技電子一甲等合開</h3></div><div style="display:contents" dir="auto"><h3 id="1ec8fb4d-d8dd-80eb-a8af-cb020acaf604" class="block-color-default">課程教材網頁截圖</h3></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8042-9377-e37549c63ca8" class=""><a href="https://www.notion.so/C-Constructor-1e28fb4dd8dd803ea6d5cacd682c76b4?pvs=21"><img class="icon" src="800x800.png"/>深入探討 C++ 建構函式（Constructor）</a> </p></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-803b-b463-f159a9bc6275" class="image"><a href="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/image%201.png"><img style="width:709.9910888671875px" src="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/image%201.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="1ec8fb4d-d8dd-8021-8acc-e2df2a8f84ab" class=""><a href="https://www.notion.so/C-Constructor-1e28fb4dd8dd803ea6d5cacd682c76b4?pvs=21">【以下截圖省略，請點連結看完整的線上課程教材】</a></h3></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80bb-b7bd-dde04ca2e07f" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1ec8fb4d-d8dd-8022-91cd-dbcaf83a72f4" class=""><mark class="highlight-yellow">範例2：</mark><mark class="highlight-yellow"><strong>Python程式設計 四技電子一甲等合開</strong></mark></h3></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80c3-a765-fea87d73102c" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-8052-93c2-dabe91a79af9" class="image"><a href="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/image%202.png"><img style="width:709.9910888671875px" src="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/image%202.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="1ec8fb4d-d8dd-8029-89a6-e70a9fb39ac9" class="block-color-default"><a href="https://www.notion.so/1e28fb4dd8dd80088eb1e48c6380e0a2?pvs=21">【以下截圖片段，請點連結看完整的線上課程教材】</a></h3></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-80cf-a04a-fe501fdf6e4a" class="image"><a href="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/image%203.png"><img style="width:709.9910888671875px" src="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/image%203.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80f4-8b93-f40f733829e2" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-80ea-b700-e20ee327307a" class="">本文件簡要說明我如何整合生成式 AI 技術，協助產出具結構性與針對性的教學講義。面對課堂時間有限、學生程度落差大與教師備課負擔重等問題，我設計了一套由 AI 參與的講義範本產出流程，教師只需設定每週教學目標與主題，即可自動產出搭配題庫、範例與文字說明的教學草稿，並依課程階段調整內容難度，支援 Markdown 與 JSON 格式，方便直接上傳至 Notion、GitHub Pages 或 Google Classroom 等平台。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-809b-8855-e37671009a7e" class="">範本結構包含學習目標、導引說明、基礎概念、程式範例、常見錯誤、練習建議與單元總結，適用於 C++ 與 Verilog 等程式設計類課程。目前已應用於本學期的四門課程，並上傳 186 份講義至「南臺科技大學 FlipClass 數位學習平台」，讓學生能夠 24 小時不受限制地預習與複習。這份附錄也包含具體講義樣板與線上教材連結，作為我落實教學創新與數位轉型的實證資料之一。</p></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-8095-bed1-d3f827b84780" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="1ec8fb4d-d8dd-803a-98f8-c1661f035dee" class="image"><a href="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/14.png"><img style="width:710.0000610351562px" src="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/14.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="1ec8fb4d-d8dd-804d-87f3-c19a48bc8c76" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>楊榮林教授｜114學年度教學優良教師遴選線上評閱資料</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #edf2f8;
+      --panel: #ffffff;
+      --panel-2: #f8fafc;
+      --text: #1f2937;
+      --heading: #10233f;
+      --muted: #5c6b7d;
+      --line: #d9e1ec;
+      --accent: #0f6b7a;
+      --accent-2: #9b5c10;
+      --accent-soft: #dceff2;
+      --link: #075f8f;
+      --link-bg: #e8f4fa;
+      --success: #1d6b45;
+      --warning: #8a5a00;
+      --shadow: 0 18px 46px rgba(15, 35, 63, .10);
+      --sidebar-width: 264px;
+    }
+
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0d1420;
+      --surface: #111b2a;
+      --surface-2: #172338;
+      --panel: #142033;
+      --panel-2: #101928;
+      --text: #d9e4f2;
+      --heading: #f3f7fb;
+      --muted: #9aacbf;
+      --line: #28384f;
+      --accent: #76d5e0;
+      --accent-2: #f2bd68;
+      --accent-soft: #193744;
+      --link: #9edfff;
+      --link-bg: #153449;
+      --success: #87d6ad;
+      --warning: #f0c06f;
+      --shadow: 0 18px 48px rgba(0, 0, 0, .34);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 18%, transparent), transparent 34rem),
+        linear-gradient(180deg, var(--surface-2) 0, var(--bg) 18rem);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+      line-height: 1.68;
+      letter-spacing: 0;
+      transition: background .25s ease, color .25s ease;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:focus-visible {
+      text-decoration: underline;
+    }
+
+    main {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 48px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: start;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--panel) 92%, transparent);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent-2);
+      font-size: .86rem;
+      font-weight: 700;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      color: var(--heading);
+      line-height: 1.32;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      font-size: clamp(1.65rem, 3vw, 2.45rem);
+      max-width: 16em;
+    }
+
+    .title-line {
+      display: inline;
+    }
+
+    h2 {
+      font-size: clamp(1.3rem, 2vw, 1.72rem);
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      font-size: 1.04rem;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      max-width: 66rem;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .theme-control {
+      display: grid;
+      gap: 8px;
+      justify-items: end;
+    }
+
+    .theme-label {
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .theme-toggle {
+      width: 172px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel-2);
+      color: var(--heading);
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px 4px 4px;
+      font-family: inherit;
+      font-weight: 800;
+      box-shadow: inset 0 1px 0 color-mix(in srgb, var(--heading) 8%, transparent);
+    }
+
+    .theme-toggle:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--accent) 44%, transparent);
+      outline-offset: 3px;
+    }
+
+    .toggle-track {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      position: relative;
+      box-shadow: 0 8px 18px color-mix(in srgb, var(--accent) 22%, transparent);
+    }
+
+    .toggle-track::before,
+    .toggle-track::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+
+    .toggle-track::before {
+      width: 13px;
+      height: 13px;
+      top: 10px;
+      left: 10px;
+      background: #fff4cc;
+      box-shadow: 0 0 0 4px rgba(255,255,255,.25);
+      opacity: 0;
+      transform: scale(.7);
+    }
+
+    .toggle-track::after {
+      width: 14px;
+      height: 14px;
+      top: 8px;
+      left: 9px;
+      background: transparent;
+      box-shadow: 7px 4px 0 0 #f5f7ff;
+      opacity: 1;
+    }
+
+    [data-theme="light"] .toggle-track::before {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    [data-theme="light"] .toggle-track::after {
+      opacity: 0;
+      transform: translateX(4px);
+    }
+
+    .page-layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+      margin-top: 20px;
+    }
+
+    .catalog {
+      position: sticky;
+      top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--panel) 94%, transparent);
+      padding: 14px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
+    }
+
+    .catalog-title {
+      color: var(--heading);
+      font-weight: 900;
+      font-size: .92rem;
+      margin-bottom: 10px;
+    }
+
+    .catalog-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 6px;
+    }
+
+    .catalog-link {
+      display: block;
+      border-radius: 6px;
+      color: var(--muted);
+      padding: 8px 10px;
+      font-size: .9rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .catalog-link:hover,
+    .catalog-link:focus-visible {
+      color: var(--heading);
+      background: var(--accent-soft);
+      text-decoration: none;
+    }
+
+    .content {
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .section-band,
+    .callout-band {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--panel) 96%, transparent);
+      padding: clamp(18px, 3vw, 28px);
+      scroll-margin-top: 20px;
+    }
+
+    .callout-band {
+      background: linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 62%, var(--panel)), var(--panel));
+    }
+
+    .start-band {
+      margin-top: 20px;
+      border: 1px solid color-mix(in srgb, var(--accent) 44%, var(--line));
+      border-radius: 8px;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 72%, var(--panel)), var(--panel));
+      padding: clamp(18px, 3vw, 26px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .start-band h2 {
+      margin-bottom: 8px;
+    }
+
+    .start-band p {
+      color: var(--muted);
+      max-width: 68rem;
+    }
+
+    .primary-action {
+      min-height: 48px;
+      padding-inline: 18px;
+      font-size: 1rem;
+      background: color-mix(in srgb, var(--link-bg) 65%, var(--accent-soft));
+      border-color: color-mix(in srgb, var(--accent) 54%, var(--line));
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 14%, transparent);
+    }
+
+    .section-lead {
+      color: var(--muted);
+      max-width: 70rem;
+      margin-bottom: 16px;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .info-tile,
+    .evidence-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-2);
+      padding: 14px;
+    }
+
+    .info-tile strong,
+    .evidence-card strong {
+      display: block;
+      color: var(--heading);
+      margin-bottom: 5px;
+    }
+
+    .info-tile span,
+    .evidence-card span {
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .spotlight-note {
+      margin-top: 14px;
+      border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--line));
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--accent-soft) 54%, var(--panel));
+      padding: 15px 16px;
+    }
+
+    .spotlight-note strong {
+      display: block;
+      color: var(--heading);
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .spotlight-note p {
+      color: var(--text);
+      margin: 0;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .button-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      border: 1px solid color-mix(in srgb, var(--link) 42%, var(--line));
+      border-radius: 8px;
+      background: var(--link-bg);
+      color: var(--link);
+      padding: 8px 13px;
+      font-weight: 800;
+      text-decoration: none;
+      text-align: center;
+      overflow-wrap: anywhere;
+      white-space: normal;
+    }
+
+    .button-link:hover,
+    .button-link:focus-visible {
+      background: color-mix(in srgb, var(--link-bg) 70%, var(--accent-soft));
+      text-decoration: none;
+    }
+
+    .review-order {
+      margin: 16px 0 0;
+      padding-left: 1.25rem;
+      color: var(--text);
+    }
+
+    .review-order li + li {
+      margin-top: 4px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-2);
+      margin-top: 14px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      font-size: .92rem;
+    }
+
+    th,
+    td {
+      padding: 12px 13px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      color: var(--heading);
+      background: color-mix(in srgb, var(--accent-soft) 66%, var(--panel-2));
+      font-size: .82rem;
+      white-space: nowrap;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    td:first-child {
+      color: var(--heading);
+      font-weight: 800;
+    }
+
+    .metric-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-2);
+      padding: 13px;
+    }
+
+    .metric b {
+      display: block;
+      color: var(--heading);
+      font-size: 1.4rem;
+      line-height: 1.2;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: .86rem;
+      margin-top: 4px;
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .source-link {
+      display: inline-flex;
+      margin-top: 10px;
+      color: var(--link);
+      font-weight: 800;
+    }
+
+    .note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: .86rem;
+      padding: 22px 4px 0;
+      text-align: center;
+    }
+
+    @media (max-width: 920px) {
+      main {
+        width: min(100% - 20px, 1200px);
+        padding-top: 10px;
+      }
+
+      .topbar {
+        grid-template-columns: 1fr;
+        padding: 20px;
+      }
+
+      .theme-control {
+        justify-items: start;
+      }
+
+      .page-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .start-band {
+        grid-template-columns: 1fr;
+      }
+
+      .catalog {
+        top: 0;
+        z-index: 10;
+        overflow-x: auto;
+      }
+
+      .catalog-list {
+        display: flex;
+        min-width: max-content;
+      }
+
+      .catalog-link {
+        white-space: nowrap;
+      }
+
+      .quick-grid,
+      .metric-strip,
+      .evidence-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      h1 {
+        word-break: break-all;
+      }
+
+      .title-line {
+        display: block;
+      }
+
+      .subtitle,
+      .section-lead,
+      .info-tile span,
+      .evidence-card span,
+      td,
+      th {
+        word-break: break-word;
+      }
+
+      .topbar,
+      .section-band,
+      .callout-band {
+        min-width: 0;
+      }
+
+      .action-row {
+        display: grid;
+      }
+
+      .button-link,
+      .theme-toggle {
+        width: 100%;
+      }
+
+      table {
+        min-width: 680px;
+      }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">114 學年度教學優良教師遴選｜線上評閱資料</p>
+      <h1><span class="title-line">楊榮林教授</span><span class="title-line">教學成果與佐證資料</span></h1>
+      <p class="subtitle">本頁將申請重點、教學創新、學生學習成效與官方佐證重新整理為評審可快速閱讀的靜態網頁。原始系統匯出、PDF、Notion 匯出頁與教學優良教師推薦表皆保留為深度查核來源。</p>
+    </div>
+    <div class="theme-control" aria-label="顯示模式">
+      <span class="theme-label">介面顯示</span>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="true" aria-label="切換為淺色模式">
+        <span class="toggle-track" aria-hidden="true"></span>
+        <span id="themeToggleText">切換淺色模式</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="start-band" aria-labelledby="start-application-title">
+    <div>
+      <h2 id="start-application-title">教學優良教師推薦表</h2>
+      <p>請先開啟教學優良教師推薦表 PDF；本頁後續各區塊依推薦表內容整理對應佐證，方便逐項查核原始資料、教學工具、學生回饋與官方問卷。</p>
+    </div>
+    <a class="button-link primary-action" href="FM-CJ-001_教學優良教師推薦表(1.3版)-楊榮林-114.pdf">開啟教學優良教師推薦表 PDF</a>
+  </section>
+
+  <div class="page-layout">
+    <nav class="catalog" aria-label="評閱目錄">
+      <div class="catalog-title">評閱目錄</div>
+      <ul class="catalog-list">
+        <li><a class="catalog-link" href="#quick-review">評審快速導覽</a></li>
+        <li><a class="catalog-link" href="#application-summary">申請重點摘要</a></li>
+        <li><a class="catalog-link" href="#teaching-philosophy">教學理念與特色</a></li>
+        <li><a class="catalog-link" href="#ai-tools">AI 融入與教具研發</a></li>
+        <li><a class="catalog-link" href="#research-recognition">教學實踐研究與外部肯定</a></li>
+        <li><a class="catalog-link" href="#student-outcomes">學生學習成效與回饋</a></li>
+        <li><a class="catalog-link" href="#official-sources">官方紀錄與原始佐證</a></li>
+      </ul>
+    </nav>
+
+    <div class="content">
+      <section class="callout-band" id="quick-review">
+        <h2>評審快速導覽</h2>
+        <p class="section-lead">建議先從上方推薦表開始，再用本頁摘要與原始佐證核對申請內容。所有連結皆為相對路徑，適合以資料夾、壓縮檔或網站部署形式進行線上評閱。</p>
+        <div class="quick-grid">
+          <div class="info-tile">
+            <strong>官方申請文件</strong>
+            <span>推薦表為正式申請來源；本頁摘要用於快速評閱。</span>
+          </div>
+          <div class="info-tile">
+            <strong>核心教學主軸</strong>
+            <span>生成式 AI、形成性評量、自動批閱與個人化進度追蹤。</span>
+          </div>
+          <div class="info-tile">
+            <strong>佐證閱讀方式</strong>
+            <span>先看重點表格，必要時點入原始 HTML、PDF 或圖片。</span>
+          </div>
+        </div>
+        <div class="spotlight-note">
+          <strong>建議優先關注：FormativeX 教學分析平台</strong>
+          <p>FormativeX 是楊榮林教授自行開發並實際導入課堂的 AI 協作評量平台，將題庫生成、封閉式課堂施測、即時作答分析、學生個人錯題報告與教師端補救教學判讀串成一個完整循環。它能具體呈現本申請案的核心價值：不是單純使用 AI，而是把 AI 轉化為可控、可驗證、可持續改善的教學流程。</p>
+        </div>
+        <div class="action-row">
+          <a class="button-link" href="114教具手冊/index.html">閱讀 FormativeX 教具手冊</a>
+          <a class="button-link" href="evdances/17%20門課程學生回饋意見彙整（112、113學年度及歷屆專班）%202048fb4dd8dd80d6bf06d531d97ff539.html">查看學生回饋彙整</a>
+        </div>
+        <ol class="review-order">
+          <li>先開啟「教學優良教師推薦表 PDF」閱讀正式申請內容。</li>
+          <li>再看「申請重點摘要」掌握整理後的查核脈絡。</li>
+          <li>再看「AI 融入與教具研發」了解主要教學創新。</li>
+          <li>接著看「學生學習成效與回饋」確認教學影響。</li>
+          <li>最後開啟「官方紀錄與原始佐證」進行查核。</li>
+        </ol>
+      </section>
+
+      <section class="section-band" id="application-summary">
+        <h2>申請重點摘要</h2>
+        <p class="section-lead">楊榮林教授服務南臺科技大學電子工程系多年，近三年以教學現場問題為起點，將課程教材、AI 工具、形成性評量與學習追蹤整合為可驗證、可改善、可擴散的教學實踐。</p>
+        <div class="metric-strip">
+          <div class="metric"><b>22 年</b><span>本校教學年資</span></div>
+          <div class="metric"><b>2 件</b><span>教育部教學實踐研究計畫</span></div>
+          <div class="metric"><b>8,543 題</b><span>FormativeX 題庫規模</span></div>
+          <div class="metric"><b>2,900+</b><span>個人化週報與成績單寄送</span></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>申請主張</th>
+                <th>評審可看的重點</th>
+                <th>主要佐證</th>
+                <th>原始來源</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>教學理念能回應學生落差</td>
+                <td>從傳統翻轉教學調整為更貼近本校學生的複習翻轉，並以影片、Notion 教材與課堂評量支援課後補強。</td>
+                <td>教學優良教師推薦表、教學問卷、學生回饋</td>
+                <td><a href="FM-CJ-001_教學優良教師推薦表(1.3版)-楊榮林-114.pdf">教學優良教師推薦表 PDF</a></td>
+              </tr>
+              <tr>
+                <td>AI 融入不是工具展示，而是課程流程</td>
+                <td>AI 出題、人工審核、Zuvio 施測、自動批閱與錯題回饋形成完整評量循環。</td>
+                <td>FormativeX 手冊、AI 形成性評量報告</td>
+                <td><a href="114教具手冊/index.html">FormativeX 教具手冊</a></td>
+              </tr>
+              <tr>
+                <td>成果具外部肯定</td>
+                <td>113 年度教育部教學實踐研究工程學門績優計畫；期刊論文與教學工具獎勵支撐教學研究成果。</td>
+                <td>計畫紀錄、期刊紀錄、頒獎照片</td>
+                <td><a href="pages/Propose.html">研究計畫案原始表</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section-band" id="teaching-philosophy">
+        <h2>教學理念與特色</h2>
+        <p class="section-lead">核心理念是讓學生看見自己學得會，也讓教師看見學生在哪裡卡住。教學設計以資料回饋為依據，透過課程影片、動態教材、形成性評量與個別化回饋，將課堂教學轉化為可持續調整的學習支持系統。</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>教學特色</th>
+                <th>做法</th>
+                <th>對評審的意義</th>
+                <th>深度佐證</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>複習翻轉</td>
+                <td>將影片與線上教材定位為課中補強與課後複習資源，降低學生課前預習不穩定造成的落差。</td>
+                <td>教學策略能依學生真實學習狀態調整，而非套用單一模式。</td>
+                <td><a href="FM-CJ-001_教學優良教師推薦表(1.3版)-楊榮林-114.pdf">推薦表內容</a></td>
+              </tr>
+              <tr>
+                <td>動態數位教材</td>
+                <td>使用 Notion、GitHub Pages、Google Classroom 等平台管理講義、題組與補充教材。</td>
+                <td>教材可隨學生反應、測驗結果與課程進度即時修正。</td>
+                <td><a href="evdances/生成式%20AI%20在「授課講義」設計中的應用與實作%201eb8fb4dd8dd8001b2a0c7988d57ca63.html">AI 講義設計佐證</a></td>
+              </tr>
+              <tr>
+                <td>形成性評量循環</td>
+                <td>課前、課中、課後反覆使用題組、程式練習與即時分析，引導學生辨識弱點。</td>
+                <td>評量不只是計分，而是協助學生調整學習策略。</td>
+                <td><a href="evdances/運用生成式%20AI%20強化「形成性評量」設計的策略與應用%201ec8fb4dd8dd80388ecfdd86f14c9e53.html">形成性評量報告</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section-band" id="ai-tools">
+        <h2>AI 融入與教具研發</h2>
+        <p class="section-lead">此部分是本申請的主要亮點。相關教具不是單一展示頁，而是已進入課堂、評量、批閱、回饋與追蹤流程的完整教學系統。</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>工具或成果</th>
+                <th>日期/年度</th>
+                <th>重要資訊</th>
+                <th>佐證型態</th>
+                <th>原始來源</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>FormativeX AI 協作學習評量與教學分析平台</td>
+                <td>114 年度</td>
+                <td>Python 後端 37 檔、HTML 樣板 9 份、題庫 Markdown 316 檔；支援區域網路施測、即時分析與學生個人報告。</td>
+                <td>教具手冊、範例報告</td>
+                <td><a href="114教具手冊/index.html">查看教具手冊</a></td>
+              </tr>
+              <tr>
+                <td>生成式 AI 輔助形成性評量工具</td>
+                <td>114 年度</td>
+                <td>依教材與難度需求產生題組草稿，再由教師審核與轉換成課堂施測格式。</td>
+                <td>教具獎勵、流程報告</td>
+                <td><a href="evdances/運用生成式%20AI%20強化「形成性評量」設計的策略與應用%201ec8fb4dd8dd80388ecfdd86f14c9e53.html">查看流程報告</a></td>
+              </tr>
+              <tr>
+                <td>即時學習進度追蹤系統</td>
+                <td>112 學年度起</td>
+                <td>整合出席、作業、形成性評量與成績資料，定期寄送個人化週報，協助學生及早調整。</td>
+                <td>系統報告、學生回饋</td>
+                <td><a href="evdances/即時學習進度追蹤系統%20(即時成績管理系統)%202028fb4dd8dd80c18027db44408237bf.html">查看追蹤系統佐證</a></td>
+              </tr>
+              <tr>
+                <td>AI 輔助講義生成範本</td>
+                <td>113-2 起</td>
+                <td>以教學目標、題庫結構與模組化輸出協助產出講義，支援多平台發布。</td>
+                <td>教學講義範例</td>
+                <td><a href="evdances/生成式%20AI%20在「授課講義」設計中的應用與實作%201eb8fb4dd8dd8001b2a0c7988d57ca63.html">查看講義設計佐證</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">原始教具手冊和 Notion 匯出頁保留完整截圖、流程描述與範例；本表只整理評審快速判斷所需資訊。</p>
+      </section>
+
+      <section class="section-band" id="research-recognition">
+        <h2>教學實踐研究與外部肯定</h2>
+        <p class="section-lead">研究與獎勵紀錄顯示，教學創新已從個人課堂實驗進一步形成期刊論文、教育部計畫、教具獎勵與學生競賽成果。</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>項目</th>
+                <th>日期/年度</th>
+                <th>重要資訊</th>
+                <th>佐證型態</th>
+                <th>原始來源</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>教育部教學實踐研究工程學門績優計畫</td>
+                <td>113 年度計畫，2026 頒獎</td>
+                <td>「生成式 AI 如何改寫教育場景：適性化學習的實驗探索」（PEE1134950）結案後獲選績優。</td>
+                <td>計畫紀錄、頒獎照片</td>
+                <td><a href="images/113教學實踐研究績優計劃.png">查看頒獎照片</a></td>
+              </tr>
+              <tr>
+                <td>教育部教學實踐研究 USR 專案</td>
+                <td>112 年度</td>
+                <td>「機器學習零基礎入門－當大學生遇上小學生」，結合 AI、Python 與跨齡共學。</td>
+                <td>計畫紀錄</td>
+                <td><a href="pages/Propose.html">查看研究計畫案原始表</a></td>
+              </tr>
+              <tr>
+                <td>教學實踐研究期刊論文</td>
+                <td>2025</td>
+                <td><em>Sustainable Teaching Practices</em> 刊登於《教學實踐研究》第 5 卷第 1 期，DOI: 10.7007/JSoTL.202503/PP.0003。</td>
+                <td>期刊紀錄</td>
+                <td><a href="pages/Publication.html">查看期刊論文原始表</a></td>
+              </tr>
+              <tr>
+                <td>教學榮譽與教材教具獎勵</td>
+                <td>112-114 學年度</td>
+                <td>112 學年度院級教學優良教師；113、114 年度多項教材教具獎勵；學生競賽指導獲獎。</td>
+                <td>校內教師成就登錄</td>
+                <td><a href="pages/hornor.html">查看獲獎紀錄原始表</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section-band" id="student-outcomes">
+        <h2>學生學習成效與回饋</h2>
+        <p class="section-lead">評量數據與學生文字回饋共同呈現教學成效：學生能看見自身進度，教師也能更早辨識風險學生並調整教學節奏。</p>
+        <div class="metric-strip">
+          <div class="metric"><b>637 份</b><span>學生回饋意見彙整</span></div>
+          <div class="metric"><b>68.1%</b><span>學生回饋正面比例</span></div>
+          <div class="metric"><b>85.11%</b><span>票選進度追蹤系統具幫助</span></div>
+          <div class="metric"><b>7 學期</b><span>教學問卷趨勢分析</span></div>
+        </div>
+        <h3>111～114 上教學問卷評量總表</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>學期</th>
+                <th>個人總平均</th>
+                <th>系所平均</th>
+                <th>全校平均</th>
+                <th>評審閱讀重點</th>
+                <th>原始來源</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>111 上</td>
+                <td>4.3650</td>
+                <td>4.2140</td>
+                <td>4.4380</td>
+                <td>個人平均高於系所平均，作為後續穩定改善的起點。</td>
+                <td><a href="evdances/111%20～%20113%20學年教學問卷評量分數詳細分析報告%202048fb4dd8dd806dab9ac7cdef147d5d.html">Notion 匯出分析</a></td>
+              </tr>
+              <tr>
+                <td>111 下</td>
+                <td>4.3682</td>
+                <td>4.2329</td>
+                <td>4.3544</td>
+                <td>持續高於系所平均，並略高於全校平均。</td>
+                <td><a href="evdances/111%20～%20113%20學年教學問卷評量分數詳細分析報告%202048fb4dd8dd806dab9ac7cdef147d5d.html">Notion 匯出分析</a></td>
+              </tr>
+              <tr>
+                <td>112 上</td>
+                <td>4.3881</td>
+                <td>4.2770</td>
+                <td>4.4355</td>
+                <td>維持高於系所平均，分數較前一學年再提升。</td>
+                <td><a href="evdances/111%20～%20113%20學年教學問卷評量分數詳細分析報告%202048fb4dd8dd806dab9ac7cdef147d5d.html">Notion 匯出分析</a></td>
+              </tr>
+              <tr>
+                <td>112 下</td>
+                <td>4.4230</td>
+                <td>4.2670</td>
+                <td>4.3699</td>
+                <td>高於系所與全校平均，顯示教學調整開始反映在整體評量。</td>
+                <td><a href="evdances/111%20～%20113%20學年教學問卷評量分數詳細分析報告%202048fb4dd8dd806dab9ac7cdef147d5d.html">Notion 匯出分析</a></td>
+              </tr>
+              <tr>
+                <td>113 上</td>
+                <td>4.4230</td>
+                <td>4.2529</td>
+                <td>4.4715</td>
+                <td>維持高於系所平均，並延續前期的高分水準。</td>
+                <td><a href="evdances/111%20～%20113%20學年教學問卷評量分數詳細分析報告%202048fb4dd8dd806dab9ac7cdef147d5d.html">Notion 匯出分析</a></td>
+              </tr>
+              <tr>
+                <td>113 下</td>
+                <td>4.3459</td>
+                <td>4.3716</td>
+                <td>4.4364</td>
+                <td>以教務處原始 PDF 補入最新學期資料，供評審查核各課程明細。</td>
+                <td><a href="pdfs/113學年(下)期末問卷-楊榮林老師教學問卷課程平均.PDF">學校原始 PDF</a></td>
+              </tr>
+              <tr>
+                <td>114 上</td>
+                <td>4.4596</td>
+                <td>4.4041</td>
+                <td>4.4681</td>
+                <td>個人平均回升並高於系所平均，與全校平均接近。</td>
+                <td><a href="pdfs/114學年(上)期末問卷-楊榮林老師教學問卷課程平均.PDF">學校原始 PDF</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">111 上至 113 上整理自原 Notion 匯出分析報告；113 下與 114 上整理自教務處課程與教學組核發之原始 PDF。原始檔均保留，供評審需要時查核。</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>成果面向</th>
+                <th>日期/範圍</th>
+                <th>重要資訊</th>
+                <th>佐證型態</th>
+                <th>原始來源</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>17 門課程學生回饋</td>
+                <td>112-113 學年度及歷屆專班</td>
+                <td>637 份回饋經彙整與 NotebookLM 摘要，正面回饋 68.1%，主要肯定教學熱忱、工具整合與即時回饋。</td>
+                <td>學生回饋彙整</td>
+                <td><a href="evdances/17%20門課程學生回饋意見彙整（112、113學年度及歷屆專班）%202048fb4dd8dd80d6bf06d531d97ff539.html">查看學生回饋彙整</a></td>
+              </tr>
+              <tr>
+                <td>個人化週報回饋</td>
+                <td>112 學年度起</td>
+                <td>定期寄送個人進度報告，讓學生及早發現弱項；教師可依據資料進行補救與輔導。</td>
+                <td>系統截圖與報告</td>
+                <td><a href="evdances/即時學習進度追蹤系統%20(即時成績管理系統)%202028fb4dd8dd80c18027db44408237bf.html">查看週報佐證</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section-band" id="official-sources">
+        <h2>官方紀錄與原始佐證</h2>
+        <p class="section-lead">以下保留所有主要原始資料入口。若評審需要查核完整系統匯出表、原始 PDF 或圖像證明，可從此處直接開啟。</p>
+        <div class="evidence-grid">
+          <div class="evidence-card">
+            <strong>教學優良教師推薦表</strong>
+            <span>正式申請文件，含基本資料、近三年教學傑出事項、授課概況與教學規劃；PDF 供快速開啟與查閱。</span>
+            <a class="source-link" href="FM-CJ-001_教學優良教師推薦表(1.3版)-楊榮林-114.pdf">開啟 PDF</a>
+          </div>
+          <div class="evidence-card">
+            <strong>教學榮譽與獲獎紀錄</strong>
+            <span>校內教師成就登錄系統匯出，含教學榮譽、教材教具獎勵與學生競賽指導。</span>
+            <a class="source-link" href="pages/hornor.html">查看原始表</a>
+          </div>
+          <div class="evidence-card">
+            <strong>期刊論文與研討會紀錄</strong>
+            <span>系統匯出之期刊論文與研討會論文列表，支援教學研究與擴散成果查核。</span>
+            <a class="source-link" href="pages/Publication.html">期刊原始表</a>
+            <a class="source-link" href="pages/Conference.html">研討會原始表</a>
+          </div>
+          <div class="evidence-card">
+            <strong>教育部教學實踐研究計畫</strong>
+            <span>112、113 年度計畫紀錄，含計畫名稱、案號、經費與執行情形。</span>
+            <a class="source-link" href="pages/Propose.html">查看原始表</a>
+          </div>
+          <div class="evidence-card">
+            <strong>教師專業進修</strong>
+            <span>近三年研習與學術活動紀錄，含生成式 AI、教學工作坊、導師輔導與國際研討會。</span>
+            <a class="source-link" href="pages/academic.html">查看原始表</a>
+          </div>
+          <div class="evidence-card">
+            <strong>官方問卷與學生回饋</strong>
+            <span>最新兩學期官方 PDF、五學期分析報告與 17 門課程學生回饋彙整。</span>
+            <a class="source-link" href="evdances/111%20～%20113%20學年教學問卷評量分數詳細分析報告%202048fb4dd8dd806dab9ac7cdef147d5d.html">五學期分析</a>
+            <a class="source-link" href="pdfs/113學年(下)期末問卷-楊榮林老師教學問卷課程平均.PDF">113 下 PDF</a>
+            <a class="source-link" href="pdfs/114學年(上)期末問卷-楊榮林老師教學問卷課程平均.PDF">114 上 PDF</a>
+            <a class="source-link" href="evdances/17%20門課程學生回饋意見彙整（112、113學年度及歷屆專班）%202048fb4dd8dd80d6bf06d531d97ff539.html">查看學生回饋彙整</a>
+          </div>
+        </div>
+        <p class="note">本頁只重建首頁的評閱路徑。原始資料頁可能保留系統匯出的欄位與樣式，目的在於提供完整查核來源。</p>
+      </section>
+    </div>
+  </div>
+
+  <footer>
+    114 學年度教學優良教師遴選線上評閱資料｜南臺科技大學電子工程系｜楊榮林教授
+  </footer>
+</main>
+
+<script>
+(function () {
+  var KEY = "portfolio-theme";
+  var html = document.documentElement;
+  var button = document.getElementById("themeToggle");
+  var label = document.getElementById("themeToggleText");
+
+  function getSavedTheme() {
+    try {
+      return localStorage.getItem(KEY);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function saveTheme(theme) {
+    try {
+      localStorage.setItem(KEY, theme);
+    } catch (error) {}
+  }
+
+  function applyTheme(theme) {
+    var nextTheme = theme === "light" ? "light" : "dark";
+    var isDark = nextTheme === "dark";
+    html.setAttribute("data-theme", nextTheme);
+    button.setAttribute("aria-pressed", String(isDark));
+    button.setAttribute("aria-label", isDark ? "切換為淺色模式" : "切換為深色模式");
+    label.textContent = isDark ? "切換淺色模式" : "切換深色模式";
+  }
+
+  applyTheme(getSavedTheme() || "dark");
+
+  button.addEventListener("click", function () {
+    var current = html.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    var next = current === "dark" ? "light" : "dark";
+    saveTheme(next);
+    applyTheme(next);
+  });
+})();
+</script>
+</body>
+</html>

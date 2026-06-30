@@ -1,0 +1,743 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>NEEMEC 110 新工程教育專班</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5da5ad0d-bcd4-4be4-a783-1ddb792024b5" class="page sans"><header><h1 class="page-title" dir="auto">NEEMEC 110 新工程教育專班</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2048fb4d-d8dd-8130-a9be-e9fd8eb70515" class="">NEEMEC 110 新工程教育專班</h1></div><div style="display:contents" dir="auto"><p id="2048fb4d-d8dd-8122-88b5-dd55d94663a5" class="">📊 <strong>Total responses:</strong> 28</p></div><div style="display:contents" dir="auto"><h2 id="2048fb4d-d8dd-8114-8225-ec5cd0725dcc" class="">Student Feedback</h2></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ff-bccf-e09e7a5ce855" class="bulleted-list"><li style="list-style-type:disc">老師的翻轉教學有各人覺得十分的有幫助，因為有影片所以我們也能時常回去觀看複習，對於一些突發狀況也有很大的幫助，我在這學期中有確診一次不過也因為有老師拍攝的影片也讓我在上課進度都有跟上，在上課有疑問的地方也能在回去的反覆觀看中慢慢了解，翻轉學習的方式我覺得對很多人都有一定的幫助。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8119-817c-d3b3db104e68" class="bulleted-list"><li style="list-style-type:disc">我覺得老師教得非常棒上課時間也非常有彈性，也知道有些學生的實作有點差，所以考試有讓我們先回家先做在給我們再去考試，我認為這點非常棒也幫助了很多同學，老師的課程沒有教到太難都以比較輕鬆的題目好讓我們了解和理解題型。👍👍</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81fe-865f-eb7163c4dcee" class="bulleted-list"><li style="list-style-type:disc">教過我的老師只有李博明老師和楊老師會錄教學影片，因為這等於是份外的事情，要額外花時間去做，我覺得真的很有用，聽不懂還可以多聽幾遍，對於上課分心或是理解較慢的同學簡直是救星，真的很感謝老師的付出。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-818f-9ef8-d3f9039e0f49" class="bulleted-list"><li style="list-style-type:disc">上老師的課程，我覺得老師的教學方式很不錯，回家也有老師自己拍的教學影片來自學。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-812a-87aa-c47a8e6dd418" class="bulleted-list"><li style="list-style-type:disc">老師教材給得很齊全，回家有看能更好的了解課程內容</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d0-9a6f-c25e4cc14910" class="bulleted-list"><li style="list-style-type:disc">我覺得楊老師的教學非常創新，我覺得這樣的教學大部分人，大概都能接受，這樣能順帶讓我們回去有自主學習的習慣。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8131-80fd-c20be8b099a3" class="bulleted-list"><li style="list-style-type:disc">我覺得是一個很好的上課方式，老師事先錄好教學影片，好讓我們可以利用空閒時間去看教學影片，而且影片裡的教學方式淺顯易懂，就算不懂也可以重複撥放影片，在上課時，有更多的時間可以去做實驗及跟老師、助教和同學討論。謝謝老師，您辛苦了。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81aa-9b33-e6483c588d0d" class="bulleted-list"><li style="list-style-type:disc">上完一學期的課程我覺得一切都很好，沒有意見。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8171-88bb-f579428c86a1" class="bulleted-list"><li style="list-style-type:disc">我覺得老師您用的翻轉教學我很喜歡，因為可以先預習下次上課的，如果還是不會也可以在回去看，還有zuvio的快問快答可以讓老師您不會教的太快，可以了解到我們在哪邊不會，</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81e8-a640-f4770ffd0d12" class="bulleted-list"><li style="list-style-type:disc">我覺得翻轉教學對我們學習會更有幫助，雖然也是有缺點，例如回家後就沒複習等等，但我覺得還是利大於弊</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-814a-8e8a-f6511204d227" class="bulleted-list"><li style="list-style-type:disc">我只能說 老師的教學方式很棒</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ad-8e20-d57054708253" class="bulleted-list"><li style="list-style-type:disc">從一年級我們學會使用Xilinx的晶片寫出一個or或是and邏輯撰寫方式，到了大二我們學習如何使用Arduino與樹梅派進行溝通，且一開始我們用Arduino可程式化的邏輯晶片控制LED燈輸出，像是紅綠燈的變化或是按鈕控制狀態等，最後期末我們再用樹梅派Node-Red方式控制Arduino的裝置，整體上課內容不錯，老師講的也蠻讚的，且回家要看老師的教學影片才知道本上課內容進階知識，對我們學習會有很多的幫助，助教方面也很認真地指導呢!</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8185-8d68-da71e62d6b11" class="bulleted-list"><li style="list-style-type:disc">老師上課講得很仔細,課後回家不理解的部分還能夠透過老師錄製的教學影片作為複習</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ec-b9a5-f84eacb64963" class="bulleted-list"><li style="list-style-type:disc">我覺得翻轉教學對於我們學生來說十分有幫助，上課時不了解的可以透過老師所拍攝的影片在次學習，上課中所使用Zuvio也讓上課大家的互動更加的有趣，在聽到其他班級的朋友說了許多老師教太快來不及很羨慕我們還能看影片複習，所以我覺得老師的授課方式非常的好。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8166-ac81-c9ed49152093" class="bulleted-list"><li style="list-style-type:disc">楊老師的翻轉教學非常的創新，我對於這樣的教學感到非常的喜歡，在這翻轉教學中，可以幫助培養自己自學的的能力，且可以從教學影片中幫助複習所學的內容。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d0-bdfd-f4d7dff429d3" class="bulleted-list"><li style="list-style-type:disc">老師的教學方式我覺得很好，像是翻轉教室的影片，讓我在不懂的時候可以去找影片自行觀看</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8123-b26a-c0e5ff171ebe" class="bulleted-list"><li style="list-style-type:disc">我覺得老師做的很用心，也很積極的在影片中教授專業的知識，非常棒，希望可以再繼續進行下去，加油。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-816e-91cb-f6a69cd5b9d8" class="bulleted-list"><li style="list-style-type:disc">我覺得這個教學很好，老師拍影片讓我們可以回家利用有空的時間看，看不懂的地方還可以重複看，有空的時候再去學不會有那麼大的壓力，而不是全部都要擠在上課時間一次學完</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-817c-856f-c20bd471b912" class="bulleted-list"><li style="list-style-type:disc">楊老師的教學方式整體來說我覺得很好，不僅在上課認真之外，還有flip class上各種資源可以複習使用</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-810a-82f6-c54e3003106d" class="bulleted-list"><li style="list-style-type:disc">影片教學的方式還不錯，不會的地方可以在回網路複習，不過沒有YouTube連結好像就看不到了</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-817b-889e-d2fcc60e5300" class="bulleted-list"><li style="list-style-type:disc">這種不同於以往的教學方式，讓我在學習上更有動力，感覺得到老師的用心，謝謝老師。唯一的缺點是基礎不好或完全沒學過基礎的人會很難跟上進度。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8105-a1e0-d6345d3230ff" class="bulleted-list"><li style="list-style-type:disc">我覺得這種方式很好回家能有影片能複習，對我這樣容易忘東西很有用，且如果怕跟不上也能看老師預錄的教材。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d4-87ca-fe92f06188ed" class="bulleted-list"><li style="list-style-type:disc">很棒</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8196-8bd3-d1532f992aa7" class="bulleted-list"><li style="list-style-type:disc">老師的教學方式很好，也有拍影片讓學生在家也能學習</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-815c-8389-fcca83c07d98" class="bulleted-list"><li style="list-style-type:disc">翻轉教學是個很不錯的教學方式，上課不懂的地方可以回家看老師錄的影片學習。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8126-a447-c232a9ffc52b" class="bulleted-list"><li style="list-style-type:disc">影片能讓我比較清楚了解課程細節，不懂的地方也能一直重複看</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8129-ae8a-dedd63eae5fa" class="bulleted-list"><li style="list-style-type:disc">剛開始認為先看影片這部分很困擾，感覺在課堂上詳細解說會更好，但後來覺得其實先看影片也還可以，因為可以重複觀看來加深映像</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81b1-86c4-ff1fb5dd0f47" class="bulleted-list"><li style="list-style-type:disc">上課教學影片不錯</li></ul></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

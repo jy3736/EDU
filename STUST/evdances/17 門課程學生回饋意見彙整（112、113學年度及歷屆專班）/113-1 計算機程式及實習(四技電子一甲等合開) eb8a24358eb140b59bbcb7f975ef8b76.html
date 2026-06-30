@@ -1,0 +1,743 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>113-1 計算機程式及實習(四技電子一甲等合開)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="eb8a2435-8eb1-40b5-9bbc-b7f975ef8b76" class="page sans"><header><h1 class="page-title" dir="auto">113-1 計算機程式及實習(四技電子一甲等合開)</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2048fb4d-d8dd-814c-abd1-f00023ef1105" class="">113-1 計算機程式及實習(四技電子一甲等合開)</h1></div><div style="display:contents" dir="auto"><p id="2048fb4d-d8dd-8185-a2a9-f97305d40596" class="">📊 <strong>Total responses:</strong> 87</p></div><div style="display:contents" dir="auto"><h2 id="2048fb4d-d8dd-81ec-900d-febe0adc8255" class="">Responses 1</h2></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81af-8046-df9727dd6890" class="bulleted-list"><li style="list-style-type:disc">是，尤其是自動批閱與成績追蹤系統，自動批閱系統可以自己就在家裡先做完題目並且確認對錯，而成績追蹤系統可以更直觀的看到自己目前的上課情形及成績。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ee-929b-dec248229945" class="bulleted-list"><li style="list-style-type:disc">大學四年以來第一次有這樣的學習方式，老實說還不錯，蠻新穎的</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8102-8e55-f5a53fecb96e" class="bulleted-list"><li style="list-style-type:disc">以前高中上的程式課程，是自己看教科書來實作，有許多地方也還是不明不白，但如今這樣學習，使我理解了更多程式碼的運用，而且自動批閱還會顯示有幾處錯誤，而不是只有顯示結果。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8100-9ab1-f3ee9d8ed107" class="bulleted-list"><li style="list-style-type:disc">再也不是死板板的課本內容了，老師會隨著每年世界的發展，而去更改上課內容，這對我來說是一個不錯的課程</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8147-b2d6-f63ac57f9030" class="bulleted-list"><li style="list-style-type:disc">是比傳統的學習方式更加輕鬆，也比較有空閒的時間來預習</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-819e-a112-f12c6eb8623b" class="bulleted-list"><li style="list-style-type:disc">有</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81be-b402-c216540ddfa3" class="bulleted-list"><li style="list-style-type:disc">是，填寫速度快題目也方便閱讀</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-816a-8734-f73e8655c10e" class="bulleted-list"><li style="list-style-type:disc">有，每週都測驗都能在上課前先預習並練習題目，在經過老師授課後更了解題目，自動批閱也讓作業更快速的繳交並完成，不用等待老師一個個的檢查，成績追蹤系統每個禮拜都能了解的自己的成績很公開透明能讓自己掌握自己的學習狀態很棒有種安心感</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c8-b8aa-d116ca5039f9" class="bulleted-list"><li style="list-style-type:disc">它讓我們執行程式會更加便利，而且能自己提出問題，並透過GenAI來解答程式功能並理解，知道程式什麼樣的語法是可以執行的。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-815a-911c-dcaf70e97099" class="bulleted-list"><li style="list-style-type:disc">是成績追蹤系統讓我每周都知道自己的學習狀況</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8180-a762-c84e37f2eb43" class="bulleted-list"><li style="list-style-type:disc">是，像成績追蹤系統能讓我知道每週的學習狀況和班平均的差距。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-819b-8f54-c1eba9392a74" class="bulleted-list"><li style="list-style-type:disc">有，能夠快速並且方便的理解自己上課的狀況</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8117-ac09-fcbeaa91067b" class="bulleted-list"><li style="list-style-type:disc">楊老師的上課方式跟一般老師比起來相差很多，多了GanAi的關係，剛開始上這門課時還不太適應，但是經過一兩個星期的調適，適應很多，也覺得蠻方便的。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81e8-b074-fbaa5178fb39" class="bulleted-list"><li style="list-style-type:disc">感受到了</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-818f-88a0-fac485306c6b" class="bulleted-list"><li style="list-style-type:disc">是，程式批閱系統增加了許多刺激感，每當改題目時，都會有緊張刺激的振奮。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-812a-ba86-dd8c692decf1" class="bulleted-list"><li style="list-style-type:disc">是的 這教學方式是獨一無二的沒有體驗過</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81b3-9dab-f24dd009b5f4" class="bulleted-list"><li style="list-style-type:disc">是。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8161-9100-f0ec00a25c4a" class="bulleted-list"><li style="list-style-type:disc">很特別</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8152-93e8-ff2dcc9131dd" class="bulleted-list"><li style="list-style-type:disc">有</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-813c-ac0b-e72d0ffceafc" class="bulleted-list"><li style="list-style-type:disc">自動批閱系統讓我們更快知道自己的成績，在批閱途中增加了一些緊張與刺激感，然後每個禮拜可以看到自己的成績，可以知道自己的進度是否有跟上老師的節奏</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c1-9b9d-ee25683ca327" class="bulleted-list"><li style="list-style-type:disc">是跟傳統的差超級多，我覺得很棒</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ba-b99a-c3615066eda1" class="bulleted-list"><li style="list-style-type:disc">有的我們目前的這些課程內，都沒有老師使用到形成性評量給於我們搭配於上課內容，因為基本上老師都一直拿著書商檔案授課，但我覺得幫助最大是在上課結束後讓們做的測驗，這樣可以讓我了解當天課程有哪些需要加強的方向。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-812e-b099-c7eeabc66da5" class="bulleted-list"><li style="list-style-type:disc">確實與其他老師的上課模式有所不同，首先，數位教材的部分看的出來有花費不少心思在教材編成，不是說其他老師的ppt不好，而是用數位教材的話可以隨時隨地隨設備做資訊補充，而PPT的話只能下載，會浪費一點空間，而且印出來的話，又會浪費紙張；再來，自動檢視學習成果的部分確實節省更多時間，還能實時的觀看自己的學習成效，我覺得這是很棒的部分。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ee-bfac-c83519c6ca1d" class="bulleted-list"><li style="list-style-type:disc">我覺得這樣的方式挺好的，這樣可以看到自己的成績就不用再想期末咬考幾分才不會被當掉。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8145-8528-c19cfe268d90" class="bulleted-list"><li style="list-style-type:disc">有</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8140-a0d9-fa5d8837a2bc" class="bulleted-list"><li style="list-style-type:disc">有，我覺得學習起來相較傳統課程，可以學習的更多</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8172-ae55-fefe9dd1123e" class="bulleted-list"><li style="list-style-type:disc">我認為透過AI的幫助，能夠快速解決許多學生的問題，更有效率的提升批閱、評量等，最重要的是每個禮拜都能即時連動評量測驗與程式，並發出成績通知，是個非常棒的系統！</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81f5-9816-c1b130ce175a" class="bulleted-list"><li style="list-style-type:disc">老師用的這些教學資源讓我很明顯的感受到我對這堂課非常的有興趣。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8182-9068-dc6bb8bb76c8" class="bulleted-list"><li style="list-style-type:disc">藉由老師從業界獲取的資訊結合在課程中，我覺得這樣的上課方式比較有辦法真的學到還有練習到之後在職場上會遇到的東西。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c5-8eda-f8a94c80891d" class="bulleted-list"><li style="list-style-type:disc">是，這種方式相較於傳統的教學更好掌握每節課的重點，也可以更快速的閱讀程式，在寫程式上也會更有頭緒。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81b5-8a9a-ed2a3db480f2" class="bulleted-list"><li style="list-style-type:disc">在學習c語言的時候，我感受到了不同的學習方式，例如自動批改，可以私下的時候練習並且可以一起完成作業，有問題的時候可以詢問GenAI得到我們需要的答案，它讓我們的上課變得更加方便，工具更多元，不像傳統課程那麼麻煩。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81df-af51-fd15327941e3" class="bulleted-list"><li style="list-style-type:disc">是，深深了解到老師的用心良苦，讓學生能及時了解問題所在。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c8-a001-c00e8b448110" class="bulleted-list"><li style="list-style-type:disc">第一次使用這工具，非常好用</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8164-a960-ff7878750518" class="bulleted-list"><li style="list-style-type:disc">蠻特別的，我覺得配合Ai固然省事，不難理解這是未來趨勢，但老實說一開始很不習慣，覺得這樣制式化的模式相較於以前老師的一一批改少了點…..人性?每次的完成雖然能迅速知道結果，相較於前者少了點等待、彈性以及小確幸。當然優點是有了成效更加便捷，不用每題找老師做確認。總而言之，個人不但不排斥反而還試著習慣這樣的教學模式，因為我相信之後會越來越多這樣的教學模式。 我們高中老師也是運用相似的AI做工具，所以非常習慣。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8186-bae2-e7d14cae9586" class="bulleted-list"><li style="list-style-type:disc">是，體驗到以往不同的學習方式，透過數位學習教材及評量能夠提前預習和課後複習，打穩自身的基礎，自動批閱能夠及時的知道答題是否正確，成績追蹤能夠知道自己的成績分布，這些都是以往的教學模式所沒有的，這些創新的教學模式都能讓我在課堂上花費更多的精力學習。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-813a-b537-e1ca00668ea9" class="bulleted-list"><li style="list-style-type:disc">是 可以讓我迅速了解自己的學習狀況</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8146-b4a2-e464c8431dba" class="bulleted-list"><li style="list-style-type:disc">我覺得這個方法應用在學習上真的很有趣，因為它可以幫助我們直接在電腦上練習，幫助我有最真實的學習經驗。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ba-8077-fafc6f424aa6" class="bulleted-list"><li style="list-style-type:disc">讓我有很多的題目練習</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d8-8139-c7718d173410" class="bulleted-list"><li style="list-style-type:disc">蠻特別的，第一次看到這種自動批閱的，速度快，而且又方便</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8196-b893-e249a9fcbc0f" class="bulleted-list"><li style="list-style-type:disc">當然有不一樣，而且很好適應 時代真的在改變 我覺得上課方式也會改變的</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d6-a25a-dde7a1da09f3" class="bulleted-list"><li style="list-style-type:disc">是，分數給得很平均，看中出席率跟平時成績。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-812a-a185-fd86f9491ea2" class="bulleted-list"><li style="list-style-type:disc">我覺得用這些可以讓我每個禮拜知道我的成績，知道我會不會過，這些資源可以讓我擁有更好的教學資源</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-815a-9f8f-c21677386e66" class="bulleted-list"><li style="list-style-type:disc">有</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-812c-a9c5-f4c77932c447" class="bulleted-list"><li style="list-style-type:disc">有</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ac-9e08-e75af3715cba" class="bulleted-list"><li style="list-style-type:disc">我覺得一個禮拜10題練習題可能會對有些同學造成壓力，有時候在課堂上都是壓線做完的，以及形成性評量的題型不要有太多重複的或是一些太基本的。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81fe-8ca5-dd544554393b" class="bulleted-list"><li style="list-style-type:disc">以上了四年的課來講其實我覺得沒有哪裡需要改的，這樣的內容還蠻輕鬆也學得到東西</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c0-aa49-f9f00b494a97" class="bulleted-list"><li style="list-style-type:disc">可以透過flipcalss上面丟的教材自主學習，一個禮拜的題目可以預先實作，再加上老師大部分的講解課程，讓我對c語言有一定的判斷能力。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8143-a80b-f5997396027b" class="bulleted-list"><li style="list-style-type:disc">雖然上課內容都有講過，但是對我這個高中對C++零基礎進入這門課還是有點烏煞煞</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8162-bcd7-ce4f68e6ec3a" class="bulleted-list"><li style="list-style-type:disc">比較希望老師可以從最基礎的東西開始講或者是針對我們不會的題目去講解</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-818c-a529-e28c9b455ca0" class="bulleted-list"><li style="list-style-type:disc">flipclass的上的講義標題是英文名每次上去看都不太清楚要打開哪個檔案，每週的成績系統很棒能隨時掌握，段考後的桌遊也很有趣讓學習不那麼死板，也能為期末多加點分數</li></ul></div><div style="display:contents" dir="auto"><h2 id="2048fb4d-d8dd-810e-a383-f6d610e7935a" class="">Responses 2</h2></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81e6-849c-c77c7789c905" class="bulleted-list"><li style="list-style-type:disc">這個課程非常棒，但是遇到一些比較難的篇章，有點跟不上進度，但這可能是因為吃到假日太多次，所以導致程課這麼緊湊。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8198-aa26-d9337ae22263" class="bulleted-list"><li style="list-style-type:disc">自動批閱程式實作題方面有點困難無法在短時間內理解程式內容和真正的打出來偶爾自動批閱程式打得出讓我減少不確定感，也提升自主練習意願</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-813a-869c-d4ad7e54361a" class="bulleted-list"><li style="list-style-type:disc">對於零基礎的我，在實作上覺得有點困難，課程內容不會到聽不懂，希望能在實作上示範該怎麼解題</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8103-9171-f32d536dd371" class="bulleted-list"><li style="list-style-type:disc">希望可以把上課內容錄成影片，方便日後複習使用，也希望可以告訴我們是哪一個程式錯</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81cb-9453-d4f02b3be15a" class="bulleted-list"><li style="list-style-type:disc">我覺得楊老師的上課方式很創新，相當不錯，但建議老師可以在剛開始上新生的程式課程時，多多介紹程式指令的意思，讓新生更快進入狀況。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-814a-b7bb-e1730db05fc1" class="bulleted-list"><li style="list-style-type:disc">老師教的很仔細很用心</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81b4-8729-c27159a2eb59" class="bulleted-list"><li style="list-style-type:disc">整體來說學到了許多東西，例如程式執行運用，理解等，還有選擇題解題，上課進度也不會太快，但希望程式可以少出一點，偶爾吃不消。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-815b-9590-cfb8de48132f" class="bulleted-list"><li style="list-style-type:disc">我覺得老師教得很好 只是我和大多數人一樣跟不上 因為以前完全沒有接觸澳這些 甚至不知道這些是甚麼 所以會覺得教得太快</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-810b-8826-e338833146c3" class="bulleted-list"><li style="list-style-type:disc">我覺得老師的上課方式不錯!</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8168-8c9e-dad68ad86ae3" class="bulleted-list"><li style="list-style-type:disc">內容非常棒</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8193-b8d7-d2edf316733a" class="bulleted-list"><li style="list-style-type:disc">我覺得上課內容適當，但是希望程式方面可以講慢一點，讓我們有時間理解</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-816c-8da2-c14d3bfe6dae" class="bulleted-list"><li style="list-style-type:disc">我覺得這個方法很棒，比拿教科書直接教的還要好，有一點點點點點建議，就是希望老師能帶學生做幾題題目，因為有些學生高職或高中不是本科的。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81a9-bbf5-fc302c6cd728" class="bulleted-list"><li style="list-style-type:disc">希望在形成性評量的方面，給予學生考試的題目可以微調減少，因為形成性評量+自動批閱系統兩個要在課堂上就完成，難度有點不易。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8112-baea-c63c292b6591" class="bulleted-list"><li style="list-style-type:disc">我覺得團隊合作的部分沒有強化到十分可惜，這裡我提出一個意見，透過期末分組專題的實行可以彌補這個部分。例如期末的範圍是到陣列的部分，這部分有幾個不錯的相關專題題目提供老師參考:1.大數運算計算機(包含使用者介面的部分或結合APP)2.走迷宮(array tree or array graph)3.之前林瑞源老師上課時的作業:老師想一個8<em>8的文字矩陣編碼及解碼，將8</em>8分成4個4<em>4，4個4</em>4各自翻轉得到編碼後的矩陣，解碼則是逆向工程然後透過Github的git push &amp; git clone來分工專案</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d4-8055-d4be82e92ac1" class="bulleted-list"><li style="list-style-type:disc">課程進度安排得很好，希望在課堂上老師可以示範個幾題讓我們可以更加聊解上課的內容。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ae-ac7e-fbc958ea8e57" class="bulleted-list"><li style="list-style-type:disc">雖然有些程式題較難，但大多還是思考一下就可以做出來的程式。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-819b-88e3-f50f0b7e728f" class="bulleted-list"><li style="list-style-type:disc">我覺得楊老師的課程可以學習的非常紮實，課程內容也很豐富</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8119-b338-e90edcdcee80" class="bulleted-list"><li style="list-style-type:disc">在這學期學到許多關於程式的知識，也透過這堂課了解docker的使用及操作方式，讓我更熟悉這套軟體的操作，也感謝老師開發成績的系統，讓我們能每個禮拜，即時看到自己的成績，謝謝老師！辛苦了～</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-818f-a938-f1b765f8982c" class="bulleted-list"><li style="list-style-type:disc">我沒有甚麼建議，我覺得老師願意花時間去做這些資源就對學生很有幫助了</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-816c-a0c2-f568fdc6457b" class="bulleted-list"><li style="list-style-type:disc">這門課很好，也很有趣，每次成功繳交作業的時候我都會有一種成就感，認真學對未來有很大的幫助。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8151-a3c2-e504877c517f" class="bulleted-list"><li style="list-style-type:disc">我覺得在上這堂課的時候可以獲得更大成就感，雖然會因為程式碼焦頭爛額，但是可以透過AI以及同學的討論得到更多新的程式概念。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ed-9d0e-ce3d93d5ca75" class="bulleted-list"><li style="list-style-type:disc">在這門課堂中，我在學習c語言的時候，剛開始很陌生、害怕，但是在一次次的練習，讓我有了想更了解的決心，所以這門課給我的感覺與眾不同。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8118-848d-c1a0c93776c5" class="bulleted-list"><li style="list-style-type:disc">對目前的課程安排很滿意，沒有意見。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81e9-802c-e1ff4c95c251" class="bulleted-list"><li style="list-style-type:disc">我覺得這個教學方式很棒</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81a1-901e-cb1d1bff73a4" class="bulleted-list"><li style="list-style-type:disc">由於老師有提到本身先前在國外待過，他把自己在國外求學及環境的模式帶回來給大家，當中的彈性、合理化、甚至於最基本的respect都有提到。個人很欣賞老師把規則講好，不能做(最好不要做)的有哪些，反之其它的都較為輕鬆，這跟台灣土生土長的老師相差甚異，講的什麼都含糊清不清然後又踩到地雷，這跟楊老師freedom的教法就有著鮮明的對比，所以我覺得這點對我受益匪淺，非常有印象。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8135-96b6-f71da86119a3" class="bulleted-list"><li style="list-style-type:disc">覺得每周都能看到成績很棒，也能讓自己檢視自己的學習成果!</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d0-80a3-cff880646044" class="bulleted-list"><li style="list-style-type:disc">老師的教學模式很創新，並且每周都有講義能夠自行觀看，加上課堂上的講解能夠更清楚的了解內容，實作的部分我覺得不錯，能夠在家做，也能夠在學校做，彈性充足，課堂剛開始的評量也很好，能夠讓腦袋開機，總體而言我蠻喜歡上老師的課。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8140-b32f-d9d0969abc22" class="bulleted-list"><li style="list-style-type:disc">在寫功課時可以先教我們寫個一兩題再讓我們自己寫</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-817c-a013-d4cfc1938b99" class="bulleted-list"><li style="list-style-type:disc">我覺得教學方法相當細緻，也很有趣，因為練習時老師講解概念和具體例子，讓我吸收更多。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8170-91eb-c52188a5d630" class="bulleted-list"><li style="list-style-type:disc">老師講得很詳細，但講太久會想睡覺</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81e0-bb89-ccf89a6ee54d" class="bulleted-list"><li style="list-style-type:disc">我對成績即時這種方式非常喜歡，不僅可以實時了解我的學習狀況，也讓我對自己的成績有把握。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81fe-9c8f-cc1b313c5c00" class="bulleted-list"><li style="list-style-type:disc">我覺得楊老師把課程準備的很充分，第一次體驗到這樣的學習方式我很喜歡，而且老師也把時間規劃的很好，因為還有讓我們自己操作而不是一直講一直講課程，我覺得很成功 也不會有上課睡著的問題</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ce-abd8-c18e64b35a11" class="bulleted-list"><li style="list-style-type:disc">實作題目上，可能可以請老師您在上課的過程中先做一次完完整整的題目，然後在做的過程中講解，然後出的實作題目在改一些地方，或者說數字全改，但是概念一樣以及跟課程有關，已基礎打底，我覺得老師您在期中考時使用的影片以及講義，很不錯，可以讓不會的同學可以透過影片完成自己的作業，可能在上課過程中，或是回家沒有複習的同學們，沒有太認真聽講，這樣在真的做實作題目時，他們可能就會不知道自己該做什麼，就會變成對自己自暴自棄，或者使用一些人工智慧來完成作業，如果有影片，也可以讓沒跟上進度的人可以看影片。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-810c-bf47-dc81ebd2c341" class="bulleted-list"><li style="list-style-type:disc">我覺得老師目前的教學方式是我能接受的，比一般的教學更有效。時不時的課堂考試加上老師講解的也清楚。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8145-837a-c799c2d73c7f" class="bulleted-list"><li style="list-style-type:disc">我覺得這門課很好可以每個禮拜都看到自己的成績，知道自己哪裡需要加強，而且每次上課就會考題目，有非常多練習的機會，但我覺得老師可以先示範，因為我完全沒有想法也不知道該怎麼打，所以希望老師可以先示範再讓我們自己做</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81e9-a5c5-c4bceb4153cb" class="bulleted-list"><li style="list-style-type:disc">老師教的很好，每天早上都有題目讓我測驗，看我的能力到那裡，課堂後面也有讓我們練習打程式。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8170-8f29-c69b0fc07bd5" class="bulleted-list"><li style="list-style-type:disc">我覺得這堂課有助於未來的工作能力</li></ul></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

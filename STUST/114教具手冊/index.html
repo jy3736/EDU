@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FormativeX AI 協作學習評量與教學分析平台｜教具介紹與使用手冊</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1020;
+      --paper: #121a2c;
+      --ink: #e8edf7;
+      --muted: #aab6c9;
+      --line: #2b3854;
+      --accent: #8db7ff;
+      --accent-soft: #172944;
+      --good: #71d69d;
+      --warn: #ffd27a;
+      --code: #1b2538;
+      --table-head: #1a2a43;
+      --figure-bg: #101827;
+      --pre-bg: #050914;
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #172033;
+      --muted: #5f6b7a;
+      --line: #dbe2ee;
+      --accent: #275ea8;
+      --accent-soft: #e7f0fb;
+      --good: #1f7a4d;
+      --warn: #946200;
+      --code: #f1f4f8;
+      --table-head: #eef3f9;
+      --figure-bg: #fbfcfe;
+      --pre-bg: #111827;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.72 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 20px 64px;
+    }
+    header {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0;
+      margin-bottom: 18px;
+      overflow: hidden;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .subtitle { margin: 0; color: var(--muted); font-size: 19px; }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: var(--accent-soft);
+      color: #153c72;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    :root:not([data-theme="light"]) .pill { color: #cfe0ff; }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      padding: 28px 34px 30px;
+    }
+    .brand-strip {
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, color-mix(in srgb, var(--accent-soft) 72%, transparent), transparent 70%),
+        var(--figure-bg);
+      padding: 16px 34px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .brand-strip img {
+      display: block;
+      width: min(516px, 55%);
+      height: auto;
+      flex: 0 0 auto;
+      order: 2;
+    }
+    .brand-copy {
+      min-width: 240px;
+      padding-right: 20px;
+      border-right: 1px solid var(--line);
+      order: 1;
+      flex: 1 1 auto;
+    }
+    .brand-copy .subtitle + .subtitle {
+      margin-top: 4px;
+    }
+    .theme-toggle {
+      border: 1px solid var(--line);
+      background: var(--accent-soft);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 8px 13px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .theme-toggle:hover { border-color: var(--accent); }
+    nav {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+    }
+    nav h2 { margin-top: 0; font-size: 18px; }
+    .toc {
+      columns: 2;
+      column-gap: 32px;
+      padding-left: 18px;
+      margin: 0;
+    }
+    section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px 34px;
+      margin: 18px 0;
+    }
+    h2 {
+      margin: 0 0 18px;
+      font-size: 28px;
+      line-height: 1.3;
+    }
+    h3 {
+      margin: 26px 0 10px;
+      font-size: 21px;
+      line-height: 1.35;
+    }
+    p { margin: 0 0 14px; }
+    ul, ol { margin-top: 0; padding-left: 24px; }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 14px 0 20px;
+      font-size: 15px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 11px;
+      vertical-align: top;
+    }
+    th {
+      background: var(--table-head);
+      text-align: left;
+    }
+    code {
+      background: var(--code);
+      border: 1px solid #d8e0eb;
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    pre {
+      overflow-x: auto;
+      background: var(--pre-bg);
+      color: #f5f7fb;
+      border-radius: 8px;
+      padding: 16px;
+      line-height: 1.55;
+    }
+    pre code {
+      background: transparent;
+      border: 0;
+      color: inherit;
+      padding: 0;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .note {
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      padding: 14px 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+    figure {
+      margin: 28px 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--figure-bg);
+      display: flex;
+      flex-direction: column;
+    }
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-top: 1px solid var(--line);
+    }
+    figcaption {
+      order: -1;
+      padding: 16px 18px 18px;
+    }
+    figcaption strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 18px;
+    }
+    figcaption p { margin: 8px 0 0; }
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin: 18px 0;
+    }
+    .step {
+      border: 1px solid var(--line);
+      background: var(--figure-bg);
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 100px;
+    }
+    .step b { color: var(--accent); }
+    .sample-links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .sample-link {
+      display: block;
+      border: 1px solid var(--line);
+      background: var(--figure-bg);
+      border-radius: 8px;
+      padding: 14px 16px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .sample-link:hover {
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+    .sample-link strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--accent);
+    }
+    .sample-link span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .toc { columns: 1; }
+      .grid, .workflow, .sample-links { grid-template-columns: 1fr; }
+      section { padding: 22px; }
+      .brand-strip { padding: 14px 22px; flex-direction: column; align-items: flex-start; }
+      .brand-strip img { width: 100%; max-width: 520px; }
+      .brand-copy { border-right: 0; padding-right: 0; }
+      .header-top { padding: 22px; }
+      .header-top { flex-direction: column; }
+    }
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      header, nav, section { border: 0; border-radius: 0; break-inside: avoid; }
+      figure { break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="brand-strip">
+        <img src="img/stust01.png" alt="南臺科技大學 STUST" />
+        <div class="brand-copy">
+          <p class="subtitle">教具介紹、詳細功能說明與使用手冊</p>
+          <p class="subtitle">開發者：楊榮林教授，南臺科技大學電子工程系</p>
+          <p class="subtitle">教學實踐研究室 P306（電子工程系）</p>
+        </div>
+      </div>
+      <div class="header-top">
+        <div>
+          <h1>FormativeX AI 協作學習評量與教學分析平台</h1>
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="切換深色與淺色模式">切換淺色</button>
+      </div>
+      <div class="meta">
+        <span class="pill">形成性評量</span>
+        <span class="pill">AI 題組生成</span>
+        <span class="pill">即時教室監測</span>
+        <span class="pill">錯題分析</span>
+        <span class="pill">學生個人化回饋</span>
+      </div>
+    </header>
+
+    <nav>
+      <h2>目錄</h2>
+      <ol class="toc">
+        <li><a href="#download-samples">下載報告範例</a></li>
+        <li><a href="#intro">教具定位</a></li>
+        <li><a href="#motivation">開發動機與設計理念</a></li>
+        <li><a href="#features">教學特色</a></li>
+        <li><a href="#architecture">系統架構與資料流程</a></li>
+        <li><a href="#functions">功能總覽</a></li>
+        <li><a href="#teacher">教師端使用手冊</a></li>
+        <li><a href="#student">學生端使用手冊</a></li>
+        <li><a href="#screenshots">截圖導覽</a></li>
+        <li><a href="#workflow">建議教學流程</a></li>
+        <li><a href="#maintenance">維運與注意事項</a></li>
+        <li><a href="#conclusion">結語</a></li>
+      </ol>
+    </nav>
+
+    <section id="download-samples">
+      <h2>下載報告範例</h2>
+      <p>以下兩份 HTML 為平台產生的下載報告範例，可開啟於獨立瀏覽器分頁，對照教師端全班分析與學生端個人作答卷的差異。</p>
+      <div class="sample-links">
+        <a class="sample-link" href="samples/測驗結束後老師可下載的綜合測驗結果.html" target="_blank" rel="noopener noreferrer">
+          <strong>教師端綜合測驗結果範例</strong>
+          <span>測驗結束後，教師可下載的全班統計、錯題分析與題目詳解報告。</span>
+        </a>
+        <a class="sample-link" href="samples/學生繳交測驗後可下載的試卷範例.html" target="_blank" rel="noopener noreferrer">
+          <strong>學生端個人作答卷範例</strong>
+          <span>學生繳交測驗後，可下載的個人答案、正解與作答結果標記報告。</span>
+        </a>
+      </div>
+    </section>
+
+    <section id="intro">
+      <h2>1. 教具定位</h2>
+      <p>FormativeX 是由南臺科技大學電子工程系楊榮林教授自行設計與實作的課堂形成性評量與教學分析平台，實際應用於 JavaScript 程式設計（五專電子三甲，30D1GH01）課程。作品完整名稱可表述為「AI 協作學習評量與教學分析平台：智慧題庫生成、即時監測、學習診斷與教學決策輔助」。</p>
+      <p>本作品以 Flask 架構開發，整合學生端線上作答、教師端即時儀表板、題庫管理、課後分析與報告匯出。它要改善的不是單一考試流程，而是傳統紙本小考、通用表單測驗與人工批改所造成的流程繁瑣、資料分散、回饋延遲與難以長期追蹤等問題。</p>
+      <table>
+        <thead><tr><th>模組</th><th>檔案</th><th>使用者</th><th>主要用途</th></tr></thead>
+        <tbody>
+          <tr><td>學生作答端</td><td><code>exam.py</code></td><td>學生</td><td>登入、選擇測驗、限時作答、提交、查看成績、下載個人作答報告</td></tr>
+          <tr><td>教師儀表板</td><td><code>dashboard.py</code></td><td>教師</td><td>題組啟用、測驗伺服器控制、即時監測、錯題分析、成績分布、詳解匯出、成績下載</td></tr>
+        </tbody>
+      </table>
+      <p>這套系統並不是將現有商業測驗平台簡單套用到課堂，而是針對實際教學現場長期觀察到的問題，利用課餘與下班後時間逐步設計、實作、修正而成的獨立教具。其開發目的，是讓教師能掌握題目生成、測驗環境、資料保存、學習分析與課後回饋的完整流程，而不必受限於外部平台的功能邊界、網路條件或資料格式。</p>
+      <div class="workflow">
+        <div class="step"><b>1. 建題</b><br>以教材與 AI 工作流程建立題組。</div>
+        <div class="step"><b>2. 施測</b><br>課堂前測或後測中啟動測驗。</div>
+        <div class="step"><b>3. 監測</b><br>教師即時觀察學生狀態與行為。</div>
+        <div class="step"><b>4. 分析</b><br>系統統計成績分布與錯題率。</div>
+        <div class="step"><b>5. 回饋</b><br>學生下載報告，教師調整教學。</div>
+      </div>
+    </section>
+
+    <section id="motivation">
+      <h2>2. 開發動機與設計理念</h2>
+      <p>FormativeX 的誕生，來自幾個非常具體的教學需求。第一，生成式 AI 普及後，傳統線上測驗若完全依賴外部網站與網際網路，測驗公平性會快速下降。學生在測驗期間只要能連上外部服務，就可能使用 AI 工具查詢答案；但若完全不用數位工具，教師又會失去即時批改、錯題分析與長期追蹤的能力。因此，本系統選擇以「教室區域網路內可獨立運作」作為核心設計，使教師可以在必要時切斷對外網路，同時仍保留數位評量與即時分析。</p>
+      <p>第二，既有工具如 Zuvio、Firebase 雲端服務、GitHub Pages 或其他外部平台，雖然能處理部分表單、測驗或資料儲存需求，但很難完全符合程式設計課堂中的細緻需求。例如：多於四個選項的題型、依學生與試卷固定亂序、測驗中即時查看每題正確狀態、記錄每題停留時間、即時辨識亂猜行為、匯出個人化作答卷、同時整合多次形成性評量等。FormativeX 因此選擇完全自行實作，讓平台功能能直接回應教學現場，而不是讓教學流程遷就外部工具。</p>
+      <p>第三，這套教具強調「資料留在教師可掌握的環境中」。學生名單、作答紀錄、成績、IP、作答歷程與刪除紀錄都保存在本機或課程資料夾中，不需要上傳至第三方雲端服務。這對含有個資與學習歷程資料的課堂評量特別重要，也讓教師能依自己的課程節奏備份、整理與分析。</p>
+      <p>第四，開發此平台的目的不是減少教師參與，而是讓教師能更深入參與教學判斷。AI 可以協助生成題目，但題目是否符合教材、難度是否合理、選項是否具有辨識度、錯題是否代表共同迷思，仍由教師決定。系統負責收集與呈現資料，真正的教學決策仍回到教師身上。</p>
+      <div class="note">FormativeX 可被視為一套「教師主導、AI 輔助、區域網路可獨立部署」的教學分析工具。它反映的是教師為了改善課堂出席、提升形成性評量品質、降低猜題干擾、限制測驗期間 AI 存取、並讓每次小測驗都能回到教學循環中，而投入大量非正式工作時間逐步完成的教具系統。</div>
+      <h3>實作規模與內容量統計</h3>
+      <p>以下統計以 <code>formativeX-製作教具</code> 專案為範圍，排除 <code>.venv</code>、快取、學生提交紀錄與刪除備份等執行期資料，呈現這套教具的程式實作量、評量內容量與輸出教材量。統計日期為 2026-05-17，行數採實體行數估算，因此包含必要的空白、註解與版面結構。</p>
+      <table>
+        <thead><tr><th>項目</th><th>數量</th><th>代表意義</th></tr></thead>
+        <tbody>
+          <tr><td>Python 後端與工具程式</td><td>37 個檔案，11,888 行</td><td>包含學生作答伺服器、教師儀表板、測驗狀態控制、題目解析、批改、報告產生、下載與題庫輔助流程。</td></tr>
+          <tr><td>HTML / Jinja 教師端與學生端介面</td><td>9 個樣板，10,037 行</td><td>支撐教師 Dashboard、學生登入與作答、即時監測、分析頁面、下載報告與多種課堂操作畫面。</td></tr>
+          <tr><td>JavaScript 互動邏輯</td><td>4,556 行內嵌於樣板中</td><td>負責倒數計時、題目導覽、即時更新、作答狀態呈現、圖表互動、教師端控制與下載操作；目前未拆成獨立 <code>.js</code> 檔。</td></tr>
+          <tr><td>評量與題庫內容 Markdown</td><td>316 個檔案，174,461 行</td><td>包含課程 assessments、共享 JavaScript 題庫與題目工作檔，反映教師將教材、AI 協作出題、人工審核與單元評量長期累積為可維護內容庫。</td></tr>
+          <tr><td>可辨識題目小節</td><td>8,543 題左右</td><td>依題目標題格式估算，呈現題庫規模與多版本、多單元形成性評量的建置工作量。</td></tr>
+          <tr><td>已產生下載測驗 / 報告 HTML</td><td>34 份，19,874 行</td><td>代表系統已能把測驗結果轉成教師與學生可直接閱讀的教學文件，並可在課後複習、補救教學與申請資料中重複使用。</td></tr>
+          <tr><td>已封裝下載測驗 ZIP</td><td>34 份</td><td>顯示平台不只線上施測，也支援將試卷與結果封裝保存，方便課程檔案管理與離線備查。</td></tr>
+        </tbody>
+      </table>
+      <p>這些數字說明 FormativeX 不是單一網頁或臨時測驗腳本，而是一套由授課教師在正常授課、行政與研究工作之外，利用大量下班後與假日時間逐步完成的完整教學系統。AI assistant 與 vibe coding 的快速迭代方式協助縮短摸索時間，但系統需求判斷、課堂流程設計、題目品質檢查、資料欄位取捨、學生端操作細節與教師端分析邏輯，仍由開發者依真實教學現場反覆修正。這也是本教具選擇完全 standalone 的原因：不依賴 Zuvio、Firebase、GitHub 或其他外部平台，教室內只要有區域網路即可運作，必要時可與外網隔離以限制測驗期間的 AI 存取。</p>
+    </section>
+
+    <section id="features">
+      <h2>3. 教學特色</h2>
+      <div class="grid">
+        <div>
+          <h3>多選項題型</h3>
+          <p>支援 A-Z 任意選項數，可製作四選一、五選一、六選一或七選一題目，降低純猜測取得高分的機率。</p>
+        </div>
+        <div>
+          <h3>封閉式區域網路</h3>
+          <p>平台可在教室 LAN 運作，不依賴外部商業測驗平台；正式施測可中斷外網以限制測驗期間的 AI 存取，同時保留數位評量與即時分析能力。</p>
+        </div>
+        <div>
+          <h3>即時學習歷程</h3>
+          <p>記錄題目停留時間、答案修改、回看題目與作答進度曲線，讓教師掌握過程而不只看分數。</p>
+        </div>
+        <div>
+          <h3>測驗轉化為教材</h3>
+          <p>測驗結束後即可匯出統計、詳解與學生個人化報告，成為課後複習與補救教學資料。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="architecture">
+      <h2>4. 系統架構與資料流程</h2>
+      <pre><code>formativeX-製作教具/
+├── exam.py
+├── dashboard.py
+├── templates/
+├── assets/
+└── courses/
+    └── &lt;course_id&gt;/
+        ├── assessments/      # Markdown 題庫
+        ├── students/         # 學生名單
+        ├── submits/          # 學生提交結果
+        ├── active_logins/    # 進行中測驗 session
+        ├── downloads/        # 匯出報告
+        ├── deleted/          # 刪除紀錄保留區
+        └── assets/
+            ├── course_config.json
+            └── messages/</code></pre>
+      <h3>題庫格式</h3>
+      <pre><code>### 1. 題目文字
+
+題目敘述
+
+(A) 選項 A
+(B) 選項 B
+(C) 選項 C
+(D) 選項 D
+(E) 選項 E
+(F) 選項 F
+
+答案: (E)</code></pre>
+      <p>學生提交後，系統會在 <code>courses/&lt;course_id&gt;/submits/&lt;exam_tag&gt;/&lt;student_id&gt;.json</code> 儲存結果，包含學號、姓名、時間戳、IP、題目順序、答案、批改結果、分數與簽章。</p>
+      <h3>獨立部署特性</h3>
+      <p>FormativeX 的執行不需要 Zuvio、Firebase、GitHub、雲端資料庫或第三方測驗平台。只要教室內有一台可執行 Python/Flask 的電腦作為伺服器，學生與教師端瀏覽器能連到同一個區域網路位址，即可完成測驗流程。</p>
+      <p>這種設計特別適合生成式 AI 時代的教室測驗：教師可保留數位系統的即時分析能力，同時透過切斷外網限制學生在測驗中使用 ChatGPT、搜尋引擎或其他線上資源。</p>
+    </section>
+
+    <section id="functions">
+      <h2>5. 功能總覽</h2>
+      <table>
+        <thead><tr><th>功能</th><th>說明</th><th>教學價值</th></tr></thead>
+        <tbody>
+          <tr><td>題組啟用</td><td>教師在 Dashboard 選擇本次開放題組</td><td>快速切換週次、單元與難度</td></tr>
+          <tr><td>測驗伺服器控制</td><td>從 Dashboard 啟動或停止學生作答端</td><td>降低部署與課堂操作負擔</td></tr>
+          <tr><td>單一登入限制</td><td>同一學號同一時間只允許一個裝置登入</td><td>降低冒名與重複作答</td></tr>
+          <tr><td>題目順序亂序</td><td>依 <code>student_id + exam_file</code> 產生固定亂序</td><td>降低鄰座抄襲</td></tr>
+          <tr><td>即時狀態卡</td><td>顯示未開始、作答中、已繳交</td><td>教師掌握全班進度</td></tr>
+          <tr><td>行為標記</td><td>根據節奏、停留時間、變更行為顯示提示</td><td>協助辨識亂猜或異常作答</td></tr>
+          <tr><td>錯題分析</td><td>依錯誤率列出題目與答錯人數</td><td>立即進行補救教學</td></tr>
+          <tr><td>題目詳解匯出</td><td>下載 Markdown / HTML / ZIP</td><td>建立課後複習教材</td></tr>
+          <tr><td>成績下載</td><td>匯出 JSON / HTML / Excel</td><td>支援期末成績整理與長期分析</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="teacher">
+      <h2>6. 教師端使用手冊</h2>
+      <h3>啟動教師儀表板</h3>
+      <pre><code>cd formativeX-製作教具
+COURSE_ID="py1b2026spring" python3 dashboard.py</code></pre>
+      <p>預設教師端位址為 <code>http://&lt;server-ip&gt;:5050</code>。教師可從儀表板選擇班級、設定題組、啟動或停止學生作答服務。</p>
+      <h3>啟用題組</h3>
+      <ol>
+        <li>進入 Dashboard 主畫面。</li>
+        <li>使用 New、All、Picked Up、Completed 等狀態篩選。</li>
+        <li>使用單元編號篩選需要的題組。</li>
+        <li>勾選本次要開放的測驗題組。</li>
+        <li>儲存設定後，學生端只會顯示已啟用題組。</li>
+      </ol>
+      <h3>啟動學生作答服務</h3>
+      <pre><code>EXAM_SIGNATURE_KEY="your-strong-random-secret" \
+COURSE_ID="py1b2026spring" \
+python3 exam.py --time 20</code></pre>
+      <h3>即時監測與管理</h3>
+      <p>「測驗狀態」分頁以學生卡片呈現未開始、作答中與已繳交狀態；點選卡片可查看個別學生作答細節。「管理測驗」分頁可強制放棄、強制繳交，或設定最後 N 分鐘。</p>
+      <h3>匯出詳解與成績</h3>
+      <p>「題目詳解」可匯出單一或多題組 Markdown、HTML 或 ZIP。「成績下載」可選擇多份題組，設定完成題數權重與答對題數權重，並輸出 JSON、HTML 或 Excel。</p>
+      <div class="note">成績計算：<code>成績 = min(a × 完成率 + b × 答對率, 100)</code></div>
+    </section>
+
+    <section id="student">
+      <h2>7. 學生端使用手冊</h2>
+      <h3>登入</h3>
+      <ol>
+        <li>開啟教師提供的學生端網址，預設為 <code>http://&lt;server-ip&gt;:5000</code>。</li>
+        <li>輸入學號。</li>
+        <li>系統自動顯示姓名，確認身份。</li>
+        <li>選擇可作答測驗並進入。</li>
+      </ol>
+      <h3>作答</h3>
+      <p>學生一次只看到一題；左側顯示測驗名稱、姓名、學號與剩餘時間。學生可切換上一題、下一題，也可勾選「作答後自動下一題」。</p>
+      <h3>交卷與下載個人報告</h3>
+      <p>提交後系統立即批改，顯示答對題數與表現評語。學生可下載完整作答卷，內容包含個人答案、正確答案、各題對錯與全班相對表現。</p>
+    </section>
+
+    <section id="screenshots">
+      <h2>8. 截圖導覽與功能說明</h2>
+      <p>以下截圖說明不只描述畫面元件，也補充開發者設計這些功能時的教學意圖。FormativeX 的重點不是把紙本小考搬到網頁上，而是把題庫生成、封閉式區域網路施測、即時監測、錯題分析、個別化回饋與長期學習資料累積，整合成教師可自行掌握的教學工具。</p>
+
+      <figure id="fig01"><img src="img/01.png" alt="教師端 Dashboard 主畫面"><figcaption><strong>教師端 Dashboard 主畫面</strong><p>教師端主畫面是課程測驗管理中心，可選擇班級、指定題組、設定測驗時間並啟動學生作答服務。它呈現本系統的核心設計意圖：教師不需登入外部平台、不需依賴雲端測驗服務，也不需將學生資料交給第三方工具。</p><p>此頁同時說明 FormativeX 不是一次性小考工具，而是支援整門課長期題庫累積、週次單元、形成性評量、期中期末複習與跨班級使用的教學平台。</p><p>開發者刻意把「選題、啟動、查看、分析」放在同一個入口，是因為課堂現場沒有時間在多個平台之間切換。教師只要在教室內啟動服務，學生即可在區域網路中作答；即使外網中斷以限制 AI 存取，測驗流程仍能完整運作。</p></figcaption></figure>
+      <figure id="fig02"><img src="img/02.png" alt="題組篩選與管理"><figcaption><strong>題組篩選與管理</strong><p>題組可依 New、All、Picked Up、Completed 與單元編號過濾，降低大型題庫下的操作負擔。00、01、02 等編號對應不同教學 Unit，每個 Unit 底下可能有多份不同難度、版本或選項數的題組。</p><p>此功能讓教師在課前快速定位本週題組，避免誤選、重複施測或被大量題庫淹沒。</p><p>這個介面背後的開發意圖，是讓 AI 協作產生的大量題目能被穩定管理。若題庫只是檔案堆疊，久了會失去可用性；因此系統必須能依單元、狀態與本次選取情境快速篩選，讓高頻率形成性評量可以真正持續整學期。</p></figcaption></figure>
+      <figure id="fig03"><img src="img/03.png" alt="測驗即時監測"><figcaption><strong>測驗即時監測</strong><p>每張卡片代表一位學生，教師可即時看到登入、作答、繳交、IP、進度與目前答對題數。即使教室已切斷外網，教師仍能在區域網路中掌握全班狀態。</p><p>卡片顏色、IP 與行為標記可協助教師定位學生、辨識遲到或快速亂猜等狀況。此畫面也支援以課前短測鼓勵準時到課的教學策略。</p><p>開發者希望教師在測驗進行中就能做教學判斷，而不是等所有學生交卷後才看到結果。這使形成性評量能成為課堂當下的觀察工具：誰還沒到、誰進度異常、誰可能需要提醒，都可以立即處理。</p></figcaption></figure>
+      <figure id="fig04"><img src="img/04.png" alt="個別學生作答分析"><figcaption><strong>個別學生作答分析</strong><p>教師可查看個別學生各題對錯與題目內容，在測驗過程中進行即時診斷。若學生極短時間內完成多題且正確率偏低，系統可提示可能存在猜測行為。</p><p>此提示不是為了批評學生，而是讓教師能引導學生理解：學習不能只靠運氣，願意閱讀題目與理解概念才會反映在長期表現上。</p><p>這個功能的設計意圖，是把「成績」拆解成可討論的學習證據。教師可以點開單一題目與學生作答，直接針對錯誤概念進行提醒，也可以把高錯誤率題目轉成全班共同討論素材。</p></figcaption></figure>
+      <figure id="fig05"><img src="img/05.png" alt="作答歷程與行為曲線"><figcaption><strong>作答歷程與行為曲線</strong><p>系統記錄作答累積曲線與答對題數變化，協助辨識快速猜題、遲到壓力或時間不足造成的作答模式。</p><p>它也記錄每題停留時間、是否返回前題、是否修改答案，以及哪些題目停留異常。測驗結果因此不只是答對或答錯，而是可觀察學生如何作答。</p><p>開發者特別重視「學習歷程」而不只重視分數，是因為程式設計學習常需要看推理過程。學生答錯可能是完全不懂，也可能是時間不足、讀題太快或在關鍵題目猶豫；曲線資料能讓教師更公平地解讀學生表現。</p></figcaption></figure>
+      <figure id="fig06"><img src="img/06.png" alt="高表現學生歷程分析"><figcaption><strong>高表現學生歷程分析</strong><p>高表現學生的停留時間可反映題目認知負荷，也能回饋教師檢查題目難度。基礎題通常快速完成，程式閱讀、流程推論或非同步執行題則需要較長思考。</p><p>當多位高表現學生都在同一題停留較久，代表該題可能具有較高思考負荷；若反覆修改，則可能需要檢查選項設計。</p><p>這個畫面也反映開發者的另一個意圖：系統不只用來找出低分學生，也用來理解高表現學生如何思考。透過高表現者的停留時間，教師可以反推題目難度與認知負荷，進而修正題組設計。</p></figcaption></figure>
+      <figure id="fig07"><img src="img/07.png" alt="中高表現學生學習行為"><figcaption><strong>中高表現學生學習行為</strong><p>曲線變化可看出學生在高難度概念處速度下降與反覆確認。以 JavaScript 非同步程式設計為例，學生需理解 event loop、callback、Promise 與 setTimeout 的執行順序。</p><p>長期累積此類資料後，教師能觀察學生是快速決策型、細心確認型，或在特定概念上需要更深入引導。</p><p>開發者希望這些資料能補足單次考試看不到的差異。兩位學生都可能拿高分，但一位可能快速判斷、另一位可能慢慢驗證；長期曲線能幫助教師做更合適的個別化輔導與分組安排。</p></figcaption></figure>
+      <figure id="fig08"><img src="img/08.png" alt="全班成績分布"><figcaption><strong>全班成績分布</strong><p>成績分布協助教師判斷題組難度、鑑別度與學生能力層次。形成性評量的目的不是把學生考倒，而是讓教師知道哪些學生真正閱讀與理解，哪些學生仍在猜測。</p><p>此頁也呼應 L1-L5 分級題組設計：基礎學生有合理得分機會，高成就學生也能受到挑戰，題組才能支援補救與延伸教學。</p><p>開發者設計多選項題型與分布分析，是為了降低「運氣型得分」對判讀的干擾。若純猜測也能取得不低分數，教師就無法知道學生是否真正理解；分布圖讓題組鑑別度能被立即檢查。</p></figcaption></figure>
+      <figure id="fig09"><img src="img/09.png" alt="錯題分析"><figcaption><strong>錯題分析</strong><p>依錯誤率排序題目，教師可立即找出全班共同困難概念並進行補救教學。若 Promise 與 setTimeout 題目錯誤率偏高，教師可立即回到 event loop、non-blocking 與 callback 排程重新講解。</p><p>這讓測驗成為教學的一部分。學生剛作答完時仍記得自己的判斷，此時立即討論錯誤原因，比隔週才檢討更有效。</p><p>此功能的開發意圖是縮短「發現問題」到「教學補強」之間的時間。傳統紙本小考常要等批改完成才知道錯題；FormativeX 讓教師在同一堂課內完成診斷與補救。</p></figcaption></figure>
+      <figure id="fig10"><img src="img/10.png" alt="AI 語音排行榜"><figcaption><strong>AI 語音排行榜</strong><p>系統可朗讀達標學生姓名與答對題數，形成課堂中的正向競合與學習投入感。教師可設定達標門檻，例如 20 題中答對 15 題以上。</p><p>此功能說明自行開發的彈性：教師可以把課堂中有效的互動策略直接做進系統，例如達標朗讀、朗讀次數限制，以及多份測驗合併後再篩選。</p><p>開發者的意圖不是製造高壓競爭，而是讓努力被看見。對許多安靜學生而言，被系統在全班面前朗讀姓名與成績，是一種明確的正向回饋，也能讓班級形成「認真作答是主流」的氛圍。</p></figcaption></figure>
+      <figure id="fig11"><img src="img/11.png" alt="測驗結果統計報告"><figcaption><strong>測驗結果統計報告</strong><p>教師匯出的全班統計報告包含作答人數、平均答對率、分數區間與各題錯誤率。它可判斷題組是否過難、是否拉開程度、哪些題目具有鑑別度。</p><p>每一次小測驗因此不再是課堂中的一次性活動，而會變成後續課程網站、期中考複習與補救教材的一部分。</p><p>開發者希望測驗資料不要停留在系統後台，而是能被轉化為可閱讀的教學文件。教師下載後可分享給學生，讓全班知道哪些概念需要複習，也讓學生理解自己的表現位於班級分布中的哪個位置。</p></figcaption></figure>
+      <figure id="fig12"><img src="img/12.png" alt="題目詳解與標準答案"><figcaption><strong>題目詳解與標準答案</strong><p>匯出報告逐題列出題目、正確答案與分析資訊，支援課後複習。學生可對照個人作答與全班錯誤率，判斷錯誤是個人弱點或全班共同困難。</p><p>這種設計反映開發者對「考後學習」的重視。測驗不是結束於交卷，而是要回到教材、課堂討論與下一次評量；詳解報告讓學生能把錯題變成可追蹤的複習任務。</p></figcaption></figure>
+      <figure id="fig13"><img src="img/13.png" alt="高錯誤率題目延伸分析"><figcaption><strong>高錯誤率題目延伸分析</strong><p>高錯誤率題目可成為後續補充教材、複習課或期中期末命題參考。報告讓平台形成「測驗、分析、回饋、複習、再評量」循環。</p><p>在 JavaScript 課程中，學生可能在期中考前已完成數百題形成性評量；期中考再整理、變化與挑選題目，使學生仍需真正理解概念，而不是背答案。</p><p>開發者刻意讓報告包含全班統計與題目內容，是為了讓學生不只知道「我錯了」，也知道這題在全班中屬於個人弱點或共同難點。這能提升學生複習時的優先順序判斷。</p></figcaption></figure>
+      <figure id="fig14"><img src="img/14.png" alt="長期形成性評量累積分析"><figcaption><strong>長期形成性評量累積分析</strong><p>長期成績下載功能整合多份題組，呈現完成率、答對率與學生長期穩定度。當學生累積完成數百題形成性評量時，資料不只代表分數，也代表出席、準時、持續投入與學習穩定度。</p><p>教師可進一步觀察學生學習風格：快速果決、慢而細心、特定單元弱點或長期穩定度，作為分組、輔導與教學調整依據。</p><p>此功能回應開發者最核心的教學意圖：不要用一次期中考或期末考決定學生樣貌，而要從整學期高頻率、低風險的形成性評量中觀察學生。長期資料能支援補救教學、分組策略與個別化輔導。</p></figcaption></figure>
+      <figure id="fig15"><img src="img/15.png" alt="學生個人化結果報告"><figcaption><strong>學生個人化結果報告</strong><p>學生交卷後可取得答對題數、相對排名與全班統計。即時回饋讓學生在剛完成題目、仍記得思考過程時，立即理解自己的表現位置。</p><p>開發者設計個人化報告，是希望學生不必等待教師批改或公告成績，就能立刻知道自己表現如何。這讓學生在學習動機仍存在時，馬上進入自我檢討與修正。</p></figcaption></figure>
+      <figure id="fig16"><img src="img/16.png" alt="個人錯題回顧"><figcaption><strong>個人錯題回顧</strong><p>個人報告逐題標示答對與答錯，並呈現正確答案。學生可辨識哪些題目是概念不清、哪些只是粗心，並回到教材或課堂筆記重新理解。</p><p>這份報告的意圖是把測驗結果變成學生自己的複習材料。學生可以帶著錯題回到教材、範例與課堂說明，而不是只看到一個分數後就結束學習。</p></figcaption></figure>
+      <figure id="fig17"><img src="img/17.png" alt="AI 題組生成工作流程"><figcaption><strong>AI 題組生成工作流程</strong><p>教師可依教材、Lecture Notes、歷史題組與難度需求產生新題目，並進行人工審核。這張圖呈現本教具背後大量下班後開發與整理工作的核心：若要長期每週前測、後測與單元測驗，必須有穩定產生高品質題組的流程。</p><p>AI 被納入可控、可驗證、可維護的出題 SOP。它提高題組擴充效率，但題目品質、課程目標、難度配置與最後判斷仍由教師負責。</p><p>開發者的意圖不是讓 AI 取代教師，而是讓 AI 成為教師可管理的助教。教材來源、題目難度、選項數、是否混合 L2/L3、題目是否合理，最後仍由教師決定；系統只是讓這個流程可以規模化、可重複、可追蹤。</p></figcaption></figure>
+      <figure id="fig18"><img src="img/18.png" alt="學生登入入口"><figcaption><strong>學生登入入口</strong><p>學生輸入學號後，系統顯示姓名供確認，並使用單一登入限制降低重複登入風險。登入流程刻意保持簡潔，符合短時間課堂測驗需求。</p><p>學生不需登入 Zuvio、Google、GitHub 或其他雲端服務，也不需要對外網路。這降低操作門檻，也減少測驗期間接觸外部 AI 或搜尋資源的機會。</p><p>開發者沒有加入複雜帳號密碼流程，是因為教室短測驗需要快速進入狀態。身份確認、單一登入限制與教師端 IP 觀察已能滿足現場管理需求，同時避免外部帳號系統帶來額外摩擦。</p></figcaption></figure>
+      <figure id="fig19"><img src="img/19.png" alt="學生作答介面"><figcaption><strong>學生作答介面</strong><p>學生端以單題模式呈現，顯示選項、剩餘時間與導覽按鈕。單題模式加上區域網路封閉環境，可降低題目外流與即時查詢答案的可能性。</p><p>學生端與教師端同步互動，教師可延長、縮短或強制繳交；系統也能記錄停留、猶豫與答案修改，形成學習歷程資料。</p><p>單題顯示是刻意設計，而不是介面限制。開發者希望學生把注意力放在當前題目，同時降低一次複製整份試卷去詢問外部 AI 的風險；這與封閉式區域網路施測共同形成公平性設計。</p></figcaption></figure>
+      <figure id="fig20"><img src="img/20.png" alt="即時成績與下載"><figcaption><strong>即時成績與下載</strong><p>提交後立即顯示成績與回饋，並提供下載作答卷功能。學生不需等待人工批改，教師也能在同一堂課內完成施測、回饋與討論。</p><p>此功能的意圖是讓回饋即時發生。形成性評量如果回饋太晚，學生已經忘記自己的思考過程；立即顯示結果與下載入口，能把作答經驗轉成後續複習動機。</p></figcaption></figure>
+      <figure id="fig21"><img src="img/21.png" alt="學生下載報告"><figcaption><strong>學生下載報告</strong><p>下載後的個人報告列出每題作答狀態、正確答案與結果。它與教師端全班錯題報告互補：學生看個人弱點，教師看共同弱點。</p><p>開發者希望學生不只依賴教師課堂講評，也能保有自己的學習紀錄。這份報告讓學生在課後自主檢討，也讓之後準備期中期末時能回頭查看自己曾經錯在哪些概念。</p></figcaption></figure>
+      <figure id="fig22"><img src="img/22.png" alt="六選一題型"><figcaption><strong>六選一題型</strong><p>六選一題型降低純猜測分數，讓理解與隨機作答者產生明顯差異。FormativeX 從底層支援 A-Z 選項，是因為教師希望評量結果更接近學生真實理解，而不是被運氣放大。</p><p>多選項題型、題序亂排、單題顯示、區域網路封閉施測與即時學習歷程分析，共同構成 FormativeX 的評量公平性設計。</p><p>這項設計源自開發者對實際課堂的觀察：短題組若採四選一，猜測仍可能得到不低分數；六選一或七選一能讓願意閱讀、理解與推理的學生被清楚區分，也讓教師的後續分析更可信。</p></figcaption></figure>
+    </section>
+
+    <section id="workflow">
+      <h2>9. 建議教學流程</h2>
+      <h3>課前</h3>
+      <ol>
+        <li>依教材與學習目標建立或更新題組。</li>
+        <li>使用 AI 工作流程產生候選題目。</li>
+        <li>教師人工審查題意、答案與難度。</li>
+        <li>將題庫放入 <code>courses/&lt;course_id&gt;/assessments/</code>。</li>
+        <li>在 Dashboard 啟用本次測驗題組。</li>
+      </ol>
+      <h3>課中</h3>
+      <ol>
+        <li>啟動學生作答服務，讓學生完成前測或後測。</li>
+        <li>教師即時查看未到、遲到或作答異常情況。</li>
+        <li>使用錯題分析與個別學生歷程進行補救教學。</li>
+      </ol>
+      <h3>課後</h3>
+      <ol>
+        <li>匯出題目詳解與測驗結果。</li>
+        <li>將報告上傳課程網站供學生複習。</li>
+        <li>分析長期完成率、答對率與穩定度，規劃下一次教學調整。</li>
+      </ol>
+    </section>
+
+    <section id="maintenance">
+      <h2>10. 維運與注意事項</h2>
+      <ul>
+        <li><code>submits/</code>、<code>active_logins/</code> 可能含有個資，應妥善保存。</li>
+        <li>正式測驗建議使用固定 <code>EXAM_SIGNATURE_KEY</code>。</li>
+        <li>若啟用 IP allowlist，需確認教室教師端與管理端 IP 在允許清單內。</li>
+        <li>刪除作答紀錄時系統會搬移至 <code>deleted/</code>，但仍建議定期備份。</li>
+        <li>AI 生成題目必須經教師人工審核，尤其是程式輸出、非同步流程、選項唯一性與答案一致性。</li>
+        <li>課堂施測不需 Zuvio、Firebase、GitHub 或其他外部雲端平台；這些工具即使可作為開發或備份輔助，也不是系統運作條件。</li>
+      </ul>
+      <div class="note">FormativeX 的價值不只在於自動批改，而在於把每一次小測驗轉化為可累積、可分析、可回饋的學習資料。它完全由教師自行開發與維護，能在教室區域網路中獨立運作，必要時可與外網隔離，以限制測驗期間的 AI 存取，同時保留數位評量最重要的即時回饋與長期分析能力。</div>
+    </section>
+
+    <section id="conclusion">
+      <h2>11. 結語</h2>
+      <p>FormativeX 將 AI 題組生成、區域網路測驗、即時監測、學習歷程分析、錯題診斷、成績下載與學生個人化回饋整合為一套完整教具。它的價值不只在於自動批改，而在於讓教師能在課堂當下掌握學生理解狀況，立即調整教學，並把每一次小測驗轉化為可累積、可分析、可回饋的學習資料。</p>
+      <p>這套系統也說明了一個明確的教學立場：面對 AI 時代，教師不應只是在既有工具中被動選擇，而可以依照自己的課程、學生與教室條件，建立真正符合教學現場的工具。FormativeX 完全由教師自行開發與維護，能在教室區域網路中獨立運作，必要時可與外網隔離，以限制測驗期間的 AI 存取，同時保留數位評量最重要的即時回饋與長期分析能力。</p>
+    </section>
+  </main>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var button = document.getElementById('themeToggle');
+      var saved = '';
+      try {
+        saved = localStorage.getItem('portfolio-theme') || '';
+      } catch (err) {
+        saved = '';
+      }
+      function applyTheme(theme) {
+        if (theme === 'light') {
+          root.setAttribute('data-theme', 'light');
+          if (button) button.textContent = '🌙 深色';
+        } else {
+          root.removeAttribute('data-theme');
+          if (button) button.textContent = '☀️ 淺色';
+        }
+      }
+      applyTheme(saved === 'light' ? 'light' : 'dark');
+      if (button) {
+        button.addEventListener('click', function () {
+          var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+          applyTheme(next);
+          try {
+            localStorage.setItem('portfolio-theme', next);
+          } catch (err) {
+            // Theme switching still works for the current page even if storage is unavailable.
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

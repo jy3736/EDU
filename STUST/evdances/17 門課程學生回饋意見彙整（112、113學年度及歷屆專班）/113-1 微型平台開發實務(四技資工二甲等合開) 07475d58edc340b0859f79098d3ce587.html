@@ -1,0 +1,743 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>113-1 微型平台開發實務(四技資工二甲等合開)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="07475d58-edc3-40b0-859f-79098d3ce587" class="page sans"><header><h1 class="page-title" dir="auto">113-1 微型平台開發實務(四技資工二甲等合開)</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2048fb4d-d8dd-819d-b9ff-f0a7e2622252" class="">113-1 微型平台開發實務(四技資工二甲等合開)</h1></div><div style="display:contents" dir="auto"><p id="2048fb4d-d8dd-814e-aba9-d1f335aa8b32" class="">📊 <strong>Total responses:</strong> 58</p></div><div style="display:contents" dir="auto"><h2 id="2048fb4d-d8dd-81f6-80d6-c32adfb24e1d" class="">Responses 1</h2></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-819f-94e0-eb3d952956eb" class="bulleted-list"><li style="list-style-type:disc">感覺很不錯，提高學習效率</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8117-9c61-ee45a937a26a" class="bulleted-list"><li style="list-style-type:disc">那個成績即時追蹤真的很用心 可以讓學生知道自己目前的成績狀況 及時去做改進</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81b2-843d-ea9888947eea" class="bulleted-list"><li style="list-style-type:disc">能感受到與傳統方式不同，透過AI能更好的學習，也能清楚知道學習進度。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8190-a35f-c4b1e4696c9f" class="bulleted-list"><li style="list-style-type:disc">有，像是自動批閱與成績追蹤系統，這些功能是之前的課程所沒有的，讓我感受到與傳統學習方式截然不同的體驗。自動批閱的系統能準確地提供即時回饋，讓我清楚了解自己的學習進度與表現。成績追蹤系統則讓我能長期觀察自己的表現變化，有助於我更有目標地進行學習規劃，並提升自我管理的能力。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81b8-aae5-c5624d2d9b59" class="bulleted-list"><li style="list-style-type:disc">是 更方便</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8101-b2d2-d52ee85c15ca" class="bulleted-list"><li style="list-style-type:disc">每週一次的成績追蹤讓我很安心</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8122-8c3c-f83508f27dbd" class="bulleted-list"><li style="list-style-type:disc">有的，第一次接觸到這些輔助工具，讓我覺得新奇且方便，能夠讓自己了解到自己的成績落在哪裡</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-813a-bf70-db29f7636ac2" class="bulleted-list"><li style="list-style-type:disc">我覺得成績追蹤系統，相較於傳統課程，我不需要自己去算成績多少，是非常方便的，但就不太會有彈性的空間。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8160-8c45-f20913da66c1" class="bulleted-list"><li style="list-style-type:disc">是，有了GenAI的幫助，不只讓學習過程能夠更加容易理解，也能在遇到困境時不會因此止步，能擁有更多的解決方法來面對困境。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8162-a167-c3b402844524" class="bulleted-list"><li style="list-style-type:disc">結合 GenAI 的教學讓我學習更個性化、高效且互動。透過數位教材、自動批閱與成績追蹤，能快速回饋學習狀況，提升效率，並帶來全新科技感的體驗，遠超傳統課程的靜態模式。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81df-b674-ce8ab1df40bf" class="bulleted-list"><li style="list-style-type:disc">這樣的結合 GenAI 的教學方式讓學習過程更加高效且個性化，學生可以在較短時間內掌握知識，並即時獲得回饋和支持，這無疑比傳統的學習方式更具吸引力和實用性</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8147-9a80-ef2e3cb44782" class="bulleted-list"><li style="list-style-type:disc">提高了方便性以及提升自身學習熱誠</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-817b-a580-da83e6bb04eb" class="bulleted-list"><li style="list-style-type:disc">會 這樣的教學方式會讓我們懂的如何運用ai來解決我們的問題畢竟ai的確比我們還要厲害 那都比我們厲害了為什麼我們不能去學習如何最大化的利用他</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-819e-b306-e5a2bedd4f7c" class="bulleted-list"><li style="list-style-type:disc">確實有別於以往，特別是自動批閱機制，從沒看過其他老師採用這種方式，幾乎都是人工批改，這對我來說確實是很新奇，雖然有可能處理不慎就會發生很多問題，但是如果沒問題的話就能省下很多人事成本以及時間。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-812c-98d0-e88d12f61423" class="bulleted-list"><li style="list-style-type:disc">感受到更多不同的ai應用</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c6-87cf-dd3c3691eab9" class="bulleted-list"><li style="list-style-type:disc">有 因為使用GenAI也是需要練習的部分，所以課程中合併我覺得很好。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8162-a510-da56ae7557da" class="bulleted-list"><li style="list-style-type:disc">有了GenAl、感覺非常方便，不僅自動批閱，這幾週的複習題也是由AI所出的，有效利用AI，十分新鮮</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8148-8c5e-d14b7aa57e26" class="bulleted-list"><li style="list-style-type:disc">我同意使用生成式 AI (GenAI) 改變了我們的學習體驗。數位教材和自動批閱讓學習變得更簡單、更有趣。這種新的學習方式與傳統課程感覺不同，我真的很喜歡！</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8188-a3d1-c0f600df3d98" class="bulleted-list"><li style="list-style-type:disc">是的，跟以往的傳統教學方式不同，更加高效。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8196-a770-e8330bf5a960" class="bulleted-list"><li style="list-style-type:disc">對程式設計的部分，可以更有效率的得到程式的模板</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-810b-b6b7-c6cd3f230f0a" class="bulleted-list"><li style="list-style-type:disc">有，這種方式讓我覺得可以有效的減少時間</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c2-a80f-f53a12e74f2a" class="bulleted-list"><li style="list-style-type:disc">做的很好</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8199-9e1b-ea681c3048cf" class="bulleted-list"><li style="list-style-type:disc">有的尤其是每個禮拜的成績追蹤，它裡面會顯示到那個禮拜時的成績，並且詳細說明成績的分佈和配分。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8152-a585-dbcddb2fc1bc" class="bulleted-list"><li style="list-style-type:disc">我覺得比起一般這樣學習，有了AI的幫助才可以加快學習的速度，而且熟悉AI對未來有著極大的幫助，畢竟以後是要跟AI共存的時代，總結來說我是很認同這樣的教法</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c3-b30d-d59880fa809b" class="bulleted-list"><li style="list-style-type:disc">我覺得結合AI工具後，教材可以每周根據不同的上課進度調整，更能貼近實際上課的狀況，每周的成績也可以讓我們更清楚的知道自己需要調整的問題，我覺得這種教學方式可以更讓學生自主關注自己的學習狀況，不只是被動的上課下課考試而已。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d3-9bab-fe3c42871dc3" class="bulleted-list"><li style="list-style-type:disc">有別於傳統課程的學習方式，這樣的改變的確更加有趣，也讓課程的內容豐富許多</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8193-98e3-c525a5c2bc25" class="bulleted-list"><li style="list-style-type:disc">能讓我隨時了解我自己的學習狀況，成績追蹤也能讓我了解我在班上的程度如何，會讓我更有動力去維持成績或努力。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8179-a4c6-ee737bdef570" class="bulleted-list"><li style="list-style-type:disc">希望教學步驟可以完整，慢一點</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-818b-8c0c-f535a4c1bd7a" class="bulleted-list"><li style="list-style-type:disc">老師教學非常用心，對我們很有幫助，繼續和學生一起互相進步！</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81da-8153-c37de7986491" class="bulleted-list"><li style="list-style-type:disc">我覺得老師的上課方式跟模式我都蠻喜歡的 老師會去找一些題材一些例子 一些關於AI的例子也會跟我們分享最近關於AI的時事跟走向 這是跟其他老師最不同的地方 其他老師都很像機器人一樣照稿念就完全照課本在上 不過我希望老師可以每個禮拜派一個研究AI題材的作業 有時候真的沒什麼興趣但是會為了做作業去了解到這個部分 可能就會發現好像跟自己想的不一樣</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8100-94c1-ccf0e5887485" class="bulleted-list"><li style="list-style-type:disc">我感覺這樣的課程給予我的學西壓力沒那麼大我喜歡這樣的課程</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ab-b5f6-cb70cb7d70e3" class="bulleted-list"><li style="list-style-type:disc">能看得出老師很認真的想給同學更好的，更有效率的學習方式，現在的上課模式個人覺得沒什麼問題，桌遊的部分好像參與度不是很高。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-812b-bb66-e6e721b91db4" class="bulleted-list"><li style="list-style-type:disc">這門課程的創新設計讓我受益良多，特別是定期更新的【線上數位教材】，不僅內容豐富，還能靈活適應行動裝置與電腦的閱讀需求，方便隨時學習。而【遊戲式學習】透過桌遊的方式，幫助我初步了解永續發展目標（SDGs），並結合台灣本地問題，在遊戲中自然融入SDGs的思維，學習過程既生動又有啟發性。這些創新讓學習更具趣味性與意義，同時也提升了效率，幫助我對課程內容有更深的掌握。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81de-93af-cb4df8e10bac" class="bulleted-list"><li style="list-style-type:disc">我覺得這門課程跟別的課程不一樣的地方就是教授非常支持我們使用AI工具，我覺得這樣是很好的，因為之後出去工作也會用AI來輔助</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81bb-9963-c794c96876f4" class="bulleted-list"><li style="list-style-type:disc">我希望對於硬體那些的應用程式能再有更多的說明，對於初次使用者來說，很容易搞不清楚狀況。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8119-8ce6-ef8cf96c39f9" class="bulleted-list"><li style="list-style-type:disc">我觉得课程内容很不错</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8180-9062-d53619107970" class="bulleted-list"><li style="list-style-type:disc">一開始老師教導還能聽明白，但後面越來越深入複雜化觀念，會比較難以吸收，需要比較多的時間吸收，吸收過程中就開始解說下一段觀念</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ef-b52b-fd99347e6e52" class="bulleted-list"><li style="list-style-type:disc">loading…</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ad-a48a-e321336032be" class="bulleted-list"><li style="list-style-type:disc">這種的上課方式令人感到新奇和驚訝，讓我擁有更加堅定的心能夠在資工這條道路上得到我想要的結果。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ef-8e60-ff56cd217d0e" class="bulleted-list"><li style="list-style-type:disc">課程內容充實，教學方法結合 GenAI 提升互動性與效率，進度安排合理且靈活。創新的數位工具對學習幫助很大，期待未來能有更多這樣的教學設計，感謝老師的用心！</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ab-80d4-efd0494a142f" class="bulleted-list"><li style="list-style-type:disc">我非常贊同這門課程的設計與教學方式，尤其是在理論與實踐結合、互動學習方面做得非常好。我相信這樣的教學創新會對學員的學習產生積極的影響，並且能夠激發他們進一步探索的動力。希望課程能繼續發展與創新，為學員提供更加豐富和深刻的學習體驗。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8131-9ed2-d73e9ef8ad4b" class="bulleted-list"><li style="list-style-type:disc">教學方式非常新穎很是有趣</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-813c-bc30-cdc243452b0e" class="bulleted-list"><li style="list-style-type:disc">課程很有趣!!</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81fd-b4c6-ca5da4bea2c4" class="bulleted-list"><li style="list-style-type:disc">我覺得老師在我們不了解py語言的情況下先花一半的課程教會我們基本的py語言十分貼心不然如果在我們不懂這個語言的情況下直接進行預計的教學估計我們都會沒心思學習 因為都看不懂</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8177-afb6-dd4f1dd99535" class="bulleted-list"><li style="list-style-type:disc">我覺得本課程的內容有很多結合GenAI的部分，這對我來說是好事，因為有時候會有很多問題，但是不一定會有老師或同學在身邊，所以這時候在AI的幫助下可以幫到我很多問題，這部分是其他堂課沒有的，所以對我來說是有好處的。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8112-8244-f6d4bb1d8f62" class="bulleted-list"><li style="list-style-type:disc">可以實際應用，並設計我非常喜歡</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-819f-8831-dceedfd91bb7" class="bulleted-list"><li style="list-style-type:disc">一開始只是為了學習/複習Python而選擇這門課，但學著學著發現其他東西也意外有趣。實體接線也是吸引我的一個原因。實體接線還是跟網站模擬的感覺不一樣！謝謝老師</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81b3-873b-cc4558703b53" class="bulleted-list"><li style="list-style-type:disc">我覺得課程應該有更多的實作活動，讓老師帶著學生一起學習編程。我喜歡這些講座，老師也很有熱情，但我認為應該有更多的指導實作活動，而不是讓學生自己嘗試。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81fb-a16c-c9d52544cead" class="bulleted-list"><li style="list-style-type:disc">程式教學的部分可以縮短一些</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8197-8c50-e374c2e7282c" class="bulleted-list"><li style="list-style-type:disc">對於成績自動批閱部分，學生繳交成績後可以得到較快的反饋</li></ul></div><div style="display:contents" dir="auto"><h2 id="2048fb4d-d8dd-81bf-9eec-f0d7f3accff0" class="">Responses 2</h2></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-812b-9053-facde204b938" class="bulleted-list"><li style="list-style-type:disc">我覺得學習的方法可以在增加一些趣味</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8154-acf8-d3d8349b534d" class="bulleted-list"><li style="list-style-type:disc">做的很好 繼續保持</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81f2-8a40-e1f4ae929213" class="bulleted-list"><li style="list-style-type:disc">沒有問題而且把題目翻成中文很感謝老師，不然英文我真的看不懂QAQ。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d4-b001-f96125b38097" class="bulleted-list"><li style="list-style-type:disc">整個學期下來我覺得楊老師的教法很不錯，在教材方面整理的也很詳細可以讓人快速了解主要內容，整體的學習效率提升了不少。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-812b-ae84-eb9ec57577c9" class="bulleted-list"><li style="list-style-type:disc">我覺得上課的時候讓我們多做實作可以增加自己思考的自主性跟動手做的能力。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c1-bf31-e4fd282856aa" class="bulleted-list"><li style="list-style-type:disc">可以多一點影音教學的補充教材</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8165-aa5e-c95cdadf07f2" class="bulleted-list"><li style="list-style-type:disc">一開始的評量測驗我覺得很有意義，沒有過多的揣測，可以直白的了解班級程度，再根據程度調整上課進度也很適當。期中後的小遊戲也也很剛好的放鬆心情。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8108-b410-ed1c19545f35" class="bulleted-list"><li style="list-style-type:disc">謝謝老師</li></ul></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

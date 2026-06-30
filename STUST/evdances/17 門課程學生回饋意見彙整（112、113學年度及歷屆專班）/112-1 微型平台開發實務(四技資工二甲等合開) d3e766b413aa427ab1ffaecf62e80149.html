@@ -1,0 +1,743 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>112-1 微型平台開發實務(四技資工二甲等合開)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d3e766b4-13aa-427a-b1ff-aecf62e80149" class="page sans"><header><h1 class="page-title" dir="auto">112-1 微型平台開發實務(四技資工二甲等合開)</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2048fb4d-d8dd-8111-b45c-e00a9f1ad7c9" class="">112-1 微型平台開發實務(四技資工二甲等合開)</h1></div><div style="display:contents" dir="auto"><p id="2048fb4d-d8dd-8172-9ec7-cd4af017aca4" class="">📊 <strong>Total responses:</strong> 99</p></div><div style="display:contents" dir="auto"><h2 id="2048fb4d-d8dd-8166-9be3-eaf312ab569b" class="">Responses 1</h2></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8185-b372-d8c4b342f209" class="bulleted-list"><li style="list-style-type:disc">老師很彈性，很幽默，很有趣</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-812a-8bdb-ec5f9efee01a" class="bulleted-list"><li style="list-style-type:disc">沒有</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-816a-b432-fe3d214e45ea" class="bulleted-list"><li style="list-style-type:disc">謝謝老師 希望可以再講慢一點</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8136-998f-c7e6c1426d0a" class="bulleted-list"><li style="list-style-type:disc">單純的使用GPT無法理解這些東西實質上的功能</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-818f-bcbc-f17227969450" class="bulleted-list"><li style="list-style-type:disc">希望老師題目可以講解再清楚一點</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d2-9251-dfd7e18b18ea" class="bulleted-list"><li style="list-style-type:disc">我覺得不太要調整教學模式</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81fb-87bf-fa0d7587cfbe" class="bulleted-list"><li style="list-style-type:disc">講課時經常有英文穿插在中文之中，對我們英文不好的會有一定的困難。但總體而言老師教得很好。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8141-b59e-ecb67aa3baf4" class="bulleted-list"><li style="list-style-type:disc">希望加分與互動能多一些 能帶著學生做邊做邊講解</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8178-827e-f1e2469fc07f" class="bulleted-list"><li style="list-style-type:disc">我希望在教學的部分，可以減少讓我們依賴chat Gpt，多一些應用、實務上的講解，並且給予所謂的標準參考範例，改善同學的基本能力問題，提供一個參考依據。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8137-bf6e-fcb271cc8436" class="bulleted-list"><li style="list-style-type:disc">python的學習要求些許過高，本身不難，但老師自己出的題目是超出我能接受的範圍，使我在其他科目有額外壓力，最好的話降低一點難度。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8181-bddc-d79f0b0e88e7" class="bulleted-list"><li style="list-style-type:disc">大部分都很棒，只是上課節奏由時候有點快會跟不上</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-811c-b03b-cf6eb28b9000" class="bulleted-list"><li style="list-style-type:disc">很棒</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8177-b38c-c4563a9e8a4e" class="bulleted-list"><li style="list-style-type:disc">希望能直接帶著學生實作</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81e9-bfec-d9995312cf3d" class="bulleted-list"><li style="list-style-type:disc">我覺得後期實作沒有都用gpt找資料考試的階段(15、16周)，時間很趕，又學新的東西，又想好好的了解老師提供的新東西，像是async等，成績又只在3節課結算，最後結束又不是那麼會用，回家自習也不完全能反映在我的期末成績上，挫折感蠻重的</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81df-a4f8-efc7aa9d9cc9" class="bulleted-list"><li style="list-style-type:disc">我覺得可以再講慢一點，有時候步驟太多會亂掉</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8143-ba12-e0b25634f313" class="bulleted-list"><li style="list-style-type:disc">我覺得現階段都還不錯</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c1-b322-cc2fd1e05c6c" class="bulleted-list"><li style="list-style-type:disc">雖然老師在開學時把評分標準講得很難，但實際上老師仍非常關心學生的成績，給予很多加分的機會讓有盡力的學生都能更順利拿到學分</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81f8-b267-f005b080031c" class="bulleted-list"><li style="list-style-type:disc">我覺得課後立即測驗的方式很棒，但是後面的進度有點快跟不太上QAQ新年快樂!</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8182-b233-d9187131d531" class="bulleted-list"><li style="list-style-type:disc">SDGs的桌遊很有趣，上課內容豐富，雖然有蠻多事情需要做，但是可以實際學到一些東西</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ed-aa63-d00f9c2f546f" class="bulleted-list"><li style="list-style-type:disc">無 新年快樂</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ff-80cf-d17fa16b5467" class="bulleted-list"><li style="list-style-type:disc">我是上大學才開始學python跟電路，所以我比較跟不上老師的進度</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81f3-ae36-efa9195048e0" class="bulleted-list"><li style="list-style-type:disc">雖然有時候全英文的講義還是要靠翻譯但讓我更了解這些專有名詞</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d0-a027-d76dbe3f026d" class="bulleted-list"><li style="list-style-type:disc">加油加油 讚讚</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-812c-af68-cc53dbef687b" class="bulleted-list"><li style="list-style-type:disc">我覺得進度可以再緩慢一點，有點太快了。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d7-95af-c066d0228155" class="bulleted-list"><li style="list-style-type:disc">有時候確實有給予我們引導，但有時候會然跳太多，引導的不夠，我會試整節課的時間，但實力真的不允許。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8109-b6d5-e74fe4e02e77" class="bulleted-list"><li style="list-style-type:disc">新年快樂!!! 謝謝老師這學期的教導，感恩的心&lt;3</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8149-ac87-e4b85cd664d4" class="bulleted-list"><li style="list-style-type:disc">老師認真教課</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8158-a34b-ed4a9212ed25" class="bulleted-list"><li style="list-style-type:disc">這門課讓人感受到進步很多，但也在學習上非常有壓力，老師讓我們感覺到是提供教材、學習方向、出考題、準備自動批閱、材料供應等工作，但課程幾乎是讓我們全自學，而老師的教材也只有點個頭，但考試與測驗的內容，卻是要將教材上的內容進行非常多的延伸，這讓我們不得不用自己上課以外花更多時間去學習與找資料以及大量練習，這對我們來說是好的，但這對具有良好基礎的同學在修這門課實在是太有利，相反的半途轉入的我則學得跌跌撞撞又沒有方法，甚至感受到相當挫折。老師應該聽說過階級複製吧，擁有越多基礎與資源的人，他在轉化與進步的速度會更快，這就是資本主義的真相，但我覺得這不太適合用在教學上，老師的出發點是好的但是不應該過度讓我們自學，我們畢竟是私科或許頂大適用(因為基礎相當良好，畢竟已經嚴格篩過一輪)，因此強烈建議老師考慮這個部分，然後同儕學習的部分我個人認為效果不好，這或許適用高中以下，但大學畢竟已經是成年人了，同學們相對的比較容易細分利益考量，畢竟這會影響學期成績排名，而系上成績排名影響我們的又更多了…老師，真的很感謝你讓我們變強以及願意不斷思考如何讓我們進步，所以我也寫出很多自己的心裡話，希望能入得了老師的眼鏡下，謝謝。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d5-bc3d-ec05b6b71634" class="bulleted-list"><li style="list-style-type:disc">上課很熱忱</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8195-b6cb-d3e09d0c8dde" class="bulleted-list"><li style="list-style-type:disc">good</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-815f-a114-d518bbdfe913" class="bulleted-list"><li style="list-style-type:disc">楊老師的教學方式我非常喜歡，感謝老師對教學上的努力，不是為出作業而出，為考試而考。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8193-b032-c2ce1e2e9126" class="bulleted-list"><li style="list-style-type:disc">我覺得您教的很好，繼續努力！難度可以稍微降低一丟丟，實力不允許我後續程式碼的部分。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-813a-a091-df8e0a1f48bd" class="bulleted-list"><li style="list-style-type:disc">老詩人很好</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-813b-bdfa-fcdf450aab68" class="bulleted-list"><li style="list-style-type:disc">很棒</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81fd-89c7-e5c3cb4b2e2e" class="bulleted-list"><li style="list-style-type:disc">新年快樂，謝謝老師這學期的教導，對於您的教學方式，我感到非常滿意。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8164-ab26-dc44884856d1" class="bulleted-list"><li style="list-style-type:disc">上課都講得很專業清楚，但只要稍微分神就很容易跟不上進度，之後都漸漸聽不懂也不會想再更深入學習，可以考慮在上課的時候開teams直播並留下直播檔，讓同學回家也可以看</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8112-ba20-c97e32984e3d" class="bulleted-list"><li style="list-style-type:disc">希望能把上課時說的題目(就算會帶著同學一起做)公布在flipclass上，還有希望題目能寫得更清楚。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8120-8ceb-cd3cf1b4831d" class="bulleted-list"><li style="list-style-type:disc">建議老師不要用zuvio繳交作業。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-817a-a740-fb9cd623e4b5" class="bulleted-list"><li style="list-style-type:disc">給我的上課體驗很好</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81f7-ba8a-fb278295d5e0" class="bulleted-list"><li style="list-style-type:disc">沒</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81e3-8e8d-e63cfff0115e" class="bulleted-list"><li style="list-style-type:disc">雖然對python完全沒基礎但可以學會一點知識是我覺得最棒的</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81fb-b77a-eca04f86fda1" class="bulleted-list"><li style="list-style-type:disc">希望可以多出點簡單程式作業練習，全英文有時候學習起來比較慢，一次講太快會突然不知道怎麼做</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-815b-a67c-d81f61ce0ac5" class="bulleted-list"><li style="list-style-type:disc">沒有建議</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-810b-b038-c8f2433284de" class="bulleted-list"><li style="list-style-type:disc">還行</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-817d-ae9e-c0418d916821" class="bulleted-list"><li style="list-style-type:disc">zuvio偶爾會讓答案消失</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8165-8f87-f8266ee6e5d0" class="bulleted-list"><li style="list-style-type:disc">我把課程分為前中斷學習Python的時候與後段設計Raspberry Pi，前段的教學方式以Snakify的內容為主，並且會有老師自編的Problem讓我們來解，我覺得這部分的評分系統很酷，我之前也有在外國大學的公開課程上看到過類似的評分系統，在對於Python有初步了解後，那些基礎絕對足夠應付之後Raspberry Pi的邏輯設計，老師在這段期間有教學如何連接MQTT，如何用MQTTX來傳送數據給我們的Raspberry Pi，如何設定Pin腳位來讓LED亮，我覺得這些已經足夠做好本次的Final Project的絕大部分，但是我有聽到一些同學反映說，對於多線程的部分與中斷按鈕，他們遇到很多困難，雖然在我的立場下，我是可以輕鬆查詢到解法，但是我們班似乎有許多人的基礎還不是很好，沒辦法用現有知識來推敲出解法，所以我覺得在有些細節部分可能還是得請老師，好好地解說一遍，有了這些各部分的實現，我認為就可以像堆積木一樣把它組合起來，完成Final Project。 我認為 教就是為了不教 ，老師在課堂上鼓勵大家使用生成式AI來解決問題是很好的方法，但鑒於有許多同學在這方面並未涉略，會有許多疑問，例如 : 我該如何問AI問題、AI生成的回答為什麼會出錯、要怎麼判斷AI的回答是否正確等問題，如果可以的話，我希望老師可以設計一些常見的問題，例如如何使用多線程來讓LED依照我輸入的頻率閃爍，再使用生成式AI來解決這個問題，並且把與AI的對話導出，這樣同學們或許可以更了解該如何正確的使用AI。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8141-aa40-f09088d2ee9c" class="bulleted-list"><li style="list-style-type:disc">謝謝老師的指導</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8110-867f-da3c69484bdc" class="bulleted-list"><li style="list-style-type:disc">課很硬，感覺很多同學跟不上</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ed-b03d-d4249ff46792" class="bulleted-list"><li style="list-style-type:disc">老師上課很輕鬆，不太會有壓力，而且期末讓我們分成好幾周來完成。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8113-b8c5-c6f16d7d4f72" class="bulleted-list"><li style="list-style-type:disc">期末考試是專題，可以讓我們不理解python的人多一點彈性，也可以多接觸python甚至是物聯網連動。</li></ul></div><div style="display:contents" dir="auto"><h2 id="2048fb4d-d8dd-8154-8b3c-cddac4e1b8ee" class="">Responses 2</h2></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8119-99db-e4818b3d3c1a" class="bulleted-list"><li style="list-style-type:disc">時間有點少，導致後面都毀滅世界</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ec-83db-d3c3de6ab30a" class="bulleted-list"><li style="list-style-type:disc">沒有</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d3-8f09-e3be98646f89" class="bulleted-list"><li style="list-style-type:disc">我覺得ok</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-819c-a6d5-f4cd2635b719" class="bulleted-list"><li style="list-style-type:disc">當天沒去</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c4-8b18-eb497ac02214" class="bulleted-list"><li style="list-style-type:disc">用玩的方式來學習是很好的方式</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8180-9429-d693cd645003" class="bulleted-list"><li style="list-style-type:disc">我覺得可以跟其他有在做聯合國永續發展17項目標(SDGs)活動的老師連動一起上課。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8102-addf-e580c7b791e1" class="bulleted-list"><li style="list-style-type:disc">這次玩桌遊我們這組雖然說沒有得到前幾名，但讓我們對於SDGS的認識更加加深，透過遊玩遊戲中學習，感覺學習都變簡單了。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c7-b682-d3f220fe216c" class="bulleted-list"><li style="list-style-type:disc">希望能多給之後的學生玩讓他們明白SDGS的重要性</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-816b-95ac-c6987b23f33c" class="bulleted-list"><li style="list-style-type:disc">在遊戲的本質上，我覺得很好玩，特別是解決事件時的競爭，雖然我不是第一次玩這個桌遊了，但是與不同得同學玩，感覺都不一樣，不過友誼的小船說番就翻，或許會造成班上同學對立。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8174-a515-c6e83fec8959" class="bulleted-list"><li style="list-style-type:disc">協商的時間有點太長，會delay到時間，建議縮短一點，但這遊戲是真的好玩。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-810f-83a3-d99f9104a871" class="bulleted-list"><li style="list-style-type:disc">我覺得這個遊戲很棒，在途中不斷思考該如何走下一步和進而了解SDGs</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81cb-b4a9-d34727a33eec" class="bulleted-list"><li style="list-style-type:disc">透過遊玩的方式學習是一個很好的方式</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8133-86ac-d48a24666d8e" class="bulleted-list"><li style="list-style-type:disc">這個活動應該繼續堅持下去</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-816c-b287-fdbee934141d" class="bulleted-list"><li style="list-style-type:disc">這種活動可以辦多一點很有趣</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-818b-a857-d401f8baba6d" class="bulleted-list"><li style="list-style-type:disc">我覺得遊戲很好玩，也讓我認識SDGs</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8146-a2fd-e4cd59236b97" class="bulleted-list"><li style="list-style-type:disc">遊戲總是能讓人放鬆，能有這樣的活動很高興。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8114-afbc-fdfbada59577" class="bulleted-list"><li style="list-style-type:disc">在那次桌遊遊戲中，我是第一次聽過SDGs這個東西，平常生活中好像也沒看過(肯定是自己沒注意)我想應該能成功讓很多人認識SDGs</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8127-976f-cb3c1837e3f5" class="bulleted-list"><li style="list-style-type:disc">通過活動了解了永續發展17項目標開始會反思自己平常有沒有做到，開始發現一切都和自己的生活息息相關</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-811d-bf6e-fc40b525de65" class="bulleted-list"><li style="list-style-type:disc">在一下的時候有一門環境安全衛生的課程，上課內容就是有關於SDGs的，但就是講一些理論的東西。而這學期修了這門課，也很高興可以再次接觸相關的東西，而且這次不單只是在教室講一些理論的東西，也透過桌遊的方式來讓大家更了解這些議題，很有趣，我們也可以透過日常生活中的一些小小的舉動來完成</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8150-a272-db1c90ec314d" class="bulleted-list"><li style="list-style-type:disc">無</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d2-922e-cf3b9d4baf22" class="bulleted-list"><li style="list-style-type:disc">我覺得很棒，可以讓學生知道現在地球正在向什麼地方去改善</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81d1-8d29-c8b50cdb6c68" class="bulleted-list"><li style="list-style-type:disc">讓平常關注不到的議題 可以更了解</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c4-b552-f553d8020eb1" class="bulleted-list"><li style="list-style-type:disc">沒捏</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81e7-bc6e-fe783b14d240" class="bulleted-list"><li style="list-style-type:disc">我覺得很好，雖然我一開始不太明白怎麼玩就是了。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81bb-beae-ee31e39c0674" class="bulleted-list"><li style="list-style-type:disc">用桌遊的方式確實增加了我們的參與意願，讓我們更投入了解SDGs也讓同學間更熟悉。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-816a-b043-f7ab290a6de4" class="bulleted-list"><li style="list-style-type:disc">之前的課程有上過，但還不太清楚，這次用好玩的桌遊讓我更了解了這17項目標，不然地球要被我們搞壞了哈哈</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ab-919a-e62a0511eea1" class="bulleted-list"><li style="list-style-type:disc">遊戲很好玩</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81c0-8e58-ef2460057a20" class="bulleted-list"><li style="list-style-type:disc">桌由題材是有趣的，但會體會到人性的險惡</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-810d-882d-eb34541f600f" class="bulleted-list"><li style="list-style-type:disc">不同同學在學習遊戲的能力有所差異，其中更是包含是否具桌遊經驗，因此作為比賽來說有些不公平，獎品只有前三名而非全七組逐步遞減，且獎品加分極高很誘人，這會讓是否前三的落差非常大，強者恆強弱者恆弱，在分組上應該採用隨機方式較好(而且三班混班選修也能彼此藉機認識破冰)，但確實好玩，自己也想買一套來蒐集。但由於那應該是以個人為單位進行遊玩，老師把它擴散成一組代表一個決策，這會需要額外花討論時間，所以在遊戲中會覺得討論與策略不夠充分，讓某些小族成員比較沒有參與感。自己本身由商管科系轉過來資工，很早就接觸SDGs明白其重要，現在很多國小就開始帶入，藉由桌遊這類遊戲確實是個好啟蒙。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8140-b95b-f9ab10c443b6" class="bulleted-list"><li style="list-style-type:disc">我沒有參加桌遊</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-812d-9d7e-ecf0843343e5" class="bulleted-list"><li style="list-style-type:disc">我不知道 沒有出席：）</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-810f-94ab-dcd9cc245455" class="bulleted-list"><li style="list-style-type:disc">我覺得這個遊戲能參與到我很高興，且讓我們認識了SDGs是什麼樣的東西，一開始只有小小的聽過這個名詞，沒有很認真地去了解它，感謝老師藉著這次的機會，讓我們知道我們小小的一個動作，日常的一些習慣，都能夠讓這社會永續發展。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-812f-aefd-ca55b7015357" class="bulleted-list"><li style="list-style-type:disc">遊戲好玩</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81e8-8de9-fb32a4675dea" class="bulleted-list"><li style="list-style-type:disc">可以用桌遊來配合上課內容很棒</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81a3-a64c-f5ce4fd09062" class="bulleted-list"><li style="list-style-type:disc">桌遊超有趣，也真正認識了SDGs的17項永續發展，透過遊戲教學也能讓我們同儕之間的討論度增加，重點是還得了第一名，讚讚讚!</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-811b-8576-f1411e88b32d" class="bulleted-list"><li style="list-style-type:disc">平常並不會接收到這些口號，但這些口號卻是大家貼近在大家的生活中，因此以桌遊這種有趣的方式讓大家可以去網上查詢了解很不錯</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8128-a41c-c9580d423c66" class="bulleted-list"><li style="list-style-type:disc">我覺得這能讓我們更加認識到17巷目標，但建議老師不要用桌遊加分。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-818e-8bed-c2cb2d0cc5e4" class="bulleted-list"><li style="list-style-type:disc">很好玩，多辦一點這種活動</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8149-964f-c959024b398e" class="bulleted-list"><li style="list-style-type:disc">很有趣</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-810c-9172-debba82b3659" class="bulleted-list"><li style="list-style-type:disc">透過桌遊可以發現SDGS適合做很多合作</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8149-a42a-fd3e0ce0ce44" class="bulleted-list"><li style="list-style-type:disc">把很好的東西傳下去，還蠻有趣的</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81f1-b255-d52f0e7e1ecf" class="bulleted-list"><li style="list-style-type:disc">非常好玩</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8119-8483-d26dcec53033" class="bulleted-list"><li style="list-style-type:disc">還不錯</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81a6-bb0b-cd2bd2a0666f" class="bulleted-list"><li style="list-style-type:disc">讓我知道長年以來常常所提到的SDGs中的內容</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8166-8509-d29ffd2a8e1f" class="bulleted-list"><li style="list-style-type:disc">我沒有參加那一次的桌遊活動</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8132-83b5-f3a078cbe635" class="bulleted-list"><li style="list-style-type:disc">有學到更多的東西</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-81ba-86f8-c6b9c0321684" class="bulleted-list"><li style="list-style-type:disc">讚讚</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-8114-89c2-e46171653245" class="bulleted-list"><li style="list-style-type:disc">之前我們有課程稍微介紹SDGs，但是沒有深入了解，經過這堂課終於搞懂了，老師用成遊戲的方式讓我們遊玩，需要用對的技術處理對的問題，一群人互相討論怎麼解決又或是一個人處理，雖然剛開始聽規則感覺有點困難，但實際玩之後覺得很簡單。</li></ul></div><div style="display:contents" dir="auto"><ul id="2048fb4d-d8dd-810f-b97f-c35f2354a9a3" class="bulleted-list"><li style="list-style-type:disc">玩這個桌遊可以深入了解聯合國的永續發展目標。遊戲過程中的策略和討論可以了解到每個目標的重要性、影響以及在現實生活中實踐它們的方法。</li></ul></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

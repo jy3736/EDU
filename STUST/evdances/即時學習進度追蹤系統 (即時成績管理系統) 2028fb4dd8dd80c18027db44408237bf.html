@@ -1,0 +1,749 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>即時學習進度追蹤系統 (即時成績管理系統) </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2028fb4d-d8dd-80c1-8027-db44408237bf" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1677756119517-756a188d2d94?ixlib=rb-4.1.0&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb" style="object-position:center 27.949999999999996%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="800x800.png"/></div><h1 class="page-title" dir="auto">即時學習進度追蹤系統 (即時成績管理系統) </h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="2038fb4d-d8dd-80a6-98cf-fa8db8501d8a" class="">在數位教學快速發展的時代，如何及時、有效地掌握學生學習動態並給予個別化回饋，是提升教學品質與學習成效的關鍵挑戰。有鑑於此，本人自112學年度起著手設計並自主開發「即時學習進度追蹤系統」，透過資料自動整合與自動化信件回饋機制，協助學生定期檢視學習進展，也大幅提升教師的教學管理效率。系統目前完成度已逾七成，主要核心功能已能全自動化處理大部分流程；但由於不同課程的成績與作業來源結構不盡相同，目前仍有部分資料需仰賴半自動化或人工處理。針對這些異質性資料整合的挑戰，我正持續投入大量時間進行優化與流程重構，期盼能在不久的將來實現真正全自動化的學習進度追蹤系統。</p></div><div style="display:contents" dir="auto"><p id="2038fb4d-d8dd-80b1-a6de-f045db1a388e" class="">為提升專業分流與管理，本系統額外申請專屬帳號 <strong>p306teaching@gmail.com</strong>，專門用於寄送學生的學習進度週報、期中與期末成績單。這不僅提升資訊安全與寄件穩定性，也利於日後規模化推廣與維運管理。自113學年度第一學期至今，該帳號已累計寄發超過2,900份個人化學習進度追蹤報告與成績單，涵蓋四門課程所有學生。每份報告皆依據不同課程結構，整合學生出席、平時作業、練習正確率及形成性評量等多項數據，自動生成專屬學習分析與回饋建議。</p></div><div style="display:contents" dir="ltr"><figure id="2038fb4d-d8dd-80b0-b1ea-c21d3ff4ed7d" class="image"><a href="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/image.png"><img style="width:2366px" src="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/image.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="2038fb4d-d8dd-8018-9a8a-ef6afadbd448" class="">在課程現場的推動成效亦相當顯著。根據113學年第一學期四門課程的實施紀錄，超過八成學生於期末學習回饋問卷中肯定本系統，認為能即時掌握進度、發現弱項，並有效提升自我調整的動機。學生回饋也多次提及，定期收到的週報不僅讓他們提早覺察學習風險，也促使主動尋求協助或自我補強。對於教師而言，系統自動彙整與標註落後學生，成為數據化精準教學的重要輔助，有效減輕人工登錄及資料統計的負擔。</p></div><div style="display:contents" dir="auto"><p id="2038fb4d-d8dd-8015-aa10-dce9f77d3515" class="">目前本系統雖尚在開發優化階段，但其自動化流程與專業分流帳號運作，已充分證明具備擴充與示範價值。未來本人將持續深耕技術開發、蒐集現場回饋，積極優化異質性資料整合的難題，期待能夠盡快實現全程全自動的數位教學追蹤系統，並推廣至更多課程與教學同儕，讓每一位學生都能享有更即時、個別化且具啟發性的學習輔助。</p></div><div style="display:contents" dir="auto"><p id="2038fb4d-d8dd-8072-8502-c2a3723a0b02" class="">
+</p></div><div style="display:contents" dir="auto"><div id="2028fb4d-d8dd-80c2-a2c2-f835deb0afa0" class="column-list"><div style="display:contents" dir="auto"><div id="2028fb4d-d8dd-8039-9189-e5ce23c853af" style="width:62.5%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="2028fb4d-d8dd-8036-9da4-d1328ac17119"><div style="font-size:1.5em"><img class="icon" src="800x800.png"/></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-80c6-b06f-e7afc05a5cb8" class="">線上版為深色主題的詳細版本，採用與課程教材相同的設計工具製作，無論在電腦或手機上瀏覽都非常方便。</p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-8086-b046-c1c08d84c7af" class="">【線上版本連結】</p></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-804e-8715-f9ed2f2314a5" class=""><a href="https://www.notion.so/1fa8fb4dd8dd8000a9f2edcc961d581c?pvs=21"><img class="icon" src="800x800.png"/>即時學習進度追蹤系統 (即時成績管理系統) </a> </p></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-80d6-b9dc-d039942a3f63" class="">
+</p></div></div></div><div style="display:contents" dir="auto"><div id="2028fb4d-d8dd-8090-b4a6-ddbbad38c115" style="width:37.50000000000001%" class="column"><div style="display:contents" dir="ltr"><figure id="2028fb4d-d8dd-80b1-b8d9-f71b1020d0ec" class="image"><a href="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/real-time.png"><img style="width:332px" src="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/real-time.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="auto"><h2 id="2028fb4d-d8dd-8005-bb31-d1e9e73de393" class="block-color-yellow">「即時學習進度追蹤系統」 技術報告摘要</h2></div><div style="display:contents" dir="auto"><div id="2028fb4d-d8dd-8014-87f0-fd8ba67ca9db" class="column-list"><div style="display:contents" dir="auto"><div id="2028fb4d-d8dd-8035-b8fb-e97ebf5db2ce" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="2028fb4d-d8dd-80a2-b17b-db58a56497a3"><div style="font-size:1.5em"><img class="icon" src="800x800.png"/></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-8061-980f-e961a5eb0232" class="">本 Podcast 介紹「即時學習進度追蹤系統」，一項能即時整合學習數據、產出週報的教學工具，幫助學生掌握進度、自我調整，並協助教師精準教學。以《計算機程式及實習》課程為例，超過八成學生認為此系統最有幫助，肯定其在教學現場的實用性與高擴展性。</p></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="2028fb4d-d8dd-8062-9e6c-e3930959f41d" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="2028fb4d-d8dd-80c2-8164-e5793705bc7c"><div class="source"><a href="https://player.soundon.fm/p/5339543e-2d81-4482-9cf1-00c377ff9cc1/episodes/fc9285c7-cc2e-4c45-8e56-a514344ba4cc">https://player.soundon.fm/p/5339543e-2d81-4482-9cf1-00c377ff9cc1/episodes/fc9285c7-cc2e-4c45-8e56-a514344ba4cc</a></div></figure></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-8058-97ce-c2916519a425" class="">教具「即時學習進度追蹤系統」 技術報告摘要</p></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-80ef-8004-fd99f59a1077" class="">
+</p></div></div></div></div></div><div style="display:contents" dir="ltr"><figure id="2028fb4d-d8dd-80e9-91ae-c80d079ff1b2" class="image"><a href="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/%E5%9C%96%E7%89%876.png"><img style="width:3044px" src="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/%E5%9C%96%E7%89%876.png"/></a></figure></div><div style="display:contents" dir="auto"><h2 id="2028fb4d-d8dd-80ee-8111-fb16d940e41f" class="block-color-yellow">期末學生學習回饋調查摘要</h2></div><div style="display:contents" dir="auto"><div id="2028fb4d-d8dd-80c2-8411-c58ffe8ea66b" class="column-list"><div style="display:contents" dir="auto"><div id="2028fb4d-d8dd-806b-b588-e25f3b8bc809" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="2028fb4d-d8dd-800a-85c5-dd7ee9d29061"><div style="font-size:1.5em"><img class="icon" src="800x800.png"/></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-8017-af75-dae3f819ac9a" class="">本 Podcast 聚焦於學生對「學習進度追蹤系統」的回饋。這套系統透過即時數據回饋，讓學生清楚掌握每週學習狀況，主動調整策略、提升效率。學生普遍認為，這種方式讓程式學習更具方向感，也提升了自我管理與動機。想了解這項系統如何改變學習行為，千萬別錯過本集！</p></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="2028fb4d-d8dd-8010-90d4-e0d8a554f6d4" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="2028fb4d-d8dd-8063-8a7b-d2d45af14c78"><div class="source"><a href="https://player.soundon.fm/p/5339543e-2d81-4482-9cf1-00c377ff9cc1/episodes/d176390e-3b8f-4fcc-9815-b5251f5f061c">https://player.soundon.fm/p/5339543e-2d81-4482-9cf1-00c377ff9cc1/episodes/d176390e-3b8f-4fcc-9815-b5251f5f061c</a></div><figcaption>期末學生學習回饋調查摘要：「計算機程式及實習」課程（四技電子一甲等合開班）</figcaption></figure></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-808c-a59f-c8737e07d45a" class="">
+</p></div></div></div></div></div><div style="display:contents" dir="ltr"><figure id="2028fb4d-d8dd-806f-a5b5-e39054bc9723" class="image"><a href="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/3.png"><img style="width:710.0000610351562px" src="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/3.png"/></a></figure></div><div style="display:contents" dir="auto"><h2 id="2028fb4d-d8dd-8031-b3fc-c885401c7f11" class="block-color-yellow">授課證明：全自編 18 週課程教材與評量設計（共 83 項教學資源）</h2></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-80ae-9cc1-d53eb302bff7" class="">這張截圖僅呈現了「計算機程式及實習_四技電子一甲」課程中的部分週次內容，實際上整門課共涵蓋 18 週的完整教材，所有教學資源皆由教師本人親自設計與編寫，總計達 83 項教學項目。內容包括：</p></div><div style="display:contents" dir="auto"><ul id="2028fb4d-d8dd-80e3-a195-e84ce08ac137" class="bulleted-list"><li style="list-style-type:disc">每週主題講義與補充教材</li></ul></div><div style="display:contents" dir="auto"><ul id="2028fb4d-d8dd-8037-9581-e6f722d665b4" class="bulleted-list"><li style="list-style-type:disc">自行設計的形成性與總結性評量（含程式實作題與回饋問卷）</li></ul></div><div style="display:contents" dir="auto"><ul id="2028fb4d-d8dd-80c5-85cc-d8b11b2b8dc3" class="bulleted-list"><li style="list-style-type:disc">整合 Zuvio 與 Auto-Grading 系統的教學追蹤設計</li></ul></div><div style="display:contents" dir="auto"><ul id="2028fb4d-d8dd-8011-88d4-cd655d040b85" class="bulleted-list"><li style="list-style-type:disc">以及引導學生善用 AI 工具的應用示範</li></ul></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-804a-90ee-ff96de65bd86" class="">這些內容完整支援課程目標，結合理論講授、程式實作與學習回饋，展現教師對教學品質的高度承諾與專業投入。</p></div><div style="display:contents" dir="ltr"><figure id="2028fb4d-d8dd-80c8-af8b-efb1c3e89b50" class="image"><a href="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/image%201.png"><img style="width:709.9928588867188px" src="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/image%201.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-8086-85e5-d53f4418513a" class="">[省略…]</p></div><div style="display:contents" dir="ltr"><figure id="2028fb4d-d8dd-80eb-a944-e02c07e7d1ca" class="image"><a href="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/image%202.png"><img style="width:674.1071166992188px" src="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/image%202.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-8093-93ce-fb835e00ed61" class="">[省略…]</p></div><div style="display:contents" dir="auto"><h2 id="2028fb4d-d8dd-80fd-8c25-d7c49cdf599a" class="block-color-yellow">教具應用實證：學習進度追蹤週報（Email 寄送紀錄）</h2></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-807b-93ea-e4f4a76052eb" class="">此為 Gmail 寄件備份畫面截圖，顯示我自編之「學習進度追蹤系統」自第六週（期中考前）起，每週定期寄發學習進度週報予全班學生。每封週報內容均包含：</p></div><div style="display:contents" dir="auto"><ul id="2028fb4d-d8dd-803c-bb7a-eec123dab420" class="bulleted-list"><li style="list-style-type:disc">學生個人累積作業完成度與成績</li></ul></div><div style="display:contents" dir="auto"><ul id="2028fb4d-d8dd-80a6-af0b-e0482336b998" class="bulleted-list"><li style="list-style-type:disc">班級平均表現與最佳表現者對照</li></ul></div><div style="display:contents" dir="auto"><ul id="2028fb4d-d8dd-8046-a9ec-f146724cfc71" class="bulleted-list"><li style="list-style-type:disc">對學習狀況的提醒與建議</li></ul></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-801b-8fec-cc20b9af7daf" class="">全班共 52 位學生，每週寄出超過 50 封個別化報告，以提升學生對自身學習狀況的警覺與調整動機。本圖僅為其中一週的寄件紀錄截圖，實際已持續寄發超過 10 週，為教具有效實施的具體佐證。</p></div><div style="display:contents" dir="ltr"><figure id="2028fb4d-d8dd-8047-9e0f-cc5bea842d5e" class="image"><a href="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/image%203.png"><img style="width:3776px" src="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/image%203.png"/></a></figure></div><div style="display:contents" dir="auto"><h2 id="2028fb4d-d8dd-806b-a14d-f00df89c3331" class="block-color-yellow">週報應用說明：強化自主學習與學習動機的雙向機制</h2></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-8000-9f11-d1672e14cd63" class="">以下截圖為學生個別週報寄送範例，透過系統自動生成學習週報，提供學生每週完整學習表現概況，內容涵蓋平時成績、期中表現、簽到狀況、形成性評量正確率與程式練習通過率等多項指標。</p></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-80c0-aaf2-c7c6e17735bb" class="">此機制具有以下教學價值：</p></div><div style="display:contents" dir="auto"><ul id="2028fb4d-d8dd-8033-a7a0-fddf3c29b3ef" class="bulleted-list"><li style="list-style-type:disc"><strong>對於平時表現較弱的學生</strong>：可及早掌握自身落後項目，並在每週回饋中察覺學習風險，及早調整策略，避免臨時抱佛腳的壓力干擾期末表現。</li></ul></div><div style="display:contents" dir="auto"><ul id="2028fb4d-d8dd-80e8-b6a4-c117c0eabd44" class="bulleted-list"><li style="list-style-type:disc"><strong>對於表現優異的學生</strong>：則是一種正向鼓舞，讓學生從週報中觀察自己的穩定進步與能力累積，進一步提升學習自信與持續精進的動力。</li></ul></div><div style="display:contents" dir="auto"><ul id="2028fb4d-d8dd-8037-8f71-d3687f841bc7" class="bulleted-list"><li style="list-style-type:disc"><strong>尤其在期末考前幾週</strong>，多數學生會根據週報中顯示的弱項主動補強，例如針對特定程式練習或觀念題進行加強練習，展現高度的自我覺察與調整能力。</li></ul></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-8073-b290-e7a816aba5ad" class="">這份週報不僅是一項數據化的成績回饋工具，更是引導學生進行<strong>自我監控與行動調整</strong>的教學輔具核心。其穩定且週期性的回饋機制，促進學生養成良好的自主學習習慣，也協助教師以量化資料掌握教學成效並即時因應。</p></div><div style="display:contents" dir="ltr"><figure id="2028fb4d-d8dd-80a8-8909-c6ad8c9c2aac" class="image"><a href="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/%E5%9C%96%E7%89%872.png"><img style="width:2738px" src="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/%E5%9C%96%E7%89%872.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="2028fb4d-d8dd-8015-b37f-d4ad2b3394ea" class="image"><a href="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/%E5%9C%96%E7%89%873.png"><img style="width:2609px" src="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/%E5%9C%96%E7%89%873.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="2028fb4d-d8dd-803e-94b3-e890287ddc07" class="image"><a href="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/%E5%9C%96%E7%89%874.png"><img style="width:3364px" src="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/%E5%9C%96%E7%89%874.png"/></a></figure></div><div style="display:contents" dir="auto"><h2 id="2028fb4d-d8dd-80be-909f-d196c54f5041" class="block-color-yellow">即時成績回饋：減少錯誤、提升透明度</h2></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-8072-9381-e541270d04ce" class="">本課程的期中與期末考試成績，皆於<strong>考試結束後 12 小時內</strong>透過系統自動產出並寄送給全體學生個別化成績報告。此作法有兩大優點：</p></div><div style="display:contents" dir="auto"><ol type="1" id="2028fb4d-d8dd-80a9-9d48-f5274c1812c4" class="numbered-list" start="1"><li><strong>即時掌握學習成果</strong>：學生能在最短時間內得知自己的整體表現，立即了解自身優劣項目，利於後續學習調整與回饋吸收。</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2028fb4d-d8dd-802b-91c1-ff046c2685c1" class="numbered-list" start="2"><li><strong>減少人工錯誤</strong>：所有成績皆透過系統自動統計與報表產生，採用電腦輸出、即時對應與複製貼上，<strong>大幅降低人工登錄成績時可能發生的遺漏或誤記風險</strong>，提升成績透明度與正確性。</li></ol></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-80cc-8e15-e528fc4ccffb" class="">這種結合自動化與即時性的設計，確保教學流程效率與資訊正確性，也進一步增強學生對課程評量機制的信任感。</p></div><div style="display:contents" dir="ltr"><figure id="2028fb4d-d8dd-80fa-9865-e588d03a59b2" class="image"><a href="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/%E5%9C%96%E7%89%875.png"><img style="width:3476px" src="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/%E5%9C%96%E7%89%875.png"/></a></figure></div><div style="display:contents" dir="auto"><h2 id="2028fb4d-d8dd-804e-a569-d5f49a52b330" class="block-color-yellow">教具成果佐證：教師端全班學習進度週報告</h2></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-806d-9091-dfaf3de4c756" class="">此圖為系統自動彙整的《計算機程式及實習》全班學習進度結算報告。報表整合期中成績、平時成績、自動批改結果與形成性評量數據，並針對以下指標進行觀察：</p></div><div style="display:contents" dir="auto"><ul id="2028fb4d-d8dd-80ac-8c5a-f37484812855" class="bulleted-list"><li style="list-style-type:disc">學生總成績（平時、期中、加分）與班級排名</li></ul></div><div style="display:contents" dir="auto"><ul id="2028fb4d-d8dd-8066-9244-d20248d288e1" class="bulleted-list"><li style="list-style-type:disc">每週簽到與練習答題次數</li></ul></div><div style="display:contents" dir="auto"><ul id="2028fb4d-d8dd-8061-9a22-d5121e9455d6" class="bulleted-list"><li style="list-style-type:disc">概念選擇題之答題率與正確率</li></ul></div><div style="display:contents" dir="auto"><ul id="2028fb4d-d8dd-800f-bb4c-c56f453941cf" class="bulleted-list"><li style="list-style-type:disc">程式練習題的解題數與通過率（即時自動批改）</li></ul></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-80d4-a1cc-d27d523cef3b" class="">紅色標記為系統自動突顯之學習風險學生，協助教師快速識別進度落後或表現異常者，以利安排個別輔導與即時教學調整。此報告每週產出一次，為課堂實施「數據導向教學」的關鍵工具。</p></div><div style="display:contents" dir="ltr"><figure id="2028fb4d-d8dd-80ab-b207-d188875a7e2e" class="image"><a href="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/%E5%9C%96%E7%89%871.png"><img style="width:3834px" src="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/%E5%9C%96%E7%89%871.png"/></a></figure></div><div style="display:contents" dir="auto"><h2 id="2028fb4d-d8dd-801b-a88a-eb42070a7967" class="block-color-yellow">課堂教學轉型的關鍵工具：「即時學習進度追蹤系統」實務分享</h2></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-8053-a31b-e85f60cc22b6" class="">
+</p></div><div style="display:contents" dir="auto"><div id="2028fb4d-d8dd-8069-93fc-c5be7aef6433" class="column-list"><div style="display:contents" dir="auto"><div id="2028fb4d-d8dd-80d4-a6cf-db30ea532d19" style="width:50%" class="column"><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-80d8-8222-e2f6e505afd5" class="">本教具在技術報告中正式命名為 <mark class="highlight-yellow"><strong>「即時學習進度追蹤系統（Real-Time Learning Progress Tracker）」</strong></mark>，是本次申請中最具實質貢獻的創新教學輔助工具。在先前學生問卷中，則以 <mark class="highlight-yellow"><strong>「即時成績管理系統」</strong></mark>呈現，實際上兩者指涉同一教具系統。本教具的設計核心在於建立一套透明、即時且可量化的學習歷程監控機制，協助教師與學生即時掌握學習動態，解決當前教學現場常見的三大難題：學生缺乏對自身學習狀況的明確認知、教師無法即時辨識學習落後學生，以及課程教學節奏無法靈活因應學生反饋調整等問題。</p></div></div></div><div style="display:contents" dir="auto"><div id="2028fb4d-d8dd-8037-b3db-e7e0b7957721" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="2028fb4d-d8dd-8009-a3ba-e1c3007c78f1" class="image"><a href="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/image%204.png"><img style="width:384px" src="%E5%8D%B3%E6%99%82%E5%AD%B8%E7%BF%92%E9%80%B2%E5%BA%A6%E8%BF%BD%E8%B9%A4%E7%B3%BB%E7%B5%B1%20(%E5%8D%B3%E6%99%82%E6%88%90%E7%B8%BE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1)/image%204.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-80ca-b063-ed5d7e6c19c4" class="">本系統整合出席紀錄、作業表現、小考成績與形成性評量結果等多元學習數據，自動產出週報，內容包含學生個人進度分析、班級平均對照與學習預警指標。藉由這些資訊，學生能及時訂定學習目標並調整策略，進行自我修正；教師亦可根據全班整體表現趨勢，調整教學內容、安排補強機制，實現以數據為基礎的教學精準化。透過此系統，不僅大幅提升了學習歷程的可見性與回饋速度，也有效促進學生自主學習與教師即時決策，是一套具高度應用價值與擴展潛力的數位教學輔具。</p></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-807a-a30a-e29e15da9af1" class=""><mark class="highlight-yellow"><strong>以本學期《計算機程式及實習》課程（課程代碼 30D19G01）為例，全班共 56 人修課，其中 44 人完成問卷回填，問卷平均為 4.4341，略高於系平均（4.2529）與校平均（4.4230）</strong></mark>，顯示整體課程設計與教具實施具正面成效。雖不及格率為 21.28%，但須注意此課程為技術型必修科目，學生程式背景差異大，成績差距本即顯著，系統即時追蹤機制正有助於提早辨識落後學生，提供補強與建議。實施過程中亦觀察到多位學生透過每週回報調整作業投入時間，主動尋求 TA 輔導，反映此系統具備實質促進學習行為改變之功能。</p></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-808c-8a5a-e8971e9a1803" class="">為進一步佐證學生觀感與教具貢獻，本課程於學期末進行創新教學方式回饋調查，學生需從七項創新教學法中選出對其最具幫助者。<mark class="highlight-yellow"><strong>結果顯示，有高達 85.11% 的學生（40 票）認為「即時成績管理系統（即本教具）」是最具幫助的工具</strong></mark>，顯著高於其他教學法。學生普遍認為該系統協助自己掌握每週學習進度、實時追蹤成果，並透過與班級平均、前段表現的對照，激勵自己進步。此外，70.21% 的學生亦選擇「定期更新的線上數位教材」為有效資源，而本教具正是配合 Notion 每週自動生成進度摘要，與教材連動，提供高度一致的學習導引。68.09% 的學生也認為結合自動批改系統（如程式作業測資與即時回饋）能減少不確定感並提升學習效率，說明追蹤系統在形成性評量回饋上的搭配使用，已建立多層次的學習支持架構。</p></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-809e-b0c6-cfd85cc1b779" class="">本教具之最大創新貢獻，在於其完整實作與實際教學現場驗證。多數傳統教學輔助系統偏向於「事後成績紀錄」，僅於期中期末回報成績；相較之下，本系統強調「週期性形成性回饋」，每週即透過數據讓學生知曉學習狀況，教師亦能根據系統圖表調整教學策略。例如當系統偵測到某次週考低於預期或某主題正確率遠低於平均時，教師即可安排補強課、上傳補充教材或進行再教學活動。學生也能根據報告判斷自己是否接近退選風險區間，實施自我警覺與策略修正，這在過往依賴期中成績為依據的退選制度中，實為一項重要的進步。</p></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-8097-a408-d5c950172b71" class="">另一方面，本教具亦大幅降低教師行政負擔，透過 Python 腳本自動整合 Zuvio 出席紀錄、作業成績與 Notion 測驗結果，不須人工作業彙整資料。教師只需設定每週追蹤指標與匯出報表時間，即可自動產出學生個別學習歷程摘要與全班分析圖表，有效節省時間，專注於課堂內容設計與學生輔導。同時，本系統具高度模組化與彈性，未來可快速擴展至其他課程，或根據教學目標調整追蹤項目與權重設定，例如增加小組互評、課堂參與討論紀錄、專題階段成果等多元資料來源。</p></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-80e8-90a0-fd6e7788627c" class="">最後，本系統亦培養學生具備自我監控與數據素養的能力。在學期初至期中階段，系統圖表逐漸顯示出明確趨勢，學生不再只是「感覺自己好像落後」，而是能具體知道自己在哪些題型、主題或週次明顯低於班平均，進而採取行動。期末回饋中，不少學生提到：「系統讓我第一次知道，原來我不是落後全部，只是程式題寫得慢」、「看到自己每週作業不及格就會開始緊張，會逼自己寫完才去睡」，這些回饋說明教具已達成「讓數據轉化為行動」的目標，實現教育中最關鍵的「自我調整」機制。</p></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-8081-b05a-e08671dc4018" class="">綜合來看，「即時學習進度追蹤系統」不僅是一項具原創性、可擴展的數位教具，更在實際教學應用中展現明顯成效，深獲學生肯定。它有效促進了學習透明度、自主性與參與度，同時優化教師的教學回饋與策略調整能力，對課堂教學品質與學生學習動機提升具有關鍵性的貢獻，為目前技職教育現場亟需推廣之創新教學工具。</p></div><div style="display:contents" dir="auto"><p id="2028fb4d-d8dd-8049-a4a6-ea994617b376" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="2038fb4d-d8dd-80f9-9d31-da2a8c2a1ea6" class="image"><a href="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/14.png"><img style="width:710.0000610351562px" src="%E7%94%9F%E6%88%90%E5%BC%8F%20AI%20%E5%9C%A8%E3%80%8C%E6%8E%88%E8%AA%B2%E8%AC%9B%E7%BE%A9%E3%80%8D%E8%A8%AD%E8%A8%88%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E5%AF%A6%E4%BD%9C/14.png"/></a></figure></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>08 - 資料結構與 JSON L5 20Q - 5b230013 (李宸睿)</title>
+  <style>
+    :root {
+      --bg: #f3f6fb;
+      --card: #ffffff;
+      --line: #d4ddeb;
+      --text: #1f2a37;
+      --muted: #5d6b82;
+      --ok: #1a7f37;
+      --bad: #cf222e;
+      --btn-bg: #1f6feb;
+      --btn-text: #ffffff;
+    }
+    body.dark {
+      --bg: #0f1724;
+      --card: #172033;
+      --line: #2a3650;
+      --text: #e8eefc;
+      --muted: #9fb0cd;
+      --ok: #4cd07a;
+      --bad: #ff7b86;
+      --btn-bg: #3a6ed8;
+      --btn-text: #ffffff;
+    }
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.12);
+    }
+    .title {
+      margin: 0 0 6px;
+      font-size: 24px;
+      font-weight: 800;
+    }
+    .meta {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .analysis {
+      margin: 0 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      background: color-mix(in srgb, var(--card) 88%, #5a88d6 12%);
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+    .analysis .item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 10px;
+      background: color-mix(in srgb, var(--card) 92%, #000 8%);
+    }
+    .analysis .label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+    .analysis .value {
+      font-size: 18px;
+      font-weight: 800;
+    }
+    .toolbar {
+      margin: 0 0 14px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .toolbar button {
+      border: 1px solid var(--line);
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .content {
+      line-height: 1.75;
+      font-size: 16px;
+    }
+    .content h3 {
+      margin: 22px 0 10px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+    .content h3:first-of-type {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: 0;
+    }
+    .marker {
+      display: inline-block;
+      min-width: 1.2em;
+      text-align: center;
+      margin-right: 4px;
+      font-weight: 900;
+    }
+    .marker-o { color: var(--ok); }
+    .marker-x { color: var(--bad); }
+    .content code {
+      background: color-mix(in srgb, var(--card) 72%, #9cb3dd 28%);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 0.1em 0.35em;
+    }
+    .content pre code {
+      background: transparent;
+      border: 0;
+      padding: 0;
+    }
+    pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.light .codehilite .hll { background-color: #ffffcc }
+.light .codehilite { background: #f0f0f0; }
+.light .codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.light .codehilite .err { border: 1px solid #F00 } /* Error */
+.light .codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.light .codehilite .o { color: #666 } /* Operator */
+.light .codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.light .codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.light .codehilite .cp { color: #007020 } /* Comment.Preproc */
+.light .codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.light .codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.light .codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.light .codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.light .codehilite .ge { font-style: italic } /* Generic.Emph */
+.light .codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.light .codehilite .gr { color: #F00 } /* Generic.Error */
+.light .codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.light .codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.light .codehilite .go { color: #888 } /* Generic.Output */
+.light .codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.light .codehilite .gs { font-weight: bold } /* Generic.Strong */
+.light .codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.light .codehilite .gt { color: #04D } /* Generic.Traceback */
+.light .codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.light .codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.light .codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.light .codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.light .codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.light .codehilite .kt { color: #902000 } /* Keyword.Type */
+.light .codehilite .m { color: #40A070 } /* Literal.Number */
+.light .codehilite .s { color: #4070A0 } /* Literal.String */
+.light .codehilite .na { color: #4070A0 } /* Name.Attribute */
+.light .codehilite .nb { color: #007020 } /* Name.Builtin */
+.light .codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.light .codehilite .no { color: #60ADD5 } /* Name.Constant */
+.light .codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.light .codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.light .codehilite .ne { color: #007020 } /* Name.Exception */
+.light .codehilite .nf { color: #06287E } /* Name.Function */
+.light .codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.light .codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.light .codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.light .codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.light .codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.light .codehilite .w { color: #BBB } /* Text.Whitespace */
+.light .codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.light .codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.light .codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.light .codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.light .codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.light .codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.light .codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.light .codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.light .codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.light .codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.light .codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.light .codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.light .codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.light .codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.light .codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.light .codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.light .codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.light .codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.light .codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.light .codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.light .codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.light .codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.light .codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.light .codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.light .codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */
+    pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.dark .codehilite .hll { background-color: #49483e }
+.dark .codehilite { background: #272822; color: #F8F8F2 }
+.dark .codehilite .c { color: #959077 } /* Comment */
+.dark .codehilite .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.dark .codehilite .esc { color: #F8F8F2 } /* Escape */
+.dark .codehilite .g { color: #F8F8F2 } /* Generic */
+.dark .codehilite .k { color: #66D9EF } /* Keyword */
+.dark .codehilite .l { color: #AE81FF } /* Literal */
+.dark .codehilite .n { color: #F8F8F2 } /* Name */
+.dark .codehilite .o { color: #FF4689 } /* Operator */
+.dark .codehilite .x { color: #F8F8F2 } /* Other */
+.dark .codehilite .p { color: #F8F8F2 } /* Punctuation */
+.dark .codehilite .ch { color: #959077 } /* Comment.Hashbang */
+.dark .codehilite .cm { color: #959077 } /* Comment.Multiline */
+.dark .codehilite .cp { color: #959077 } /* Comment.Preproc */
+.dark .codehilite .cpf { color: #959077 } /* Comment.PreprocFile */
+.dark .codehilite .c1 { color: #959077 } /* Comment.Single */
+.dark .codehilite .cs { color: #959077 } /* Comment.Special */
+.dark .codehilite .gd { color: #FF4689 } /* Generic.Deleted */
+.dark .codehilite .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.dark .codehilite .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.dark .codehilite .gr { color: #F8F8F2 } /* Generic.Error */
+.dark .codehilite .gh { color: #F8F8F2 } /* Generic.Heading */
+.dark .codehilite .gi { color: #A6E22E } /* Generic.Inserted */
+.dark .codehilite .go { color: #66D9EF } /* Generic.Output */
+.dark .codehilite .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.dark .codehilite .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.dark .codehilite .gu { color: #959077 } /* Generic.Subheading */
+.dark .codehilite .gt { color: #F8F8F2 } /* Generic.Traceback */
+.dark .codehilite .kc { color: #66D9EF } /* Keyword.Constant */
+.dark .codehilite .kd { color: #66D9EF } /* Keyword.Declaration */
+.dark .codehilite .kn { color: #FF4689 } /* Keyword.Namespace */
+.dark .codehilite .kp { color: #66D9EF } /* Keyword.Pseudo */
+.dark .codehilite .kr { color: #66D9EF } /* Keyword.Reserved */
+.dark .codehilite .kt { color: #66D9EF } /* Keyword.Type */
+.dark .codehilite .ld { color: #E6DB74 } /* Literal.Date */
+.dark .codehilite .m { color: #AE81FF } /* Literal.Number */
+.dark .codehilite .s { color: #E6DB74 } /* Literal.String */
+.dark .codehilite .na { color: #A6E22E } /* Name.Attribute */
+.dark .codehilite .nb { color: #F8F8F2 } /* Name.Builtin */
+.dark .codehilite .nc { color: #A6E22E } /* Name.Class */
+.dark .codehilite .no { color: #66D9EF } /* Name.Constant */
+.dark .codehilite .nd { color: #A6E22E } /* Name.Decorator */
+.dark .codehilite .ni { color: #F8F8F2 } /* Name.Entity */
+.dark .codehilite .ne { color: #A6E22E } /* Name.Exception */
+.dark .codehilite .nf { color: #A6E22E } /* Name.Function */
+.dark .codehilite .nl { color: #F8F8F2 } /* Name.Label */
+.dark .codehilite .nn { color: #F8F8F2 } /* Name.Namespace */
+.dark .codehilite .nx { color: #A6E22E } /* Name.Other */
+.dark .codehilite .py { color: #F8F8F2 } /* Name.Property */
+.dark .codehilite .nt { color: #FF4689 } /* Name.Tag */
+.dark .codehilite .nv { color: #F8F8F2 } /* Name.Variable */
+.dark .codehilite .ow { color: #FF4689 } /* Operator.Word */
+.dark .codehilite .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.dark .codehilite .w { color: #F8F8F2 } /* Text.Whitespace */
+.dark .codehilite .mb { color: #AE81FF } /* Literal.Number.Bin */
+.dark .codehilite .mf { color: #AE81FF } /* Literal.Number.Float */
+.dark .codehilite .mh { color: #AE81FF } /* Literal.Number.Hex */
+.dark .codehilite .mi { color: #AE81FF } /* Literal.Number.Integer */
+.dark .codehilite .mo { color: #AE81FF } /* Literal.Number.Oct */
+.dark .codehilite .sa { color: #E6DB74 } /* Literal.String.Affix */
+.dark .codehilite .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.dark .codehilite .sc { color: #E6DB74 } /* Literal.String.Char */
+.dark .codehilite .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.dark .codehilite .sd { color: #E6DB74 } /* Literal.String.Doc */
+.dark .codehilite .s2 { color: #E6DB74 } /* Literal.String.Double */
+.dark .codehilite .se { color: #AE81FF } /* Literal.String.Escape */
+.dark .codehilite .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.dark .codehilite .si { color: #E6DB74 } /* Literal.String.Interpol */
+.dark .codehilite .sx { color: #E6DB74 } /* Literal.String.Other */
+.dark .codehilite .sr { color: #E6DB74 } /* Literal.String.Regex */
+.dark .codehilite .s1 { color: #E6DB74 } /* Literal.String.Single */
+.dark .codehilite .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.dark .codehilite .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.dark .codehilite .fm { color: #A6E22E } /* Name.Function.Magic */
+.dark .codehilite .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.dark .codehilite .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.dark .codehilite .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.dark .codehilite .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.dark .codehilite .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+  </style>
+</head>
+<body class="dark">
+  <div class="wrap">
+    <div class="card">
+      <h1 class="title">08 - 資料結構與 JSON L5 20Q - 5b230013 (李宸睿)</h1>
+      <p class="meta">O = 答對，X = 答錯或未作答</p>
+      <div class="analysis">
+        <div class="item"><div class="label">成績</div><div class="value">14/20</div></div>
+        <div class="item"><div class="label">排名</div><div class="value">5/24</div></div>
+        <div class="item"><div class="label">班級高/均/低</div><div class="value">17/10/5</div></div>
+        <div class="item"><div class="label">眾數</div><div class="value">9</div></div>
+      </div>
+      <div class="toolbar"><button id="themeToggle" type="button">切換淺色</button></div>
+      <div class="content"><h1>06 - 資料結構與 JSON L5 20Q</h1>
+<hr />
+<h3><span class="marker marker-o">O</span> 1. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">reading</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">12.4</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">current</span><span class="o">:</span><span class="w"> </span><span class="mf">0.8</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">unit</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;DC&quot;</span>
+<span class="p">};</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">selectedField</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;current&quot;</span><span class="p">;</span>
+<span class="nx">reading</span><span class="p">.</span><span class="nx">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Number</span><span class="p">((</span><span class="nx">reading</span><span class="p">.</span><span class="nx">current</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.4</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">1</span><span class="p">));</span>
+<span class="nx">reading</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ON&quot;</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">reading</span><span class="p">[</span><span class="nx">selectedField</span><span class="p">]);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">reading</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">reading</span><span class="p">.</span><span class="nx">temperature</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">0.8</span>
+<span class="nx">ON</span>
+<span class="kc">undefined</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.2</span>
+<span class="nx">ON</span>
+<span class="kc">undefined</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.2</span>
+<span class="kc">undefined</span>
+<span class="kc">undefined</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">current</span>
+<span class="nx">ON</span>
+<span class="nx">temperature</span>
+</code></pre></div>
+
+<h2>答案: (B)</h2>
+<h3><span class="marker marker-x">X</span> 2. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">controller</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Main Controller&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">pins</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="mf">5</span><span class="p">],</span>
+<span class="w">  </span><span class="nx">location</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">room</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;R402&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">floor</span><span class="o">:</span><span class="w"> </span><span class="mf">4</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">controller</span><span class="p">.</span><span class="nx">pins</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mf">6</span><span class="p">);</span>
+<span class="nx">controller</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">room</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;R401&quot;</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">controller</span><span class="p">.</span><span class="nx">pins</span><span class="p">[</span><span class="mf">4</span><span class="p">]);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">controller</span><span class="p">.</span><span class="nx">pins</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">controller</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">room</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="kc">undefined</span>
+<span class="mf">5</span>
+<span class="nx">R401</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">5</span>
+<span class="mf">4</span>
+<span class="nx">R401</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">6</span>
+<span class="mf">4</span>
+<span class="nx">R402</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">6</span>
+<span class="mf">5</span>
+<span class="nx">R401</span>
+</code></pre></div>
+
+<h2>答案: (D)</h2>
+<h3><span class="marker marker-o">O</span> 3. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">devices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;T1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">config</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">unit</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;C&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">intervalMs</span><span class="o">:</span><span class="w"> </span><span class="mf">1000</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;T2&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">config</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">unit</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;C&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">intervalMs</span><span class="o">:</span><span class="w"> </span><span class="mf">5000</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;T3&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">config</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">unit</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;C&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">intervalMs</span><span class="o">:</span><span class="w"> </span><span class="mf">2000</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+<span class="p">];</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">targetId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;T2&quot;</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">found</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">devices</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">targetId</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">missing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">devices</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;T9&quot;</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">found</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">intervalMs</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">missing</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">5000</span>
+<span class="kc">undefined</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1000</span>
+<span class="kc">undefined</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">5000</span>
+<span class="kc">null</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">T2</span>
+<span class="kc">undefined</span>
+</code></pre></div>
+
+<h2>答案: (A)</h2>
+<h3><span class="marker marker-o">O</span> 4. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">rawPacket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`[</span>
+<span class="sb">  {&quot;id&quot;:&quot;B01&quot;,&quot;time&quot;:&quot;09:00&quot;,&quot;voltage&quot;:12.6,&quot;current&quot;:0.5},</span>
+<span class="sb">  {&quot;id&quot;:&quot;B01&quot;,&quot;time&quot;:&quot;09:10&quot;,&quot;voltage&quot;:11.4,&quot;current&quot;:0.6},</span>
+<span class="sb">  {&quot;id&quot;:&quot;B01&quot;,&quot;time&quot;:&quot;09:20&quot;,&quot;voltage&quot;:12.2,&quot;current&quot;:0.4},</span>
+<span class="sb">  {&quot;id&quot;:&quot;B01&quot;,&quot;time&quot;:&quot;09:30&quot;,&quot;voltage&quot;:10.9,&quot;current&quot;:0.7}</span>
+<span class="sb">]`</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">logs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">rawPacket</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">11.5</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">lowVoltageLogs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">logs</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">voltage</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">threshold</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">logs</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">lowVoltageLogs</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">lowVoltageLogs</span><span class="p">[</span><span class="mf">1</span><span class="p">].</span><span class="nx">time</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">2</span>
+<span class="mf">4</span>
+<span class="mf">09</span><span class="o">:</span><span class="mf">30</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">4</span>
+<span class="mf">1</span>
+<span class="mf">09</span><span class="o">:</span><span class="mf">10</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">4</span>
+<span class="mf">2</span>
+<span class="mf">09</span><span class="o">:</span><span class="mf">30</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">4</span>
+<span class="mf">2</span>
+<span class="mf">09</span><span class="o">:</span><span class="mf">10</span>
+</code></pre></div>
+
+<h2>答案: (C)</h2>
+<h3><span class="marker marker-o">O</span> 5. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">sampleRate</span><span class="o">:</span><span class="w"> </span><span class="mf">1000</span>
+<span class="p">};</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">configText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">parsedConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">configText</span><span class="p">);</span>
+
+<span class="nx">parsedConfig</span><span class="p">.</span><span class="nx">sampleRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parsedConfig</span><span class="p">.</span><span class="nx">sampleRate</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">500</span><span class="p">;</span>
+<span class="nx">parsedConfig</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ready&quot;</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">sampleRate</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">parsedConfig</span><span class="p">.</span><span class="nx">sampleRate</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">parsedConfig</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1500</span>
+<span class="mf">1500</span>
+<span class="nx">ready</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1000</span>
+<span class="mf">1500</span>
+<span class="nx">ready</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1000</span>
+<span class="mf">1000</span>
+<span class="kc">undefined</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1000</span>
+<span class="mf">1500</span>
+<span class="kc">undefined</span>
+</code></pre></div>
+
+<h2>答案: (B)</h2>
+<h3><span class="marker marker-o">O</span> 6. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">voltages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">12.6</span><span class="p">,</span><span class="w"> </span><span class="mf">12.4</span><span class="p">,</span><span class="w"> </span><span class="mf">11.2</span><span class="p">,</span><span class="w"> </span><span class="mf">10.9</span><span class="p">,</span><span class="w"> </span><span class="mf">12.1</span><span class="p">];</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">lowVoltages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">voltages</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">v</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">11.5</span><span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">displayList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">lowVoltages</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">v</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">v</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">1</span><span class="p">)</span><span class="si">}</span><span class="sb"> V`</span><span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">voltages</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">sum</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">sum</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">v</span><span class="p">;</span>
+<span class="p">},</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">average</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">total</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">voltages</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">displayList</span><span class="p">[</span><span class="mf">0</span><span class="p">]);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">displayList</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">average</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">));</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">11.2</span><span class="w"> </span><span class="nx">V</span>
+<span class="mf">2</span>
+<span class="mf">11.84</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">10.9</span><span class="w"> </span><span class="nx">V</span>
+<span class="mf">2</span>
+<span class="mf">11.84</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">11.2</span><span class="w"> </span><span class="nx">V</span>
+<span class="mf">5</span>
+<span class="mf">11.84</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">11.2</span><span class="w"> </span><span class="nx">V</span>
+<span class="mf">2</span>
+<span class="mf">59.20</span>
+</code></pre></div>
+
+<h2>答案: (A)</h2>
+<h3><span class="marker marker-x">X</span> 7. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">logs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">12.6</span><span class="p">,</span><span class="w"> </span><span class="nx">current</span><span class="o">:</span><span class="w"> </span><span class="mf">0.5</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:10&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">11.4</span><span class="p">,</span><span class="w"> </span><span class="nx">current</span><span class="o">:</span><span class="w"> </span><span class="mf">0.6</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:20&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">12.2</span><span class="p">,</span><span class="w"> </span><span class="nx">current</span><span class="o">:</span><span class="w"> </span><span class="mf">0.4</span><span class="w"> </span><span class="p">}</span>
+<span class="p">];</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">11.5</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">detailedLogs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">logs</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">time</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">voltage</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">voltage</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">threshold</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot;LOW&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;NORMAL&quot;</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">detailedLogs</span><span class="p">[</span><span class="mf">1</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">detailedLogs</span><span class="p">[</span><span class="mf">2</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">logs</span><span class="p">[</span><span class="mf">1</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">NORMAL</span>
+<span class="nx">NORMAL</span>
+<span class="nx">LOW</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">NORMAL</span>
+<span class="nx">LOW</span>
+<span class="nx">LOW</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">LOW</span>
+<span class="nx">LOW</span>
+<span class="kc">undefined</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">LOW</span>
+<span class="nx">NORMAL</span>
+<span class="kc">undefined</span>
+</code></pre></div>
+
+<h2>答案: (D)</h2>
+<h3><span class="marker marker-o">O</span> 8. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+
+<span class="nx">samples</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;10:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">temp</span><span class="o">:</span><span class="w"> </span><span class="mf">25.4</span><span class="w"> </span><span class="p">});</span>
+<span class="nx">samples</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;10:01&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">temp</span><span class="o">:</span><span class="w"> </span><span class="mf">25.7</span><span class="w"> </span><span class="p">});</span>
+<span class="nx">samples</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;10:02&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">temp</span><span class="o">:</span><span class="w"> </span><span class="mf">26.1</span><span class="w"> </span><span class="p">});</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">found</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">samples</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">temp</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">25.5</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">samples</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">sum</span><span class="p">,</span><span class="w"> </span><span class="nx">item</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">sum</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">temp</span><span class="p">;</span>
+<span class="p">},</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">found</span><span class="p">.</span><span class="nx">time</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">samples</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">((</span><span class="nx">total</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">samples</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">1</span><span class="p">));</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">10</span><span class="o">:</span><span class="mo">02</span>
+<span class="mf">3</span>
+<span class="mf">25.7</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">10</span><span class="o">:</span><span class="mo">01</span>
+<span class="mf">2</span>
+<span class="mf">25.7</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">10</span><span class="o">:</span><span class="mo">01</span>
+<span class="mf">3</span>
+<span class="mf">25.7</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">10</span><span class="o">:</span><span class="mo">00</span>
+<span class="mf">3</span>
+<span class="mf">25.4</span>
+</code></pre></div>
+
+<h2>答案: (C)</h2>
+<h3><span class="marker marker-x">X</span> 9. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">logs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">12.6</span><span class="p">,</span><span class="w"> </span><span class="nx">current</span><span class="o">:</span><span class="w"> </span><span class="mf">0.5</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:10&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">11.4</span><span class="p">,</span><span class="w"> </span><span class="nx">current</span><span class="o">:</span><span class="w"> </span><span class="mf">0.6</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:20&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">12.2</span><span class="p">,</span><span class="w"> </span><span class="nx">current</span><span class="o">:</span><span class="w"> </span><span class="mf">0.4</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:30&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">10.9</span><span class="p">,</span><span class="w"> </span><span class="nx">current</span><span class="o">:</span><span class="w"> </span><span class="mf">0.7</span><span class="w"> </span><span class="p">}</span>
+<span class="p">];</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">lowPowerTotal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">logs</span>
+<span class="w">  </span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">voltage</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">11.5</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nb">Number</span><span class="p">((</span><span class="nx">item</span><span class="p">.</span><span class="nx">voltage</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">current</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">)))</span>
+<span class="w">  </span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">sum</span><span class="p">,</span><span class="w"> </span><span class="nx">power</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">sum</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">power</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">lowPowerTotal</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">logs</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">voltage</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">14.47</span>
+<span class="mf">12.6</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">6.84</span>
+<span class="mf">12.6</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">14.47</span>
+<span class="mf">11.4</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">29.01</span>
+<span class="mf">12.6</span>
+</code></pre></div>
+
+<h2>答案: (A)</h2>
+<h3><span class="marker marker-x">X</span> 10. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">channelData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">ch1</span><span class="o">:</span><span class="w"> </span><span class="mf">3.31</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">ch2</span><span class="o">:</span><span class="w"> </span><span class="mf">3.28</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">ch3</span><span class="o">:</span><span class="w"> </span><span class="mf">3.35</span>
+<span class="p">};</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">selectedChannel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ch2&quot;</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">backupChannel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ch4&quot;</span><span class="p">;</span>
+
+<span class="nx">channelData</span><span class="p">.</span><span class="nx">ch2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">channelData</span><span class="p">.</span><span class="nx">ch2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.02</span><span class="p">;</span>
+<span class="nx">channelData</span><span class="p">.</span><span class="nx">ch4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.30</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">channelData</span><span class="p">[</span><span class="nx">selectedChannel</span><span class="p">].</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">channelData</span><span class="p">[</span><span class="nx">backupChannel</span><span class="p">].</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">channelData</span><span class="p">.</span><span class="nx">ch1</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">));</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">3.28</span>
+<span class="mf">3.30</span>
+<span class="mf">3.31</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">ch2</span>
+<span class="nx">ch4</span>
+<span class="nx">ch1</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">3.30</span>
+<span class="kc">undefined</span>
+<span class="mf">3.31</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">3.30</span>
+<span class="mf">3.30</span>
+<span class="mf">3.31</span>
+</code></pre></div>
+
+<h2>答案: (D)</h2>
+<h3><span class="marker marker-o">O</span> 11. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">report</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;A1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;normal&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;A2&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;critical&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="p">];</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">reportText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">report</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">parsedReport</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">reportText</span><span class="p">);</span>
+
+<span class="nx">parsedReport</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;checked&quot;</span><span class="p">;</span>
+<span class="nx">parsedReport</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;A3&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;normal&quot;</span><span class="w"> </span><span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">report</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">parsedReport</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">parsedReport</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">report</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">2</span>
+<span class="mf">2</span>
+<span class="nx">checked</span>
+<span class="nx">normal</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">3</span>
+<span class="mf">3</span>
+<span class="nx">checked</span>
+<span class="nx">checked</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">2</span>
+<span class="mf">3</span>
+<span class="nx">checked</span>
+<span class="nx">normal</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">2</span>
+<span class="mf">3</span>
+<span class="nx">normal</span>
+<span class="nx">normal</span>
+</code></pre></div>
+
+<h2>答案: (C)</h2>
+<h3><span class="marker marker-o">O</span> 12. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">alarmLog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">level</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;info&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">level</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;warning&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="nx">level</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;error&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="p">];</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">firstWarning</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">alarmLog</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">level</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;warning&quot;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">firstCritical</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">alarmLog</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">level</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;critical&quot;</span><span class="p">);</span>
+
+<span class="nx">alarmLog</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="nx">level</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;warning&quot;</span><span class="w"> </span><span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">firstWarning</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">firstCritical</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">alarmLog</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">2</span>
+<span class="kc">null</span>
+<span class="mf">4</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">2</span>
+<span class="kc">undefined</span>
+<span class="mf">4</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">4</span>
+<span class="kc">undefined</span>
+<span class="mf">4</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">2</span>
+<span class="kc">undefined</span>
+<span class="mf">3</span>
+</code></pre></div>
+
+<h2>答案: (B)</h2>
+<h3><span class="marker marker-o">O</span> 13. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">batteryLog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">12.6</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:10&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">12.4</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:20&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">12.1</span><span class="w"> </span><span class="p">}</span>
+<span class="p">];</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">displayLog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">batteryLog</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">time</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">item</span><span class="p">.</span><span class="nx">voltage</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">1</span><span class="p">)</span><span class="si">}</span><span class="sb"> V`</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">});</span>
+
+<span class="nx">batteryLog</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">voltage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">12.0</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">displayLog</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">text</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">batteryLog</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">voltage</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">1</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">displayLog</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">12.6</span><span class="w"> </span><span class="nx">V</span>
+<span class="mf">12.6</span>
+<span class="mf">3</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">12.0</span><span class="w"> </span><span class="nx">V</span>
+<span class="mf">12.0</span>
+<span class="mf">3</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">12.0</span><span class="w"> </span><span class="nx">V</span>
+<span class="mf">12.0</span>
+<span class="mf">2</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">12.6</span><span class="w"> </span><span class="nx">V</span>
+<span class="mf">12.0</span>
+<span class="mf">3</span>
+</code></pre></div>
+
+<h2>答案: (D)</h2>
+<h3><span class="marker marker-o">O</span> 14. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">logs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">12.6</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:10&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">11.4</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:20&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">12.2</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:30&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="o">:</span><span class="w"> </span><span class="mf">10.9</span><span class="w"> </span><span class="p">}</span>
+<span class="p">];</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">11.5</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">summary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">logs</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">result</span><span class="p">,</span><span class="w"> </span><span class="nx">item</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">result</span><span class="p">.</span><span class="nx">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">result</span><span class="p">.</span><span class="nx">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">total</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">voltage</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">result</span><span class="p">.</span><span class="nx">lowCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">lowCount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">voltage</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">threshold</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">result</span><span class="p">;</span>
+<span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">total</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">lowCount</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">summary</span><span class="p">.</span><span class="nx">count</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">summary</span><span class="p">.</span><span class="nx">lowCount</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">((</span><span class="nx">summary</span><span class="p">.</span><span class="nx">total</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">summary</span><span class="p">.</span><span class="nx">count</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">));</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">4</span>
+<span class="mf">2</span>
+<span class="mf">11.78</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">4</span>
+<span class="mf">1</span>
+<span class="mf">11.78</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">2</span>
+<span class="mf">4</span>
+<span class="mf">11.78</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">4</span>
+<span class="mf">2</span>
+<span class="mf">47.10</span>
+</code></pre></div>
+
+<h2>答案: (A)</h2>
+<h3><span class="marker marker-x">X</span> 15. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">voltages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">12.6</span><span class="p">,</span><span class="w"> </span><span class="mf">12.4</span><span class="p">,</span><span class="w"> </span><span class="mf">11.2</span><span class="p">,</span><span class="w"> </span><span class="mf">10.9</span><span class="p">,</span><span class="w"> </span><span class="mf">12.1</span><span class="p">];</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">lowVoltages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">voltages</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">v</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">11.5</span><span class="p">);</span>
+
+<span class="nx">voltages</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mf">10.8</span><span class="p">);</span>
+<span class="nx">lowVoltages</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mf">11.0</span><span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">originalLowCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">voltages</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">v</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">11.5</span><span class="p">).</span><span class="nx">length</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">lowListCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">lowVoltages</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">voltages</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">originalLowCount</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">lowListCount</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">5</span>
+<span class="mf">2</span>
+<span class="mf">3</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">6</span>
+<span class="mf">4</span>
+<span class="mf">3</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">6</span>
+<span class="mf">3</span>
+<span class="mf">3</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">6</span>
+<span class="mf">3</span>
+<span class="mf">2</span>
+</code></pre></div>
+
+<h2>答案: (C)</h2>
+<h3><span class="marker marker-o">O</span> 16. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">rawPacket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`[</span>
+<span class="sb">  {&quot;id&quot;:&quot;B01&quot;,&quot;time&quot;:&quot;09:00&quot;,&quot;voltage&quot;:12.6,&quot;current&quot;:0.5},</span>
+<span class="sb">  {&quot;id&quot;:&quot;B01&quot;,&quot;time&quot;:&quot;09:10&quot;,&quot;voltage&quot;:11.4,&quot;current&quot;:0.6},</span>
+<span class="sb">  {&quot;id&quot;:&quot;B01&quot;,&quot;time&quot;:&quot;09:20&quot;,&quot;voltage&quot;:12.2,&quot;current&quot;:0.4}</span>
+<span class="sb">]`</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">logs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">rawPacket</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">11.5</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">detailedLogs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">logs</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">time</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">power</span><span class="o">:</span><span class="w"> </span><span class="nb">Number</span><span class="p">((</span><span class="nx">item</span><span class="p">.</span><span class="nx">voltage</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">current</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">)),</span>
+<span class="w">    </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">voltage</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">threshold</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot;LOW&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;NORMAL&quot;</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">detailedLogs</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">power</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">detailedLogs</span><span class="p">[</span><span class="mf">1</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">detailedLogs</span><span class="p">[</span><span class="mf">2</span><span class="p">].</span><span class="nx">time</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">6.30</span>
+<span class="nx">LOW</span>
+<span class="mf">09</span><span class="o">:</span><span class="mf">10</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">6.30</span>
+<span class="nx">LOW</span>
+<span class="mf">09</span><span class="o">:</span><span class="mf">20</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">7.00</span>
+<span class="nx">LOW</span>
+<span class="mf">09</span><span class="o">:</span><span class="mf">10</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">6.30</span>
+<span class="nx">NORMAL</span>
+<span class="mf">09</span><span class="o">:</span><span class="mf">20</span>
+</code></pre></div>
+
+<h2>答案: (B)</h2>
+<h3><span class="marker marker-x">X</span> 17. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">incomingText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;{&quot;sensor&quot;:&quot;T1&quot;,&quot;temp&quot;:26.3,&quot;ok&quot;:true}&#39;</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">parsedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">incomingText</span><span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">sensor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">parsedData</span><span class="p">.</span><span class="nx">sensor</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">reading</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="nx">parsedData</span><span class="p">.</span><span class="nx">temp</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">unit</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;C&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">sensor</span><span class="p">.</span><span class="nx">reading</span><span class="p">.</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">sensor</span><span class="p">.</span><span class="nx">reading</span><span class="p">.</span><span class="nx">value</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.2</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sensor</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sensor</span><span class="p">.</span><span class="nx">reading</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">1</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">parsedData</span><span class="p">.</span><span class="nx">unit</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">T1</span>
+<span class="mf">26.5</span>
+<span class="nx">C</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">T1</span>
+<span class="mf">26.3</span>
+<span class="nx">C</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">sensor</span>
+<span class="mf">26.5</span>
+<span class="kc">undefined</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">T1</span>
+<span class="mf">26.5</span>
+<span class="kc">undefined</span>
+</code></pre></div>
+
+<h2>答案: (D)</h2>
+<h3><span class="marker marker-o">O</span> 18. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">devices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;T1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">config</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">unit</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;C&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">intervalMs</span><span class="o">:</span><span class="w"> </span><span class="mf">1000</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;T2&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">config</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">unit</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;C&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">intervalMs</span><span class="o">:</span><span class="w"> </span><span class="mf">5000</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;T3&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">config</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">unit</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;C&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">intervalMs</span><span class="o">:</span><span class="w"> </span><span class="mf">2000</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+<span class="p">];</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">fastDevices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">devices</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">intervalMs</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">2000</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">intervals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">fastDevices</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">intervalMs</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">totalInterval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">intervals</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">sum</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">sum</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">value</span><span class="p">;</span>
+<span class="p">},</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">fastDevices</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">intervals</span><span class="p">[</span><span class="mf">1</span><span class="p">]);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">totalInterval</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">2</span>
+<span class="mf">2000</span>
+<span class="mf">3000</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">3</span>
+<span class="mf">2000</span>
+<span class="mf">8000</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">2</span>
+<span class="mf">1000</span>
+<span class="mf">3000</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1</span>
+<span class="mf">2000</span>
+<span class="mf">2000</span>
+</code></pre></div>
+
+<h2>答案: (A)</h2>
+<h3><span class="marker marker-o">O</span> 19. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">report</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">summary</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">sampleCount</span><span class="o">:</span><span class="w"> </span><span class="mf">4</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">lowVoltageCount</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">averageVoltage</span><span class="o">:</span><span class="w"> </span><span class="mf">11.78</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nx">details</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;NORMAL&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:10&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;LOW&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:20&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;NORMAL&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">time</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;09:30&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;LOW&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">};</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">report</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">parsed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">text</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">lowDetails</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parsed</span><span class="p">.</span><span class="nx">details</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;LOW&quot;</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">parsed</span><span class="p">.</span><span class="nx">summary</span><span class="p">.</span><span class="nx">sampleCount</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">lowDetails</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">time</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">lowDetails</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">4</span>
+<span class="mf">09</span><span class="o">:</span><span class="mf">10</span>
+<span class="mf">1</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">2</span>
+<span class="mf">09</span><span class="o">:</span><span class="mf">10</span>
+<span class="mf">4</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">4</span>
+<span class="mf">09</span><span class="o">:</span><span class="mf">10</span>
+<span class="mf">2</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">4</span>
+<span class="mf">09</span><span class="o">:</span><span class="mf">30</span>
+<span class="mf">2</span>
+</code></pre></div>
+
+<h2>答案: (C)</h2>
+<h3><span class="marker marker-o">O</span> 20. 執行以下程式碼，輸出結果為何？</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">rawPacket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`[</span>
+<span class="sb">  {&quot;id&quot;:&quot;B01&quot;,&quot;time&quot;:&quot;09:00&quot;,&quot;voltage&quot;:12.6,&quot;current&quot;:0.5},</span>
+<span class="sb">  {&quot;id&quot;:&quot;B01&quot;,&quot;time&quot;:&quot;09:10&quot;,&quot;voltage&quot;:11.4,&quot;current&quot;:0.6},</span>
+<span class="sb">  {&quot;id&quot;:&quot;B01&quot;,&quot;time&quot;:&quot;09:20&quot;,&quot;voltage&quot;:12.2,&quot;current&quot;:0.4},</span>
+<span class="sb">  {&quot;id&quot;:&quot;B01&quot;,&quot;time&quot;:&quot;09:30&quot;,&quot;voltage&quot;:10.9,&quot;current&quot;:0.7}</span>
+<span class="sb">]`</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">logs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">rawPacket</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">11.5</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">lowVoltageLogs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">logs</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">voltage</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">threshold</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">averageVoltage</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="nx">logs</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">sum</span><span class="p">,</span><span class="w"> </span><span class="nx">item</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">sum</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">voltage</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">logs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">finalReport</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">summary</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">sampleCount</span><span class="o">:</span><span class="w"> </span><span class="nx">logs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">lowVoltageCount</span><span class="o">:</span><span class="w"> </span><span class="nx">lowVoltageLogs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">averageVoltage</span><span class="o">:</span><span class="w"> </span><span class="nb">Number</span><span class="p">(</span><span class="nx">averageVoltage</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">))</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">finalReport</span><span class="p">.</span><span class="nx">summary</span><span class="p">.</span><span class="nx">sampleCount</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">finalReport</span><span class="p">.</span><span class="nx">summary</span><span class="p">.</span><span class="nx">lowVoltageCount</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">finalReport</span><span class="p">.</span><span class="nx">summary</span><span class="p">.</span><span class="nx">averageVoltage</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">));</span>
+</code></pre></div>
+
+<p>(A)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">4</span>
+<span class="mf">1</span>
+<span class="mf">11.78</span>
+</code></pre></div>
+
+<p>(B)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">4</span>
+<span class="mf">2</span>
+<span class="mf">11.78</span>
+</code></pre></div>
+
+<p>(C)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">2</span>
+<span class="mf">4</span>
+<span class="mf">11.78</span>
+</code></pre></div>
+
+<p>(D)</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">4</span>
+<span class="mf">2</span>
+<span class="mf">11.77</span>
+</code></pre></div>
+
+<p>答案: (B)</p></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var body = document.body;
+      var btn = document.getElementById('themeToggle');
+      btn.addEventListener('click', function () {
+        if (body.classList.contains('light')) {
+          body.classList.remove('light');
+          body.classList.add('dark');
+          btn.textContent = '切換淺色';
+        } else {
+          body.classList.remove('dark');
+          body.classList.add('light');
+          btn.textContent = '切換深色';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

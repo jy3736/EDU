@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI 素養畢業能力檢核制度提案草案">
+  <title>AI 素養畢業能力檢核｜制度提案草案</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: #ecf3f9;
+      background: #08111c;
+      font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: 1.7;
+    }
+    a { color: inherit; }
+    .shell { max-width: 1280px; margin: 0 auto; padding: 30px 24px 64px; }
+    .hero {
+      display: grid;
+      gap: 20px;
+      padding: 34px;
+      border: 1px solid #2b4962;
+      border-radius: 24px;
+      background: radial-gradient(circle at 88% 8%, #164a63 0, transparent 30%), linear-gradient(130deg, #102337, #0c1726 62%);
+      box-shadow: 0 20px 60px #0007;
+    }
+    .eyebrow { margin: 0; color: #9ad7df; font-size: .9rem; font-weight: 700; letter-spacing: .08em; }
+    h1, h2, h3, p { margin-top: 0; }
+    strong { color: #f0ca79; }
+    h1 { max-width: 800px; margin-bottom: 10px; font-size: clamp(2rem, 5vw, 3.85rem); line-height: 1.16; letter-spacing: -.04em; }
+    .lead { max-width: 760px; margin-bottom: 0; color: #c6d5e2; font-size: 1.12rem; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 9px; }
+    .pill { padding: 5px 11px; border: 1px solid #3f7180; border-radius: 999px; color: #b7eaf0; background: #10313c; font-size: .9rem; }
+    .core-principle { padding: 18px 20px; border: 1px solid #5aa4b4; border-radius: 14px; background: linear-gradient(100deg, #103d4b, #102335); }
+    .core-principle p { max-width: 1200px; margin: 0; color: #d1e1e6; font-size: 1.06rem; }
+    .inline-highlight { color: #f0ca79; font-weight: 750; }
+    .overview { padding: 16px; border: 1px solid #31546d; border-radius: 14px; background: #0a1928b8; }
+    .core-principle.overview { padding: 18px 20px; border-color: #5aa4b4; background: linear-gradient(100deg, #103d4b, #102335); }
+    .overview h2 { margin-bottom: 10px; color: #a9e3f0; font-size: .98rem; letter-spacing: .06em; }
+    .overview p { max-width: 960px; margin-bottom: 0; color: #c6d5e2; }
+    .overview-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .overview-grid div { padding: 11px; border-left: 2px solid #58b9c5; background: #10283a; }
+    .overview-grid strong { display: block; margin-bottom: 3px; color: #d3f0f6; font-size: .94rem; }
+    .overview-grid span { display: block; color: #b7c8d5; font-size: .84rem; line-height: 1.55; }
+    .layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; margin-top: 28px; }
+    .catalog { align-self: start; position: sticky; top: 18px; padding: 14px; border: 1px solid #28445b; border-radius: 16px; background: #0d1a28; }
+    .catalog h2 { margin: 0 0 9px; color: #8bb8d6; font-size: .85rem; letter-spacing: .08em; }
+    .catalog a { display: block; padding: 9px 10px; border-radius: 9px; color: #b9d0df; text-decoration: none; font-size: .94rem; }
+    .catalog a:hover, .catalog a:focus-visible { color: #fff; background: #1a3b52; outline: none; }
+    .content { display: grid; gap: 18px; }
+    section { scroll-margin-top: 18px; padding: clamp(20px, 4vw, 34px); border: 1px solid #26455d; border-radius: 20px; background: #0d1a28; }
+    section h2 { margin-bottom: 9px; font-size: clamp(1.35rem, 2.6vw, 1.9rem); line-height: 1.3; }
+    .section-intro { color: #abc0d0; }
+    .module-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+    .module { padding: 18px; border: 1px solid #31546d; border-radius: 14px; background: #102335; }
+    .module.required { border-color: #4d9799; background: linear-gradient(135deg, #10343c, #102335); }
+    .module h3 { margin-bottom: 6px; font-size: 1.06rem; }
+    .module p { margin-bottom: 0; color: #bed0dc; font-size: .95rem; }
+    .module p + p { margin-top: 10px; }
+    .examples { color: #d4edf1 !important; }
+    .tag { display: inline-block; margin-bottom: 10px; padding: 3px 8px; border-radius: 999px; color: #a5e0df; background: #0b3d42; font-size: .78rem; font-weight: 700; }
+    .flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; }
+    .flow li { position: relative; min-height: 122px; padding: 17px; border: 1px solid #31546d; border-radius: 13px; background: #102335; }
+    .flow strong { display: block; margin-bottom: 5px; color: #a9e3f0; }
+    .flow span { color: #b7c8d5; font-size: .9rem; }
+    .rule-list { display: grid; gap: 10px; margin: 20px 0 0; padding: 0; list-style: none; }
+    .rule-list li { padding: 14px 16px; border-left: 3px solid #58b9c5; border-radius: 0 12px 12px 0; background: #102335; }
+    .rule-list strong { color: #f0ca79; }
+    .question-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+    .rationale-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 20px; }
+    .rationale-grid article { padding: 15px; border: 1px solid #31546d; border-radius: 12px; background: #102335; }
+    .rationale-grid h3 { margin-bottom: 6px; color: #c7f1f5; font-size: .98rem; }
+    .rationale-grid p { margin-bottom: 0; color: #b9cad6; font-size: .9rem; }
+    .question-card { padding: 20px; border: 1px solid #31546d; border-radius: 14px; background: #102335; }
+    .question-card h3 { margin-bottom: 8px; color: #d0ecfb; font-size: 1.04rem; }
+    .question-card p { color: #c6d5e2; }
+    .choice-list { display: grid; gap: 7px; margin: 14px 0; padding: 0; list-style: none; }
+    .choice-list li { padding: 8px 10px; border: 1px solid #294961; border-radius: 8px; color: #bcd0dd; background: #0d1a28; font-size: .92rem; }
+    .answer-key { margin-bottom: 0 !important; padding: 11px 12px; border-left: 3px solid #69c6a8; border-radius: 0 9px 9px 0; color: #c8eddb !important; background: #13352f; }
+    .answer-key span { display: block; margin-top: 4px; }
+    .governance { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+    .governance article { padding: 17px; border: 1px solid #31546d; border-radius: 13px; background: #102335; }
+    .governance h3 { margin-bottom: 7px; color: #d0ecfb; font-size: 1.02rem; }
+    .governance p { margin-bottom: 0; color: #b9cad6; font-size: .94rem; }
+    .notice { margin-top: 18px; padding: 16px; border: 1px solid #846f38; border-radius: 12px; color: #e7dbad; background: #2b2717; }
+    footer { padding: 24px 4px 0; color: #8fa7b8; font-size: .88rem; text-align: center; }
+    @media (max-width: 820px) {
+      .shell { padding: 16px 14px 40px; }
+      .hero { padding: 26px 22px; border-radius: 18px; }
+      .layout { grid-template-columns: 1fr; gap: 16px; }
+      .catalog { position: static; display: flex; gap: 5px; overflow-x: auto; padding: 9px; white-space: nowrap; }
+      .catalog h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+      .catalog a { flex: 0 0 auto; border: 1px solid #31546d; }
+      .module-grid, .governance, .rationale-grid { grid-template-columns: 1fr; }
+      .overview-grid { grid-template-columns: 1fr 1fr; }
+      .flow { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 460px) { .flow, .overview-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">南臺科技大學電子工程系｜制度提案草案</p>
+        <h1>AI 素養畢業能力檢核</h1>
+        <p class="lead">這是一項讓學生在畢業前整理並證明 AI 基礎能力的制度。學生先依公告資料自主學習，再在受控環境完成評量；每次結果都會回到明確的補強方向，幫助學生一步步達成畢業門檻。</p>
+      </div>
+      <div class="pill-row" aria-label="制度重點">
+        <span class="pill">年度版本公告</span><span class="pill">Study Guide 導讀</span><span class="pill">受控教室應試</span><span class="pill">模組化達標</span>
+      </div>
+      <aside class="core-principle overview" aria-label="核心評量設計與內容總覽">
+        <p>「<span class="inline-highlight">以 n 選 m 的觀念多選題，檢核完整理解</span>」是本制度的核心：學生必須完整閱讀每個選項，並讓選擇與正確答案完全吻合，藉此降低猜測、引導反覆學習與維持評量公平性。學生先完成「<span class="inline-highlight">倫理必考</span>」模組，再從常見工具、通用技術與專業延伸三個領域中採「<span class="inline-highlight">三群選二</span>」，形成自己的評量組合；系統依選擇提供「<span class="inline-highlight">Study Guide</span>」，說明當年度的主題、工具範例與學習資料，完成受控教室測驗後再依模組結果持續學習與重考補強，並保留各模組的最高成績。</p>
+      </aside>
+    </header>
+
+    <div class="layout">
+      <nav class="catalog" aria-label="頁面目錄">
+        <h2>制度目錄</h2>
+        <a href="#modules">模組與選考</a>
+        <a href="#flow">公告到應試流程</a>
+        <a href="#rules">測驗、計分與回饋</a>
+        <a href="#questions">題目範例</a>
+        <a href="#governance">治理與公開資訊</a>
+      </nav>
+
+      <main class="content">
+        <section id="modules">
+          <p class="eyebrow">01｜模組架構</p>
+          <h2>一個必考模組，加上三選二的選考模組</h2>
+          <p class="section-intro">學生會先完成每個人都需要的「使用倫理」，再從三個選考模組群中選兩群。這樣既能保有共同的 AI 使用底線，也能讓不同科系、不同學習方向的學生，選擇和自己較相關的能力範圍。</p>
+          <div class="module-grid">
+            <article class="module required"><span class="tag">所有學生必考</span><h3>使用倫理</h3><p>學生要理解如何合理、合法且符合學術倫理地使用 AI，包括學術誠信、使用揭露、著作權、個資與風險認知。</p><p class="examples"><strong>重點是：</strong>知道何時可以把 AI 當作協作工具，以及如何為自己的作業、判斷與成果負責。</p></article>
+            <article class="module"><span class="tag">選考模組</span><h3>常見工具</h3><p>學生會認識當年度常見 AI 工具的用途、適用情境、限制與風險；評量重點是選擇與判斷，而不是背介面操作。</p><p class="examples"><strong>年度研讀範例：</strong>OpenAI、ChatGPT、Codex、Gemini、Claude、Claude Code、NotebookLM、GitHub Copilot、Microsoft Copilot、Perplexity。</p></article>
+            <article class="module"><span class="tag">選考模組</span><h3>通用技術</h3><p>學生要學會可跨工具使用的概念：怎麼交代任務、提供足夠脈絡、檢查結果，並把 AI 放進可靠的工作流程。</p><p class="examples"><strong>年度研讀範例：</strong>Prompt、Context、AI Agent、Skill、MCP、RAG、工作流程、輸出驗證與幻覺辨識。</p></article>
+            <article class="module"><span class="tag">選考模組</span><h3>專業延伸</h3><p>各系會依專業需求與科系屬性，公告該領域需要的 AI 應用能力、學習資料與題目草案。</p><p class="examples"><strong>學生可以期待：</strong>評量內容會連結自己系上的專業任務與未來工作情境。</p></article>
+          </div>
+        </section>
+
+        <section id="flow">
+          <p class="eyebrow">02｜年度執行</p>
+          <h2>以年度版本與 Study Guide 協助完成門檻</h2>
+          <p class="section-intro">學生不必自己猜測要準備什麼。每學年會先公告一個評量版本，清楚列出能力目標、建議工具與主題、學習資料、考場規則及最低要求；學生選擇模組後，就會取得對應的個人 Study Guide。</p>
+          <ol class="flow">
+            <li><strong>1. 年度公告</strong><span>先看清楚本年度的模組目標、範圍、資料與有效期間。</span></li>
+            <li><strong>2. 選擇模組</strong><span>登記使用倫理，以及三選二的選考組合，取得個人 Study Guide。</span></li>
+            <li><strong>3. 學習與預約</strong><span>依 Study Guide 安排自學與補強，再於開放時段預約受控教室。</span></li>
+            <li><strong>4. 應試與回饋</strong><span>使用指定設備開考、系統隨機組卷；時間到自動交卷，結果會指出達標與後續補強方向。</span></li>
+          </ol>
+        </section>
+
+        <section id="rules">
+          <p class="eyebrow">03｜測驗與結果</p>
+          <h2>清楚公告規則，讓重考成為學習的一部分</h2>
+          <ul class="rule-list">
+            <li><strong>受控環境：</strong>學生在校方指定的受控教室使用指定設備完成觀念多選題，讓每位學生都在一致條件下展現自己的理解。</li>
+            <li><strong>全對計分：</strong>每題必須選到全部正確選項，且不能選到錯誤選項。這個規則確認學生掌握的是完整觀念，而不是只碰巧選到部分答案。</li>
+            <li><strong>題庫與最低要求：</strong>系統依年度題庫藍圖隨機組卷；各模組的正式最低要求，會依題庫難度與試測結果在年度公告中清楚核定。</li>
+            <li><strong>不限次數重考：</strong>系統保留各模組最高成績與通過狀態；學生可針對尚未達標模組持續補強與補考。同一年度版本有效期間內，評量範圍與判定標準一致。</li>
+            <li><strong>結果回饋：</strong>結果以各模組「達標／未達標」呈現，並連結對應的 Study Guide 補強單元，讓學生知道下一步可以從哪裡開始。</li>
+          </ul>
+        </section>
+
+        <section id="questions">
+          <p class="eyebrow">04｜題目格式</p>
+          <h2>以 n 選 m 的觀念多選題，檢核完整理解</h2>
+          <p class="section-intro">每題會提供 n 個選項，其中 m 個是正確答案。學生的選擇必須與正確答案<strong>完全吻合</strong>：少選任何一項，或多選任何一項，該題都不計分。下面是用來理解格式的練習範例；正式題目會依年度題庫與模組範圍組成。</p>
+          <div class="rationale-grid">
+            <article><h3>降低猜測</h3><p>選項與正確答案數都會改變，學生必須真的判斷每一項，降低只靠運氣作答造成的分數偏差。</p></article>
+            <article><h3>完整閱讀</h3><p>學生需要讀完所有選項，分辨哪些說法合宜、哪些有風險；閱讀本身就是概念複習與辨識訓練。</p></article>
+            <article><h3>重考即補強</h3><p>配合不限次數重考與模組回饋，學生可以多次回到 Study Guide，逐步強化自己的基本概念。</p></article>
+            <article><h3>公平且有效率</h3><p>系統可依完全吻合的規則一致計分；評量結果更聚焦於完整理解，也讓批閱作業有效率。</p></article>
+          </div>
+          <div class="question-grid">
+            <article class="question-card">
+              <span class="tag">範例一｜6 選 3</span>
+              <h3>使用倫理：以 AI 協助完成課程報告時，哪些做法合宜？</h3>
+              <ul class="choice-list">
+                <li>A. 依課程規範揭露使用 AI 的方式。</li>
+                <li>B. 直接把 AI 產生的來源當作可引用的資料。</li>
+                <li>C. 交稿前查核重要事實與原始來源。</li>
+                <li>D. 不經檢查，直接把 AI 草稿當成自己的最終結論。</li>
+                <li>E. 避免輸入他人的個資或未獲授權的資料。</li>
+                <li>F. 認為 AI 生成的圖片一定可以自由使用。</li>
+              </ul>
+              <p class="answer-key"><strong>範例答案：A、C、E。</strong><span>三項都必須選到，且不能選到其他項目，才算答對。</span></p>
+            </article>
+            <article class="question-card">
+              <span class="tag">範例二｜5 選 2</span>
+              <h3>使用倫理：以 AI 協助完成課程報告時，哪些做法合宜？</h3>
+              <ul class="choice-list">
+                <li>A. 依課程規範揭露使用 AI 的方式。</li>
+                <li>B. 直接把 AI 產生的來源當作可引用的資料。</li>
+                <li>C. 交稿前查核重要事實與原始來源。</li>
+                <li>D. 不經檢查，直接把 AI 草稿當成自己的最終結論。</li>
+                <li>E. 認為 AI 生成的圖片一定可以自由使用。</li>
+              </ul>
+              <p class="answer-key"><strong>範例答案：A、C。</strong><span>兩項都和負責任的使用及成果查核直接相關。</span></p>
+            </article>
+            <article class="question-card">
+              <span class="tag">範例三｜4 選 1</span>
+              <h3>通用技術：下列何者最能說明 RAG 的用途？</h3>
+              <ul class="choice-list">
+                <li>A. 讓模型自動取得任何人的私密資料。</li>
+                <li>B. 先取回相關且核定的資料，再協助生成答案。</li>
+                <li>C. 只要增加選項數，就能保證答案正確。</li>
+                <li>D. 以工具名稱取代對輸出內容的檢查。</li>
+              </ul>
+              <p class="answer-key"><strong>範例答案：B。</strong><span>RAG 的核心是先取得相關資料，讓後續回答有可追溯的參考基礎。</span></p>
+            </article>
+            <article class="question-card">
+              <span class="tag">範例四｜2 選 1</span>
+              <h3>常見工具：比較兩項 AI 工具時，最重要的判斷依據是什麼？</h3>
+              <ul class="choice-list">
+                <li>A. 工具是否符合任務需求、資料條件與使用風險。</li>
+                <li>B. 工具名稱是否最常出現在社群討論中。</li>
+              </ul>
+              <p class="answer-key"><strong>範例答案：A。</strong><span>工具選擇應回到任務目的、可用資料與風險，而不是只看熱度。</span></p>
+            </article>
+          </div>
+        </section>
+
+        <section id="governance">
+          <p class="eyebrow">05｜責任分工與資訊公開</p>
+          <h2>建立年度更新、審題與畢業審核的共同機制</h2>
+          <p class="section-intro">AI 工具與應用快速改變，因此這不是一份一次寫完的固定考綱。教師與學校會以明確分工，持續更新內容、維持題目品質，也讓學生知道可以查詢哪些資訊。</p>
+          <div class="governance">
+            <article><h3>AI 教師群組</h3><p>共同研擬、審題與年度更新「使用倫理、常見工具、通用技術」三個校級模組，讓全校學生有共同的 AI 素養基礎。</p></article>
+            <article><h3>各系教師</h3><p>依專業需求研擬「專業延伸」的內容、學習資料與題目草案，讓評量能反映不同科系的應用情境。</p></article>
+            <article><h3>校級工作小組</h3><p>協調年度版本、最低要求、題庫審核、考場規範、申訴程序與畢業審核，確保制度執行方式一致、學生資訊清楚。</p></article>
+          </div>
+          <div class="notice"><strong>對學生的公開與查詢承諾：</strong>校方公告模組目標、可選模組、Study Guide、評分規則、應試規範、年度版本有效期間與申訴程序；系統保存年度版本、學生選考模組、每一次應試紀錄、各模組最高成績、通過狀態與通過日期，供學生查詢及畢業資格審核；各項正式營運參數以核定後的年度公告為準。</div>
+        </section>
+      </main>
+    </div>
+    <footer>南臺科技大學電子工程系｜AI 素養畢業能力檢核制度提案草案</footer>
+  </div>
+</body>
+</html>

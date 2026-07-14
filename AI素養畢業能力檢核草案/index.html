@@ -46,7 +46,7 @@
     .overview h2 { margin-bottom: 10px; color: #a9e3f0; font-size: .98rem; letter-spacing: .06em; }
     .overview p { max-width: 960px; margin-bottom: 0; color: #c6d5e2; }
     .overview-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-    .overview-grid div { padding: 11px; border-left: 2px solid #58b9c5; background: #10283a; }
+    .overview-grid div { padding: 11px; background: #10283a; }
     .overview-grid strong { display: block; margin-bottom: 3px; color: #d3f0f6; font-size: .94rem; }
     .overview-grid span { display: block; color: #b7c8d5; font-size: .84rem; line-height: 1.55; }
     .layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; margin-top: 28px; }
@@ -71,7 +71,7 @@
     .flow strong { display: block; margin-bottom: 5px; color: #a9e3f0; }
     .flow span { color: #b7c8d5; font-size: .9rem; }
     .rule-list { display: grid; gap: 10px; margin: 20px 0 0; padding: 0; list-style: none; }
-    .rule-list li { padding: 14px 16px; border-left: 3px solid #58b9c5; border-radius: 0 12px 12px 0; background: #102335; }
+    .rule-list li { padding: 14px 16px; border-radius: 12px; background: #102335; }
     .rule-list strong { color: #f0ca79; }
     .question-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
     .rationale-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 20px; }
@@ -83,12 +83,16 @@
     .question-card p { color: #c6d5e2; }
     .choice-list { display: grid; gap: 7px; margin: 14px 0; padding: 0; list-style: none; }
     .choice-list li { padding: 8px 10px; border: 1px solid #294961; border-radius: 8px; color: #bcd0dd; background: #0d1a28; font-size: .92rem; }
-    .answer-key { margin-bottom: 0 !important; padding: 11px 12px; border-left: 3px solid #69c6a8; border-radius: 0 9px 9px 0; color: #c8eddb !important; background: #13352f; }
+    .answer-key { margin-bottom: 0 !important; padding: 11px 12px; border-radius: 9px; color: #c8eddb !important; background: #13352f; }
     .answer-key span { display: block; margin-top: 4px; }
     .governance { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
     .governance article { padding: 17px; border: 1px solid #31546d; border-radius: 13px; background: #102335; }
     .governance h3 { margin-bottom: 7px; color: #d0ecfb; font-size: 1.02rem; }
     .governance p { margin-bottom: 0; color: #b9cad6; font-size: .94rem; }
+    .governance-detail { margin-top: 24px; }
+    .governance-detail h3 { margin-bottom: 8px; color: #d0ecfb; font-size: 1.14rem; }
+    .governance-detail p { max-width: 1050px; margin-bottom: 0; color: #b9cad6; }
+    .governance-detail p + p { margin-top: 12px; }
     .notice { margin-top: 18px; padding: 16px; border: 1px solid #846f38; border-radius: 12px; color: #e7dbad; background: #2b2717; }
     footer { padding: 24px 4px 0; color: #8fa7b8; font-size: .88rem; text-align: center; }
     @media (max-width: 820px) {
@@ -128,7 +132,7 @@
         <a href="#flow">公告到應試流程</a>
         <a href="#rules">測驗、計分與回饋</a>
         <a href="#questions">題目範例</a>
-        <a href="#governance">治理與公開資訊</a>
+        <a href="#governance">責任分工與題目更新</a>
       </nav>
 
       <main class="content">
@@ -228,15 +232,19 @@
         </section>
 
         <section id="governance">
-          <p class="eyebrow">05｜責任分工與資訊公開</p>
+          <p class="eyebrow">05｜責任分工與題目更新</p>
           <h2>建立年度更新、審題與畢業審核的共同機制</h2>
-          <p class="section-intro">AI 工具與應用快速改變，因此這不是一份一次寫完的固定考綱。教師與學校會以明確分工，持續更新內容、維持題目品質，也讓學生知道可以查詢哪些資訊。</p>
+          <p class="section-intro">AI 工具與應用快速改變，因此制度會依固定節奏檢視與調適內容。教師群組負責清楚定義學生應學會什麼；校方則以共同規範維持題目品質、年度版本與畢業審核的一致性。</p>
           <div class="governance">
-            <article><h3>AI 教師群組</h3><p>共同研擬、審題與年度更新「使用倫理、常見工具、通用技術」三個校級模組，讓全校學生有共同的 AI 素養基礎。</p></article>
-            <article><h3>各系教師</h3><p>依專業需求研擬「專業延伸」的內容、學習資料與題目草案，讓評量能反映不同科系的應用情境。</p></article>
-            <article><h3>校級工作小組</h3><p>協調年度版本、最低要求、題庫審核、考場規範、申訴程序與畢業審核，確保制度執行方式一致、學生資訊清楚。</p></article>
+            <article><h3>AI 教師群組</h3><p>共同訂定「使用倫理、常見工具、通用技術」的學習方向、能力目標、資料來源與年度更新原則，讓全校學生具備共同的 AI 素養基礎。</p></article>
+            <article><h3>各系教師</h3><p>依專業需求訂定「專業延伸」的學習方向、適用任務與參考資料，讓評量反映不同科系的專業應用情境。</p></article>
+            <article><h3>校級工作小組</h3><p>協調年度版本、最低要求、題目生成與審核規範、考場規範、申訴程序與畢業審核，確保制度執行一致。</p></article>
           </div>
-          <div class="notice"><strong>對學生的公開與查詢承諾：</strong>校方公告模組目標、可選模組、Study Guide、評分規則、應試規範、年度版本有效期間與申訴程序；系統保存年度版本、學生選考模組、每一次應試紀錄、各模組最高成績、通過狀態與通過日期，供學生查詢及畢業資格審核；各項正式營運參數以核定後的年度公告為準。</div>
+          <div class="governance-detail">
+            <h3>滾動式題目更新</h3>
+            <p>「使用倫理」等穩定概念會定期檢視；「常見工具」、「通用技術」與各系「專業延伸」內容，則依 AI 發展、熱門技術與系所需求持續調適。教師的工作重點是定義學生要學會什麼、應能判斷什麼，而不是逐題撰寫與保存固定試題。</p>
+            <p>系統以核定的學習方向為依據，由<strong>AI 協助出題</strong>並產生多樣化題組；每個考試期間先生成對應題組，下一個期間再依更新後的方向重新產生。學生可以從曾經考過的題目與考古題累積概念與判斷方法，但不會期待下一次看到相同題目；下次只會出現依同一學習方向重新生成的類似題目，形成「<strong>理解考古題，而不是背誦考古題</strong>」的學習方式。</p>
+          </div>
         </section>
       </main>
     </div>
